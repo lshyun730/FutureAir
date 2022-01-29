@@ -8,21 +8,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>미래항공 관리자페이지</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-	$(document).ready(function() {
-		$('.gnb>li').mouseenter(function() {
-			$('.gnb>li').removeClass('over');
-			$(this).addClass('over');
-		});
-
-		$('.gnb>li').mouseleave(function() {
-			$(this).removeClass('over');
-		});
-	});
-</script>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script defer src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 </head>
 <body>
 
@@ -40,7 +30,7 @@
 	<header class="header">
 		<div class="inner">
 			<h1>
-				<a href="./"><img src="resources/images/logo.png" alt="미래항공 로고"></a>
+				<a href="./"><img src="${pageContext.request.contextPath}/resources/images/logo.png" alt="미래항공 로고"></a>
 			</h1>
 			<nav>
 				<ul class="gnb">

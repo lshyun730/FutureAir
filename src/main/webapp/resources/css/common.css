@@ -6,14 +6,16 @@
     --primary: #0063D4;
     --secondary: #F5F6FA;
     --warning: #ffc107;
-    --red: #E74D4D;
+    --red: #D80027;
     --black: #000000;
+	--white: #ffffff; 
     --dark: #151517;
+	--danger: #E74D4D; 
     --darkgray: #222224;
-	--white: #ffffff;
 	--gray: #8D8D8D;
-	--light: #e3e3e3;
+	--light: #EDEFF6; 
 }
+
 /* 여백 초기화 */
 body {
 	overflow-x: hidden;
