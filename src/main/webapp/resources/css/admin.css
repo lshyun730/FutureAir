@@ -7,7 +7,13 @@
 common
 -----------------------
 */
-:root { --primary: #0063D4; --secondary: #F5F6FA; --red: #D80027; --green: #65B12D; --purple: #7D35A8; --info: #c3c3c3; --warning: #ffc107; --danger: #E74D4D; --black: #484848; --white: #ffffff; --gray: #8D8D8D; --light: #EDEFF6; }
+:root { 
+	--green: #65B12D; 
+	--purple: #7D35A8; 
+	--info: #c3c3c3; 
+	--danger: #E74D4D; 
+	--black: #484848; 
+}
 html, body {height: 100%;}
 body {background: var(--secondary);}
 h2 {padding-bottom: 1.25rem; font-family: 'S-CoreDream-4';}
