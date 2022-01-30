@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>미래항공 관리자페이지</title>
+<title>미래항공</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
@@ -19,7 +19,7 @@
 <section class="util">
 		<div class="inner">
 			<ul>
-				<li><a href="#">로그인</a></li>
+				<li><a href="login">로그인</a></li>
 				<li><a href="#">이벤트</a></li>
 				<li><a href="#">고객서비스</a></li>
 				<li><a href="#">한국어</a></li>
