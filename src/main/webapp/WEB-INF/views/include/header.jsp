@@ -19,7 +19,7 @@
 <section class="util">
 		<div class="inner">
 			<ul>
-				<li><a href="#">로그인</a></li>
+				<li><a href="login">로그인</a></li>
 				<li><a href="#">이벤트</a></li>
 				<li><a href="#">고객서비스</a></li>
 				<li><a href="#">한국어</a></li>
@@ -62,12 +62,12 @@
 						<div class="gnb_cont">
 							<div class="inner">
 								<ul class="gnb_dep2">
-									<li><a href="#">수하물</a>
+									<li><a href="${pageContext.request.contextPath}/airport/baggage/baggageInfo">수하물</a>
 										<ul class="gnb_dep3">
-											<li><a href="#">수하물안내</a></li>
-											<li><a href="#">운송 제한 물품</a></li>
-											<li><a href="#">휴대수하물</a></li>
-											<li><a href="#">위탁수하물</a></li>
+											<li><a href="${pageContext.request.contextPath}/airport/baggage/baggageInfo">수하물안내</a></li>
+											<li><a href="${pageContext.request.contextPath}/airport/baggage/baggageRestricted">운송 제한 물품</a></li>
+											<li><a href="${pageContext.request.contextPath}/airport/baggage/baggageCarryOn">휴대수하물</a></li>
+											<li><a href="${pageContext.request.contextPath}/airport/baggage/baggageChecked">위탁수하물</a></li>
 										</ul></li>
 									<li><a href="#">탑승절차</a>
 										<ul class="gnb_dep3">
