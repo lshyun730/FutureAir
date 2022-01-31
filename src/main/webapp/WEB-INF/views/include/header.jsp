@@ -30,7 +30,7 @@
 	<header class="header">
 		<div class="inner">
 			<h1>
-				<a href="./"><img src="${pageContext.request.contextPath}/resources/images/common/logo.png" alt="미래항공 로고"></a>
+				<a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/resources/images/common/logo.png" alt="미래항공 로고"></a>
 			</h1>
 			<nav>
 				<ul class="gnb">
@@ -96,22 +96,22 @@
 								<ul class="gnb_dep2">
 									<li><a href="#">클래스별 서비스</a>
 										<ul class="gnb_dep3">
-											<li><a href="#">일등석</a></li>
-											<li><a href="#">비즈니스석</a></li>
-											<li><a href="#">이코노미석</a></li>
+											<li><a href="${pageContext.request.contextPath}/plane/seatClass">일등석</a></li>
+											<li><a href="${pageContext.request.contextPath}/plane/seatClass">비즈니스석</a></li>
+											<li><a href="${pageContext.request.contextPath}/plane/seatClass">이코노미석</a></li>
 										</ul></li>
 									<li><a href="#">기내 서비스</a>
 										<ul class="gnb_dep3">
-											<li><a href="#">기내식</a></li>
+											<li><a href="${pageContext.request.contextPath}/plane/service/flightMeals">기내식</a></li>
 											<li><a href="#">기내 면세점</a></li>
 											<li><a href="#">기내 특별 서비스</a></li>
 										</ul></li>
-									<li><a href="#">항공기 안내</a>
+									<li><a href="${pageContext.request.contextPath}/plane/aircraft">항공기 안내</a>
 										<ul class="gnb_dep3">
-											<li><a href="#">보잉 787</a></li>
-											<li><a href="#">보잉 777</a></li>
-											<li><a href="#">에어버스 A380</a></li>
-											<li><a href="#">에어버스 A330</a></li>
+											<li><a href="${pageContext.request.contextPath}/plane/aircraft">보잉 787</a></li>
+											<li><a href="${pageContext.request.contextPath}/plane/aircraft">보잉 777</a></li>
+											<li><a href="${pageContext.request.contextPath}/plane/aircraft">에어버스 A380</a></li>
+											<li><a href="${pageContext.request.contextPath}/plane/aircraft">에어버스 A330</a></li>
 										</ul></li>
 									<li><a href="#">부가서비스</a>
 										<ul class="gnb_dep3">

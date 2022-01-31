@@ -102,16 +102,35 @@ airport
 -----------------------
 */
 
-.title_box {width:100%; background: var(--secondary); padding:3.75rem 1.875rem; box-sizing: border-box;}
-.desc_list li {padding-left: 10px; position: relative;}
-.desc_list li::before {content: "·"; position: absolute; left: 0}
-
 /* 운송제한물품 */
 .restricted_list {display: flex; gap: 1.875rem }
-.restricted_list li {width: calc(100%/3); text-align: center; border: 1px solid var(--light); padding: 1.875rem 3.75rem; box-sizing: border-box;}
-.restricted_list li .title {font-size: 1.125rem; font-weight: bold; padding-bottom: 1.25rem}
-.restricted_list li span {font-size: 0.85rem}
+.restricted_list li {position: relative; width: calc(100%/3); text-align: center; border: 1px solid var(--light); padding: 1.875rem 3.75rem; box-sizing: border-box;}
+.restricted_list li::after {content:""; width: 2.5rem; height:2.5rem; top:1.875rem ;left: 50%; transform: translateX(-50%);background-repeat: no-repeat; background-size: contain; position: absolute;}
+.restricted_list li:nth-child(1)::after {background-image: url(../images/sub/ico_baggageRestricted1.png);}
+.restricted_list li:nth-child(2)::after {background-image: url(../images/sub/ico_baggageRestricted2.png);}
+.restricted_list li:nth-child(3)::after {background-image: url(../images/sub/ico_baggageRestricted3.png);}
+.restricted_list li .title {font-weight: bold; padding-bottom: 0.75rem; padding-top: 3.75rem;}
+.restricted_list li .desc {font-size: 0.85rem;}
 
+/* 위탁수화물 */
+.baggage_checked.tab_menu .tab_label {width: 25%;}
+
+/* 클래스별서비스 & 기내식 */
+.seat_class .tab_menu .tab_label {width: calc(100% / 3);}
+.seat_class .class_service_list li{display: flex; align-items: center;margin:  0 0 3.75rem;}
+.seat_class .class_service_list li .img {width: 45%;}
+.seat_class .class_service_list li .desc {padding: 1.875rem 3.125rem; width: 55%;}
+.seat_class .class_service_list li .desc .title {font-weight: bold; font-size: 1.125rem; padding-bottom: 0.625rem;}
+.seat_class .tab_menu .tab_contents > div {padding: 3.75rem 0}
+.flight_meals h3 {padding-top: 0}
+
+/* 항공기안내 */
+.aircraft_list>li {display: flex; align-items: center; border: 1px solid var(--light); margin-bottom: 3.75rem;}
+.aircraft_list li .img{width: 50%;}
+.aircraft_list li .desc{width: 50%; padding: 3.125rem; }
+.aircraft_list li .desc .title {font-size: 1.25rem; font-weight: bold;}
+.aircraft_list li .desc .text {padding: 0.625rem 0 1.25rem}
+.aircraft_list li .desc .info {display: flex; justify-content: space-between; color: var(--gray); font-size: 0.875rem;}
 
 
 /*
@@ -119,15 +138,15 @@ airport
 fooer
 -----------------------
 */
-.footer {background: var(--darkgray); color: var(--gray); font-size: .875rem; padding: 20px 0 0;}
+.footer {background: var(--darkgray); color: var(--gray); font-size: .875rem; padding: 1.25rem 0 0;}
 .footer .contact {border-bottom: 1px solid var(--gray);}
-.footer .contact li {display: inline-block; padding: 0 20px; margin-bottom: 20px; border-right: 1px solid var(--gray);}
+.footer .contact li {display: inline-block; padding: 0 1.25rem; margin-bottom: 1.25rem; border-right: 1px solid var(--gray);}
 .footer .contact li:first-child{padding-left: 0;}
 .footer .contact li:last-child{border-right: 0;}
-.footer .address {padding: 20px 0;}
+.footer .address {padding: 1.25rem 0;}
 .footer .address p {line-height: 1.5rem;}
-.footer .policy {padding: 20px 0 ;background: var(--dark);margin-top: 30px;}
-.footer .policy li {display: inline-block; padding-right: 60px;}
+.footer .policy {padding: 1.25rem 0 ;background: var(--dark);margin-top: 1.875rem;}
+.footer .policy li {display: inline-block; padding-right: 3.75rem;}
 .footer .policy li.color_red a{color: var(--red);}
 .footer .policy a{color: #fff;}
 
@@ -141,6 +160,7 @@ components
 
 h2 {font-size: 1.25rem;font-weight: bold;padding-bottom: 1.875rem;}
 h3 {font-size: 1.125rem;font-weight: bold;padding: 3.75rem 0 1.25rem;}
+p, li{line-height: 150%;}
 
 /* breadcrumbs */
 .breadcrumbs ul {margin: 1.875rem 0; display: flex; align-items: center}
@@ -155,17 +175,16 @@ input[type="date"] {width: 100%; border:0; border-bottom: 1px solid var(--gray);
 input[type="text"], input[type="password"] {width: 100%; border:1px solid var(--lightgray); padding: 10px; border-radius: 3px; box-sizing: border-box;}
 select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0;}
 
-
 /* 탭메뉴 */
 .tab_menu input.tab_list {font-weight: bold;visibility: hidden; display: none;}
-.tab_menu .tab_label {float: left; width: 50%; line-height: 45px; display: inline-block; text-align: center; cursor: pointer; border: 1px solid var(--light); background: var(--secondary); box-sizing: border-box;}
+.tab_menu .tab_label {display :block;float: left; width: 50%; line-height: 45px; display: inline-block; text-align: center; cursor: pointer; border: 1px solid var(--light); background: var(--secondary); box-sizing: border-box;}
 .tab_menu > input:checked + label {background: #fff; border-bottom: 0; font-weight: bold; color: var(--primary); border-top: 3px solid var(--primary);z-index: 5;}
 .tab_menu input#tab1:checked ~ .tab_contents #content1,
 .tab_menu input#tab2:checked ~ .tab_contents #content2,
-.tab_menu input#tab3:checked ~ .tab_contents #content3 { opacity: 1; z-index: 9; }
+.tab_menu input#tab3:checked ~ .tab_contents #content3,
+.tab_menu input#tab4:checked ~ .tab_contents #content4 { opacity: 1; z-index: 9; display: block;}
 .tab_menu .tab_contents {position: relative;z-index: 4; width: 100%; clear: both; margin-top: 100px;}
-.tab_menu .tab_contents > form, .tab_menu .tab_contents > div {opacity: 0; position: absolute;}
-
+.tab_menu .tab_contents > form, .tab_menu .tab_contents > div {opacity: 0; position: relative; display: none;}
 
 /* 슬라이더 */
 .swiper {width: 100%; height: 100%;}
@@ -175,3 +194,18 @@ select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.3
 .swiper-pagination {left: 2rem;bottom: auto; width: auto; top:-0.75rem;}
 .swiper-button-next,.swiper-button-prev  {color: #000;}
 .swiper-button-prev::after, .swiper-button-next::after{font-size: 1.2rem;}
+
+/* 테이블 */
+.table {width: 100%; border-collapse: collapse;}
+.table th, .table td {padding: 1.25rem;border-bottom: 1px solid var(--light); text-align: center;}
+.table th {background: var(--secondary);}
+
+/* 타이틀박스 */
+.title_box {width:100%; background: var(--secondary); padding:3.75rem 1.875rem; box-sizing: border-box;}
+.title_box_img {width: 100%; height: 14.375rem; overflow: hidden; margin: 1.25rem 0 3.75rem;}
+.title_box_img img{object-fit: cover;}
+
+/* 상세설명 리스트 */
+.desc_list li {padding-left: 0.625rem; position: relative;}
+.desc_list li::before {content: "·"; position: absolute; left: 0}
+

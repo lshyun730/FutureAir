@@ -16,9 +16,9 @@ public class HomeController {
 	}
 	
 	// 로그인
-		@RequestMapping(value = "login", method = RequestMethod.GET)
-		public String login() {
-			return "customer/login";
-		}
+	@RequestMapping(value = "login", method = RequestMethod.GET)
+	public String login() {
+		return "customer/login";
+	}
 
 }
