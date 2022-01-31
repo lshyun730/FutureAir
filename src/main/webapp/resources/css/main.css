@@ -6,10 +6,15 @@ layout
 -----------------------
 */
 .inner {width: 1280px; margin: 0 auto;}
-
-
-
-
+h2 {font-size: 1.25rem;font-weight: bold;padding-bottom: 1.875rem;}
+h3 {font-size: 1.125rem;font-weight: bold;padding: 3.75rem 0 1.25rem;}
+.main_content {margin: 6.25rem 0; }
+.content {margin: 3.75rem auto 6.25rem}
+.breadcrumbs ul {margin: 1.875rem 0; display: flex; align-items: center}
+.breadcrumbs ul li {padding: 0 20px; color: var(--gray); position: relative;}
+.breadcrumbs ul li:first-child {padding-left: 0}
+.breadcrumbs ul li::after {font-family: "Font Awesome 5 Free";font-weight: 900; content: "\f054";position: absolute; right: 0px; top:50%;transform: translate(50%, -40%); font-size: 0.75rem}
+.breadcrumbs ul li:last-child::after {display: none}
 
 /*
 -----------------------
@@ -40,7 +45,7 @@ header
 fooer
 -----------------------
 */
-.footer {background: var(--darkgray); color: var(--gray); font-size: .875rem;padding: 20px 0 0 ;}
+.footer {background: var(--darkgray); color: var(--gray); font-size: .875rem; padding: 20px 0 0;}
 .footer .contact {border-bottom: 1px solid var(--gray);}
 .footer .contact li {display: inline-block; padding: 0 20px; margin-bottom: 20px; border-right: 1px solid var(--gray);}
 .footer .contact li:first-child{padding-left: 0;}
@@ -61,8 +66,6 @@ main
 -----------------------
 */
 
-h2 {font-size: 1.25rem;font-weight: bold;padding-bottom: 1.875rem;}
-.content {margin: 6.25rem 0; }
 
 .main_visual {width: 100%; height: 40rem; position: relative; overflow: hidden;}
 .main_visual .main_slider .main_title{position: absolute;top: 6.25rem;font-size: 1.75rem; font-weight: bold;}
@@ -102,7 +105,6 @@ h2 {font-size: 1.25rem;font-weight: bold;padding-bottom: 1.875rem;}
 .service_list li a .icon{position: absolute; top: 1.875rem;left: 50%; transform: translateX(-50%);}
 
 
-
 /*
 -----------------------
 login
@@ -137,6 +139,23 @@ input[type="submit"] {width: 100%;height: 3.5rem; border: 0; border-radius: 0.31
 input[type="date"] {width: 100%; border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0;}
 input[type="text"], input[type="password"] {width: 100%; border:1px solid var(--lightgray); padding: 10px; border-radius: 3px; box-sizing: border-box;}
 select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0;}
+
+
+/*
+-----------------------
+airport
+-----------------------
+*/
+
+.title_box {width:100%; background: var(--secondary); padding:3.75rem 1.875rem; box-sizing: border-box;}
+.desc_list li {padding-left: 10px; position: relative;}
+.desc_list li::before {content: "·"; position: absolute; left: 0}
+
+/* 운송제한물품 */
+.restricted_list {display: flex; gap: 1.875rem }
+.restricted_list li {width: calc(100%/3); text-align: center; border: 1px solid var(--light); padding: 1.875rem 3.75rem; box-sizing: border-box;}
+.restricted_list li .title {font-size: 1.125rem; font-weight: bold; padding-bottom: 1.25rem}
+.restricted_list li span {font-size: 0.85rem}
 
 
 

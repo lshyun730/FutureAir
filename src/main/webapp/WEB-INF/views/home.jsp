@@ -108,7 +108,8 @@
 </section>
 <!-- main visual E -->
 <!-- popular flight S -->
-<section class="popular_flight content">
+
+<section class="popular_flight main_content">
     <div class="inner">
         <h2>인기 항공권</h2>
         <div class="swiper popular_slider">
@@ -161,7 +162,8 @@
 </section>
 <!-- popular flight E -->
 <!-- covid S -->
-<section class="covid content">
+
+<section class="covid main_content">
     <div class="inner">
         <a href="#" class="covid_center">
             <p>코로나 19 종합안내 센터</p>

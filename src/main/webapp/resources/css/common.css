@@ -8,13 +8,13 @@
     --warning: #ffc107;
     --red: #D80027;
     --black: #000000;
-	--white: #ffffff; 
+	  --white: #ffffff; 
     --dark: #151517;
-	--danger: #E74D4D; 
+	  --danger: #E74D4D; 
     --darkgray: #222224;
-	--gray: #8D8D8D;
-	--light: #EDEFF6; 
-	--lightgray : #c1c1c1;
+	  --gray: #8D8D8D;
+	  --light: #EDEFF6; 
+	  --lightgray : #c1c1c1;
 }
 
 /* 여백 초기화 */
