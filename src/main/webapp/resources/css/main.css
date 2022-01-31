@@ -6,15 +6,9 @@ layout
 -----------------------
 */
 .inner {width: 1280px; margin: 0 auto;}
-h2 {font-size: 1.25rem;font-weight: bold;padding-bottom: 1.875rem;}
-h3 {font-size: 1.125rem;font-weight: bold;padding: 3.75rem 0 1.25rem;}
 .main_content {margin: 6.25rem 0; }
 .content {margin: 3.75rem auto 6.25rem}
-.breadcrumbs ul {margin: 1.875rem 0; display: flex; align-items: center}
-.breadcrumbs ul li {padding: 0 20px; color: var(--gray); position: relative;}
-.breadcrumbs ul li:first-child {padding-left: 0}
-.breadcrumbs ul li::after {font-family: "Font Awesome 5 Free";font-weight: 900; content: "\f054";position: absolute; right: 0px; top:50%;transform: translate(50%, -40%); font-size: 0.75rem}
-.breadcrumbs ul li:last-child::after {display: none}
+
 
 /*
 -----------------------
@@ -38,36 +32,11 @@ header
 .gnb_dep3>li>a {display: block; margin-bottom: 0.313rem;}   
 
 
-
-
-/*
------------------------
-fooer
------------------------
-*/
-.footer {background: var(--darkgray); color: var(--gray); font-size: .875rem; padding: 20px 0 0;}
-.footer .contact {border-bottom: 1px solid var(--gray);}
-.footer .contact li {display: inline-block; padding: 0 20px; margin-bottom: 20px; border-right: 1px solid var(--gray);}
-.footer .contact li:first-child{padding-left: 0;}
-.footer .contact li:last-child{border-right: 0;}
-.footer .address {padding: 20px 0;}
-.footer .address p {line-height: 1.5rem;}
-.footer .policy {padding: 20px 0 ;background: var(--dark);margin-top: 30px;}
-.footer .policy li {display: inline-block; padding-right: 60px;}
-.footer .policy li.color_red a{color: var(--red);}
-.footer .policy a{color: #fff;}
-
-
-
-
 /*
 -----------------------
 main
 -----------------------
 */
-
-
-
 .main_visual {width: 100%; height: 40rem; position: relative; overflow: hidden;}
 .main_visual .main_slider .main_title{position: absolute;top: 6.25rem;font-size: 1.75rem; font-weight: bold;}
 .main_visual .main_slider .main_more{position: absolute;top: 12.5rem; text-decoration: underline; font-size: 1.25rem;}
@@ -106,9 +75,25 @@ main
 .service_list li a .icon{position: absolute; top: 1.875rem;left: 50%; transform: translateX(-50%);}
 
 
-input[type="submit"] {width: 100%;height: 3.5rem; border: 0; border-radius: 0.313rem; color: #fff; background: var(--primary);}
-input[type="date"] {width: 100%; border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0;}
-select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0;}
+
+/*
+-----------------------
+login
+-----------------------
+*/
+
+.login {width: 400px;min-height: 500px; margin: 60px auto;}
+.login .tab_contents input {margin-bottom: 20px;}
+.login .login_info {text-align: center;}
+.login .login_info li{display: inline-block; margin: 0 5px; font-size: 0.875rem;}
+.login .sns_login {text-align: center;}
+.login .sns_login li {display: inline-block;}
+.login .sns_login li a {display: block;}
+.login .sns_login li a {text-indent: -9999px; background-repeat:  no-repeat;background-position: center center; background-size: cover; width: 40px; height: 40px;margin: 30px 10px;}
+.login .sns_login li a#kakao {background-image: url(../images/common/ico-kakao.svg)}
+.login .sns_login li a#naver {background-image: url(../images/common/ico-naver.svg)}
+.login .sns_login li a#google {background-image: url(../images/common/ico-google.svg)}
+
 
 
 /*
@@ -126,6 +111,60 @@ airport
 .restricted_list li {width: calc(100%/3); text-align: center; border: 1px solid var(--light); padding: 1.875rem 3.75rem; box-sizing: border-box;}
 .restricted_list li .title {font-size: 1.125rem; font-weight: bold; padding-bottom: 1.25rem}
 .restricted_list li span {font-size: 0.85rem}
+
+
+
+/*
+-----------------------
+fooer
+-----------------------
+*/
+.footer {background: var(--darkgray); color: var(--gray); font-size: .875rem; padding: 20px 0 0;}
+.footer .contact {border-bottom: 1px solid var(--gray);}
+.footer .contact li {display: inline-block; padding: 0 20px; margin-bottom: 20px; border-right: 1px solid var(--gray);}
+.footer .contact li:first-child{padding-left: 0;}
+.footer .contact li:last-child{border-right: 0;}
+.footer .address {padding: 20px 0;}
+.footer .address p {line-height: 1.5rem;}
+.footer .policy {padding: 20px 0 ;background: var(--dark);margin-top: 30px;}
+.footer .policy li {display: inline-block; padding-right: 60px;}
+.footer .policy li.color_red a{color: var(--red);}
+.footer .policy a{color: #fff;}
+
+
+
+/*
+-----------------------
+components
+-----------------------
+*/
+
+h2 {font-size: 1.25rem;font-weight: bold;padding-bottom: 1.875rem;}
+h3 {font-size: 1.125rem;font-weight: bold;padding: 3.75rem 0 1.25rem;}
+
+/* breadcrumbs */
+.breadcrumbs ul {margin: 1.875rem 0; display: flex; align-items: center}
+.breadcrumbs ul li {padding: 0 20px; color: var(--gray); position: relative;}
+.breadcrumbs ul li:first-child {padding-left: 0}
+.breadcrumbs ul li::after {font-family: "Font Awesome 5 Free";font-weight: 900; content: "\f054";position: absolute; right: 0px; top:50%;transform: translate(50%, -40%); font-size: 0.75rem}
+.breadcrumbs ul li:last-child::after {display: none}
+
+/* 인풋 */
+input[type="submit"] {width: 100%;height: 3.5rem; border: 0; border-radius: 0.313rem; color: #fff; background: var(--primary);}
+input[type="date"] {width: 100%; border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0;}
+input[type="text"], input[type="password"] {width: 100%; border:1px solid var(--lightgray); padding: 10px; border-radius: 3px; box-sizing: border-box;}
+select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0;}
+
+
+/* 탭메뉴 */
+.tab_menu input.tab_list {font-weight: bold;visibility: hidden; display: none;}
+.tab_menu .tab_label {float: left; width: 50%; line-height: 45px; display: inline-block; text-align: center; cursor: pointer; border: 1px solid var(--light); background: var(--secondary); box-sizing: border-box;}
+.tab_menu > input:checked + label {background: #fff; border-bottom: 0; font-weight: bold; color: var(--primary); border-top: 3px solid var(--primary);z-index: 5;}
+.tab_menu input#tab1:checked ~ .tab_contents #content1,
+.tab_menu input#tab2:checked ~ .tab_contents #content2,
+.tab_menu input#tab3:checked ~ .tab_contents #content3 { opacity: 1; z-index: 9; }
+.tab_menu .tab_contents {position: relative;z-index: 4; width: 100%; clear: both; margin-top: 100px;}
+.tab_menu .tab_contents > form, .tab_menu .tab_contents > div {opacity: 0; position: absolute;}
 
 
 /* 슬라이더 */

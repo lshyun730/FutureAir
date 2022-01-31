@@ -19,7 +19,7 @@
 <section class="util">
 		<div class="inner">
 			<ul>
-				<li><a href="login">로그인</a></li>
+				<li><a href="${pageContext.request.contextPath}/login">로그인</a></li>
 				<li><a href="#">이벤트</a></li>
 				<li><a href="#">고객서비스</a></li>
 				<li><a href="#">한국어</a></li>
@@ -30,7 +30,7 @@
 	<header class="header">
 		<div class="inner">
 			<h1>
-				<a href="./"><img src="${pageContext.request.contextPath}/resources/images/logo.png" alt="미래항공 로고"></a>
+				<a href="./"><img src="${pageContext.request.contextPath}/resources/images/common/logo.png" alt="미래항공 로고"></a>
 			</h1>
 			<nav>
 				<ul class="gnb">

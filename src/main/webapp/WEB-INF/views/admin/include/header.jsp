@@ -13,7 +13,7 @@
 <body>
 <!-- header S -->  
 <header class="header">
-    <h1 class="logo"><a href="./admin"><img src="${pageContext.request.contextPath}/resources/images/logo.png" alt="FUTURE AIR"></a></h1>
+    <h1 class="logo"><a href="./admin"><img src="${pageContext.request.contextPath}/resources/images/common/logo.png" alt="FUTURE AIR"></a></h1>
     <nav class="gnb">
         <ul>
             <span class="gnb_txt">GENERAL</span>

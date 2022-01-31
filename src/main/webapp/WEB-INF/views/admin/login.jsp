@@ -14,7 +14,7 @@
 <body>
     <div class="adminLogin">
         <form action="adminLogin" method="post" class="item" onsubmit="return loginFormCheck()">
-            <h1><img src="${pageContext.request.contextPath}/resources/images/logo.png" alt="미래항공"></h1>
+            <h1><img src="${pageContext.request.contextPath}/resources/images/common/logo.png" alt="미래항공"></h1>
             <div class="inputbox no_icon">
                 <div class="inputbox_input">
                     <input type="text" id="admin_id" name="admin_id" placeholder="관리자 아이디">
