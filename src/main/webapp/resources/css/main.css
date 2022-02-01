@@ -40,7 +40,7 @@ main
 .main_visual {width: 100%; height: 40rem; position: relative; overflow: hidden;}
 .main_visual .main_slider .main_title{position: absolute;top: 6.25rem;font-size: 1.75rem; font-weight: bold;}
 .main_visual .main_slider .main_more{position: absolute;top: 12.5rem; text-decoration: underline; font-size: 1.25rem;}
-.main_visual .main_slider .controller{position: absolute; top: 18.75rem; width: 100%;}
+.main_visual .main_slider .controller{position: absolute; top: 18rem; width: 100%;}
 .main_visual .main_slider .controller .swiper-button-next{left: 4.375rem;}
 .main_visual .main_slider .controller .swiper-button-prev{left: 0;}
 .main_visual .main_slider .controller .inner{position: relative;}
@@ -82,18 +82,62 @@ login
 -----------------------
 */
 
-.login {width: 400px;min-height: 500px; margin: 60px auto;}
-.login .tab_contents input {margin-bottom: 20px;}
+.login {width: 25rem;min-height: 31.25rem; margin: 3.75rem auto;}
+.login .tab_contents input {margin-bottom: 1.25rem;}
 .login .login_info {text-align: center;}
-.login .login_info li{display: inline-block; margin: 0 5px; font-size: 0.875rem;}
+.login .login_info li{display: inline-block; margin: 0 0.313rem; font-size: 0.875rem;}
 .login .sns_login {text-align: center;}
 .login .sns_login li {display: inline-block;}
 .login .sns_login li a {display: block;}
-.login .sns_login li a {text-indent: -9999px; background-repeat:  no-repeat;background-position: center center; background-size: cover; width: 40px; height: 40px;margin: 30px 10px;}
+.login .sns_login li a {text-indent: -9999px; background-repeat:  no-repeat;background-position: center center; background-size: cover; width: 2.5rem; height: 2.5rem;margin: 1.875rem 0.625rem;}
 .login .sns_login li a#kakao {background-image: url(../images/common/ico-kakao.svg)}
 .login .sns_login li a#naver {background-image: url(../images/common/ico-naver.svg)}
 .login .sns_login li a#google {background-image: url(../images/common/ico-google.svg)}
 
+
+/*
+-----------------------
+book
+-----------------------
+*/
+/* 비행기예약폼 */
+.bookFlightForm .row {display: flex; gap: 1.875rem; margin: 3.75rem 0 0;}
+.bookFlightForm .row > div {width: calc(100%/3);}
+.bookFlightForm .submit {width: 7.5rem; margin:  6.25rem auto 0;}
+
+/* 주간리스트 */
+.weekList {position: relative; ;display: flex; text-align: center;padding: 0 3.125rem;}
+.weekList li {width: calc(100%/7); border: 1px solid var(--light);}
+.weekList li.navigation {position: absolute; width: 3.125rem; height: 100%;}
+.weekList li.navigation.prev {left: 0; }
+.weekList li.navigation.next {right: 0; }
+.weekList li.navigation a {padding: 0; height: 100%;display: flex; flex-direction: column; justify-content: center;}
+.weekList li a{display: block; padding: 1.875rem; background: var(--secondary);}
+.weekList li a span {display: block; font-style: 0.875rem;}
+.weekList li.active a{background: var(--primary); color: #fff; font-size: bold;}
+
+/* 항공권리스트 */
+.flight_list { margin: 3.75rem 0;}
+.flight_list > li {display: flex; justify-content: space-between; align-items: center; text-align: center;border-top: 1px solid var(--light); border-bottom: 1px solid var(--light);}
+.flight_list li .flight_info {position: relative;;display: flex; width: 40%; justify-content: space-around;}
+.flight_list li .flight_info span {display: block; font-size: 1.25rem; font-weight: bold;}
+.flight_list li .flight_info .direction {position: absolute; width: 5.625rem; height: 1px; background: #000; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+.flight_list li .flight_info .direction::before {content:''; position: absolute; width: 0.313rem; height: 0.313rem; background: #000; display: block; transform: translate(-50% , -50%); top: 50%; left: 0; border-radius: 50%;} 
+.flight_list li .flight_info .direction::after {content:''; position: absolute; width: 0.313rem; height: 0.313rem; background: #000; display: block; transform: translate(50% , -50%); top: 50%; right: 0; border-radius: 50%;} 
+.flight_contents {display: flex;}
+.flight_contents li.active  a{background: var(--primary); color: #fff;}
+.flight_contents li a{display: block; padding: 2.5rem 3.75rem;}
+.flight_contents li a span {display: block; font-size: 1.25rem;}
+.flight_payment_wrap {text-align: center; margin-top: 3.75rem}
+.flight_payment_wrap .btn_primary {margin: 3.75rem 0; }
+.flight_payment {display: flex; justify-content: space-between; padding: 1.875rem; background: var(--secondary); font-size: 1.25rem;}
+.flight_payment .price {font-weight: bold;}
+
+.book_done .title_box {text-align: center;}
+.book_done .title_box p {color: var(--gray);}
+.book_done .title_box .title{font-size: 1.5rem; font-weight: bold; color: #000; padding-bottom: 0.625rem;}
+.book_done .btn_wrap {text-align: center; padding: 3.75rem 0}
+.book_done .btn_wrap .light{margin-right: 0.625rem;}
 
 
 /*
@@ -164,26 +208,37 @@ p, li{line-height: 150%;}
 
 /* breadcrumbs */
 .breadcrumbs ul {margin: 1.875rem 0; display: flex; align-items: center}
-.breadcrumbs ul li {padding: 0 20px; color: var(--gray); position: relative;}
+.breadcrumbs ul li {padding: 0 1.25rem; color: var(--gray); position: relative;}
 .breadcrumbs ul li:first-child {padding-left: 0}
 .breadcrumbs ul li::after {font-family: "Font Awesome 5 Free";font-weight: 900; content: "\f054";position: absolute; right: 0px; top:50%;transform: translate(50%, -40%); font-size: 0.75rem}
 .breadcrumbs ul li:last-child::after {display: none}
 
 /* 인풋 */
 input[type="submit"] {width: 100%;height: 3.5rem; border: 0; border-radius: 0.313rem; color: #fff; background: var(--primary);}
-input[type="date"] {width: 100%; border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0;}
-input[type="text"], input[type="password"] {width: 100%; border:1px solid var(--lightgray); padding: 10px; border-radius: 3px; box-sizing: border-box;}
+input[type="date"] {width: 100%; border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0; border-radius: 3px;}
+input[type="text"], input[type="password"] {width: 100%; border:1px solid var(--lightgray); padding: 0.625rem; border-radius: 3px; box-sizing: border-box;}
 select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0;}
+
+/* 인풋 박스형태 */
+.border_input input{border: 1px solid var(--lightgray); padding: 0.625rem;}
+.border_input select{border: 1px solid var(--lightgray); padding: 0.625rem; border-radius: 3px;}
+.border_input input[type="radio"]{font-weight: bold;visibility: hidden; display: none;}
+.border_input label {padding: 0.625rem 0.938rem; display :block;float: left; width: 50%; display: inline-block; text-align: center; cursor: pointer; border: 1px solid var(--light); background: var(--secondary); box-sizing: border-box; border-radius: 3px;}
+.border_input input:checked + label {background: var(--primary); color: #fff;}
+
+/* 버튼 */
+.btn_primary {width: 7.5rem;height: 3.5rem; border: 0; border-radius: 0.313rem; color: #fff; background: var(--primary);}
+.btn_primary.light {background: var(--light); color: #000; }
 
 /* 탭메뉴 */
 .tab_menu input.tab_list {font-weight: bold;visibility: hidden; display: none;}
-.tab_menu .tab_label {display :block;float: left; width: 50%; line-height: 45px; display: inline-block; text-align: center; cursor: pointer; border: 1px solid var(--light); background: var(--secondary); box-sizing: border-box;}
+.tab_menu .tab_label {display :block;float: left; width: 50%; line-height: 2.813rem; display: inline-block; text-align: center; cursor: pointer; border: 1px solid var(--light); background: var(--secondary); box-sizing: border-box;}
 .tab_menu > input:checked + label {background: #fff; border-bottom: 0; font-weight: bold; color: var(--primary); border-top: 3px solid var(--primary);z-index: 5;}
 .tab_menu input#tab1:checked ~ .tab_contents #content1,
 .tab_menu input#tab2:checked ~ .tab_contents #content2,
 .tab_menu input#tab3:checked ~ .tab_contents #content3,
 .tab_menu input#tab4:checked ~ .tab_contents #content4 { opacity: 1; z-index: 9; display: block;}
-.tab_menu .tab_contents {position: relative;z-index: 4; width: 100%; clear: both; margin-top: 100px;}
+.tab_menu .tab_contents {position: relative;z-index: 4; width: 100%; clear: both; margin-top: 6.25rem;}
 .tab_menu .tab_contents > form, .tab_menu .tab_contents > div {opacity: 0; position: relative; display: none;}
 
 /* 슬라이더 */
@@ -199,6 +254,7 @@ select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.3
 .table {width: 100%; border-collapse: collapse;}
 .table th, .table td {padding: 1.25rem;border-bottom: 1px solid var(--light); text-align: center;}
 .table th {background: var(--secondary);}
+.table.top_boder {border-top: 3px solid #000;}
 
 /* 타이틀박스 */
 .title_box {width:100%; background: var(--secondary); padding:3.75rem 1.875rem; box-sizing: border-box;}
@@ -208,4 +264,12 @@ select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.3
 /* 상세설명 리스트 */
 .desc_list li {padding-left: 0.625rem; position: relative;}
 .desc_list li::before {content: "·"; position: absolute; left: 0}
+
+/* 선택리스트 */
+.selectList {display: flex;}
+.selectList li a{display: block;padding: 0.625rem 0; width: 7.5rem;text-align: center;; background: var(--secondary);}
+.selectList li:first-child a{border-top-left-radius: 0.313rem; border-bottom-left-radius: 0.313rem;}
+.selectList li:last-child a{border-top-right-radius: 0.313rem; border-bottom-right-radius: 0.313rem;}
+.selectList li.active a{background: var(--primary); color: #fff;}
+
 

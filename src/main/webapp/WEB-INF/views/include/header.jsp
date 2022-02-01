@@ -40,7 +40,7 @@
 								<ul class="gnb_dep2">
 									<li><a href="#">항공권예약</a>
 										<ul class="gnb_dep3">
-											<li><a href="#">항공권예약</a></li>
+											<li><a href="${pageContext.request.contextPath}/book/flightBook">항공권예약</a></li>
 											<li><a href="#">예약안내</a></li>
 										</ul></li>
 									<li><a href="#">예매조회</a>
