@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.air.future.dao.BoardMapper">
+	
+	<select id="selectBoard" resultType="board">
+		select board_index, title, writer, topic_type, contents
+				, to_char(board_date, 'YYYY-MM-DD') as board_date
+				, hits, reply_type
+		from board_fa
+	</select>
+	 	
+	<delete id="deleteBoard" parameterType="int">
+		delete from board_fa where board_index = #{board_index}
+	</delete>
+	
+	<select id="searchBoard" parameterType="map" resultType="board">
+		select board_index, title, writer, topic_type, contents
+				, to_char(board_date, 'YYYY-MM-DD') as board_date
+				, hits, reply_type
+		from board_fa
+		where 1=1
+		<choose>
+			<when test="!time1.equals('') and !time2.equals('')">
+				and board_date >= #{time1}
+				and board_date &lt; #{time2}
+			</when>
+			<when test="!time1.equals('')">and board_date >= #{time1}</when>
+			<when test="!time2.equals('')">and board_date &lt; #{time2}</when>		
+			<otherwise>
+				and 2=2
+			</otherwise>
+		</choose>
+		<if test="!topic_type.equals('전체')">and topic_type like '%' || #{topic_type} || '%'</if>
+		<if test="!reply_type.equals('전체')">and reply_type like '%' || #{reply_type} || '%'</if>
+		<if test="!title.equals('')">and title like '%' || #{title} || '%'</if>
+	</select>	
+	
+</mapper>

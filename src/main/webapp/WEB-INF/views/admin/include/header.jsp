@@ -25,41 +25,41 @@
     
             <span class="gnb_txt">FLIGHT</span>
             <li>
-                <a href="admin/flight/flightList">비행일정
+                <a href="${pageContext.request.contextPath}/admin/flight/flightList">비행일정
                     <span class="icon"><i class="fas fa-plane"></i></span>
                 </a>
             </li>
             <li>
-                <a href="admin/flight/reservationList">예약현황
+                <a href="${pageContext.request.contextPath}/admin/flight/reservationList">예약현황
                     <span class="icon"><i class="fas fa-clipboard-list"></i></span>
                 </a>
             </li>
             
             <span class="gnb_txt">CUSTOMER</span>
             <li>
-                <a href="admin/customer/customerList">회원정보
+                <a href="${pageContext.request.contextPath}/admin/customer/customerList">회원정보
                     <span class="icon"><i class="fas fa-user"></i></span>
                 </a>
             </li>
             <li>
-                <a href="admin/customer/customerGrade">회원등급
+                <a href="${pageContext.request.contextPath}/admin/customer/customerGrade">회원등급
                     <span class="icon"><i class="fas fa-arrow-circle-up"></i></span>
                 </a>
             </li>
             <li>
-                <a href="admin/customer/sendMail">메일발송
+                <a href="${pageContext.request.contextPath}/admin/customer/sendMail">메일발송
                     <span class="icon"><i class="fas fa-envelope"></i></span>
                 </a>
             </li>
     
             <span class="gnb_txt">BOARD</span>
             <li>
-                <a href="admin/board/boardManager">게시물관리
+                <a href="${pageContext.request.contextPath}/admin/board/boardManager">게시물관리
                     <span class="icon"><i class="fas fa-pen-alt"></i></span>
                 </a>
             </li>
             <li>
-                <a href="admin/board/boardSetting">게시판설정
+                <a href="${pageContext.request.contextPath}/admin/board/boardSetting">게시판설정
                     <span class="icon"><i class="fas fa-cog"></i></span>
                 </a>
             </li>

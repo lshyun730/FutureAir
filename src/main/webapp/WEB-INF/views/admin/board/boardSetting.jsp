@@ -31,10 +31,11 @@
                 </tr>
             </thead>
             <tbody>
+            <c:forEach var="boardList" items="${boardList }">
                 <tr>
                     <td><input type="checkbox"></td>
-                    <td>Q&A</td>
-                    <td><a href="#">공지사항</a></td>
+                    <td>${boardList.topic_type }</td>
+                    <td><a href="#">${boardList.title }</a></td>
                     <td>1</td>
                     <td>3/10</td>
                     <td>관리자/비회원</td>
@@ -45,6 +46,7 @@
                     </td>
                     <td class="btn_m_wrap"><div class="btn_m"><span></span></div></td>
                 </tr>
+             </c:forEach>
             </tbody>
         </table>
         <!-- table E --> 
