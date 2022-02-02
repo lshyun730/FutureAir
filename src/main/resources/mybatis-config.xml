@@ -5,9 +5,12 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.air.future.vo.Admin" alias="admin"/>
+		<typeAlias type="com.air.future.vo.Customer" alias="customer"/>
+		<typeAlias type="com.air.future.vo.Grade" alias="grade"/>
 	</typeAliases>
 	
 	<mappers>
 	<mapper resource="mapper/AdminMapper.xml"/>
+	<mapper resource="mapper/CustomerMapper.xml"/>
 	</mappers>
 </configuration>
