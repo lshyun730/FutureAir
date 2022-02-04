@@ -64,6 +64,40 @@ public class BoardController {
 		return "admin/board/boardManager";
 	}
 	
+	//게시판 작성자 이동 버튼
+		@RequestMapping(value = "board/customerInfo", method = RequestMethod.GET)
+		public String customerinfo() {
+			
+			
+			
+			return "admin/customer/customerInfo";
+		}
+		
+	
+	//게시판 추가 버튼
+	@RequestMapping(value = "board/boardSettingNotice", method = RequestMethod.GET)
+	public String boardSettingNotice() {
+		
+		
+		
+		return "admin/board/boardSettingNotice";
+	}
+	
+	
+	//보드세팅에서 삭제하기 버튼
+	@RequestMapping(value = "board/boardSettingDelete", method = RequestMethod.GET)
+	public String boardSettingDelete(Model model, int[] boardCheck) {
+		
+//		for(int s : boardCheck) {
+//			
+//			int result  = service.deleteBoard(s);
+//			
+//		}
+//		ArrayList<Board> boardList = service.selectBoard();	
+//		model.addAttribute("boardList", boardList);
+		return "admin/board/boardSettingDelete";
+	}
+	
 	
 	
 }

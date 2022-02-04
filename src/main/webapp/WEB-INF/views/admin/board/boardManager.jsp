@@ -125,7 +125,7 @@ function checkAll(checker){
                     <td><input type="checkbox" id="boardCheck" name="boardCheck" value="${boardlist.board_index }"></td>
                     <td>${boardlist.topic_type }</td>
                     <td><a href="#">${boardlist.title }</a></td>
-                    <td><a href="#">${boardlist.writer }</a></td>
+                    <td><a href="customerInfo">${boardlist.writer }</a></td>
                     <td>
                     <c:if test="${boardlist.topic_type eq '문의'}">
 	                    <c:if test="${boardlist.reply_type == 0}"> 답변 미완료 </c:if>
