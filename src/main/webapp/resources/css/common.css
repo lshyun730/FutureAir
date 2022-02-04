@@ -23,6 +23,7 @@ body {
 	position: relative;
 }
 
+* {box-sizing: border-box;}
 body,
 div,
 ul,

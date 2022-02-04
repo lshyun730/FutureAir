@@ -13,7 +13,9 @@ common
 	--info: #c3c3c3; 
 	--danger: #E74D4D; 
 	--black: #484848; 
+	
 }
+
 html, body {height: 100%;}
 body {background: var(--secondary);}
 h2 {padding-bottom: 1.25rem; font-family: 'S-CoreDream-4';}
@@ -37,7 +39,7 @@ fix
 */
 
 /* header */
-.header { position: fixed; width: 16.5rem; height: 100vh; background-color: var(--white); box-shadow:0.25rem 0.25rem 0.875rem rgba(0, 0, 0, 0.1); } 
+.header { position: fixed; top:0; width: 16.5rem; height: 100vh; background-color: var(--white); box-shadow:0.25rem 0.25rem 0.875rem rgba(0, 0, 0, 0.1); } 
 .header .logo { text-align: center; padding: 2rem 2.5rem; }
 .gnb .gnb_txt { display: block; font-size: 0.75rem; margin: 0; padding: 1.875rem 3.125rem 0.625rem; text-transform: uppercase; letter-spacing: 0.125rem } 
 .gnb .gnb_txt:nth-child(1) {padding-top: 0;}
@@ -49,6 +51,7 @@ fix
 
 /* util */
 .util { row-gap: 0; padding-bottom: 0 !important;}
+.util .row {justify-content: space-between;}
 .util .search { display: flex; align-items: center; background-color: var(--white); border-radius: 0.625rem; padding: 0 0 0 1.875rem; height: 3.75rem; } 
 .util .search input { border: 0; width: 100%; height: 100%; border-radius: 0.625rem; padding: 0.625rem 0.625rem 0.625rem 0.625rem; box-sizing: border-box; } 
 .util .info  {grid-column: 4/5; background: transparent; box-shadow: none; display: flex; justify-content: space-between; padding: 0; } 
@@ -59,6 +62,15 @@ fix
 .util .info .bell_icon i { font-size: 1.25rem; } 
 .util .profile .btn_m {right: 0.625rem;}
 
+/* conte */
+.contents {padding-left: 16.5rem;}
+.contents h2{padding-bottom:0.875rem; }
+.contents .row {display: flex;padding: 0 1.875rem;flex-wrap: wrap; margin: 1.875rem -0.938rem;}
+.contents .row > * {flex: 0 0 25%; max-width: 25%; padding: 0 0.938rem;}
+.contents .row .inner {background-color: var(--white); border-radius: 0.625rem; box-shadow:0.25rem 0.25rem 0.875rem rgba(0, 0, 0, 0.1); padding: 1.875rem; width:100%; height: 100%}
+.contents .row .width50 {flex: 0 0 50%; max-width: 50%;}
+.contents .row .width100 {flex: 0 0 100%; max-width: 100%;}
+
 /* footer */
 .footer { padding: 1.875rem 1.875rem 1.875rem 18.375rem; text-align: center; color: var(--gray); } 
 
@@ -68,12 +80,11 @@ login page
 -----------------------
 */
 .adminLogin {display: flex;justify-content: center; align-items: center; width: 100%;height: 100%;}
-.adminLogin .item{width: 20rem; padding: 50px 30px;}
-.adminLogin .item h1 {width: 10rem; margin: 0 auto;margin-bottom: 30px;}
-.adminLogin .item .inputbox {margin: 15px 0;}
-.adminLogin .item .inputbox.submit {margin-top: 20px; position: relative;}
-.adminLogin .error_msg {color: var(--danger);padding-left: 10px;}
-
+.adminLogin .item{width: 22rem; padding: 3.125rem 1.875rem;}
+.adminLogin .item h1 {width: 10rem; margin: 0 auto;margin-bottom: 1.875rem;}
+.adminLogin .item .inputbox {margin: 0.938rem 0;}
+.adminLogin .item .inputbox.submit {margin-top: 1.25rem; position: relative;}
+.adminLogin .error_msg {color: var(--danger);padding-left: 0.625rem;}
 
 /*
 -----------------------
@@ -81,7 +92,8 @@ main page
 -----------------------
 */
 
-.main_contents h2{padding-bottom:0.875rem; }
+
+
 
 /* today-info */
 .today_info_txt h2 {font-size: .875rem; padding-bottom:0.25rem ;}
@@ -94,20 +106,24 @@ main page
 .today_info:nth-of-type(4) .today_info_icon {background: var(--primary)}
 
 /* popular_flight */
-.popular_flight ul li a {display: flex;align-items: center;padding: 0.625rem 0;}
+/* .popular_flight ul {display: flex; flex-direction: column; justify-content: space-; height: 100%;} */
+.popular_flight ul li a {display: flex;align-items: center;padding: 0.875rem 0;}
 .popular_flight_img {width: 2.5rem; height: 2.5rem;margin-right:0.875rem;}
 .popular_flight_info {width: 100%;}
 .popular_flight_info span{font-size: 0.875rem; color: var(--gray);}
 
 /* graph_income */
-.graph_income { grid-column: 2/4; } 
+
+/* graph_reservation */
+.chartWrap{min-height: 300px; margin-left: -5px; display: flex; justify-content: center; align-items: center;height: initial;}
+
+/* state_flight */
+.state_flight .chartWrap {margin: 0;}
 
 /* recent_reservation */
-.recent_reservation { grid-column: 3/5; } 
 
 /* rate_reservation */
 .rate_reservation ul li {padding-bottom: 1.25rem;}
-
 
 
 /*
@@ -169,9 +185,11 @@ sub page
 */
 
 /* 그리드 */
-.grid { padding: 1.875rem 1.875rem 1.875rem 18.375rem; display: grid; grid-template-columns: repeat(4, 1fr); row-gap: 1.875rem; column-gap: 1.875rem; } 
-.item { background-color: var(--white); border-radius: 0.625rem; box-shadow:0.25rem 0.25rem 0.875rem rgba(0, 0, 0, 0.1); padding: 1.875rem; } 
+.grid { padding: 1.875rem; display: grid; grid-template-columns: repeat(4, 1fr); row-gap: 1.875rem; column-gap: 1.875rem; } 
+.item { background-color: var(--white); border-radius: 0.625rem; box-shadow:0.25rem 0.25rem 0.875rem rgba(0, 0, 0, 0.1); padding: 1.875rem; box-sizing: border-box;} 
 .item.fullwidth { grid-column: 1/ 5; } 
+
+/* 플렉서블박스 */
 
 /* 프로필 */
 .profile { position: relative; flex-grow: 1; display: flex; align-items: center; font-size: 0.875rem } 
@@ -186,7 +204,7 @@ sub page
 .flex_content_footer {display: flex; justify-content: space-between; align-items: flex-start; padding-top: 1.875rem;}
 
 /* 좌우양끝정렬 */
-.flex_space_between {display: flex; justify-content: space-between; gap: 30px;}
+.flex_space_between {display: flex; justify-content: space-between; gap: 1.875rem;}
 
 /* 기본테이블 */
 .table { width: 100%; text-align: left; border-collapse: collapse; border-radius: 0.625rem; border-style: hidden; box-shadow: 0 0 0 1px var(--light); } 

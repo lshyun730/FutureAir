@@ -1,5 +1,8 @@
 package com.air.future.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,6 +20,35 @@ public class AdminDAO {
 		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class); 
 		Admin admin = mapper.selectAdmin(admin_id);
 		return admin;
+	}
+	
+	// 오늘 수익, 예약수, 비행일정
+		public HashMap<String,String> todayInfo() {
+			AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
+			HashMap<String,String> todayInfo = mapper.todayInComeReservation();
+			todayInfo.putAll(mapper.todayFlight());
+			return todayInfo;
+		}
+	
+	// 대륙별 점유율 
+	public ArrayList<HashMap<String,String>> rateContinents() {
+		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
+		ArrayList<HashMap<String,String>> rateContinents = mapper.rateContinents();
+		return rateContinents;
+	}
+	
+	// 인기항공권 
+		public ArrayList<HashMap<String,String>> popularFlight() {
+			AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
+			ArrayList<HashMap<String,String>> popularFlight = mapper.popularFlight();
+			return popularFlight;
+		}
+	
+	// 최근예약
+	public ArrayList<HashMap<String,String>> recentReservation() {
+		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
+		ArrayList<HashMap<String,String>> recentReservation = mapper.recentReservation();
+		return recentReservation;
 	}
 
 }

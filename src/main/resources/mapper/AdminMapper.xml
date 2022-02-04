@@ -9,4 +9,59 @@
 		select * from admin_fa where admin_id = #{admin_id}
 	</select>
 	
+	
+	<!-- 오늘 매출액, 오늘 예약수 -->
+	<select id="todayInComeReservation" resultType="HashMap">
+		select nvl(sum(payment), 0) as today_income, nvl(count(reservation_num), 0) as today_reservation 
+		from reservation_fa
+		where TO_CHAR(reservation_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+	</select>
+	
+	<!-- 오늘 비행일정 -->
+	<select id="todayFlight" resultType="HashMap">
+		select count(airplane_id) as today_flight 
+		from route_fa
+		where TO_CHAR(departure_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+	</select>
+	
+	<!-- 인기비행상품 -->
+	<select id="popularFlight" resultType="HashMap">
+		select * 
+		from (
+			select rou.departure_name, rou.arrival_name, a.airplane_type,min(rou.normal_price) as price, count(*) count  
+			from reservation_fa r, schedule_fa s, route_fa rou, airplane_fa a
+			where r.reservation_num = s.reservation_num 
+				and r.reservation_date >= add_months(sysdate,-12)
+				and s.route_num = rou.route_num
+				and rou.airplane_id = a.airplane_id
+			group by rou.departure_name, rou.arrival_name, a.airplane_type
+			order by count desc)
+		where <![CDATA[rownum <=5]]>
+	</select>
+	
+	<!-- 대륙별점유율 -->
+	<select id="rateContinents" resultType="HashMap">
+		select last.*, ROUND(RATIO_TO_REPORT(last.count) OVER(), 2) * 100 AS rate 
+		from (
+		    select d.continents as continents, count(*) count
+		    from destination_fa d, route_fa rou
+		    where rou.arrival_name = d.airport_name
+		group by continents) last
+	</select>
+	
+	<!-- 최근예약내역 -->
+	<select id="recentReservation" resultType="HashMap">
+		select * 
+		from (
+			select r.reservation_num, c.customer_name, rou.departure_name, rou.arrival_name, r.payment, r.reservation_date
+		    from reservation_fa r, schedule_fa s ,route_fa rou, customer_fa c
+		    where r.reservation_num = s.reservation_num
+		        and s.route_num = rou.route_num
+		        and c.customer_id = r.customer_id
+		        and c.customer_name = s.passenger_name
+		    group by r.reservation_num, c.customer_name, rou.departure_name, rou.arrival_name, r.payment, r.reservation_date
+		    order by r.reservation_date desc,  reservation_num desc)
+		where <![CDATA[rownum <=5]]>
+	</select>
+
 </mapper>
