@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.air.future.service.AdminService;
 import com.air.future.vo.Admin;
 
+import lombok.extern.java.Log;
+
 @SessionAttributes("admin")
 @Controller
 public class AdminController {
@@ -19,7 +21,11 @@ public class AdminController {
 	
 	// 관리자 메인페이지 이동
 	@RequestMapping(value = "admin", method = RequestMethod.GET)
-	public String admin() {
+	public String admin(Model model) {
+		model.addAttribute("todayInfo", service.todayInfo());
+		model.addAttribute("popularFlight", service.popularFlight());
+		model.addAttribute("rateContinents", service.rateContinents());
+		model.addAttribute("recentReservation", service.recentReservation());
 		return "admin/admin";
 	}
 
