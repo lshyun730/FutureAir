@@ -40,12 +40,18 @@ public class AdminService {
 		return graphIncome; 
 	}
 	
-	// 예약분석
+	// 예약분석 그래프
 	public ArrayList<HashMap<String, String>> graphReservation() {
 		ArrayList<HashMap<String, String>> graphReservation = dao.graphReservation();
 		return graphReservation;
 	}
 		
+	// 항공편상황 그래프
+	public HashMap<String, String> graphFlightState() {
+		HashMap<String, String> graphFlightState = dao.graphFlightState();
+		return graphFlightState;
+	}
+	
 	// 대륙별 점유율 
 	public ArrayList<HashMap<String, String>> rateContinents() {
 		ArrayList<HashMap<String, String>> rateContinents = dao.rateContinents();
