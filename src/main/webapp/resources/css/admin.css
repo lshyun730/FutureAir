@@ -112,18 +112,15 @@ main page
 .popular_flight_info {width: 100%;}
 .popular_flight_info span{font-size: 0.875rem; color: var(--gray);}
 
-/* graph_income */
 
-/* graph_reservation */
-.chartWrap{min-height: 300px; margin-left: -5px; display: flex; justify-content: center; align-items: center;height: initial;}
-
-/* state_flight */
-.state_flight .chartWrap {margin: 0;}
+/* charts */
+.graph_income .chartWrap,
+.graph_reservation .chartWrap {min-height: 300px; margin-left: -5px; display: flex; justify-content: center; align-items: center;height: initial;}
+.state_flight .chartWrap {height: 260px}
 
 /* recent_reservation */
 
-/* rate_reservation */
-.rate_reservation ul li {padding-bottom: 1.25rem;}
+.rate_reservation ul li {padding: 0.875rem 0;}
 
 
 /*

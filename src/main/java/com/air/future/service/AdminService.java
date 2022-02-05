@@ -34,6 +34,18 @@ public class AdminService {
 		return popularFlight; 
 	}
 	
+	// 기간 매출 그래프
+	public ArrayList<HashMap<String, String>> graphIncome() {
+		ArrayList<HashMap<String, String>> graphIncome = dao.graphIncome();
+		return graphIncome; 
+	}
+	
+	// 예약분석
+	public ArrayList<HashMap<String, String>> graphReservation() {
+		ArrayList<HashMap<String, String>> graphReservation = dao.graphReservation();
+		return graphReservation;
+	}
+		
 	// 대륙별 점유율 
 	public ArrayList<HashMap<String, String>> rateContinents() {
 		ArrayList<HashMap<String, String>> rateContinents = dao.rateContinents();
@@ -45,4 +57,6 @@ public class AdminService {
 		ArrayList<HashMap<String, String>> recentReservation = dao.recentReservation();
 		return recentReservation; 
 	}
+	
+	
 }
