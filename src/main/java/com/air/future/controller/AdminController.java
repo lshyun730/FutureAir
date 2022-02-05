@@ -1,10 +1,14 @@
 package com.air.future.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.air.future.service.AdminService;
@@ -53,6 +57,24 @@ public class AdminController {
 		
 		model.addAttribute("admin", admin);
 		return "redirect:/admin";
+	}
+	
+	// 기간매출그래프
+	@RequestMapping(value = "graphIncome", method = RequestMethod.GET)
+	@ResponseBody
+	public ArrayList<HashMap<String, String>> adminGraph(Model model) {
+		ArrayList<HashMap<String, String>> graphIncome = service.graphIncome();
+		model.addAttribute("graphIncome", graphIncome);
+		return graphIncome;
+	}
+	
+	// 예약분석그래프
+	@RequestMapping(value = "graphReservation", method = RequestMethod.GET)
+	@ResponseBody
+	public ArrayList<HashMap<String, String>> graphReservation(Model model) {
+		ArrayList<HashMap<String, String>> graphReservation = service.graphReservation();
+		model.addAttribute("graphReservation", graphReservation);
+		return graphReservation;
 	}
 	
 }

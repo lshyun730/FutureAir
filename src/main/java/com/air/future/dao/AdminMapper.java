@@ -19,6 +19,12 @@ public interface AdminMapper {
 	// 인기 예약 5개
 	public ArrayList<HashMap<String,String>> popularFlight();
 	
+	// 월간 매출 그래프
+	public ArrayList<HashMap<String,String>> graphIncome();
+	
+	// 예약 분석 그래프
+	public ArrayList<HashMap<String,String>> graphReservation();
+	
 	// 대륙별 점유율
 	public ArrayList<HashMap<String,String>> rateContinents();
 	

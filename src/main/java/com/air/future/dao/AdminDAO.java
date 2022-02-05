@@ -23,13 +23,27 @@ public class AdminDAO {
 	}
 	
 	// 오늘 수익, 예약수, 비행일정
-		public HashMap<String,String> todayInfo() {
-			AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
-			HashMap<String,String> todayInfo = mapper.todayInComeReservation();
-			todayInfo.putAll(mapper.todayFlight());
-			return todayInfo;
-		}
+	public HashMap<String,String> todayInfo() {
+		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
+		HashMap<String,String> todayInfo = mapper.todayInComeReservation();
+		todayInfo.putAll(mapper.todayFlight());
+		return todayInfo;
+	}
 	
+	// 기간 매출 그래프
+	public ArrayList<HashMap<String,String>> graphIncome() {
+		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
+		ArrayList<HashMap<String,String>> todayInfo = mapper.graphIncome();
+		return todayInfo;
+	}
+	
+	// 기간 예약분석
+	public ArrayList<HashMap<String,String>> graphReservation() {
+		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
+		ArrayList<HashMap<String,String>> graphReservation = mapper.graphReservation();
+		return graphReservation;
+	}
+		
 	// 대륙별 점유율 
 	public ArrayList<HashMap<String,String>> rateContinents() {
 		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);

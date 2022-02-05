@@ -39,6 +39,44 @@
 		where <![CDATA[rownum <=5]]>
 	</select>
 	
+	<!-- 기간매출그래프 -->
+	<select id="graphIncome" resultType="HashMap">
+		select to_char(b.dt, 'YY-MM') as reservation_date, nvl(sum(a.payment), 0) payment
+		from ( select to_char(reservation_date, 'YY-MM-DD') as reservation_date, sum(payment) as payment
+		        from reservation_fa
+		        where reservation_date between to_date(add_months(sysdate,-12))
+		                                        and to_date(add_months(sysdate,0)) 
+		        group by reservation_date
+		    ) a
+		  , ( select to_date(add_months(sysdate, - 11) ,'YY-MM-DD') + level - 1 as dt
+		        from dual 
+		     connect by level <![CDATA[ < ]]>= (to_date(sysdate,'YY-MM-DD')  
+		                        - to_date(add_months(sysdate, -11),'YY-MM-DD') + 1)
+		    ) b
+		where to_char(b.dt, 'YY-MM-DD') = a.reservation_date(+)
+		group by to_char(b.dt, 'YY-MM')
+		order by to_char(b.dt, 'YY-MM')
+	</select>
+	
+	<!-- 예약현황 -->
+	<select id="graphReservation" resultType="HashMap">
+		select to_char(b.dt, 'MM.DD') as reservation_date, nvl(sum(a.count), 0) count
+		from ( select to_char(reservation_date, 'YY-MM-DD') as reservation_date, count(reservation_num) as count
+		        from reservation_fa
+		        where reservation_date between to_date(add_months(sysdate,-12))
+		                                        and to_date(add_months(sysdate,0)) 
+		        group by reservation_date
+		    ) a
+		  , ( select to_date(sysdate - 4, 'YY-MM-DD') + level - 1 as dt
+		        from dual 
+		     connect by level <![CDATA[ < ]]>= (to_date(sysdate,'YY-MM-DD')  
+		                        - to_date(sysdate - 4,'YY-MM-DD') + 1 )
+		    ) b
+		where to_char(b.dt, 'YY-MM-DD') = a.reservation_date(+)
+		group by to_char(b.dt, 'MM.DD')
+		order by to_char(b.dt, 'MM.DD')
+	</select>
+	
 	<!-- 대륙별점유율 -->
 	<select id="rateContinents" resultType="HashMap">
 		select last.*, ROUND(RATIO_TO_REPORT(last.count) OVER(), 2) * 100 AS rate 
