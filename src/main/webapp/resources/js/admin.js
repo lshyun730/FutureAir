@@ -17,8 +17,7 @@ function loginFormCheck() {
 }
 
 
-/* graphIncome */
-
+/* 기간 매출 그래프 */
 $.ajax({
 	url : 'graphIncome',
 		type : 'get',
@@ -92,14 +91,11 @@ $.ajax({
 			        }
 			    }
 			});
-		},
-		error: function(){
-			alert("실패");
 		}
 })
 
 
-
+/* 예약분석 그래프 */
 $.ajax({
 	url : 'graphReservation',
 		type : 'get',
@@ -175,61 +171,61 @@ $.ajax({
 		}
 });
 
-const incomeChart = document.getElementById('incomeChart').getContext('2d');
-const reservationChart = document.getElementById('reservationChart').getContext('2d');
-const flightChart = document.getElementById('flightChart').getContext('2d');
-
-
-
-
-
-new Chart(flightChart, {
-    type: 'doughnut', 
-    data: { 
-        labels: [
-            '취소', '대기', '비행', '도착'
-        ],
-        datasets: [
-            { //데이터
-                label: '기간 매출 그래프', 
-                fill: false, 
-                data: [
-                    150, 50, 200, 100
-                ],
-                backgroundColor: [
-                    //색상
-                    'rgba(216, 0, 39, .8)',
-                    'rgba(125, 53, 168, .8)',
-                    'rgba(0, 99, 212, .8)',
-                    'rgba(101, 177, 45, .8)'
-                ],
-                borderColor: [
-                    'rgba(216, 0, 39, 1)',
-                    'rgba(125, 53, 168, 1)',
-                    'rgba(0, 99, 212, 1)',
-                    'rgba(101, 177, 45, 1)'
-                ]
-            }
-        ]
-    },
-    options: {
-        maintainAspectRatio: false,
-        legend : {
-            display: true,
-            labels: {
-                boxWidth : 10,
-                fontSize: 10,
-                padding: 10,
-            },
-            position: 'bottom',
-        },
-        layout : {
-            padding : {
-                top: 0,
-                left : 15,
-                right : 15,
-            }
-        },
-    },
+/* 항공편 상황 그래프 */
+$.ajax({
+	url : 'graphFlightState',
+		type : 'get',
+		success : function(data) {
+			let labelList = Object.keys(data);
+			let countList = Object.values(data);
+			console.log(labelList);
+			new Chart(document.getElementById('flightChart'), {
+			    type: 'doughnut', 
+			    data: { 
+			        labels: labelList,
+			        datasets: [
+			            { //데이터
+			                label: '기간 매출 그래프', 
+			                fill: false, 
+			                data: countList,
+			                backgroundColor: [
+			                    //색상
+			                    'rgba(0, 99, 212, .8)',
+			                    'rgba(101, 177, 45, .8)',
+			                    'rgba(125, 53, 168, .8)'
+			                ],
+			                borderColor: [
+			                    'rgba(0, 99, 212, 1)',
+			                    'rgba(101, 177, 45, 1)',
+			                    'rgba(125, 53, 168, 1)'
+			                ]
+			            }
+			        ]
+			    },
+			    options: {
+			        maintainAspectRatio: false,
+			        legend : {
+			            display: true,
+			            labels: {
+			                boxWidth : 10,
+			                fontSize: 10,
+			                padding: 10,
+			            },
+			            position: 'bottom',
+			        },
+			        layout : {
+			            padding : {
+			                top: 0,
+			                left : 15,
+			                right : 15,
+			            }
+			        },
+			    },
+			});
+		}
 });
+
+
+
+
 

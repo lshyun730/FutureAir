@@ -37,11 +37,18 @@ public class AdminDAO {
 		return todayInfo;
 	}
 	
-	// 기간 예약분석
+	// 예약분석 그래프
 	public ArrayList<HashMap<String,String>> graphReservation() {
 		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
 		ArrayList<HashMap<String,String>> graphReservation = mapper.graphReservation();
 		return graphReservation;
+	}
+		
+	// 항공편 상황 그래프
+	public HashMap<String,String> graphFlightState() {
+		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
+		HashMap<String,String> graphFlightState = mapper.graphFlightState();
+		return graphFlightState;
 	}
 		
 	// 대륙별 점유율 

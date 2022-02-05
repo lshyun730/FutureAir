@@ -25,6 +25,9 @@ public interface AdminMapper {
 	// 예약 분석 그래프
 	public ArrayList<HashMap<String,String>> graphReservation();
 	
+	// 항공편 상황 그래프
+	public HashMap<String,String> graphFlightState();
+	
 	// 대륙별 점유율
 	public ArrayList<HashMap<String,String>> rateContinents();
 	

@@ -77,6 +77,26 @@
 		order by to_char(b.dt, 'MM.DD')
 	</select>
 	
+	<!-- 항공편 상황 -->
+	<select id="graphFlightState" resultType="HashMap"> 
+		select wait.*, flight.*, arrival.* from 
+		    (select count(*) as 대기  from route_fa 
+		    where TO_CHAR(departure_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+		        and TO_CHAR(departure_date, 'YYYYMMDD HH24:MI') <![CDATA[ > ]]> TO_CHAR(SYSDATE, 'YYYYMMDD HH24:MI')
+		        and TO_CHAR(arrival_date, 'YYYYMMDD HH24:MI') <![CDATA[ > ]]> TO_CHAR(SYSDATE, 'YYYYMMDD HH24:MI')
+		    ) wait,
+		    (select count(*) as 비행  from route_fa 
+		    where TO_CHAR(departure_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+		        and TO_CHAR(departure_date, 'YYYYMMDD HH24:MI') <![CDATA[ < ]]> TO_CHAR(SYSDATE, 'YYYYMMDD HH24:MI')
+		        and TO_CHAR(arrival_date, 'YYYYMMDD HH24:MI') <![CDATA[ > ]]> TO_CHAR(SYSDATE, 'YYYYMMDD HH24:MI')
+		    ) flight,
+		    (select count(*) as 도착  from route_fa 
+		    where TO_CHAR(departure_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+		        and TO_CHAR(departure_date, 'YYYYMMDD HH24:MI') <![CDATA[ < ]]> TO_CHAR(SYSDATE, 'YYYYMMDD HH24:MI')
+		        and TO_CHAR(arrival_date, 'YYYYMMDD HH24:MI') <![CDATA[ < ]]> TO_CHAR(SYSDATE, 'YYYYMMDD HH24:MI')
+		    ) arrival
+	</select>
+	
 	<!-- 대륙별점유율 -->
 	<select id="rateContinents" resultType="HashMap">
 		select last.*, ROUND(RATIO_TO_REPORT(last.count) OVER(), 2) * 100 AS rate 
