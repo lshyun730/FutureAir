@@ -115,7 +115,7 @@ main page
 
 /* charts */
 .graph_income .chartWrap,
-.graph_reservation .chartWrap {min-height: 300px; margin-left: -5px; display: flex; justify-content: center; align-items: center;height: initial;}
+.graph_reservation .chartWrap {min-height: 300px; margin-left: -5px; }
 .state_flight .chartWrap {height: 260px}
 
 /* recent_reservation */
@@ -130,7 +130,7 @@ sub page
 */
 
 /* flight status */
-.flight_status .search_detail .inputbox:nth-child(7) { grid-column: 4/ 5; } 
+.flight_status .search_detail .inputbox:nth-child(6) { grid-column: 4/ 5; } 
 
 /* reservation list */
 
@@ -209,6 +209,7 @@ sub page
 .table th { background: var(--secondary); } 
 .table tr { border: 1px solid var(--light); } 
 .table th, .table td { padding:0.875rem 1.875rem; overflow: hidden; } 
+.table .tableEmpty {text-align: center}
 
 /* 리스트 네비게이션 */
 .navi { text-align: right; } 
@@ -216,7 +217,7 @@ sub page
 .navi a.active { border-color: var(--primary); background: var(--primary); color: var(--white); } 
 
 /* 기본버튼 */
-.btn { border-radius: 0.625rem; padding: 0.5rem 0; width: 120px; } 
+.btn { border-radius: 0.625rem; padding: 0.5rem 0; width: 120px; cursor: pointer;} 
 .btn.primary { background: var(--primary); color: var(--white); } 
 .btn.danger { background: transparent; border: 1px solid var(--danger); color: var(--danger); } 
 .btn.action { display: block; width: 0.25rem; height: 1.25rem; padding: 0 0.625rem; } 
@@ -242,6 +243,7 @@ sub page
 /* 상세검색 */
 .search_detail { display: grid; align-items: flex-end; grid-template-columns: repeat(4, 1fr); column-gap: 1.875rem; row-gap: 0.875rem; background: var(--secondary); padding: 1.875rem; border-radius: 0.625rem; margin-bottom: 1.875rem; } 
 .search_detail .inputbox { display: grid; }
+.search_detail select {text-indent: 2.25rem}
 
 
 /* 인풋박스 */

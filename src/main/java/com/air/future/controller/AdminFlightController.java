@@ -1,8 +1,8 @@
 package com.air.future.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,10 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.air.future.service.AdminFlightService;
 import com.air.future.util.PageNavigator;
-import com.air.future.vo.Route;
 
 
 @RequestMapping(value = "admin/flight")
@@ -39,6 +39,7 @@ public class AdminFlightController {
 		Model model
 		) {
 		
+		System.out.println(departure_name);
 		HashMap<String, String> map = new HashMap<>();
 		map.put("departure_name", departure_name);
 		map.put("arrival_name", arrival_name);
@@ -47,14 +48,29 @@ public class AdminFlightController {
 		map.put("departure_date_end", departure_date_end);
 		
 		int total = service.getRouteTotal(map);
-		
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		
 		model.addAttribute("searchMap", map);
+		model.addAttribute("destinationList", service.destinationList());
 		model.addAttribute("routeList", service.routeList(map, navi));
 		model.addAttribute("navi", navi);
 		
 		return "admin/flight/flightList";
+	}
+	
+	
+	// 비행일정 삭제
+	@RequestMapping(value = "deleteRoute", method = RequestMethod.POST)
+	@ResponseBody
+	public int deleteRoute(HttpServletRequest request, Model model) {
+		String[] deleteList = request.getParameterValues("deleteList");
+		int result = 0;
+		for (String route_num : deleteList) {
+			result = service.deleteRoute(route_num);	
+		}
+
+		System.out.println(deleteList[0]);
+		return result;
 	}
 }
 

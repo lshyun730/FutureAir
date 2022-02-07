@@ -4,22 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.air.future.dao.AdminFlightMapper">
 
-	<select id="routeList" resultType="route" parameterType="HashMap">
-		select * from route_fa
-		where to_char(departure_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{departure_date_end}
-		and to_char(departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
+	<!-- 비행일정리스트 -->
+	<select id="routeList" resultType="HashMap" parameterType="HashMap">
+		select r.* , a.airplane_id from route_fa r, airplane_fa a
+		where r.airplane_id = a.airplane_id 
+		and to_char(r.departure_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{departure_date_end}
+		and to_char(r.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
 		<if test="departure_name != ''">
-		and departure_name = #{departure_name}
+		and r.departure_name = #{departure_name}
 		</if>
 		<if test="arrival_name != ''">
-		and arrival_name = #{arrival_name}
+		and r.arrival_name = #{arrival_name}
 		</if>
 		<if test="route_num != ''">
-		and route_num = #{route_num}
+		and r.route_num = #{route_num}
 		</if>
 		order by route_num
 	</select>
 	
+	<!-- 비행일정갯수 -->
 	<select id="getRouteTotal" resultType="int" parameterType="HashMap">
 		select count(*) from route_fa
  		where to_char(departure_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{departure_date_end}
@@ -33,6 +36,15 @@
 		<if test="route_num != ''">
 		and route_num = #{route_num}
 		</if>
-		
 	</select>
+	
+	<!-- 취향지리스트 -->
+	<select id="destinationList" resultType="destination">
+		select * from destination_fa
+	</select>
+	
+	<delete id="deleteRoute" parameterType="String">
+		delete from route_fa
+		where route_num = #{route_num}
+	</delete>
 </mapper>
