@@ -122,9 +122,7 @@
             <div class="navi">
                 <a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})"><i class="fas fa-chevron-left"></i></a>
                 <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
-					<c:if test="${counter == navo.currenPage }"></c:if>
-						<a href="javascript:pagingFormSubmit(${counter})">${counter}</a>
-					<c:if test="${counter == navo.currenPage }"></c:if>
+					<a href="javascript:pagingFormSubmit(${counter})">${counter}</a>
 				</c:forEach>
                 <a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})"><i class="fas fa-chevron-right"></i></a>
             </div>
