@@ -64,12 +64,7 @@ public class AdminFlightController {
 	@ResponseBody
 	public int deleteRoute(HttpServletRequest request, Model model) {
 		String[] deleteList = request.getParameterValues("deleteList");
-		int result = 0;
-		for (String route_num : deleteList) {
-			result = service.deleteRoute(route_num);	
-		}
-
-		System.out.println(deleteList[0]);
+		int result = service.deleteRoute(deleteList);
 		return result;
 	}
 }
