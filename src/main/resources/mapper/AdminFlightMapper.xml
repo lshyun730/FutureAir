@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.air.future.dao.AdminFlightMapper">
+
+	<select id="routeList" resultType="route" parameterType="HashMap">
+		select * from route_fa
+		where to_char(departure_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{departure_date_end}
+		and to_char(departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
+		<if test="departure_name != ''">
+		and departure_name = #{departure_name}
+		</if>
+		<if test="arrival_name != ''">
+		and arrival_name = #{arrival_name}
+		</if>
+		<if test="route_num != ''">
+		and route_num = #{route_num}
+		</if>
+		order by route_num
+	</select>
+	
+	<select id="getRouteTotal" resultType="int" parameterType="HashMap">
+		select count(*) from route_fa
+ 		where to_char(departure_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{departure_date_end}
+		and to_char(departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
+		<if test="departure_name != ''">
+		and departure_name = #{departure_name}
+		</if>
+		<if test="arrival_name != ''">
+		and arrival_name = #{arrival_name}
+		</if>
+		<if test="route_num != ''">
+		and route_num = #{route_num}
+		</if>
+		
+	</select>
+</mapper>
