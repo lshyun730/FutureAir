@@ -241,7 +241,8 @@ sub page
 .btn_m_wrap{position: relative;}
 
 /* 상세검색 */
-.search_detail { display: grid; align-items: flex-end; grid-template-columns: repeat(4, 1fr); column-gap: 1.875rem; row-gap: 0.875rem; background: var(--secondary); padding: 1.875rem; border-radius: 0.625rem; margin-bottom: 1.875rem; } 
+.search_detail {display:none; align-items: flex-end; grid-template-columns: repeat(4, 1fr); column-gap: 1.875rem; row-gap: 0.875rem; background: var(--secondary); padding: 1.875rem; border-radius: 0.625rem; margin-bottom: 1.875rem; } 
+.search_detail.active {display: grid; }
 .search_detail .inputbox { display: grid; }
 .search_detail select {text-indent: 2.25rem}
 

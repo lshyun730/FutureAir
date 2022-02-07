@@ -16,14 +16,14 @@
         <div class="flex_content_header">
             <h2>비행일정</h2>
             <div class="action">
-                <button class="btn_s dropdown">상세검색<span class="icon"><i class="fas fa-chevron-down"></i></span></button>
+                <button class="btn_s dropdown btn_search_detail">상세검색<span class="icon"><i class="fas fa-chevron-down"></i></span></button>
                 <button class="btn primary">비행추가</button>
             </div>
         </div>
         
         <!-- content header E -->   
         <!-- search detail S -->   
-        <form action="${pageContext.request.contextPath}/admin/flight/flightList" class="search_detail" method="get" id="search_detail">
+        <form action="${pageContext.request.contextPath}/admin/flight/flightList" class="search_detail active" method="get" id="search_detail">
             <div class="inputbox">
                 <p class="inputbox_title">출발지</p>
                 <div class="inputbox_input">
@@ -101,13 +101,13 @@
             <div class="inputbox term">
                 <p class="inputbox_title">출발일</p>
                 <div class="inputbox_input">
-                    <input type="date" placeholder="2022-01-22" name="departure_date_start" value="${searchMap.departure_date_start}">
+                    <input type="date" placeholder="2022-01-22" id="departure_date_start" name="departure_date_start" value="${searchMap.departure_date_start}" onchange="checkDate(this)">
                     <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
                 </div>
             </div>
             <div class="inputbox">
                 <div class="inputbox_input">
-                    <input type="date" placeholder="2022-01-22" name="departure_date_end" value="${searchMap.departure_date_end}">
+                    <input type="date" placeholder="2022-01-22" id="departure_date_end" name="departure_date_end" value="${searchMap.departure_date_end}"  onchange="checkDate(this)">
                     <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
                 </div>
             </div>
@@ -186,64 +186,3 @@
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>
 <!-- footer E --> 
-
-<script>
-	function pagingFormSubmit(currentPage) {
-		
-		const form = document.getElementById("search_detail");
-		const page = document.getElementById("page");
-		
-		page.value = currentPage;
-		form.submit();
-	}
-	
-	function selectAll(selectAll)  {
-		  const checkboxes = document.getElementsByName('tableSelect');
-		  checkboxes.forEach((checkbox) => {
-		    checkbox.checked = selectAll.checked;
-		  })
-		}
-	
-	function checkDelete() {
-		 const checkboxes = document.getElementsByName('tableSelect'); 
-		 const deleteList = new Array();
-		 checkboxes.forEach((checkbox) => {
-			 if(checkbox.checked) {
-				deleteList.push(checkbox.value);
-			 }
-		 })
-		 if(deleteList.length == 0) {
-			 alert("선택된 항목이 없습니다")
-		 } else{
-			 if(confirm("정말 삭제하시겠습니까?")){
-		 		 $.ajax({
-						url : 'deleteRoute',
-						data : {
-							deleteList : deleteList
-						},
-						traditional : true, 
-						type : 'post',
-						success : function(data) {
-							if(data==1) {
-								alert('삭제에 성공하였습니다');		
-								location.reload();
-							}
-						}
-				 }); 				 
-			 }
-		 }		
-	}
-	
-	function changeSelect(selectBox) {
-		const departure_name = document.getElementById("departure_name");
-		const arrivel_name = document.getElementById("arrival_name");	
-		
-		const departure_name_value = departure_name.options[departure_name.selectedIndex].value;
-		const arrival_name_value = arrival_name.options[arrival_name.selectedIndex].value;
-		
-		if(departure_name_value == arrival_name_value) {
-			alert("같은 지역을 선택할 수 없습니다")			
-			selectBox.options[0].selected = true;
-		}
-	}
-</script>
