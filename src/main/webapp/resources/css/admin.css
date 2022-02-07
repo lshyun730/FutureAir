@@ -241,9 +241,12 @@ sub page
 
 /* 상세검색 */
 .search_detail { display: grid; align-items: flex-end; grid-template-columns: repeat(4, 1fr); column-gap: 1.875rem; row-gap: 0.875rem; background: var(--secondary); padding: 1.875rem; border-radius: 0.625rem; margin-bottom: 1.875rem; } 
-.search_detail .inputbox { display: grid; } 
+.search_detail .inputbox { display: grid; }
+
 
 /* 인풋박스 */
+input[type="date"]::-webkit-inner-spin-button {display: none;}
+input[type="date"]::-webkit-calendar-picker-indicator { position:absolute; width:100%; opacity: 0;}
 .inputbox_title { margin-bottom: 0.625rem; } 
 .inputbox_input { position: relative; } 
 .inputbox input::placeholder {color: var(--info);}
@@ -254,6 +257,7 @@ sub page
 .inputbox.no_icon .inputbox_input input {padding:0.875rem;}
 .inputbox.term .inputbox_input::after { display: block; content: ''; width:0.25rem ; height: 1px; background: var(--gray); position: absolute; right: 0; top: 50%; transform: translate(calc(50% + 0.875rem), -50%); } 
 .inputbox.submit input {width: 100%;}
+
 
 .submit input { background: var(--primary); color: var(--white); padding:0.875rem 3.125rem; cursor: pointer; border: 0px ; border-radius: 0.625rem;} 
 .checkbox input{vertical-align: -1px;}

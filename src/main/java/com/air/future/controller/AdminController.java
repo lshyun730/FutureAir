@@ -59,6 +59,8 @@ public class AdminController {
 		return "redirect:/admin";
 	}
 	
+	
+	
 	// 기간매출그래프
 	@RequestMapping(value = "graphIncome", method = RequestMethod.GET)
 	@ResponseBody
