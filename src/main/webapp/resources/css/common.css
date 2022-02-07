@@ -129,9 +129,8 @@ img {
 	width: 100%;
 }
 
+select option[value=""][disabled] {
+	display: none;
+	color: var(--gray)
+}
 
-/* 
----------------------
-컴포넌트
----------------------
-*/

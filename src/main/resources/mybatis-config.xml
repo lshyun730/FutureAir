@@ -6,6 +6,7 @@
 	<typeAliases>
 		<typeAlias type="com.air.future.vo.Admin" alias="admin"/>
 		<typeAlias type="com.air.future.vo.Route" alias="route"/>
+		<typeAlias type="com.air.future.vo.Destination" alias="destination"/>
 	</typeAliases>
 	
 	<mappers>
