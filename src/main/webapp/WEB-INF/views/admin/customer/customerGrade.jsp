@@ -3,28 +3,33 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Script S -->
 <script type="text/javascript">
+	//회원등급 검색 시 사용
+	/*
 	function search(){
 		const name 		= document.getElementById("customer_name");
 		const id 		= document.getElementById("customer_id");
 		const grade 	= document.getElementById("customer_grade");
 		return true;
-	}
+	}*/
 
+	// 체크박스 전체 체크하기
 	function fullCheckGrade(fullChecker){
 		const fullCheck 	= document.getElementsByName("grade_checkbox");
 		fullCheck.forEach((checkbox) => {checkbox.checked = fullChecker.checked;});
 	}
-
 	function fullCheckCustomer(fullChecker){
 		const fullCheck 	= document.getElementsByName("customer_checkbox");
 		fullCheck.forEach((checkbox) => {checkbox.checked = fullChecker.checked;});
 	}
 
+	// 모달창 Open/Close
 	function modalOpen(){ document.getElementById("modal").style.display = 'flex'; }
 	function modalClose(){ document.getElementById("modal").style.display = 'none'; }
 
+	// 등급 추가하기
 	function gradeAdd(){
 		const grade			= document.getElementById("grade");
 		const mileage_exp	= document.getElementById("mileage_exp");
@@ -38,14 +43,55 @@
 			|| pay_scope.value == "" || pay_ratio.value == "" || promo_terms.value == "") {
 			alert("값을 빠짐없이 입력해주시길 바랍니다."); 	return false;
 		}
-
 		if(isNaN(mileage_exp.value) == true || isNaN(mileage_scope.value) == true || isNaN(mileage_ratio.value) == true
 				|| isNaN(pay_scope.value) == true || isNaN(pay_ratio.value) == true){
 			alert("등급 명칭을 제외한 나머지는 숫자로 입력해 주시길 바랍니다."); 		return false;
 		}
-
 		return true;
 	}
+
+	//등급 명칭 중복 검사하기
+	function checkGrade(){
+		const inputGrade = $("#grade").val();
+		$.ajax({
+			data 	: { grade : inputGrade },
+			url		: "checkGradeName",
+			type	: "post",
+			dataType : "text",
+			success	: function(data) {
+				if (data == '0'){
+					$("#gradeAddButton").attr("disabled", false);
+				} else {
+					alert("방금 입력하신 등급명은 중복입니다. 등급명은 중복된 값을 사용할 수 없습니다.");
+					$("#gradeAddButton").attr("disabled", true);
+				}
+				}
+			}
+		)
+	}
+
+	/*
+	function checkGrade(){
+
+		const inputGrade = document.getElementById("grade");
+		const xhr = new XMLHttpRequest();
+		const formData = new FormData();
+		formData.append('grade', inputGrade);
+		xhr.open(method, url);
+		
+		xhr.open('POST', 'checkGradeName' true);
+		xhr.send(formData);
+		xhr.onload = () => {
+			if(xhr.status == '0'){
+				console.log("전송성공");
+			} else if(xhr.status == '1'){
+				console.log("전송성공");
+			} else {
+				console.log("전송실패");
+			}
+		}
+	}*/
+
 
 
 </script>
@@ -215,7 +261,7 @@
                 <div class="inputbox no_icon">
                     <p class="inputbox_title">등급이름</p>
                     <div class="inputbox_input">
-                        <input type="text" id="grade" name="grade" placeholder="일반등급">
+                        <input type="text" id="grade" name="grade" placeholder="일반등급" oninput='checkGrade();'>
                     </div>
                 </div>
                 <div class="inputbox no_icon">
@@ -253,7 +299,7 @@
                     </div>
                 </div>
                 <div class="submit">
-                    <input type="submit" value="추가하기">
+                    <input type="submit" id="gradeAddButton" disabled="disabled" value="추가하기">
                 </div>
             </form>
             <button class="close" onclick="modalClose();"><i class="fas fa-times"></i></button>

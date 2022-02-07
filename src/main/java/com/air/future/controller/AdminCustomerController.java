@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.air.future.service.CustomerService;
 import com.air.future.vo.Customer;
@@ -80,7 +81,7 @@ public class AdminCustomerController {
 		return "admin/customer/customerGrade";
 	}
 	
-	// 모달창으로 받은 등급 관련 정보 추가하기(customerGrade.jsp > modal
+	// 모달창으로 받은 등급 관련 정보 추가하기(customerGrade.jsp > modal)
 	@RequestMapping(value = "gradeAdd", method = RequestMethod.POST)
 	public String gradeAdd(Model model, String grade, String mileage_exp, String mileage_scope
 							, String mileage_ratio, String pay_scope, String pay_ratio, String promo_terms) {
@@ -94,6 +95,15 @@ public class AdminCustomerController {
 		model.addAttribute("customerListAll", customerListAll);
 		return "admin/customer/customerGrade";
 	}
+	
+	// AJAX를 통한 등급 추가 이전에 등급 명칭 중복 검사하기(customerGrade.jsp)
+	@ResponseBody
+	@RequestMapping(value = "checkGradeName", method = RequestMethod.POST)
+	public String checkGradeName(String grade) {
+		return Integer.toString(service.gradeDuplication(grade));
+	}
+
+	
 	
 	// (customerReservation.jsp)
 	@RequestMapping(value = "customerReservation", method = RequestMethod.GET)
