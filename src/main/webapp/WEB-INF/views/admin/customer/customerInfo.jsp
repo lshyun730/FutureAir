@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-    <link rel="stylesheet" href="resources/css/admin.css">
+    <link rel="stylesheet" href="../../resources/css/admin.css">
     <title>미래항공 관리자페이지</title>
 </head>
 <body>
@@ -41,31 +41,31 @@
                     <table class="table">
                         <tr>
                             <th>이름</th>
-                            <td>홍길동</td>
+                            <td>${customerList.customer_name }</td>
                             <th>아이디</th>
-                            <td>hong123</td>
+                            <td>${customerList.customer_id }</td>
                         </tr>
                         <tr>
                             <th>생년월일</th>
-                            <td>2000-01-01</td>
+                            <td>${customerList.customer_birth }</td>
                             <th>성별</th>
-                            <td>남자</td>
+                            <td>${customerList.customer_gender }</td>
                         </tr>
                         <tr>
                             <th>회원등급</th>
-                            <td>일반등급</td>
+                            <td>${customerList.customer_grade }</td>
                             <th>가입날짜</th>
-                            <td>2022-01-01</td>
+                            <td>${customerList.customer_birth }</td>
                         </tr>
                         <tr>
                             <th>전화번호</th>
-                            <td>010-1234-0123</td>
+                            <td>${customerList.customer_phone }</td>
                             <th>이메일</th>
-                            <td>hong123@gmail.com</td>
+                            <td>${customerList.customer_email }</td>
                         </tr>
                         <tr>
                             <th>주소</th>
-                            <td colspan="3">부산 진구 새싹로 123번지 12</td>
+                            <td colspan="3">${customerList.customer_country } / ${customerList.customer_address }</td>
                         </tr>
                     </table>
                     <!-- table E --> 
@@ -77,9 +77,9 @@
                     <table class="table">
                         <tr>
                             <th>마일리지</th>
-                            <td>50,000</td>
+                            <td>${mileage }</td>
                             <th>총결제금액</th>
-                            <td>1,000,000</td>
+                            <td>테이블 생성 예정</td>
                         </tr>
                     </table>
                 </section>
