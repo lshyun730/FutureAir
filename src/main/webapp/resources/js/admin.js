@@ -28,23 +28,20 @@ function pagingFormSubmit(currentPage) {
 
 /* 체크박스 전체 선택 & 전체 선택 취소 */
 function selectAll(selectAll)  {
-	  const checkboxes = document.getElementsByName('tableSelect');
-	  
-	  checkboxes.forEach((checkbox) => {
-	    checkbox.checked = selectAll.checked;
-	  })
-	}
+  const checkboxes = document.getElementsByName('tableSelect');
+  
+  checkboxes.forEach(checkbox => checkbox.checked = selectAll.checked)
+}
 
 /* 체크박스 선택 삭제 */
 function checkDelete() {
 	 const checkboxes = document.getElementsByName('tableSelect'); 
 	 const deleteList = new Array();
 	 
-	 checkboxes.forEach((checkbox) => {
-		 if(checkbox.checked) {
-			deleteList.push(checkbox.value);
-		 }
+	 checkboxes.forEach(checkbox => {
+		 if(checkbox.checked) deleteList.push(checkbox.value);
 	 })
+	 
 	 if(deleteList.length == 0) {
 		 alert("선택된 항목이 없습니다")
 	 } else{
