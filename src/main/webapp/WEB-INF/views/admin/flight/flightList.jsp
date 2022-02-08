@@ -1,7 +1,7 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 
 <!-- header S -->    
 <%@include file ="../include/header.jsp" %>
@@ -20,7 +20,6 @@
                 <button class="btn primary">비행추가</button>
             </div>
         </div>
-        
         <!-- content header E -->   
         <!-- search detail S -->   
         <form action="${pageContext.request.contextPath}/admin/flight/flightList" class="search_detail active" method="get" id="search_detail">
@@ -127,7 +126,6 @@
         </form>
         <!-- search detail E -->   
         <!-- table S --> 
-        <form action="">
         <table class="table">
             <thead>
                 <tr>
@@ -164,7 +162,6 @@
             </tbody>
         </table>
         <!-- table E --> 
-        </form>
         <!-- content footer S --> 
         <div class="flex_content_footer">
             <button class="btn danger" onclick="javascript:checkDelete()">선택삭제</button>
@@ -182,7 +179,30 @@
     <!-- flight status E -->   
     </div>
 </section>
-<!-- content E --> 
+<!-- content E -->
+<script>
+
+//선택삭제
+function deleteAjax(deleteList) {
+	if(confirm("정말 삭제하시겠습니까?")){
+		 $.ajax({
+				url : 'deleteRoute',
+				data : {
+					deleteList : deleteList
+				},
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data==1) {
+						alert('삭제에 성공하였습니다');		
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
+</script>
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>
 <!-- footer E --> 
+
