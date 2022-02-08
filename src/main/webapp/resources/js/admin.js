@@ -29,6 +29,7 @@ function pagingFormSubmit(currentPage) {
 /* 체크박스 전체 선택 & 전체 선택 취소 */
 function selectAll(selectAll)  {
 	  const checkboxes = document.getElementsByName('tableSelect');
+	  
 	  checkboxes.forEach((checkbox) => {
 	    checkbox.checked = selectAll.checked;
 	  })
@@ -38,6 +39,7 @@ function selectAll(selectAll)  {
 function checkDelete() {
 	 const checkboxes = document.getElementsByName('tableSelect'); 
 	 const deleteList = new Array();
+	 
 	 checkboxes.forEach((checkbox) => {
 		 if(checkbox.checked) {
 			deleteList.push(checkbox.value);
@@ -46,22 +48,7 @@ function checkDelete() {
 	 if(deleteList.length == 0) {
 		 alert("선택된 항목이 없습니다")
 	 } else{
-		 if(confirm("정말 삭제하시겠습니까?")){
-	 		 $.ajax({
-					url : 'deleteRoute',
-					data : {
-						deleteList : deleteList
-					},
-					traditional : true, 
-					type : 'post',
-					success : function(data) {
-						if(data==1) {
-							alert('삭제에 성공하였습니다');		
-							location.reload();
-						}
-					}
-			 }); 				 
-		 }
+		deleteAjax(deleteList);
 	 }		
 }
 
@@ -84,11 +71,14 @@ function checkDate(dateBox) {
 	const departure_date_start = document.getElementById("departure_date_start");
 	const departure_date_end = document.getElementById("departure_date_end");
 	
+	if(departure_date_start.value == '' || departure_date_end.value == '') return;
+	
 	if(departure_date_start.value > departure_date_end.value) {
 		alert("날짜 범위를 확인해 주세요");		
 		departure_date_end.value = departure_date_start.value;
 	}
 }
+
 
 // 상세검색 열고닫기 
 function searchDetail() {
@@ -101,8 +91,16 @@ function searchDetail() {
     } 
 }
 
-const btnSearchDetail = document.querySelector(".btn_search_detail");
-btnSearchDetail.addEventListener("click", searchDetail);
+
+//
+// 상세검색
+/*const btnSearchDetail = document.querySelector(".btn_search_detail");
+btnSearchDetail.addEventListener("click", searchDetail);*/
+
+// 메뉴선택
+// const gnbList = document.querySelectorAll(".gnb li a");
+// console.log(gnbList)
+// gnbList.addEventListener("click", gnbActive);
 
 
 
