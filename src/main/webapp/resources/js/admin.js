@@ -88,6 +88,9 @@ function searchDetail() {
     } 
 }
 
+// 모달창 Open/Close
+function modalOpen(){ document.getElementById("modal").style.display = 'flex'; }
+function modalClose(){ document.getElementById("modal").style.display = 'none'; }
 
 //
 // 상세검색

@@ -179,12 +179,12 @@
 	        <div class="flex_content_footer">
 	            <button class="btn danger" onclick="javascript:checkDelete()">선택삭제</button>
 	            <div class="navi">
-	                <a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})"><i class="fas fa-chevron-left"></i></a>
-	                <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
-						<a href="javascript:pagingFormSubmit(${counter})">${counter}</a>
-					</c:forEach>
-	                <a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})"><i class="fas fa-chevron-right"></i></a>
-	            </div>
+	           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
+	               <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
+					<a href="javascript:pagingFormSubmit(${counter})" <c:if test="${navi.currentPage == counter}">class="active"</c:if>>${counter}</a>
+				</c:forEach>
+	           	<a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})" class="next"></a>
+	           </div>
 	        </div>
 	        <!-- content footer E --> 
         </div>

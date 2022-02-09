@@ -9,7 +9,7 @@ import org.apache.ibatis.session.RowBounds;
 import com.air.future.vo.Customer;
 import com.air.future.vo.Grade;
 
-public interface CustomerMapper {
+public interface AdminCustomerMapper {
 	
 	// 페이징 처리 : 회원정보(customerList.jsp)를 위한 부분
 	public int customerGetTotal(Customer customer);
@@ -19,11 +19,11 @@ public interface CustomerMapper {
 	public ArrayList<Customer> customerFind(Customer customer, RowBounds rb);
 	
 	// 회원 마일리지(mileage_fa) 삭제하기
-	public int mileageDelete(ArrayList<Customer> customerList);
+	public int mileageDelete(String customer_id);
 	// 회원 예약(reservation_fa) 삭제하기
-	public int reservationDelete(ArrayList<Customer> customerList);
+	public int reservationDelete(String customer_id);
 	// 회원(customer_fa) 삭제하기
-	public int customerDelete(ArrayList<Customer> customerList);
+	public int customerDelete(String customer_id);
 	
 	// 회원 세부정보 팝업창에 필요한 회원 정보 불러오기
 	public Customer customerInfoFind(String customer_id);

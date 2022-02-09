@@ -23,6 +23,19 @@
         <!-- content header E -->   
         <!-- search detail S -->   
         <form action="${pageContext.request.contextPath}/admin/flight/flightList" class="search_detail active" method="get" id="search_detail">
+        	<div class="inputbox term">
+                <p class="inputbox_title">출발일</p>
+                <div class="inputbox_input">
+                    <input type="date" placeholder="2022-01-22" id="departure_date_start" name="departure_date_start" value="${searchMap.departure_date_start}" onchange="checkDate(this)">
+                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
+                </div>
+            </div>
+            <div class="inputbox">
+                <div class="inputbox_input">
+                    <input type="date" placeholder="2022-01-22" id="departure_date_end" name="departure_date_end" value="${searchMap.departure_date_end}"  onchange="checkDate(this)">
+                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
+                </div>
+            </div>
             <div class="inputbox">
                 <p class="inputbox_title">출발지</p>
                 <div class="inputbox_input">
@@ -97,19 +110,6 @@
                     <span class="inputbox_icon"><i class="fas fa-plane-arrival"></i></span>
                 </div>
             </div>
-            <div class="inputbox term">
-                <p class="inputbox_title">출발일</p>
-                <div class="inputbox_input">
-                    <input type="date" placeholder="2022-01-22" id="departure_date_start" name="departure_date_start" value="${searchMap.departure_date_start}" onchange="checkDate(this)">
-                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
-                </div>
-            </div>
-            <div class="inputbox">
-                <div class="inputbox_input">
-                    <input type="date" placeholder="2022-01-22" id="departure_date_end" name="departure_date_end" value="${searchMap.departure_date_end}"  onchange="checkDate(this)">
-                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
-                </div>
-            </div>
             <div class="inputbox">
                 <p class="inputbox_title">비행번호 </p>
                 <div class="inputbox_input">
@@ -129,7 +129,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th><input type="checkbox" value="selectall" onclick="selectAll(this)"></th>
+                    <th><input type="checkbox" onclick="selectAll(this)"></th>
                     <th>비행번호</th>
                     <th>출발지</th>
                     <th>도착지</th>
@@ -166,12 +166,12 @@
         <div class="flex_content_footer">
             <button class="btn danger" onclick="javascript:checkDelete()">선택삭제</button>
             <div class="navi">
-                <a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})"><i class="fas fa-chevron-left"></i></a>
-                <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
-					<a href="javascript:pagingFormSubmit(${counter})">${counter}</a>
-				</c:forEach>
-                <a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})"><i class="fas fa-chevron-right"></i></a>
-            </div>
+           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
+               <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
+				<a href="javascript:pagingFormSubmit(${counter})" <c:if test="${navi.currentPage == counter}"> class="active"</c:if>>${counter}</a>
+			</c:forEach>
+           	<a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})" class="next"></a>
+           </div>
         </div>
         <!-- content footer E --> 
         </div>

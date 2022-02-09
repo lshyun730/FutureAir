@@ -7,15 +7,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.air.future.dao.CustomerDAO;
+import com.air.future.dao.AdminCustomerDAO;
 import com.air.future.vo.Customer;
 import com.air.future.vo.Grade;
 
 @Service
-public class CustomerService {
+public class AdminCustomerService {
 
 	@Autowired
-	CustomerDAO dao;
+	AdminCustomerDAO dao;
 	
 	// 페이징 처리 : 회원정보(customerList.jsp)를 위한 부분
 	public int customerGetTotal(String customer_name, String customer_id, String customer_email
@@ -68,13 +68,11 @@ public class CustomerService {
 	
 	// 회원정보 삭제하기
 	public int customerDelete(String[] customers) {
-		ArrayList<Customer> customerList = new ArrayList<>();
-		for(String customer : customers) {
-			Customer c = new Customer();
-			c.setCustomer_id(customer);
-			customerList.add(c);
+		int result = 0;
+		for(String customer_id : customers) {
+			result = dao.customerDelete(customer_id);
+			if(result == 0) return 0;
 		}
-		int result = dao.customerDelete(customerList);
 		return result;
 	}
 	

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.air.future.service.CustomerService;
+import com.air.future.service.AdminCustomerService;
 import com.air.future.util.PageNavigator;
 import com.air.future.vo.Customer;
 import com.air.future.vo.Grade;
@@ -24,7 +26,7 @@ import com.air.future.vo.Grade;
 public class AdminCustomerController {
 
 	@Autowired
-	CustomerService service;
+	AdminCustomerService service;
 	
 	// 게시판 관련 상수값들
 	final int countPerPage 	= 10;			// 페이지 당 글 수
@@ -68,11 +70,11 @@ public class AdminCustomerController {
 
 	// 회원정보 삭제버튼을 통한 회원정보 삭제하기(customerList.jsp)
 	@RequestMapping(value = "customerDelete", method = RequestMethod.POST)
-	public String customerDelete(Model model, String[] customer_checkbox) {
-		service.customerDelete(customer_checkbox);							// 삭제 요청한 회원 삭제하기
-		ArrayList<Customer> customerListAll = service.customerListAll();	// 삭제 후 새로 회원정보 불러오는 파트
-		model.addAttribute("customerListAll", customerListAll);
-		return "admin/customer/customerList";
+	@ResponseBody
+	public int customerDelete(HttpServletRequest request) {
+		String[] deleteList = request.getParameterValues("deleteList");
+		int result = service.customerDelete(deleteList);							// 삭제 요청한 회원 삭제하기
+		return result;
 	}
 	
 	/*

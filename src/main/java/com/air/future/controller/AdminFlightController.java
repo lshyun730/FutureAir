@@ -70,7 +70,7 @@ public class AdminFlightController {
 	// 비행일정 삭제
 	@RequestMapping(value = "deleteRoute", method = RequestMethod.POST)
 	@ResponseBody
-	public int deleteRoute(HttpServletRequest request, Model model) {
+	public int deleteRoute(HttpServletRequest request) {
 		String[] deleteList = request.getParameterValues("deleteList");
 		int result = service.deleteRoute(deleteList);
 		return result;

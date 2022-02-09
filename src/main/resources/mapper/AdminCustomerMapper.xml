@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.air.future.dao.CustomerMapper">
+<mapper namespace="com.air.future.dao.AdminCustomerMapper">
 
 	<!-- 페이징 처리 : 회원정보 검색을 위한 총 개수 확인하기 -->
 	<select id="customerGetTotal" parameterType="customer" resultType="int">
@@ -70,33 +70,21 @@
 	</select>
 	
 	<!-- 회원정보(customer_fa) 삭제를 위한 마일리자(mileage_fa) 삭제하기 -->
-	<delete id="mileageDelete" parameterType="customer">
+	<delete id="mileageDelete" parameterType="String">
 		delete from mileage_fa 
-		<where>
-			<foreach collection="list" item="customer" separator="or">
-				mileage_id = #{customer.customer_id}
-			</foreach>
-		</where>
+		where mileage_id = #{customer_id}
 	</delete>
 	
 	<!-- 회원정보(customer_fa) 삭제를 위한 예약 부분(reservation_fa) 삭제하기 -->
-	<delete id="reservationDelete" parameterType="customer">
+	<delete id="reservationDelete" parameterType="String">
 		delete from reservation_fa 
-		<where>
-			<foreach collection="list" item="customer" separator="or">
-				customer_id = #{customer.customer_id}
-			</foreach>
-		</where>
+		where customer_id = #{customer_id}
 	</delete>
 	
 	<!-- 회원정보(customer_fa) 삭제하기 -->
-	<delete id="customerDelete" parameterType="customer">
+	<delete id="customerDelete" parameterType="String">
 		delete from customer_fa 
-		<where>
-			<foreach collection="list" item="customer" separator="or">
-				customer_id = #{customer.customer_id}
-			</foreach>
-		</where>
+		where customer_id = #{customer_id}
 	</delete>
 	
 	<!-- 페이징 처리 : 회원등급별 화원관리 검색 기능(customerGrade.jsp) -->

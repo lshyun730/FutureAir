@@ -14,8 +14,8 @@
 	
 	<mappers>
 	<mapper resource="mapper/AdminMapper.xml"/>
-	<mapper resource="mapper/CustomerMapper.xml"/>
-	<mapper resource="mapper/BoardMapper.xml"/>
 	<mapper resource="mapper/AdminFlightMapper.xml"/>
+	<mapper resource="mapper/AdminCustomerMapper.xml"/>
+	<mapper resource="mapper/AdminBoardMapper.xml"/>
 	</mappers>
 </configuration>

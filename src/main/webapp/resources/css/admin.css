@@ -129,18 +129,16 @@ sub page
 -----------------------
 */
 
-/* flight status */
-.flight_status .search_detail .inputbox:nth-child(6) { grid-column: 4/ 5; } 
+/* 비행일정 */
 
-/* reservation list */
+/* 예약현황 */
 
-/* customer info */
-.customer-list_search .inputbox:nth-child(7) {grid-column: 4/ 5;}
+/* 회원정보 */
 
-/* customer grade */
-.create_grade {display: grid; grid-template-columns: repeat(2, 1fr); row-gap: 1.25rem; column-gap: 1.875rem; align-items: flex-end;;}
+/* 회원등급 */
+.create_grade {display: grid; grid-template-columns: repeat(2, 1fr); row-gap: 1.25rem; column-gap: 1.875rem; align-items: flex-end;}
 
-/* sand mail */
+/* 메일발송 */
 .mail_setting {grid-column: 1/3;}
 .send_mail {grid-column: 3/5;}
 .sand_mail_form {display: grid; grid-template-columns: repeat(2, 1fr); row-gap: 1.25rem; column-gap: 1.875rem;}
@@ -148,15 +146,14 @@ sub page
 .sand_mail_form .textbox {grid-column: 1/3;}
 .sand_mail_form .content_footer {grid-column: 1/3; text-align: center;padding-top: 1.25rem;}
 .sand_mail_form .content_footer button:nth-child(1) {background: var(--light); margin-right:0.25rem ;}
-/* sand mail 수정하기모달 */
+
+/* 메일발송 수정하기 모달 */
 .rewrite .inputbox {padding-bottom: 1.875rem ;}
 .rewrite .textbox textarea{height: 12.5rem;}
 
-/* board manager */
-.board_manager .inputbox:nth-child(5) {grid-column: 1/3;}
-.board_manager .inputbox:nth-child(6) {grid-column: 4/5;}
+/* 게시물관리 */
 
-/* board setting */
+/* 게시판설정 */
 .board_blank {width: 800px; margin: 1.875rem auto; padding: 0 1.875rem;}
 .board_blank .navi {text-align: right; padding-top: 2.5rem;}
 .board_blank .submit {text-align: center;padding: 2.5rem;}
@@ -212,9 +209,11 @@ sub page
 .table .tableEmpty {text-align: center}
 
 /* 리스트 네비게이션 */
-.navi { text-align: right; } 
-.navi a { display: inline-block; width: 1.875rem; height: 1.875rem; text-align: center; line-height: 1.875rem; border: 1px solid var(--light); border-radius: 0.625rem; font-weight: bold; } 
+.navi { text-align: right; display: flex;} 
+.navi a {position: relative; display:block; width: 1.875rem; height: 1.875rem; text-align: center; line-height: 1.6rem; border: 1px solid var(--light); border-radius: 0.625rem; font-weight: bold; margin-left: 0.313rem;} 
 .navi a.active { border-color: var(--primary); background: var(--primary); color: var(--white); } 
+.navi a.prev::after {font-family: "Font Awesome 5 Free";font-weight: 900; content: "\f053"; position: absolute;;left: 50%; transform: translate(calc(-50% - 1px),0) ;line-height: 1.875rem;}
+.navi a.next::after {font-family: "Font Awesome 5 Free";font-weight: 900; content: "\f054"; position: absolute;;left: 50%; transform: translate(calc(-50% - 1px),0) ;line-height: 1.875rem;}
 
 /* 기본버튼 */
 .btn { border-radius: 0.625rem; padding: 0.5rem 0; width: 120px; cursor: pointer;} 
@@ -245,6 +244,7 @@ sub page
 .search_detail.active {display: grid; }
 .search_detail .inputbox { display: grid; }
 .search_detail select {text-indent: 2.25rem}
+.search_detail .inputbox.submit {grid-column: 4/5;}
 
 
 /* 인풋박스 */
@@ -252,11 +252,11 @@ input[type="date"]::-webkit-inner-spin-button {display: none;}
 input[type="date"]::-webkit-calendar-picker-indicator { position:absolute; width:100%; opacity: 0;}
 .inputbox_title { margin-bottom: 0.625rem; } 
 .inputbox_input { position: relative; } 
-.inputbox input::placeholder {color: var(--info);}
 .inputbox_input input, .inputbox_input select { padding:0.875rem 0.875rem 0.875rem 3.125rem; border-radius: 0.625rem; border: 1px solid var(--light); width: 100%; box-sizing: border-box; } 
-.inputbox_input select { padding:0.875rem; appearance: none;} 
+.inputbox input::placeholder {color: var(--info);}
+.inputbox_input select { padding:0.875rem; appearance: none; position: relative;} 
+.inputbox_input select::after{font-family: "Font Awesome 5 Free";font-weight: 900; content: "\f078";position: absolute; top: 50%; left: 1.25rem; transform: translateY(-50%); color: var(--info); font-size: .875rem; }
 .inputbox_icon { position: absolute; top: 50%; left: 1.25rem; transform: translateY(-50%); color: var(--info); font-size: .875rem; } 
-.inputbox_icon.down { left: initial; right: 1.25rem; } 
 .inputbox.no_icon .inputbox_input input {padding:0.875rem;}
 .inputbox.term .inputbox_input::after { display: block; content: ''; width:0.25rem ; height: 1px; background: var(--gray); position: absolute; right: 0; top: 50%; transform: translate(calc(50% + 0.875rem), -50%); } 
 .inputbox.submit input {width: 100%;}

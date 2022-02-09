@@ -2,49 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script>
-function pagingFormSubmit(currentPage){
-	var form = document.getElementById("pagingForm");
-	var page = document.getElementById("page");
-	
-	page.value = currentPage;
-	form.submit();
-}
-
-
-function formCheck(){
-	var checkbox = document.getElementsByName("boardCheck");
-	var num = 0;
-
-	for (var i = 0; i < checkbox.length ; i++){
-		if(checkbox[i].checked == true){
-			num++;
-		}
-	}
-	
-	window.open("boardSettingDelete");
-
-	
-
-	return true;
-
-	
-}
-
 function insertBoard(){
 	var title = document.getElementsById("title");
 	var topic_type = document.getElementsById("topic_type");
 	var contents = document.getElementsById("contents");
-
-	
 }
-
-
-
-
-function checkAll(checker){
-	   const boardChecker = document.getElementsByName("boardCheck");
-	   boardChecker.forEach((checkbox) => {checkbox.checked = checker.checked;});
-	}
 
 function popup_open(){
 	document.getElementById("modal").style.display = 'flex';
@@ -68,34 +30,39 @@ function popup_close(){
 		        <div class="flex_content_header">
 		            <h2>게시판 설정</h2>
 		            <div class="action">
-		                <button class="btn primary"><a href="boardSettingNotice">게시판추가</a></button>
+		                <button class="btn primary" onclick="boardSettingNotice">게시판추가</button>
 		            </div>
 		        </div>
 		        <!-- content header E -->
 		        <!-- table S --> 
-		        <form action="boardSettingDelete" method="get" id="boardform" name="boardform">
 		        <table class="table">
+		        	<colgroup>
+						<col width="5%">
+						<col>
+						<col width="20%">
+					</colgroup>
 		            <thead>
 		                <tr>
-		                    <th><input type="checkbox" onclick="checkAll(this)"></th>
+		                    <th><input type="checkbox" onclick="selectAll(this)"></th>
 		                    <th>분류</th>
-		                    <th>게시판제목</th>
+		                    <th>게시판이름</th>
 		                    <th>게시판ID</th>
 		                    <th>새글/총갯수</th>
-		                    <th>권한(읽기/쓰기)</th>
 		                    <th>게시물관리</th>
 		                    <th>액션</th>
 		                </tr>
 		            </thead>
 		            <tbody>
-		            <c:forEach var="boardList" items="${boardList }">
+		            <c:if test="${empty boardList}">
+	            		<tr><td colspan="9" class="tableEmpty">검색 결과가 없습니다</td></tr>
+	            	</c:if>
+		            <c:forEach var="board" items="${boardList}" varStatus="status">
 		                <tr>
-		                    <td><input type="checkbox" id="boardCheck" name="boardCheck" value="${boardList.board_index }"></td>
-		                    <td>${boardList.topic_type }</td>
-		                    <td><a href="#">${boardList.title }</a></td>
-		                    <td>1</td>
-		                    <td>3/10</td>
-		                    <td>관리자/비회원</td>
+		                    <td><input type="checkbox" name="tableSelect" value="${board.TOPIC_TYPE}"></td>
+		                    <td><c:if test="${board.REPLY_TYPE eq 0}">운영</c:if><c:if test="${board.REPLY_TYPE eq 1}">상담</c:if></td>
+		                    <td><a href="#">${board.TOPIC_TYPE}</a></td>
+		                    <td>${status.index + 1}</td>
+		                    <td>${board.COUNT_TODAY}/${board.COUNT_ALL}</td>
 		                    <td>
 		                        <button class="btn_s more">글쓰기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
 		                        <button class="btn_s more" onclick="window.location ='boardSettingDelete.html'">글삭제<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
@@ -106,18 +73,17 @@ function popup_close(){
 		             </c:forEach>
 		            </tbody>
 		        </table>
-		         </form>
 		        <!-- table E --> 
 		        <!-- content footer S --> 
 		        <div class="flex_content_footer">
-		            <button class="btn danger" form="boardform" onclick="return formCheck();">선택삭제</button>
+		            <button class="btn danger" form="boardform" onclick="javascript:checkDelete()">선택삭제</button>
 		            <div class="navi">
-		                <a href="#"><i class="fas fa-chevron-left"></i></a>
-		                <a href="#" class="active">1</a>
-		                <a href="#">2</a>
-		                <a href="#">3</a>
-		                <a href="#"><i class="fas fa-chevron-right"></i></a>
-		            </div>
+			           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
+			               <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
+							<a href="javascript:pagingFormSubmit(${counter})" <c:if test="${navi.currentPage == counter}">class="active"</c:if>>${counter}</a>
+						</c:forEach>
+			           	<a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})" class="next"></a>
+		        	</div>
 	            </div>
 	        </div>
 	        <!-- content footer E --> 
@@ -168,6 +134,28 @@ function popup_close(){
 	</div>
 </section>
 <!-- content E --> 
+<script>
+function deleteAjax(deleteList) {
+	if(confirm("정말 삭제하시겠습니까?")){
+		 $.ajax({
+				url : 'deleteBoard',
+				data : {
+					deleteList : deleteList
+				},
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data > 0) {
+						alert('삭제에 성공하였습니다');		
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
+</script>
+s
+
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>
 <!-- footer E --> 

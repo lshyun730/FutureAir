@@ -1,48 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
-
-function pagingFormSubmit(currentPage){
-	var form = document.getElementById("pagingForm");
-	var page = document.getElementById("page");
-
-	page.value = currentPage;
-	form.submit();
-}
-
-function formCheck(){
-	var checkbox = document.getElementsByName("boardCheck");
-	var num = 0;
-
-	for (var i = 0; i < checkbox.length ; i++){
-		if(checkbox[i].checked == true){
-			num++;
-		}
-	}
-
-	if(num < 1 ){
-		alert('하나라도 체크해주세요');
-		return false; 
-	}
-
-	if(!confirm('정말 삭제하시겠습니까?')){
-
-		return false;
-	}
-
-	return true;
-}
-
-
-
-function checkAll(checker){
-	   const boardChecker = document.getElementsByName("boardCheck");
-	   boardChecker.forEach((checkbox) => {checkbox.checked = checker.checked;});
-	}
-
-</script>
-
 <!-- header S -->    
 <%@include file ="../include/header.jsp" %>
 <!-- header E -->
@@ -62,26 +20,28 @@ function checkAll(checker){
 		        </div>
 		        <!-- content header E -->   
 		        <!-- search detail S -->   
-		        <form action="searchBoard" method="post" class="search_detail">
+		        <form action="boardManager" method="get" class="search_detail active" id="search_detail">
 		            <div class="inputbox term">
-		                <p class="inputbox_title">검색일</p>
+		                <p class="inputbox_title">작성일</p>
 		                <div class="inputbox_input">
-		                    <input type="text" name="search1" placeholder="2022-01-22">
+		                    <input type="date" name="board_date_start" placeholder="2022-01-22" value="${searchList.board_date_start }">
 		                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
 		                </div>
 		            </div>
 		            <div class="inputbox">
 		                <div class="inputbox_input">
-		                    <input type="text" name="search2" placeholder="2022-01-22">
+		                    <input type="date" name="board_date_end" placeholder="2022-01-22" value="${searchList.board_date_end }">
 		                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
 		                </div>
 		            </div>
 		            <div class="inputbox">
 		                <p class="inputbox_title">게시판</p>
 		                <div class="inputbox_input">
-		                    <select name="board_status">
+		                    <select name="topic_type">
 		                        <option value="전체" selected>전체</option>
-		                        <option value="Q&A">Q&A</option>
+		                    	<c:forEach var="topic" items="${topicList}">
+									<option value="${topic}" <c:if test="${topic eq searchList.topic_type}">selected="selected"</c:if> >${topic}</option>		                  
+		                    	</c:forEach>
 		                    </select>
 		                    <span class="inputbox_icon down"><i class="fas fa-chevron-down"></i></span>
 		                </div>
@@ -89,7 +49,7 @@ function checkAll(checker){
 		            <div class="inputbox">
 		                <p class="inputbox_title">답변상태</p>
 		                <div class="inputbox_input">
-		                    <select name="reply_status">
+		                    <select name="reply_type">
 		                        <option value="전체" selected>전체</option>
 		                        <option value="답변전">답변전</option>
 		                        <option value="답변완료">답변완료</option>
@@ -100,24 +60,29 @@ function checkAll(checker){
 		            <div class="inputbox">
 		                <p class="inputbox_title">검색어</p>
 		                <div class="inputbox_input">
-		                    <input type="text" name="searchtext" placeholder="검색어 입력">
+		                    <input type="text" name="search_text" placeholder="검색어 입력" value="${searchList.search_text}">
 		                    <span class="inputbox_icon"><i class="fas fa-search"></i></span>
 		                </div>
 		            </div>
 		            
 		            <div class="inputbox submit">
 		                <div class="inputbox_input">
-		                    <input type="submit" value="검색">
+		                    <input type="submit" value="검색" onclick="pagingFormSubmit(1)">
 		                </div>
 		            </div>
+		            <input type="hidden" name="page" id="page" />
 		        </form>
 		        <!-- search detail E -->   
 		        <!-- table S --> 
-		        <form action="delete" method="get" id="boardform" name="boardform">
 		        <table class="table">
+					<colgroup>
+						<col width="5%">
+						<col>
+						<col width="30%">
+					</colgroup>
 		            <thead>
 		                <tr>
-		                    <th><input type="checkbox" onclick="checkAll(this)"></th>
+		                    <th><input type="checkbox" onclick="selectAll(this)"></th>
 		                    <th>분류</th>
 		                    <th>제목</th>
 		                    <th>작성자</th>
@@ -129,44 +94,45 @@ function checkAll(checker){
 		                </tr>
 		            </thead>
 		            <tbody>
-		            
-		            <c:forEach var="boardlist" items="${boardList }">
+		            <c:if test="${empty postList}">
+	            		<tr><td colspan="9" class="tableEmpty">검색 결과가 없습니다</td></tr>
+	            	</c:if>
+		            <c:forEach var="post" items="${postList}">
 		                <tr>
-		                    <td><input type="checkbox" id="boardCheck" name="boardCheck" value="${boardlist.board_index }"></td>
-		                    <td>${boardlist.topic_type }</td>
-		                    <td><a href="#">${boardlist.title }</a></td>
-		                    <td><a href="customerInfo">${boardlist.writer }</a></td>
+		                    <td><input type="checkbox" name="tableSelect" value="${post.board_index}"></td>
+		                    <td>${post.topic_type}</td>
+		                    <td><a href="#">${post.title }</a></td>
+		                    <td><a href="customerInfo">${post.writer}</a></td>
 		                    <td>
-		                    <c:if test="${boardlist.topic_type eq '문의'}">
-			                    <c:if test="${boardlist.reply_type == 0}"> 답변 미완료 </c:if>
-			                    <c:if test="${boardlist.reply_type != 0}"> 답변 완료 </c:if>
+		                    <c:if test="${post.reply_type eq '1'}">
+			                    <c:if test="${post.reply_index eq null}"> 답변전 </c:if>
+			                    <c:if test="${post.reply_index ne null}"> 답변완료 </c:if>
 			                </c:if>
-			                <c:if test="${'문의' ne boardlist.topic_type}">
+			                <c:if test="${post.reply_type eq '0'}">
 			                	-
 			                </c:if>
 		                    </td>
 		                    <td>
 		                        <button class="btn_s more">답변하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
 		                    </td>
-		                    <td>${boardlist.board_date }</td>
-		                    <td>${boardlist.hits }</td>
+		                    <td>${post.board_date }</td>
+		                    <td>${post.hits }</td>
 		                    <td class="btn_m_wrap"><div class="btn_m"><span></span></div></td>
 		                </tr>
 		                </c:forEach>
 		               
 		            </tbody>
 		        </table>
-		        </form>
 		        <!-- table E --> 
 		        <!-- content footer S --> 
 		        <div class="flex_content_footer">
-		            <button class="btn danger" form="boardform" onclick="return formCheck();">선택삭제</button>
+		            <button class="btn danger" form="boardform"  onclick="javascript:checkDelete()">선택삭제</button>
 		            <div class="navi">
-		                <a href="#"><i class="fas fa-chevron-left"></i></a>
-		                <a href="#" class="active">1</a>
-		                <a href="#">2</a>
-		                <a href="#">3</a>
-		                <a href="#"><i class="fas fa-chevron-right"></i></a>
+		                <a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})"><i class="fas fa-chevron-left"></i></a>
+		                <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
+							<a href="javascript:pagingFormSubmit(${counter})" <c:if test="${navi.currentPage == counter}">class="active"</c:if>>${counter}</a>
+						</c:forEach>
+		                <a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})"><i class="fas fa-chevron-right"></i></a>
 		            </div>
 		        </div>
 		        <!-- content footer E --> 
@@ -177,5 +143,26 @@ function checkAll(checker){
 </section>
 <!-- content E --> 
 <!-- footer S -->
+
+<script>
+function deleteAjax(deleteList) {
+	if(confirm("정말 삭제하시겠습니까?")){
+		 $.ajax({
+				url : 'deletePost',
+				data : {
+					deleteList : deleteList
+				},
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data==1) {
+						alert('삭제에 성공하였습니다');		
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
+</script>
 <%@include file ="../include/footer.jsp" %>
 <!-- footer E --> 
