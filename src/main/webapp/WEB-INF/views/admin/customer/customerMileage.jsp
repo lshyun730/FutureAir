@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-    <link rel="stylesheet" href="resources/css/admin.css">
+    <link rel="stylesheet" href="../../resources/css/admin.css">
     <title>미래항공 관리자페이지</title>
 </head>
 <body>
@@ -17,7 +17,7 @@
             <header class="customer_header">
                 <nav class="lnb">
                     <ul>
-                        <li><a href="customerInfo.html">회원정보</a></li>
+                        <li><a href="<c:url value="customerInfo.html?id=${id }" />">회원정보</a></li>
                         <li><a href="customerReservation.html">예약내역</a></li>
                         <li class="active"><a href="customerMileage.html">마일리지</a></li>
                     </ul>
@@ -47,15 +47,15 @@
                         </colgroup>
                         <tr>
                             <th>총 마일리지</th>
-                            <td>10,000</td>
+                            <td>${mileageAll }</td>
                             <th>사용된 마일리지</th>
-                            <td>0</td>
+                            <td>${mileageUsed }</td>
                         </tr>
                         <tr>
                             <th>사용가능 마일리지</th>
-                            <td>10,000</td>
+                            <td>${mileageUsable }</td>
                             <th>미가용 마일리지</th>
-                            <td>10,000</td>
+                            <td>${mileageFUsable }</td>
                         </tr>
                     </table>
                     <!-- table E --> 
@@ -72,19 +72,21 @@
                                 <th>상세내용</th>
                                 <th>유형</th>
                                 <th>예약번호</th>
-                                <th>차감</th>
+                                <th>증감/차감</th>
                                 <th>잔액</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>2022-03-01</td>
-                                <td>항공권 예약</td>
-                                <td>결제적립</td>
-                                <td><a href="#">R001</a></td>
-                                <td>10,000</td>
-                                <td>10,000</td>
-                            </tr>
+                        	<c:forEach var="mMap" items="${mileageBalance }" varStatus="status">
+		                           <tr>
+		                           		<td><c:out value="${mMap['MILEAGE_DATE'] }" /></td>
+		                           		<td><c:out value="${mMap['MILEAGE_TYPE'] }" /></td>
+		                           		<td><c:out value="${mMap['MILEAGE_TYPE'] }" /></td>
+		                           		<td><a href="#"><c:out value="${mMap['MILEAGE_RESERVATION'] }" /></a></td>
+		                           		<td><c:out value="${mMap['MILEAGE_POINT'] }" /></td>
+		                           		<td><c:out value="${mMap['MILEAGE_BALANCE'] }" /></td>
+		                           </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                     <!-- table E --> 
