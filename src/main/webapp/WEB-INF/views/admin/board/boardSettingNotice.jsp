@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
-    <link rel="stylesheet" href="resources/css/admin.css">
+    <link rel="stylesheet" href="../../resources/css/admin.css">
     <title>미래항공 관리자페이지</title>
 </head>
 <body style="background: #fff;">

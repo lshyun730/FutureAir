@@ -2,6 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script>
+function pagingFormSubmit(currentPage){
+	var form = document.getElementById("pagingForm");
+	var page = document.getElementById("page");
+	
+	page.value = currentPage;
+	form.submit();
+}
+
+
 function formCheck(){
 	var checkbox = document.getElementsByName("boardCheck");
 	var num = 0;
@@ -11,10 +20,22 @@ function formCheck(){
 			num++;
 		}
 	}
+	
+	window.open("boardSettingDelete");
 
 	
 
 	return true;
+
+	
+}
+
+function insertBoard(){
+	var title = document.getElementsById("title");
+	var topic_type = document.getElementsById("topic_type");
+	var contents = document.getElementsById("contents");
+
+	
 }
 
 
@@ -23,6 +44,14 @@ function formCheck(){
 function checkAll(checker){
 	   const boardChecker = document.getElementsByName("boardCheck");
 	   boardChecker.forEach((checkbox) => {checkbox.checked = checker.checked;});
+	}
+
+function popup_open(){
+	document.getElementById("modal").style.display = 'flex';
+	}
+	
+function popup_close(){
+	document.getElementById("modal").style.display = 'none'; 
 	}
 
 </script>
