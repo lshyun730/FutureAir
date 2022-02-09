@@ -2,6 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script>
+function pagingFormSubmit(currentPage){
+	var form = document.getElementById("pagingForm");
+	var page = document.getElementById("page");
+	
+	page.value = currentPage;
+	form.submit();
+}
+
+
 function formCheck(){
 	var checkbox = document.getElementsByName("boardCheck");
 	var num = 0;
@@ -11,10 +20,22 @@ function formCheck(){
 			num++;
 		}
 	}
+	
+	window.open("boardSettingDelete");
 
 	
 
 	return true;
+
+	
+}
+
+function insertBoard(){
+	var title = document.getElementsById("title");
+	var topic_type = document.getElementsById("topic_type");
+	var contents = document.getElementsById("contents");
+
+	
 }
 
 
@@ -23,6 +44,14 @@ function formCheck(){
 function checkAll(checker){
 	   const boardChecker = document.getElementsByName("boardCheck");
 	   boardChecker.forEach((checkbox) => {checkbox.checked = checker.checked;});
+	}
+
+function popup_open(){
+	document.getElementById("modal").style.display = 'flex';
+	}
+	
+function popup_close(){
+	document.getElementById("modal").style.display = 'none'; 
 	}
 
 </script>
@@ -37,12 +66,12 @@ function checkAll(checker){
         <div class="flex_content_header">
             <h2>게시판 설정</h2>
             <div class="action">
-                <button class="btn primary"><a href="boardSettingNotice">게시판추가</a></button>
+                <button class="btn primary" onclick="popup_open();">게시판추가</button>
             </div>
         </div>
         <!-- content header E -->
         <!-- table S --> 
-        <form action="boardSettingDelete" method="get" id="boardform" name="boardform">
+        <form action="${pageContext.request.contextPath}/admin/board/boardSetting" method="get" id="pagingForm" onsubmit="return pagingFormSubmit(1);">
         <table class="table">
             <thead>
                 <tr>
@@ -72,63 +101,65 @@ function checkAll(checker){
                     </td>
                     <td class="btn_m_wrap"><div class="btn_m"><span></span></div></td>
                 </tr>
-             </c:forEach>
+             </c:forEach>    
             </tbody>
-        </table>
+            <input type="hidden" id="page" name="page">
+       		 </table>
          </form>
         <!-- table E --> 
         <!-- content footer S --> 
         <div class="flex_content_footer">
             <button class="btn danger" form="boardform" onclick="return formCheck();">선택삭제</button>
             <div class="navi">
-                <a href="#"><i class="fas fa-chevron-left"></i></a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#"><i class="fas fa-chevron-right"></i></a>
+                <a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup} )">
+                   <i class="fas fa-chevron-left"></i>
+                </a>
+                  <c:forEach var="counter" begin="${navi.startPageGroup }" end="${navi.endPageGroup }" >
+               <c:if test="${counter == navi.currentPage }"><b></b></c:if>
+                  <a href="javascript:pagingFormSubmit(${counter })"
+                     <c:if test="${navi.currentPage == counter}">class="active"</c:if>>${counter }</a>
+               <c:if test="${counter == navi.currentPage }"><b></b></c:if>
+            </c:forEach>
+                <a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup} )">
+                   <i class="fas fa-chevron-right"></i>
+                </a>
             </div>
         </div>
         <!-- content footer E --> 
     </section>
     <!-- board setting E -->  
     <!-- modal S -->  
-    <section class="modal">
+    <section class="modal" id="modal">
         <div class="modal_wrap">
             <h2>게시판추가</h2>
-            <form action="#" class="create_board">
+            <form action="insertBoard" method="get" class="create_board">
                 <div class="inputbox no_icon">
                     <p class="inputbox_title">게시판이름</p>
                     <div class="inputbox_input">
-                        <input type="text" placeholder="2022-01-22">
+                        <input type="text" placeholder="게시판 이름 입력" id="title" name="title">
                     </div>
                 </div>
                 <div class="inputbox">
-                    <p class="inputbox_title">글쓰기권한</p>
+                    <p class="inputbox_title">글타입</p>
                     <div class="inputbox_input">
-                        <select name="status">
-                            <option value="전체" selected>관리자</option>
-                            <option value="답변전">회원</option>
-                            <option value="답변완료">비회원</option>
+                        <select name="topic_type" id="topic_type">
+                            <option value="Q&A" selected>Q&A</option>
+                            <option value="공지">공지</option>
                         </select>
                         <span class="inputbox_icon down"><i class="fas fa-chevron-down"></i></span>
                     </div>
                 </div>
                 <div class="inputbox">
-                    <p class="inputbox_title">글보기권한</p>
+                    <p class="inputbox_title">글내용</p>
                     <div class="inputbox_input">
-                        <select name="status">
-                            <option value="전체" selected>관리자</option>
-                            <option value="답변전">회원</option>
-                            <option value="답변완료">비회원</option>
-                        </select>
-                        <span class="inputbox_icon down"><i class="fas fa-chevron-down"></i></span>
+                        <input type="text" placeholder="게시판 내용 입력" id="contents" name="contents">
                     </div>
                 </div>
                 <div class="submit">
-                    <input type="submit" value="추가하기">
+                    <input type="submit" value="추가하기" onclick="return insertBoard();">
                 </div>
             </form>
-            <button class="close"><i class="fas fa-times"></i></button>
+            <button class="close" onclick="popup_close();"><i class="fas fa-times"></i></button>
         </div>
         <div class="bg_black"></div>
     </section>

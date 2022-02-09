@@ -3,6 +3,14 @@
 
 <script>
 
+function pagingFormSubmit(currentPage){
+	var form = document.getElementById("pagingForm");
+	var page = document.getElementById("page");
+
+	page.value = currentPage;
+	form.submit();
+}
+
 function formCheck(){
 	var checkbox = document.getElementsByName("boardCheck");
 	var num = 0;
@@ -52,17 +60,17 @@ function checkAll(checker){
         </div>
         <!-- content header E -->   
         <!-- search detail S -->   
-        <form action="searchBoard" method="post" class="search_detail">
+        <form action="${pageContext.request.contextPath}/admin/board/boardManager" method="get" class="search_detail" id="pagingForm">
             <div class="inputbox term">
                 <p class="inputbox_title">검색일</p>
                 <div class="inputbox_input">
-                    <input type="text" name="search1" placeholder="2022-01-22">
+                    <input type="date" name="search1" placeholder="2022-01-22" value="${map.time1 }">
                     <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
                 </div>
             </div>
             <div class="inputbox">
                 <div class="inputbox_input">
-                    <input type="text" name="search2" placeholder="2022-01-22">
+                    <input type="date" name="search2" placeholder="2022-01-22" value = "${map.time2 }">
                     <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
                 </div>
             </div>
@@ -90,20 +98,21 @@ function checkAll(checker){
             <div class="inputbox">
                 <p class="inputbox_title">검색어</p>
                 <div class="inputbox_input">
-                    <input type="text" name="searchtext" placeholder="검색어 입력">
+                    <input type="text" name="searchtext" placeholder="검색어 입력" value="${map.title }">
                     <span class="inputbox_icon"><i class="fas fa-search"></i></span>
                 </div>
             </div>
             
             <div class="inputbox submit">
                 <div class="inputbox_input">
-                    <input type="submit" value="검색">
+                    <input type="submit" value="검색" onclick="pagingFormSubmit(1)">
                 </div>
             </div>
+            <input type="hidden" name="page" id="page">
         </form>
         <!-- search detail E -->   
         <!-- table S --> 
-        <form action="delete" method="get" id="boardform" name="boardform">
+        <form action="${pageContext.request.contextPath}/admin/board/delete" method="get" id="boardform" name="boardform">
         <table class="table">
             <thead>
                 <tr>
@@ -152,11 +161,11 @@ function checkAll(checker){
         <div class="flex_content_footer">
             <button class="btn danger" form="boardform" onclick="return formCheck();">선택삭제</button>
             <div class="navi">
-                <a href="#"><i class="fas fa-chevron-left"></i></a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#"><i class="fas fa-chevron-right"></i></a>
+                <a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})"><i class="fas fa-chevron-left"></i></a>
+                <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
+					<a href="javascript:pagingFormSubmit(${counter})">${counter}</a>
+				</c:forEach>
+                <a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})"><i class="fas fa-chevron-right"></i></a>
             </div>
         </div>
         <!-- content footer E --> 

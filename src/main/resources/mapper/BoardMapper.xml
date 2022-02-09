@@ -3,18 +3,40 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.air.future.dao.BoardMapper">
+
+	<!-- 보드 셋팅 토탈 불러오기 -->
+	<select id="getSettingTotal" resultType="int">
+		select count(*) from board_fa
+	</select>
 	
-	<select id="selectBoard" resultType="board">
+	<!-- 보드 세팅 불러오기 -->
+	<select id="selectBoardSetting" parameterType="string" resultType="board">
 		select board_index, title, writer, topic_type, contents
 				, to_char(board_date, 'YYYY-MM-DD') as board_date
 				, hits, reply_type
 		from board_fa
 	</select>
-	 	
+	
+	<!-- 보드 매니저 불러오기 -->
+	<select id="selectBoard" parameterType="map" resultType="board">
+		select board_index, title, writer, topic_type, contents
+				, to_char(board_date, 'YYYY-MM-DD') as board_date
+				, hits, reply_type
+		from board_fa
+		where 1=1	
+		<if test="!time1.equals('')">and board_date >= #{time1}</if>
+		<if test="!time2.equals('')">and board_date &lt; #{time2}</if>		
+		<if test="!topic_type.equals('전체')">and topic_type like '%' || #{topic_type} || '%'</if>
+		<if test="!reply_type.equals('전체')">and reply_type like '%' || #{reply_type} || '%'</if>
+		<if test="!title.equals('')">and title like '%' || #{title} || '%'</if>
+	</select>
+	 
+	 <!-- 보드 매니저 삭제 -->
 	<delete id="deleteBoard" parameterType="int">
 		delete from board_fa where board_index = #{board_index}
 	</delete>
 	
+	<!-- 미사용 -->
 	<select id="searchBoard" parameterType="map" resultType="board">
 		select board_index, title, writer, topic_type, contents
 				, to_char(board_date, 'YYYY-MM-DD') as board_date
@@ -23,11 +45,11 @@
 		where 1=1
 		<choose>
 			<when test="!time1.equals('') and !time2.equals('')">
-				and board_date >= #{time1}
-				and board_date &lt; #{time2}
+				and board_date >= #{search1}
+				and board_date &lt; #{search2}
 			</when>
-			<when test="!time1.equals('')">and board_date >= #{time1}</when>
-			<when test="!time2.equals('')">and board_date &lt; #{time2}</when>		
+			<when test="!time1.equals('')">and board_date >= #{search1}</when>
+			<when test="!time2.equals('')">and board_date &lt; #{search2}</when>		
 			<otherwise>
 				and 2=2
 			</otherwise>
@@ -36,5 +58,30 @@
 		<if test="!reply_type.equals('전체')">and reply_type like '%' || #{reply_type} || '%'</if>
 		<if test="!title.equals('')">and title like '%' || #{title} || '%'</if>
 	</select>	
+	
+	<!-- 보드 매니저 페이징 처리 -->
+	<select id="getTotal" parameterType="map" resultType="int">
+		select count(*) from board_fa
+		where 1=1
+		<choose>
+			<when test="!search1.equals('') and !search2.equals('')">
+				and board_date >= #{search1}
+				and board_date &lt; #{search2}
+			</when>
+			<when test="!search1.equals('')">and board_date >= #{search1}</when>
+			<when test="!search2.equals('')">and board_date &lt; #{search2}</when>		
+			<otherwise>
+				and 2=2
+			</otherwise>
+		</choose>
+		<if test="!topic_type.equals('전체')">and topic_type like '%' || #{topic_type} || '%'</if>
+		<if test="!reply_type.equals('전체')">and reply_type like '%' || #{reply_type} || '%'</if>
+		<if test="!title.equals('')">and title like '%' || #{title} || '%'</if>
+	</select>
+	
+	<!-- 관리자 게시판 추가하기 -->
+	<insert id="insertBoard" parameterType="map">
+		insert into board_fa(board_index, title, writer, topic_type, contents) values(board_index_seq.nextval, #{title}, #{writer}, #{topic_type}, #{contents})
+	</insert>
 	
 </mapper>
