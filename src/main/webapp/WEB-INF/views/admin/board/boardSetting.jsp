@@ -1,6 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<script>
+function formCheck(){
+	var checkbox = document.getElementsByName("boardCheck");
+	var num = 0;
+
+	for (var i = 0; i < checkbox.length ; i++){
+		if(checkbox[i].checked == true){
+			num++;
+		}
+	}
+
+	
+
+	return true;
+}
+
+
+
+
+function checkAll(checker){
+	   const boardChecker = document.getElementsByName("boardCheck");
+	   boardChecker.forEach((checkbox) => {checkbox.checked = checker.checked;});
+	}
+
+</script>
 <!-- header S -->    
 <%@include file ="../include/header.jsp" %>
 <!-- header E -->
@@ -12,15 +37,16 @@
         <div class="flex_content_header">
             <h2>게시판 설정</h2>
             <div class="action">
-                <button class="btn primary">게시판추가</button>
+                <button class="btn primary"><a href="boardSettingNotice">게시판추가</a></button>
             </div>
         </div>
         <!-- content header E -->
         <!-- table S --> 
+        <form action="boardSettingDelete" method="get" id="boardform" name="boardform">
         <table class="table">
             <thead>
                 <tr>
-                    <th><input type="checkbox"></th>
+                    <th><input type="checkbox" onclick="checkAll(this)"></th>
                     <th>분류</th>
                     <th>게시판제목</th>
                     <th>게시판ID</th>
@@ -31,10 +57,11 @@
                 </tr>
             </thead>
             <tbody>
+            <c:forEach var="boardList" items="${boardList }">
                 <tr>
-                    <td><input type="checkbox"></td>
-                    <td>Q&A</td>
-                    <td><a href="#">공지사항</a></td>
+                    <td><input type="checkbox" id="boardCheck" name="boardCheck" value="${boardList.board_index }"></td>
+                    <td>${boardList.topic_type }</td>
+                    <td><a href="#">${boardList.title }</a></td>
                     <td>1</td>
                     <td>3/10</td>
                     <td>관리자/비회원</td>
@@ -45,12 +72,14 @@
                     </td>
                     <td class="btn_m_wrap"><div class="btn_m"><span></span></div></td>
                 </tr>
+             </c:forEach>
             </tbody>
         </table>
+         </form>
         <!-- table E --> 
         <!-- content footer S --> 
         <div class="flex_content_footer">
-            <button class="btn danger">선택삭제</button>
+            <button class="btn danger" form="boardform" onclick="return formCheck();">선택삭제</button>
             <div class="navi">
                 <a href="#"><i class="fas fa-chevron-left"></i></a>
                 <a href="#" class="active">1</a>
