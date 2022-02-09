@@ -8,17 +8,20 @@
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
     <title>미래항공 관리자페이지</title>
 </head>
 <body>
 <!-- header S -->  
 <header class="header">
-    <h1 class="logo"><a href="./admin"><img src="${pageContext.request.contextPath}/resources/images/common/logo.png" alt="FUTURE AIR"></a></h1>
+    <h1 class="logo"><a href="${pageContext.request.contextPath}/admin"><img src="${pageContext.request.contextPath}/resources/images/common/logo.png" alt="FUTURE AIR"></a></h1>
     <nav class="gnb">
         <ul>
             <span class="gnb_txt">GENERAL</span>
             <li class="active">
-                <a href="./admin">홈
+                <a href="${pageContext.request.contextPath}/admin">홈
                     <span class="icon"><i class="fas fa-home"></i></span>
                 </a>
             </li>
@@ -68,23 +71,27 @@
 </header>
 <!-- header E -->  
 <!-- util S -->  
-<section class="util grid">
-    <form action="#" class="search item">
-        <span class="search_icon"><i class="fas fa-search"></i></span>
-        <input type="text" name="search" placeholder="검색어 입력">
-    </form>
-    
-    <section class="info item">
-        <div class="bell">
-            <span class="bell_icon"><i class="far fa-bell"></i></span>
+<div class="util contents">
+    <div class="row">
+        <div class="search_box">
+            <form action="#" class="search item">
+                <span class="search_icon"><i class="fas fa-search"></i></span>
+                <input type="search_text" name="search" placeholder="Search for...">
+            </form>
         </div>
-        <div class="profile">
-            <div class="profile_img">
-                <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt="profile">
+        
+        <div class="info item">
+            <div class="bell">
+                <span class="bell_icon"><i class="far fa-bell"></i></span>
             </div>
-            <p>홍길동<span>마스터관리자</span></p>
-            <div class="btn_m"><span></span></div>
+            <div class="profile">
+                <div class="profile_img">
+                    <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt="profile">
+                </div>
+                <p>홍길동<span>마스터관리자</span></p>
+                <div class="btn_m"><span></span></div>
+            </div>
         </div>
-    </section>
-</section>
+    </div>
+</div>
 <!-- util E -->  

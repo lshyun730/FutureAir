@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.air.future.dao.AdminFlightMapper">
+
+<!-- 비행일정 -->
+	<!-- 비행일정리스트 -->
+	<select id="routeList" resultType="HashMap" parameterType="HashMap">
+		select r.* , a.airplane_id from route_fa r, airplane_fa a
+		where r.airplane_id = a.airplane_id 
+		and to_char(r.departure_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{departure_date_end}
+		and to_char(r.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
+		<if test="departure_name != ''">
+		and r.departure_name = #{departure_name}
+		</if>
+		<if test="arrival_name != ''">
+		and r.arrival_name = #{arrival_name}
+		</if>
+		<if test="route_num != ''">
+		and r.route_num = #{route_num}
+		</if>
+		order by route_num
+	</select>
+	
+	<!-- 비행일정갯수 -->
+	<select id="getRouteTotal" resultType="int" parameterType="HashMap">
+		select count(*) from route_fa
+ 		where to_char(departure_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{departure_date_end}
+		and to_char(departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
+		<if test="departure_name != ''">
+		and departure_name = #{departure_name}
+		</if>
+		<if test="arrival_name != ''">
+		and arrival_name = #{arrival_name}
+		</if>
+		<if test="route_num != ''">
+		and route_num = #{route_num}
+		</if>
+	</select>
+	
+	<!-- 비행일정 삭제 -->
+	<delete id="deleteRoute" parameterType="String">
+		delete from route_fa
+		where route_num = #{route_num}
+	</delete>
+	
+
+	
+	
+<!-- 예약현황 -->
+	<!-- 예약일정리스트 -->
+	<select id="reservationList" parameterType="HashMap" resultType="HashMap">
+		select last.*,
+			case when reser_type.reservation_type = '1' then '편도'
+			     when reser_type.reservation_type = '2' then '왕복'
+			     else '다구간'
+			end as reservation_type
+		from (select s.reservation_num, c.customer_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment  
+		    from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
+		    where r.reservation_num = s.reservation_num
+		    and s.route_num = rou.route_num
+		    and c.customer_id = r.customer_id
+		    and c.customer_name = s.passenger_name
+		    <if test="departure_date_start != ''">
+				and to_char(rou.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
+		    </if>
+		    <if test="departure_date_end != ''">
+			    and to_char(rou.departure_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{departure_date_end}
+		    </if>
+		    <if test="reservation_date_start != ''">
+				and to_char(r.reservation_date, 'YYYY-MM-DD') >= #{reservation_date_start}
+		    </if>
+		    <if test="reservation_date_end != ''">
+				and to_char(r.reservation_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{reservation_date_end}
+		    </if>
+			<if test="departure_name != ''">
+			and rou.departure_name = #{departure_name}
+			</if>
+			<if test="arrival_name != ''">
+			and rou.arrival_name = #{arrival_name}
+			</if>
+			<if test="customer_name != ''">
+			and c.customer_name like  '%'||#{customer_name}||'%'
+			</if>
+		    order by r.reservation_num desc) last, 
+		    (select reservation_num, count(reservation_num) reservation_type
+		    from schedule_fa
+		    group by reservation_num) reser_type
+		where last.reservation_num = reser_type.reservation_num
+	</select>	
+	
+	<!-- 예약일정갯수 -->
+	<select id="getReservationTotal" parameterType="HashMap" resultType="int">
+		select count(*)  
+	    from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
+	    where r.reservation_num = s.reservation_num
+	    and s.route_num = rou.route_num
+	    and c.customer_id = r.customer_id
+	    and c.customer_name = s.passenger_name
+	    <if test="departure_date_start != ''">
+			and to_char(rou.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
+	    </if>
+	    <if test="departure_date_end != ''">
+		    and to_char(rou.departure_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{departure_date_end}
+	    </if>
+	    <if test="reservation_date_start != ''">
+			and to_char(r.reservation_date, 'YYYY-MM-DD') >= #{reservation_date_start}
+	    </if>
+	    <if test="reservation_date_end != ''">
+			and to_char(r.reservation_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{reservation_date_end}
+	    </if>
+		<if test="departure_name != ''">
+		and rou.departure_name = #{departure_name}
+		</if>
+		<if test="arrival_name != ''">
+		and rou.arrival_name = #{arrival_name}
+		</if>
+		<if test="customer_name != ''">
+		and c.customer_name like '%'||#{customer_name}||'%'
+		</if>
+	</select>
+	
+	<!-- 예약삭제 (schedule_fa) -->
+	<delete id="deleteSchedule" parameterType="String">
+		delete from schedule_fa
+		where reservation_num = #{reservation_num}
+	</delete>
+	
+	<!-- 예약삭제 (reservation_fa) -->
+	<delete id="deleteReservation" parameterType="String">
+		delete from reservation_fa
+		where reservation_num = #{reservation_num}
+	</delete>
+	
+	
+	
+	
+<!-- 공통 -->	
+	<!-- 취향지리스트 -->
+	<select id="destinationList" resultType="destination">
+		select * from destination_fa
+	</select>
+</mapper>
+
