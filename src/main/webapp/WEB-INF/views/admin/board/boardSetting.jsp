@@ -8,14 +8,6 @@ function insertBoard(){
 	var contents = document.getElementsById("contents");
 }
 
-function popup_open(){
-	document.getElementById("modal").style.display = 'flex';
-	}
-	
-function popup_close(){
-	document.getElementById("modal").style.display = 'none'; 
-	}
-
 </script>
 <!-- header S -->    
 <%@include file ="../include/header.jsp" %>
@@ -30,7 +22,7 @@ function popup_close(){
 		        <div class="flex_content_header">
 		            <h2>게시판 설정</h2>
 		            <div class="action">
-		                <button class="btn primary" onclick="boardSettingNotice">게시판추가</button>
+		                <button class="btn primary" onclick="javascript:modalOpen()">게시판추가</button>
 		            </div>
 		        </div>
 		        <!-- content header E -->
@@ -65,8 +57,8 @@ function popup_close(){
 		                    <td>${board.COUNT_TODAY}/${board.COUNT_ALL}</td>
 		                    <td>
 		                        <button class="btn_s more">글쓰기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more" onclick="window.location ='boardSettingDelete.html'">글삭제<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more" onclick="window.location ='boardSettingNotice.html'">공지글<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+		                        <button class="btn_s more" onclick="window.open('boardSettingDelete?topic_type=${board.TOPIC_TYPE}', '_blank', 'width=800,height=800')">글삭제<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+		                        <button class="btn_s more" onclick="window.open('boardSettingNotice?topic_type=${board.TOPIC_TYPE}', '_blank', 'width=800,height=800')">공지글<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
 		                    </td>
 		                    <td class="btn_m_wrap"><div class="btn_m"><span></span></div></td>
 		                </tr>
@@ -89,8 +81,9 @@ function popup_close(){
 	        <!-- content footer E --> 
 	    </section>
 	    <!-- board setting E -->  
+	</div>
 	    <!-- modal S -->  
-	    <section class="modal">
+	    <section class="modal" id="modal">
 	        <div class="modal_wrap">
 	            <h2>게시판추가</h2>
 	            <form action="#" class="create_board">
@@ -126,12 +119,11 @@ function popup_close(){
 	                    <input type="submit" value="추가하기">
 	                </div>
 	            </form>
-	            <button class="close"><i class="fas fa-times"></i></button>
+	            <button class="close" onclick="javascript:modalClose()"><i class="fas fa-times"></i></button>
 	        </div>
 	        <div class="bg_black"></div>
 	    </section>
 	    <!-- modal E -->  
-	</div>
 </section>
 <!-- content E --> 
 <script>

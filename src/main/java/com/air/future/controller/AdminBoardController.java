@@ -92,15 +92,9 @@ public class AdminBoardController {
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("navi", navi);
 		return "admin/board/boardSetting";
-
-	//게시판 추가
-	@RequestMapping(value = "boardSettingNotice", method = RequestMethod.GET)
-	public String boardSettingNotice() {
-		return "admin/board/boardSettingNotice";
 	}
-	
-	
-	//게시물 삭제하기
+
+	// 게시물 삭제하기
 	@RequestMapping(value = "deleteBoard", method = RequestMethod.POST)
 	@ResponseBody
 	public int deleteBoard(HttpServletRequest request) {
@@ -109,7 +103,19 @@ public class AdminBoardController {
 		return result;
 	}
 	
+	// 게시물관리 - 글삭제
+	@RequestMapping(value = "boardSettingDelete", method = RequestMethod.GET)
+	public String boardSettingDelete(String topic_type) {
+		return "admin/board/boardSettingDelete";
+	}
 	
+	// 게시물관리 - 공지글지정
+	@RequestMapping(value = "boardSettingNotice", method = RequestMethod.GET)
+	public String boardSettingNotice(String topic_type) {
+		return "admin/board/boardSettingNotice";
+	}
+		
+		
 	// 게시판 추가
 	@RequestMapping(value = "insertBoard", method = RequestMethod.GET)
 	public String insertBoard(@RequestParam(value = "page", defaultValue = "1") int page,
