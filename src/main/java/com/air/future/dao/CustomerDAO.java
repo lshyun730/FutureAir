@@ -1,7 +1,10 @@
 package com.air.future.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,6 +18,13 @@ public class CustomerDAO {
 	@Autowired
 	SqlSession sqlSession;
 	
+	// 페이징 처리 : 회원정보(customerList.jsp)를 위한 부분
+	public int customerGetTotal(Customer customer) {
+		CustomerMapper mapper = sqlSession.getMapper(CustomerMapper.class); 
+		int result = mapper.customerGetTotal(customer);
+		return result;
+	}
+	
 	// 회원정보 전체 불러오기
 	public ArrayList<Customer> customerListAll() {
 		CustomerMapper mapper = sqlSession.getMapper(CustomerMapper.class); 
@@ -22,10 +32,11 @@ public class CustomerDAO {
 		return customerListAll;
 	}
 	
-	// 회원정보 검색 결과 값 불러오기
-	public ArrayList<Customer> customerFind(Customer customer) {
+	// 페이징 처리 : 회원정보(customerList.jsp) 검색 결과 값 불러오기
+	public ArrayList<Customer> customerFind(Customer customer, int startRecord, int countPerPage) {
 		CustomerMapper mapper = sqlSession.getMapper(CustomerMapper.class); 
-		ArrayList<Customer> customerFind = mapper.customerFind(customer);
+		RowBounds rb = new RowBounds(startRecord, countPerPage);
+		ArrayList<Customer> customerFind = mapper.customerFind(customer, rb);
 		return customerFind;
 	}
 	
@@ -52,6 +63,21 @@ public class CustomerDAO {
 		return mileage;
 	}
 	
+	// 회원 세부정보에 필요한 회원 총결제금액 불러오기
+	public String customerFullPay(String customer_id) {
+		CustomerMapper mapper = sqlSession.getMapper(CustomerMapper.class);
+		String customerFullPay = mapper.customerFullPay(customer_id);
+		return customerFullPay;
+	}
+	
+	// 페이징 처리 : 회원등급(customerGrade.jsp)을 위한 부분
+	public int gradeGetTotal(Customer customer) {
+		CustomerMapper mapper = sqlSession.getMapper(CustomerMapper.class); 
+		int result = mapper.gradeGetTotal(customer);
+		return result;
+	}
+
+	
 	// 회원등급 및 회원등급에 따른 전체 회원수 불러오기
 	public ArrayList<Grade> customerGradeAll() {
 		CustomerMapper mapper = sqlSession.getMapper(CustomerMapper.class); 
@@ -59,10 +85,11 @@ public class CustomerDAO {
 		return customerGradeAll;
 	}
 	
-	// 회원등급별 회원관리 부분 검색 결과 값 불러오기
-	public ArrayList<Customer> gradeFind(Customer customer) {
-		CustomerMapper mapper = sqlSession.getMapper(CustomerMapper.class); 
-		ArrayList<Customer> gradeFind = mapper.gradeFind(customer);
+	// 페이징 처리 : 회원등급별 회원관리 부분 검색 결과 값 불러오기
+	public ArrayList<Customer> gradeFind(Customer customer, int startRecord, int countPerPage) {
+		CustomerMapper mapper = sqlSession.getMapper(CustomerMapper.class);
+		RowBounds rb = new RowBounds(startRecord, countPerPage);
+		ArrayList<Customer> gradeFind = mapper.gradeFind(customer, rb);
 		return gradeFind;
 	}
 	
@@ -79,5 +106,38 @@ public class CustomerDAO {
 		int result = mapper.gradeAdd(grade);
 		return result;
 	}
+	
+	// 회원 총 마일리지 불러오기
+	public String mileageAll(String id) {
+		CustomerMapper mapper = sqlSession.getMapper(CustomerMapper.class); 
+		String result = mapper.mileageAll(id);
+		return result;
+	}
+	// 회원 사용한 마일리지 불러오기
+	public String mileageUsed(String id) {
+		CustomerMapper mapper = sqlSession.getMapper(CustomerMapper.class); 
+		String result = mapper.mileageUsed(id);
+		return result;
+	}
+	// 회원 사용가능한 마일리지 불러오기
+	public String mileageUsable(String id) {
+		CustomerMapper mapper = sqlSession.getMapper(CustomerMapper.class); 
+		String result = mapper.mileageUsable(id);
+		return result;
+	}
+	// 회원 미가용 마일리지 불러오기
+	public String mileageFUsable(String id) {
+		CustomerMapper mapper = sqlSession.getMapper(CustomerMapper.class); 
+		String result = mapper.mileageFUsable(id);
+		return result;
+	}
+	// 회원 마일리지 내역 불러오기
+	public List<HashMap<String, String>> mileageBalance(String id) {
+		CustomerMapper mapper = sqlSession.getMapper(CustomerMapper.class);
+		List<HashMap<String, String>> result = mapper.mileageBalance(id);
+		return result;
+	}
+
+
 
 }

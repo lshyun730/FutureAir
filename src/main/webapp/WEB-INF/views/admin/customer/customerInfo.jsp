@@ -19,7 +19,7 @@
                     <ul>
                         <li class="active"><a href="customerInfo.html">회원정보</a></li>
                         <li><a href="customerReservation.html">예약내역</a></li>
-                        <li><a href="customerMileage.html">마일리지</a></li>
+                        <li><a href="<c:url value="customerMileage.html?id=${id }" />">마일리지</a></li>
                     </ul>
                 </nav>
                 <div class="profile">
@@ -79,7 +79,7 @@
                             <th>마일리지</th>
                             <td>${mileage }</td>
                             <th>총결제금액</th>
-                            <td>테이블 생성 예정</td>
+                            <td>${customerFullPay }</td>
                         </tr>
                     </table>
                 </section>

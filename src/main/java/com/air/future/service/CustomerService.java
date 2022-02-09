@@ -1,6 +1,8 @@
 package com.air.future.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,15 +17,9 @@ public class CustomerService {
 	@Autowired
 	CustomerDAO dao;
 	
-	// 회원정보 전체 불러오기
-	public ArrayList<Customer> customerListAll() {
-		ArrayList<Customer> customerListAll = dao.customerListAll();
-		return customerListAll;
-	}
-	
-	// 회원정보 검색 결과 값 불러오기
-	public ArrayList<Customer> customerFind(String customer_name, String customer_id, String customer_email
-											, String customer_phone, String customer_gender, String customer_grade) {
+	// 페이징 처리 : 회원정보(customerList.jsp)를 위한 부분
+	public int customerGetTotal(String customer_name, String customer_id, String customer_email
+						, String customer_phone, String customer_gender, String customer_grade) {
 		Customer customer = new Customer();
 		customer.setCustomer_name(customer_name);
 		customer.setCustomer_id(customer_id);
@@ -31,8 +27,43 @@ public class CustomerService {
 		customer.setCustomer_phone(customer_phone);
 		customer.setCustomer_gender(customer_gender);
 		customer.setCustomer_grade(customer_grade);
-		ArrayList<Customer> customerFind = dao.customerFind(customer);
+		int result = dao.customerGetTotal(customer);
+		return result;
+	}
+	
+	// 페이징 처리 : 회원정보(customerList.jsp) 검색 결과 값 불러오기
+	public ArrayList<Customer> customerFind(String customer_name, String customer_id
+											, String customer_email, String customer_phone
+											, String customer_gender, String customer_grade
+											, int startRecord, int countPerPage) {
+		
+		Customer customer = new Customer();
+		customer.setCustomer_name(customer_name);
+		customer.setCustomer_id(customer_id);
+		customer.setCustomer_email(customer_email);
+		customer.setCustomer_phone(customer_phone);
+		customer.setCustomer_gender(customer_gender);
+		customer.setCustomer_grade(customer_grade);
+		
+		ArrayList<Customer> customerFind = dao.customerFind(customer, startRecord, countPerPage);
 		return customerFind;
+	}
+	
+	// 페이징 처리 : 회원등급(customerGrade.jsp)을 위한 부분
+	public int gradeGetTotal(String customer_name, String customer_id, String customer_grade) {
+		Customer customer = new Customer();
+		customer.setCustomer_name(customer_name);
+		customer.setCustomer_id(customer_id);
+		customer.setCustomer_grade(customer_grade);
+		int result = dao.gradeGetTotal(customer);
+		return result;
+	}
+	
+
+	// 회원정보 전체 불러오기
+	public ArrayList<Customer> customerListAll() {
+		ArrayList<Customer> customerListAll = dao.customerListAll();
+		return customerListAll;
 	}
 	
 	// 회원정보 삭제하기
@@ -59,6 +90,12 @@ public class CustomerService {
 		return mileage;
 	}
 	
+	// 회원 세부정보에 필요한 회원 총결제금액 불러오기
+	public String customerFullPay(String customer_id) {
+		String customerFullPay = dao.customerFullPay(customer_id);
+		return customerFullPay;
+	}
+	
 	// 회원등급 전체 불러오기
 	public ArrayList<Grade> customerGradeAll(){
 		ArrayList<Grade> customerGradeAll = dao.customerGradeAll();
@@ -66,12 +103,13 @@ public class CustomerService {
 	}
 	
 	// 회원등급 검색을 통한 결과값 불러오기
-	public ArrayList<Customer> gradeFind(String customer_name, String customer_id, String customer_grade) {
+	public ArrayList<Customer> gradeFind(String customer_name, String customer_id, String customer_grade
+											, int startRecord, int countPerPage) {
 		Customer customer = new Customer();
 		customer.setCustomer_name(customer_name);
 		customer.setCustomer_id(customer_id);
 		customer.setCustomer_grade(customer_grade);
-		ArrayList<Customer> customerListAll = dao.gradeFind(customer);
+		ArrayList<Customer> customerListAll = dao.gradeFind(customer, startRecord, countPerPage);
 		return customerListAll;
 	}
 	
@@ -95,5 +133,28 @@ public class CustomerService {
 		int result = dao.gradeAdd(gradeAll);
 		return result;
 	}
+	
+	// 회원 총 마일리지 불러오기
+	public String mileageAll(String id) {
+		return dao.mileageAll(id);
+	}
+	// 회원 사용한 마일리지 불러오기
+	public String mileageUsed(String id) {
+		return dao.mileageUsed(id);
+	}
+	// 회원 사용가능한 마일리지 불러오기
+	public String mileageUsable(String id) {
+		return dao.mileageUsable(id);
+	}
+	// 회원 미가용 마일리지 불러오기
+	public String mileageFUsable(String id) {
+		return dao.mileageFUsable(id);
+	}
+	// 회원 마일리지 내역 불러오기
+	public List<HashMap<String, String>> mileageBalance(String id){
+		return dao.mileageBalance(id);
+	}
+
+
 
 }

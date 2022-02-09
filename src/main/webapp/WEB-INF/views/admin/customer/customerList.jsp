@@ -4,6 +4,14 @@
 
 <!-- Script S -->
 <script type="text/javascript">
+
+	function pagingFormSubmit(currentPage){
+		var form = document.getElementById("pagingForm");
+		var page = document.getElementById("page");
+		page.value = currentPage;
+		form.submit();
+	}
+
 	function search(){
 		var name 	= document.getElementById("customer_name");
 		var id 		= document.getElementById("customer_id");
@@ -59,32 +67,32 @@
         </div>
         <!-- content header E -->   
         <!-- search detail S -->   
-        <form action="customerFind" class="search_detail" method="get" onsubmit="return search();">
+        <form action="customerList" id="pagingForm" class="search_detail" method="get" onsubmit="return search();">
             <div class="inputbox">
                 <p class="inputbox_title">이름</p>
                 <div class="inputbox_input">
-                    <input type="text" id="customer_name" name="customer_name" placeholder="홍길동">
+                    <input type="text" id="customer_name" name="customer_name" placeholder="홍길동" value="${customer_name}">
                     <span class="inputbox_icon"><i class="fas fa-user"></i></span>
                 </div>
             </div>
             <div class="inputbox">
                 <p class="inputbox_title">아이디</p>
                 <div class="inputbox_input">
-                    <input type="text" id="customer_id" name="customer_id" placeholder="future123">
+                    <input type="text" id="customer_id" name="customer_id" placeholder="future123" value="${customer_id}">
                     <span class="inputbox_icon"><i class="fas fa-portrait"></i></span>
                 </div>
             </div>
             <div class="inputbox">
                 <p class="inputbox_title">이메일</p>
                 <div class="inputbox_input">
-                    <input type="text" id="customer_email" name="customer_email" placeholder="future@gmail.com">
+                    <input type="text" id="customer_email" name="customer_email" placeholder="future@gmail.com" value="${customer_email}">
                     <span class="inputbox_icon"><i class="fas fa-envelope"></i></span>
                 </div>
             </div>
             <div class="inputbox">
                 <p class="inputbox_title">전화번호</p>
                 <div class="inputbox_input">
-                    <input type="text" id="customer_phone" name="customer_phone" placeholder="01012341234">
+                    <input type="text" id="customer_phone" name="customer_phone" placeholder="01012341234" value="${customer_phone}">
                     <span class="inputbox_icon"><i class="fas fa-phone"></i></span>
                 </div>
             </div>
@@ -92,9 +100,9 @@
                 <p class="inputbox_title">성별</p>
                 <div class="inputbox_input">
                     <select id="customer_gender" name="customer_gender">
-                        <option value="전체" selected>전체</option>
-                        <option value="남자">남자</option>
-                        <option value="여자">여자</option>
+                        <option value="전체" <c:if test="${customer_gender eq '전체'}">selected</c:if> >전체</option>
+                        <option value="남자" <c:if test="${customer_gender eq '남자'}">selected</c:if>>남자</option>
+                        <option value="여자" <c:if test="${customer_gender eq '여자'}">selected</c:if>>여자</option>
                     </select>
                     <span class="inputbox_icon down"><i class="fas fa-chevron-down"></i></span>
                 </div>
@@ -103,19 +111,21 @@
                 <p class="inputbox_title">등급</p>
                 <div class="inputbox_input">
                     <select id="customer_grade" name="customer_grade">
-                        <option value="일반" selected>일반</option>
-                        <option value="실버">실버</option>
-                        <option value="골드">골드</option>
-                        <option value="플래티늄">플래티늄</option>
+                    	<option value="전체" <c:if test="${customer_grade eq '전체'}">selected</c:if>>전체</option>
+                        <option value="일반" <c:if test="${customer_grade eq '일반'}">selected</c:if>>일반</option>
+                        <option value="실버" <c:if test="${customer_grade eq '실버'}">selected</c:if>>실버</option>
+                        <option value="골드" <c:if test="${customer_grade eq '골드'}">selected</c:if>>골드</option>
+                        <option value="플래티늄" <c:if test="${customer_grade eq '플래티늄'}">selected</c:if>>플래티늄</option>
                     </select>
                     <span class="inputbox_icon down"><i class="fas fa-chevron-down"></i></span>
                 </div>
             </div>
             <div class="inputbox submit">
                 <div class="inputbox_input">
-                    <input type="submit" value="검색">
+                    <input type="submit" value="검색" onclick='pagingFormSubmit(1);'>
                 </div>
             </div>
+            <input type="hidden" name="page" id="page">
         </form>
         <!-- content header E -->   
         <!-- table S --> 
@@ -167,11 +177,18 @@
         <div class="flex_content_footer">
             <button type="submit" form="data" class="btn danger" onClick="return checkDelete();">선택삭제</button>
             <div class="navi">
-                <a href="#"><i class="fas fa-chevron-left"></i></a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#"><i class="fas fa-chevron-right"></i></a>
+                <a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup} )">
+                	<i class="fas fa-chevron-left"></i>
+                </a>
+               	<c:forEach var="counter" begin="${navi.startPageGroup }" end="${navi.endPageGroup }" >
+					<c:if test="${counter == navi.currentPage }"><b></b></c:if>
+						<a href="javascript:pagingFormSubmit(${counter })"
+							<c:if test="${navi.currentPage == counter}">class="active"</c:if>>${counter }</a>
+					<c:if test="${counter == navi.currentPage }"><b></b></c:if>
+				</c:forEach>
+                <a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup} )">
+                	<i class="fas fa-chevron-right"></i>
+                </a>
             </div>
         </div>
         <!-- content footer E --> 

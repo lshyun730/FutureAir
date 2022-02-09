@@ -3,6 +3,21 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.air.future.dao.CustomerMapper">
+
+	<!-- 페이징 처리 : 회원정보 검색을 위한 총 개수 확인하기 -->
+	<select id="customerGetTotal" parameterType="customer" resultType="int">
+		select count(*)
+		from customer_fa
+		<where>
+			1=1
+			<if test="!customer_name.equals('')">	and customer_name like '%' || #{customer_name}  || '%'</if>
+			<if test="!customer_id.equals('')">		and customer_id like '%' || #{customer_id} || '%'</if>
+			<if test="!customer_email.equals('')">	and customer_email like '%' || #{customer_email} || '%'</if>
+			<if test="!customer_phone.equals('')">	and customer_phone like '%' || #{customer_phone} || '%'</if>
+			<if test="!customer_gender.equals('전체')">	and customer_gender like '%' || #{customer_gender} || '%'</if>
+			<if test="!customer_grade.equals('전체')">	and customer_grade like '%' || #{customer_grade} || '%'</if>
+		</where>
+	</select>
 	
 	<!-- 회원정보 전체 불러오기 -->
 	<select id="customerListAll" resultType="customer">
@@ -51,7 +66,7 @@
     								from customer_fa
     								group by customer_grade ) b
 		ON a.grade = b.customer_grade
-		order by customer_grade_index
+		order by promo_terms
 	</select>
 	
 	<!-- 회원정보(customer_fa) 삭제를 위한 마일리자(mileage_fa) 삭제하기 -->
@@ -83,6 +98,19 @@
 			</foreach>
 		</where>
 	</delete>
+	
+	<!-- 페이징 처리 : 회원등급별 화원관리 검색 기능(customerGrade.jsp) -->
+	<select id="gradeGetTotal" parameterType="customer" resultType="int">
+		select count(*)
+		from customer_fa
+		<where>
+			1=1
+			<if test="!customer_name.equals('')">		and customer_name like '%' || #{customer_name}  || '%'	</if>
+			<if test="!customer_id.equals('')">			and customer_id like '%' || #{customer_id} || '%'		</if>
+			<if test="!customer_grade.equals('전체')">	and customer_grade like '%' || #{customer_grade} || '%'	</if>
+		</where>
+	</select>
+	
 	
 	<!-- 회원등급별 화원관리 검색 기능(customerGrade.jsp) -->
 	<select id="gradeFind" parameterType="customer" resultType="customer">
@@ -119,17 +147,71 @@
 				, to_char(customer_joindate, 'YYYY-MM-DD') as customer_joindate
 		from customer_fa
 		<where>
-			customer_id like '%' || #{customer_id} || '%'
+			customer_id = #{customer_id}
 		</where>
 	</select>
 	
-	<!-- 회원정보 팝업창 정보에 필요한 개인 마일리지 정보 불러오기(customerInfo.jsp) -->
+	<!-- 팝업창 : 회원정보 팝업창 정보에 필요한 개인 마일리지 정보 불러오기(customerInfo.jsp) -->
 	<select id="customerMileageFind" parameterType="string" resultType="string">
 		select sum(mileage_point) as mileage_point
 		from mileage_fa
 		<where>
 			mileage_id = #{mileage_id}
 		</where>
+	</select>
+	
+	<!-- 팝업창 : 회원정보 팝업창 정보에 필요한 개인 총결제금액 정보 불러오기(customerInfo.jsp) -->
+	<select id="customerFullPay" parameterType="string" resultType="string">
+		select sum(pay) as pay 
+		from reservation_fa
+		<where>
+			customer_id = #{customer_id}
+		</where>
+	</select>
+	
+	<!-- 팝업창 : 마일리지 팝업창 정보에 필요한 개인 총 마일리지 불러오기 -->
+	<select id="mileageAll" parameterType="string" resultType="string">
+		select NVL(sum(mileage_point), 0) from mileage_fa 
+		<where>
+			mileage_id = #{mileage_id}
+		</where>
+	</select>
+	<!-- 팝업창 : 마일리지 팝업창 정보에 필요한 개인 사용한 마일리지 불러오기 -->
+	<select id="mileageUsed" parameterType="string" resultType="string">
+		select NVL(ABS(sum(mileage_point)), 0) from mileage_fa 
+		<where>
+			mileage_id = #{mileage_id}
+			and mileage_point &lt; 0
+		</where>
+	</select>
+	<!-- 팝업창 : 마일리지 팝업창 정보에 필요한 개인 사용가능 마일리지 불러오기 -->
+	<select id="mileageUsable" parameterType="string" resultType="string">
+		select NVL(sum(mileage_point), 0) from mileage_fa 
+		<where>
+			mileage_id = #{mileage_id}
+			and mileage_date &lt; sysdate
+		</where>
+	</select>
+	<!-- 팝업창 : 마일리지 팝업창 정보에 필요한 개인 미가용 마일리지 불러오기 -->
+	<select id="mileageFUsable" parameterType="string" resultType="string">
+		select NVL(sum(mileage_point), 0) from mileage_fa 
+		<where>
+			mileage_id = #{mileage_id}
+			and mileage_date <![CDATA[>=]]> sysdate
+		</where>
+	</select>
+	<!-- 팝업창 : 마일리지 팝업창 정보에 필요한 개인 마일리지 적립내역 불러오기 -->
+	<select id="mileageBalance" parameterType="string" resultType="map">
+		select to_char(mileage_date, 'YYYY-MM-DD') as mileage_date
+				, to_char(mileage_type) as mileage_type
+				, to_char(mileage_reservation) as mileage_reservation
+				, to_char(mileage_point) as mileage_point
+				, to_char(sum(mileage_point) over(order by mileage_index)) as mileage_balance
+		from mileage_fa
+		<where>
+			mileage_id = #{mileage_id}
+		</where>
+			order by mileage_date
 	</select>
 	
 	<!-- 등급 추가 시 customer_grade_fa 테이블의 중복된 명칭 중복 여부 체킹하기 -->
