@@ -1,14 +1,20 @@
 package com.air.future.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.air.future.service.AdminService;
 import com.air.future.vo.Admin;
+
+import lombok.extern.java.Log;
 
 @SessionAttributes("admin")
 @Controller
@@ -19,7 +25,11 @@ public class AdminController {
 	
 	// 관리자 메인페이지 이동
 	@RequestMapping(value = "admin", method = RequestMethod.GET)
-	public String admin() {
+	public String admin(Model model) {
+		model.addAttribute("todayInfo", service.todayInfo());
+		model.addAttribute("popularFlight", service.popularFlight());
+		model.addAttribute("rateContinents", service.rateContinents());
+		model.addAttribute("recentReservation", service.recentReservation());
 		return "admin/admin";
 	}
 
@@ -49,4 +59,32 @@ public class AdminController {
 		return "redirect:/admin";
 	}
 	
+	
+	
+	// 기간매출그래프
+	@RequestMapping(value = "graphIncome", method = RequestMethod.GET)
+	@ResponseBody
+	public ArrayList<HashMap<String, String>> adminGraph(Model model) {
+		ArrayList<HashMap<String, String>> graphIncome = service.graphIncome();
+		model.addAttribute("graphIncome", graphIncome);
+		return graphIncome;
+	}
+	
+	// 예약분석그래프
+	@RequestMapping(value = "graphReservation", method = RequestMethod.GET)
+	@ResponseBody
+	public ArrayList<HashMap<String, String>> graphReservation(Model model) {
+		ArrayList<HashMap<String, String>> graphReservation = service.graphReservation();
+		model.addAttribute("graphReservation", graphReservation);
+		return graphReservation;
+	}
+	
+	// 예약분석그래프
+	@RequestMapping(value = "graphFlightState", method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, String> graphFlightState(Model model) {
+		HashMap<String, String> graphFlightState = service.graphFlightState();
+		model.addAttribute("graphFlightState", graphFlightState);
+		return graphFlightState;
+	}
 }

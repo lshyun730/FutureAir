@@ -132,5 +132,5 @@ public class PageNavigator {
 				+ ", currentGroup=" + currentGroup + ", startPageGroup=" + startPageGroup + ", endPageGroup="
 				+ endPageGroup + ", startRecord=" + startRecord + "]";
 	}
-	
+
 }
