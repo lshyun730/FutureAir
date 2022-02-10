@@ -24,42 +24,40 @@
 		            <div class="inputbox term">
 		                <p class="inputbox_title">작성일</p>
 		                <div class="inputbox_input">
-		                    <input type="date" name="board_date_start" placeholder="2022-01-22" value="${searchList.board_date_start }">
+		                    <input type="date" name="post_date_start" placeholder="2022-01-22" value="${searchList.board_date_start }">
 		                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
 		                </div>
 		            </div>
 		            <div class="inputbox">
 		                <div class="inputbox_input">
-		                    <input type="date" name="board_date_end" placeholder="2022-01-22" value="${searchList.board_date_end }">
+		                    <input type="date" name="post_date_end" placeholder="2022-01-22" value="${searchList.board_date_end }">
 		                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
 		                </div>
 		            </div>
 		            <div class="inputbox">
 		                <p class="inputbox_title">게시판</p>
-		                <div class="inputbox_input">
-		                    <select name="topic_type">
+		                <div class="inputbox_input selectbox">
+		                    <select name="board_name">
 		                        <option value="전체" selected>전체</option>
 		                    	<c:forEach var="topic" items="${topicList}">
 									<option value="${topic}" <c:if test="${topic eq searchList.topic_type}">selected="selected"</c:if> >${topic}</option>		                  
 		                    	</c:forEach>
 		                    </select>
-		                    <span class="inputbox_icon down"><i class="fas fa-chevron-down"></i></span>
 		                </div>
 		            </div>
 		            <div class="inputbox">
 		                <p class="inputbox_title">답변상태</p>
-		                <div class="inputbox_input">
+		                <div class="inputbox_input selectbox">
 		                    <select name="reply_type">
 		                        <option value="전체" selected>전체</option>
 		                        <option value="답변전">답변전</option>
 		                        <option value="답변완료">답변완료</option>
 		                    </select>
-		                    <span class="inputbox_icon down"><i class="fas fa-chevron-down"></i></span>
 		                </div>
 		            </div>
 		            <div class="inputbox">
 		                <p class="inputbox_title">검색어</p>
-		                <div class="inputbox_input">
+		                <div class="inputbox_input selectbox">
 		                    <input type="text" name="search_text" placeholder="검색어 입력" value="${searchList.search_text}">
 		                    <span class="inputbox_icon"><i class="fas fa-search"></i></span>
 		                </div>
@@ -99,24 +97,24 @@
 	            	</c:if>
 		            <c:forEach var="post" items="${postList}">
 		                <tr>
-		                    <td><input type="checkbox" name="tableSelect" value="${post.board_index}"></td>
-		                    <td>${post.topic_type}</td>
-		                    <td><a href="#">${post.title }</a></td>
-		                    <td><a href="customerInfo">${post.writer}</a></td>
+		                    <td><input type="checkbox" name="tableSelect" value="${post.POST_INDEX}"></td>
+		                    <td>${post.BOARD_NAME}</td>
+		                    <td><a href="#">${post.TITLE}</a></td>
+		                    <td><a href="customerInfo">${post.WRITER}</a></td>
 		                    <td>
-		                    <c:if test="${post.reply_type eq '1'}">
-			                    <c:if test="${post.reply_index eq null}"> 답변전 </c:if>
-			                    <c:if test="${post.reply_index ne null}"> 답변완료 </c:if>
+		                    <c:if test="${post.REPLY_TYPE eq '1'}">
+			                    <c:if test="${post.REPLY_INDEX eq null}"> 답변전 </c:if>
+			                    <c:if test="${post.REPLY_INDEX ne null}"> 답변완료 </c:if>
 			                </c:if>
-			                <c:if test="${post.reply_type eq '0'}">
+			                <c:if test="${post.REPLY_TYPE eq '0'}">
 			                	-
 			                </c:if>
 		                    </td>
 		                    <td>
 		                        <button class="btn_s more">답변하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
 		                    </td>
-		                    <td>${post.board_date }</td>
-		                    <td>${post.hits }</td>
+		                    <td>${post.POST_DATE }</td>
+		                    <td>${post.HITS }</td>
 		                    <td class="btn_m_wrap"><div class="btn_m"><span></span></div></td>
 		                </tr>
 		                </c:forEach>

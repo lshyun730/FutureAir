@@ -6,72 +6,71 @@
 
 <!-- 게시글관리 -->
 	<!-- 게시물 리스트 -->
-	<select id="getPostList" parameterType="HashMap" resultType="board">
-		select board_index, title, writer, topic_type, contents, to_char(board_date, 'YYYY-MM-DD') as board_date, hits, reply_type, reply_index
-		from board_fa
-		where 1=1	
-		<if test="!board_date_start.equals('')">and to_char(board_date, 'YYYY-MM-DD') >= #{board_date_start}</if>
-		<if test="!board_date_end.equals('')">and to_char(board_date, 'YYYY-MM-DD') &lt;= #{board_date_end}</if>	
-		<if test="!topic_type.equals('전체')">and topic_type = #{topic_type}</if>	
-		<if test="!reply_type.equals('전체')">and reply_type = '1'</if>
- 		<if test="reply_type.equals('답변완료')">and reply_index is not null</if>
-		<if test="reply_type.equals('답변전')">and reply_index is null</if>
-		<if test="!search_text.equals('')">and title like '%' || #{search_text} || '%'</if>
-		order by board_date desc
+	<select id="getPostList" parameterType="HashMap" resultType="HashMap">
+		select p.post_index, p.title, p.writer, p.board_name, p.contents, to_char(p.post_date, 'YYYY-MM-DD') as post_date, p.hits, p.reply_index, b.reply_type
+		from post_fa p, board_fa b
+		where p.board_name = b.board_name
+		<if test="!post_date_start.equals('')">and to_char(p.post_date, 'YYYY-MM-DD') >= #{post_date_start}</if>
+		<if test="!post_date_end.equals('')">and to_char(p.post_date, 'YYYY-MM-DD') &lt;= #{post_date_end}</if>	
+		<if test="!board_name.equals('전체')">and p.board_name = #{board_name}</if>	
+		<if test="!reply_type.equals('전체')">and b.reply_type = '1'</if>
+ 		<if test="reply_type.equals('답변완료')">and p.reply_index is not null</if>
+		<if test="reply_type.equals('답변전')">and p.reply_index is null</if>
+		<if test="!search_text.equals('')">and p.title like '%' || #{search_text} || '%'</if>
+		order by p.post_date desc
 	</select>
 	
 	<!-- 게시물 리스트 갯수 -->
 	<select id="getTotal" parameterType="HashMap" resultType="int">
 		select count(*)
-		from board_fa
-		where 1=1	
-		<if test="!board_date_start.equals('')">and to_char(board_date, 'YYYY-MM-DD') >= #{board_date_start}</if>
-		<if test="!board_date_end.equals('')">and to_char(board_date, 'YYYY-MM-DD') &lt;= #{board_date_end}</if>	
-		<if test="!topic_type.equals('전체')">and topic_type = #{topic_type}</if>	
-		<if test="!reply_type.equals('전체')">and reply_type = '1'</if>
- 		<if test="reply_type.equals('답변완료')">and reply_index is not null</if>
-		<if test="reply_type.equals('답변전')">and reply_index is null</if>
-		<if test="!search_text.equals('')">and title like '%' || #{search_text} || '%'</if>
+		from post_fa p, board_fa b
+		where p.board_name = b.board_name
+		<if test="!post_date_start.equals('')">and to_char(p.post_date, 'YYYY-MM-DD') >= #{post_date_start}</if>
+		<if test="!post_date_end.equals('')">and to_char(p.post_date, 'YYYY-MM-DD') &lt;= #{post_date_end}</if>	
+		<if test="!board_name.equals('전체')">and p.board_name = #{board_name}</if>	
+		<if test="!reply_type.equals('전체')">and b.reply_type = '1'</if>
+ 		<if test="reply_type.equals('답변완료')">and p.reply_index is not null</if>
+		<if test="reply_type.equals('답변전')">and p.reply_index is null</if>
+		<if test="!search_text.equals('')">and p.title like '%' || #{search_text} || '%'</if>
 	</select>
 	
 	<select id="getTopicList" resultType="String">
-		select topic_type from board_fa
-		group by topic_type
+		select board_name from board_fa
 	</select>
 	 
 	 <!-- 게시물 삭제 -->
 	<delete id="deletePost" parameterType="String">
-		delete from board_fa 
-		where board_index = to_number(#{board_index})
+		delete from post_fa 
+		where post_index = to_number(#{board_index})
 	</delete>
 	
 	
 <!-- 게시판관리 -->
 	<!-- 게시판 리스트 -->
  	<select id="getBoardList" resultType="HashMap">
-		select  a.*, count(b.count_today) count_today from 
-		(select topic_type, reply_type, count(*) count_all from board_fa group by topic_type,reply_type )a LEFT OUTER JOIN 
-		(select count(*) count_today, topic_type from board_fa 
-		where to_char(board_date, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')
-		group by topic_type
-		) B on (a.topic_type = B.topic_type)
-		GROUP BY a.topic_type, reply_type, count_all
+		select a.board_name, a.board_id, a.board_type, a.reply_type, a.write_right, a.read_right, nvl(b.count_allday, 0) count_allday, nvl(c.count_today, 0) count_today from 
+		(select * from board_fa) a LEFT OUTER JOIN 
+		(select board_name,  count(*) count_allday from post_fa group by board_name) b on (a.board_name = b.board_name)  LEFT OUTER JOIN 
+		(select board_name,  count(*) count_today from post_fa 
+		where to_char(post_date, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')
+		group by board_name) c on (b.board_name = c.board_name)
+		order by a.board_id desc
 	</select>
 	
 	<!-- 게시판 리스트 갯수 -->
 	<select id="getSettingTotal" resultType="int">
-		select count(distinct topic_type) from board_fa
+		select count(*) from board_fa
 	</select>
 	
 	<!-- 게시판 삭제 -->
 	<delete id="deleteBoard" parameterType="String">
 		delete from board_fa 
-		where topic_type = #{topic_type}
+		where board_name = #{board_name}
 	</delete>
 	
 	<!-- 관리자 게시판 추가하기 -->
-	<insert id="insertBoard" parameterType="HashMap">
-		insert into board_fa(board_index, title, writer, topic_type, contents) values(board_index_seq.nextval, #{title}, #{writer}, #{topic_type}, #{contents})
+	<insert id="insertBoard" parameterType="board">
+ 		insert into board_fa values(#{board_name}, board_index_seq.nextval,  #{board_type}, #{reply_type}, #{write_right}, #{read_right})
 	</insert>
 	
 </mapper>

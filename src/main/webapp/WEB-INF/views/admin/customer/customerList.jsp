@@ -51,18 +51,17 @@
 		            </div>
 		            <div class="inputbox">
 		                <p class="inputbox_title">성별</p>
-		                <div class="inputbox_input">
+		                <div class="inputbox_input selectbox">
 		                    <select id="customer_gender" name="customer_gender">
 		                        <option value="전체" <c:if test="${customer_gender eq '전체'}">selected</c:if> >전체</option>
 		                        <option value="남자" <c:if test="${customer_gender eq '남자'}">selected</c:if>>남자</option>
 		                        <option value="여자" <c:if test="${customer_gender eq '여자'}">selected</c:if>>여자</option>
 		                    </select>
-		                    <span class="inputbox_icon down"><i class="fas fa-chevron-down"></i></span>
 		                </div>
 		            </div>
 		            <div class="inputbox">
 		                <p class="inputbox_title">등급</p>
-		                <div class="inputbox_input">
+		                <div class="inputbox_input selectbox">
 		                    <select id="customer_grade" name="customer_grade">
 		                    	<option value="전체" <c:if test="${customer_grade eq '전체'}">selected</c:if>>전체</option>
 		                        <option value="일반" <c:if test="${customer_grade eq '일반'}">selected</c:if>>일반</option>
@@ -70,7 +69,6 @@
 		                        <option value="골드" <c:if test="${customer_grade eq '골드'}">selected</c:if>>골드</option>
 		                        <option value="플래티늄" <c:if test="${customer_grade eq '플래티늄'}">selected</c:if>>플래티늄</option>
 		                    </select>
-		                    <span class="inputbox_icon down"><i class="fas fa-chevron-down"></i></span>
 		                </div>
 		            </div>
 		            <div class="inputbox submit">
@@ -86,8 +84,8 @@
 		            <thead>
 		                <tr>
 		                    <th><input type="checkbox" onclick='selectAll(this)'></th>
-		                    <th>이름</th>
 		                    <th>아이디</th>
+		                    <th>이름</th>
 		                    <th>이메일</th>
 		                    <th>전화번호</th>
 		                    <th>성별</th>
@@ -106,12 +104,8 @@
 						<c:forEach var="customerList" items="${customerListAll}" varStatus="status">		
 							<tr>
 								<td><input type="checkbox" name="tableSelect" value="${customerList.customer_id}"></td>
-								<td>
-									<a href="<c:url value="customerInfo?id=${customerList.customer_id}"/>" onclick="window.open(this.href, '_blank', 'width=800,height=800');return false;">
-										${customerList.customer_name }
-									</a>
-								</td>
-								<td>${customerList.customer_id }</td>
+								<td><a href="javascript:popupOpen('customerInfo?id=${customerList.customer_id}')">${customerList.customer_id }</a></td>
+								<td>${customerList.customer_name }</td>
 								<td>${customerList.customer_email }</td>
 								<td>${customerList.customer_phone }</td>
 								<td>${customerList.customer_gender }</td>

@@ -25,7 +25,7 @@
         <form action="${pageContext.request.contextPath}/admin/flight/flightList" class="search_detail active" method="get" id="search_detail">
         	<div class="inputbox term">
                 <p class="inputbox_title">출발일</p>
-                <div class="inputbox_input">
+                <div class="inputbox_input ">
                     <input type="date" placeholder="2022-01-22" id="departure_date_start" name="departure_date_start" value="${searchMap.departure_date_start}" onchange="checkDate(this)">
                     <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
                 </div>
@@ -38,7 +38,7 @@
             </div>
             <div class="inputbox">
                 <p class="inputbox_title">출발지</p>
-                <div class="inputbox_input">
+                <div class="inputbox_input selectbox">
                 	<select name="departure_name" onchange="changeSelect(this)" id="departure_name">
                 		<option value="" disabled selected>도시 혹은 공항</option>
                 		<optgroup label="아시아">
@@ -70,12 +70,11 @@
 					        </c:forEach>
                 		</optgroup>
                 	</select>
-                    <span class="inputbox_icon"><i class="fas fa-plane-departure"></i></span>
                 </div>
             </div>
             <div class="inputbox">
                 <p class="inputbox_title">도착지</p>
-                <div class="inputbox_input">
+                <div class="inputbox_input selectbox">
                     <select name="arrival_name" onchange="changeSelect(this)"  id="arrival_name">
                 		<option value="" disabled selected>도시 혹은 공항</option>
                 		<optgroup label="아시아">
@@ -107,7 +106,6 @@
 					        </c:forEach>
                 		</optgroup>
                 	</select>
-                    <span class="inputbox_icon"><i class="fas fa-plane-arrival"></i></span>
                 </div>
             </div>
             <div class="inputbox">

@@ -45,7 +45,7 @@
 		from ( select to_char(reservation_date, 'YY-MM-DD') as reservation_date, sum(payment) as payment
 		        from reservation_fa
 		        where reservation_date between to_date(add_months(sysdate,-12))
-		                                        and to_date(add_months(sysdate,0)) 
+		                                        and to_date(add_months(sysdate,1)) 
 		        group by reservation_date
 		    ) a
 		  , ( select to_date(add_months(sysdate, - 11) ,'YY-MM-DD') + level - 1 as dt

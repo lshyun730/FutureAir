@@ -150,7 +150,7 @@
 	
 	<!-- 팝업창 : 회원정보 팝업창 정보에 필요한 개인 총결제금액 정보 불러오기(customerInfo.jsp) -->
 	<select id="customerFullPay" parameterType="string" resultType="string">
-		select sum(pay) as pay 
+		select sum(payment) as pay 
 		from reservation_fa
 		<where>
 			customer_id = #{customer_id}

@@ -129,7 +129,7 @@
 		        <form action="customerGrade" id="pagingForm" class="search_detail active" method="get" onsubmit="return search()">
 		            <div class="inputbox">
 		                <p class="inputbox_title">등급</p>
-		                <div class="inputbox_input">
+		                <div class="inputbox_input selectbox">
 		                    <select id="customer_grade" name="customer_grade">
 		                    	<option value="전체" <c:if test="${customer_grade eq '전체'}">selected</c:if>>전체</option>
 		                        <c:forEach var="customerGrade" items="${customerGradeAll}" varStatus="status">
@@ -138,7 +138,6 @@
 		                        	</c:forEach>
 		                    	</c:forEach>
 		                    </select>
-		                    <span class="inputbox_icon down"><i class="fas fa-chevron-down"></i></span>
 		                </div>
 		            </div>
 		            <div class="inputbox">
@@ -186,7 +185,7 @@
 								<td><input type="checkbox" name="tableSelect" value="${customerList.customer_id}"></td>
 								<td>${customerList.customer_joindate }</td>
 								<td>
-									<a href="<c:url value="customerInfo?id=${customerList.customer_id }"/>" onclick="window.open(this.href, '_blank', 'width=800,height=800');return false;">
+									<a href="javascript:popupOpen('customerInfo?id=${customerList.customer_id}')">
 										${customerList.customer_name }
 									</a>
 								</td>

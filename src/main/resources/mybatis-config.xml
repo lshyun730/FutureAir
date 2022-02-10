@@ -7,9 +7,10 @@
 		<typeAlias type="com.air.future.vo.Admin" alias="admin"/>
 		<typeAlias type="com.air.future.vo.Customer" alias="customer"/>
 		<typeAlias type="com.air.future.vo.Grade" alias="grade"/>
-		<typeAlias type="com.air.future.vo.Board" alias="board"/>
+		<typeAlias type="com.air.future.vo.Post" alias="post"/>
 		<typeAlias type="com.air.future.vo.Route" alias="route"/>
 		<typeAlias type="com.air.future.vo.Destination" alias="destination"/>
+		<typeAlias type="com.air.future.vo.Board" alias="board"/>
 	</typeAliases>
 	
 	<mappers>

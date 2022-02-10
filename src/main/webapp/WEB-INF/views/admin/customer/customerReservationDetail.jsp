@@ -37,53 +37,64 @@
             <div class="inner">
                 <!-- customer content S -->  
                 <section class="customer_content">
-                    <h2>전체 예약내역</h2>
-                    <!-- search detail S -->
-                    <form action="#" class="search_detail active" id="serch_detail">
-                        <div class="inputbox term">
-                            <p class="inputbox_title">예약일</p>
-                            <div class="inputbox_input">
-                                <input type="text" placeholder="2022-01-22">
-                                <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
-                            </div>
-                        </div>
-                        <div class="inputbox">
-                            <div class="inputbox_input">
-                                <input type="text" placeholder="2022-01-22">
-                                <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
-                            </div>
-                        </div>
-                        <div class="inputbox submit">
-                            <div class="inputbox_input">
-                                <input type="submit" value="검색">
-                            </div>
-                        </div>
-                    </form>
-                    <!-- search detail E -->
+                    <h2>예약내역상세</h2>
                     <!-- table S --> 
                     <table class="table">
                         <thead>
                             <tr>
-                                <th><input type="checkbox"></th>
                                 <th>예약번호</th>
-                                <th>승객</th>
-                                <th>출발지</th>
-                                <th>도착지</th>
-                                <th>출발일</th>
-                                <th>예약일</th>
+                                <th>이름</th>
+                                <th>여권번호</th>
                                 <th>결제가격</th>
+                                <th>여정안내서</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><input type="checkbox"></td>
-                                <td><a href="${pageContext.request.contextPath}/admin/customer/customerReservationDetail">R10001</a></td>
-                                <td><a href="#">홍길동</a></td>
-                                <td>부산</td>
-                                <td>인천</td>
+                                <td><a href="#">R10001</a></td>
+                                <td>홍길동</td>
+                                <td>M12345678</td>
+                                <td>50,000원</td>
+                                <td>
+                                    <button class="btn_s more"><span>출력</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+                                    <button class="btn_s more"><span>PDF</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+                                    <button class="btn_s more"><span>이메일</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- table E --> 
+                </section>
+                <!-- customer content E -->  
+                <!-- customer content S -->  
+                <section class="customer_content">
+                    <h2>여정</h2>
+                    <!-- table S --> 
+                    <table class="table">
+                        <colgroup>
+                        <col width="15%">
+                        <col width="38%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>여정</th>
+                                <th>출도착시간</th>
+                                <th>편명/기종</th>
+                                <th>기종</th>
+                                <th>클래스</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
                                 <td>2022-03-01</td>
-                                <td>2022-03-01</td>
-                                <td>431,000 원</td>
+                                <td class="flight_info">
+                                    <div class="from">부산/김해<span>08:50</span></div>
+                                    <div class="to">서울/김포<span>09:50</span></div>
+                                    <div class="direction"></div>
+                                </td>
+                                <td>F01032</td>
+                                <td>A330</td>
+                                <td>이코노미</td>
                             </tr>
                         </tbody>
                     </table>

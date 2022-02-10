@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.air.future.vo.Board;
+import com.air.future.vo.Post;
 
 @Repository
 public class AdminBoardDAO {
@@ -23,10 +24,10 @@ public class AdminBoardDAO {
 -------------- 
 */		
 	// 게시물 정보 가져오기
-	public ArrayList<Board> getPostList(HashMap<String, String> searchList, int startRecord, int countPerPage){
+	public ArrayList<HashMap<String, String>> getPostList(HashMap<String, String> searchList, int startRecord, int countPerPage){
 		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
 		RowBounds rb = new RowBounds(startRecord, countPerPage);
-		ArrayList<Board> postList = mapper.getPostList(searchList,rb);
+		ArrayList<HashMap<String, String>> postList = mapper.getPostList(searchList,rb);
 		return postList;		
 	}
 	
@@ -73,18 +74,16 @@ public class AdminBoardDAO {
 	}
 	
 	// 게시판 추가하기
-	public int insertBoard(HashMap<String, String> map) {
+	public int insertBoard(Board board) {
 		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
-		System.out.println("Dao 전");
-		int result = mapper.insertBoard(map);
-		System.out.println("Dao 후");
+		int result = mapper.insertBoard(board);
 		return result;
 		
 	}
 
-	public int deleteBoard(String reply_type) {
+	public int deleteBoard(String board_name) {
 		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
-		int result = mapper.deleteBoard(reply_type);
+		int result = mapper.deleteBoard(board_name);
 		return result;
 	}
 	

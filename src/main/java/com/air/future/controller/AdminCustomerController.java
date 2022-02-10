@@ -178,7 +178,14 @@ public class AdminCustomerController {
 	
 	// (customerReservation.jsp)
 	@RequestMapping(value = "customerReservation", method = RequestMethod.GET)
-	public String customerReservation(Model model) {
+	public String customerReservation(Model model, String id) {
+		model.addAttribute("id", id);
 		return "admin/customer/customerReservation";
+	}
+	
+	// (customerReservationDetail.jsp)
+	@RequestMapping(value = "customerReservationDetail", method = RequestMethod.GET)
+	public String customerReservationDetail(Model model) {
+		return "admin/customer/customerReservationDetail";
 	}
 }

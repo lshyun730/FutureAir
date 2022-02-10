@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-    <link rel="stylesheet" href="../../resources/css/admin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/resources/css/admin.css">
     <title>미래항공 관리자페이지</title>
 </head>
 <body>
@@ -17,9 +17,9 @@
             <header class="customer_header">
                 <nav class="lnb">
                     <ul>
-                        <li><a href="<c:url value="customerInfo.html?id=${id }" />">회원정보</a></li>
-                        <li><a href="customerReservation.html">예약내역</a></li>
-                        <li class="active"><a href="customerMileage.html">마일리지</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/customer/customerInfo?id=${id}">회원정보</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/customer/customerReservation?id=${id}">예약내역</a></li>
+                        <li class="active"><a href="${pageContext.request.contextPath}/admin/customer/customerMileage?id=${id}">마일리지</a></li>
                     </ul>
                 </nav>
                 <div class="profile">

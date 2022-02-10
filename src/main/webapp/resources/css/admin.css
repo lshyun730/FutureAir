@@ -62,7 +62,7 @@ fix
 .util .info .bell_icon i { font-size: 1.25rem; } 
 .util .profile .btn_m {right: 0.625rem;}
 
-/* conte */
+/* contents */
 .contents {padding-left: 16.5rem;}
 .contents h2{padding-bottom:0.875rem; }
 .contents .row {display: flex;padding: 0 1.875rem;flex-wrap: wrap; margin: 1.875rem -0.938rem;}
@@ -169,6 +169,11 @@ sub page
 .customer_detail .customer_contents { background-color: var(--white); height: 100%;} 
 .customer_detail .customer_content {padding-top: 1.875rem;}
 .customer_detail .search_detail {grid-template-columns: repeat(3, 1fr)}
+.customer_detail .flight_info {position: relative;;display: flex; justify-content: space-between; text-align: center; margin-right: 1.5rem; margin-left: 0;}
+.customer_detail .flight_info span {display: block; font-size: 1.25rem; font-weight: bold;}
+.customer_detail .flight_info .direction {position: absolute; width: 5.625rem; height: 1px; background: #000; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+.customer_detail .flight_info .direction::before {content:''; position: absolute; width: 0.313rem; height: 0.313rem; background: #000; display: block; transform: translate(-50% , -50%); top: 50%; left: 0; border-radius: 50%;} 
+.customer_detail .flight_info .direction::after {content:''; position: absolute; width: 0.313rem; height: 0.313rem; background: #000; display: block; transform: translate(50% , -50%); top: 50%; right: 0; border-radius: 50%;} 
 
 
 
@@ -242,8 +247,7 @@ sub page
 /* 상세검색 */
 .search_detail {display:none; align-items: flex-end; grid-template-columns: repeat(4, 1fr); column-gap: 1.875rem; row-gap: 0.875rem; background: var(--secondary); padding: 1.875rem; border-radius: 0.625rem; margin-bottom: 1.875rem; } 
 .search_detail.active {display: grid; }
-.search_detail .inputbox { display: grid; }
-.search_detail select {text-indent: 2.25rem}
+.search_detail .inputbox { display: grid;}
 .search_detail .inputbox.submit {grid-column: 4/5;}
 
 
@@ -252,14 +256,15 @@ input[type="date"]::-webkit-inner-spin-button {display: none;}
 input[type="date"]::-webkit-calendar-picker-indicator { position:absolute; width:100%; opacity: 0;}
 .inputbox_title { margin-bottom: 0.625rem; } 
 .inputbox_input { position: relative; } 
-.inputbox_input input, .inputbox_input select { padding:0.875rem 0.875rem 0.875rem 3.125rem; border-radius: 0.625rem; border: 1px solid var(--light); width: 100%; box-sizing: border-box; } 
+.inputbox_input input, .inputbox_input select { padding:0.875rem 1.25rem 0.875rem 3.125rem; border-radius: 0.625rem; border: 1px solid var(--light); width: 100%; box-sizing: border-box; } 
 .inputbox input::placeholder {color: var(--info);}
-.inputbox_input select { padding:0.875rem; appearance: none; position: relative;} 
-.inputbox_input select::after{font-family: "Font Awesome 5 Free";font-weight: 900; content: "\f078";position: absolute; top: 50%; left: 1.25rem; transform: translateY(-50%); color: var(--info); font-size: .875rem; }
 .inputbox_icon { position: absolute; top: 50%; left: 1.25rem; transform: translateY(-50%); color: var(--info); font-size: .875rem; } 
 .inputbox.no_icon .inputbox_input input {padding:0.875rem;}
 .inputbox.term .inputbox_input::after { display: block; content: ''; width:0.25rem ; height: 1px; background: var(--gray); position: absolute; right: 0; top: 50%; transform: translate(calc(50% + 0.875rem), -50%); } 
 .inputbox.submit input {width: 100%;}
+.selectbox{position: relative;}
+.selectbox select { padding:0.875rem 1.25rem; appearance: none; position: relative;} 
+.selectbox::after{font-family: "Font Awesome 5 Free";display:inline-block; font-weight: 900; content: "\f078";position: absolute; top: 50%; right: 1.25rem; transform: translateY(-50%); color: var(--info); font-size: .875rem; pointer-events: none;}
 
 
 .submit input { background: var(--primary); color: var(--white); padding:0.875rem 3.125rem; cursor: pointer; border: 0px ; border-radius: 0.625rem;} 

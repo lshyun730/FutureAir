@@ -1,19 +1,13 @@
 package com.air.future.service;
 
 import java.util.ArrayList;
-
-
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.air.future.dao.AdminBoardDAO;
-import com.air.future.dao.AdminBoardMapper;
 import com.air.future.vo.Board;
-import com.air.future.service.*;
 
 
 @Service
@@ -29,8 +23,8 @@ public class AdminBoardService {
 -------------- 
 */		
 	// 게시글 가져오기
-	public ArrayList<Board> getPostList(HashMap<String, String> searchList,PageNavigator navi){		
-		ArrayList<Board> postList = dao.getPostList(searchList,navi.getStartRecord(),navi.getCountPerPage());		
+	public ArrayList<HashMap<String, String>> getPostList(HashMap<String, String> searchList,PageNavigator navi){		
+		ArrayList<HashMap<String, String>> postList = dao.getPostList(searchList,navi.getStartRecord(),navi.getCountPerPage());		
 		return postList;
 	}
 	
@@ -87,9 +81,8 @@ public class AdminBoardService {
 	}
 	
 	// 게시판 추가하기
-	public int insertBoard(HashMap<String, String> map) {
-		int result = dao.insertBoard(map);
-		
+	public int insertBoard(Board board) {
+		int result = dao.insertBoard(board);
 		return result;
 		
 	}

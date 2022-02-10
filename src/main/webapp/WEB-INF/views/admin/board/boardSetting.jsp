@@ -40,6 +40,7 @@ function insertBoard(){
 		                    <th>게시판이름</th>
 		                    <th>게시판ID</th>
 		                    <th>새글/총갯수</th>
+		                    <th>권한(읽기/쓰기)</th>
 		                    <th>게시물관리</th>
 		                    <th>액션</th>
 		                </tr>
@@ -48,13 +49,14 @@ function insertBoard(){
 		            <c:if test="${empty boardList}">
 	            		<tr><td colspan="9" class="tableEmpty">검색 결과가 없습니다</td></tr>
 	            	</c:if>
-		            <c:forEach var="board" items="${boardList}" varStatus="status">
+		            <c:forEach var="board" items="${boardList}">
 		                <tr>
-		                    <td><input type="checkbox" name="tableSelect" value="${board.TOPIC_TYPE}"></td>
-		                    <td><c:if test="${board.REPLY_TYPE eq 0}">운영</c:if><c:if test="${board.REPLY_TYPE eq 1}">상담</c:if></td>
-		                    <td><a href="#">${board.TOPIC_TYPE}</a></td>
-		                    <td>${status.index + 1}</td>
-		                    <td>${board.COUNT_TODAY}/${board.COUNT_ALL}</td>
+		                    <td><input type="checkbox" name="tableSelect" value="${board.BOARD_NAME}"></td>
+		                    <td>${board.BOARD_TYPE}</td>
+		                    <td><a href="#">${board.BOARD_NAME}</a></td>
+		                    <td>${board.BOARD_ID}</td>
+		                    <td>${board.COUNT_TODAY}/${board.COUNT_ALLDAY}</td>
+		                    <td>${board.READ_RIGHT}/${board.WRITE_RIGHT}</td>
 		                    <td>
 		                        <button class="btn_s more">글쓰기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
 		                        <button class="btn_s more" onclick="window.open('boardSettingDelete?topic_type=${board.TOPIC_TYPE}', '_blank', 'width=800,height=800')">글삭제<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
@@ -86,33 +88,50 @@ function insertBoard(){
 	    <section class="modal" id="modal">
 	        <div class="modal_wrap">
 	            <h2>게시판추가</h2>
-	            <form action="#" class="create_board">
+	            <form action="insertBoard" class="create_board" method="post">
 	                <div class="inputbox no_icon">
 	                    <p class="inputbox_title">게시판이름</p>
 	                    <div class="inputbox_input">
-	                        <input type="text" placeholder="2022-01-22">
+	                        <input type="text" placeholder="게시판 이름을 입력해주세요" name="board_name">
 	                    </div>
 	                </div>
 	                <div class="inputbox">
-	                    <p class="inputbox_title">글쓰기권한</p>
-	                    <div class="inputbox_input">
-	                        <select name="status">
-	                            <option value="전체" selected>관리자</option>
-	                            <option value="답변전">회원</option>
-	                            <option value="답변완료">비회원</option>
+	                    <p class="inputbox_title">게시판종류</p>
+	                    <div class="inputbox_input selectbox">
+	                        <select name="board_type">
+	                            <option value="운영" selected>운영</option>
+	                            <option value="상담">상담</option>
+	                            <option value="상품">상품</option>
 	                        </select>
-	                        <span class="inputbox_icon down"><i class="fas fa-chevron-down"></i></span>
 	                    </div>
 	                </div>
 	                <div class="inputbox">
-	                    <p class="inputbox_title">글보기권한</p>
-	                    <div class="inputbox_input">
-	                        <select name="status">
-	                            <option value="전체" selected>관리자</option>
-	                            <option value="답변전">회원</option>
-	                            <option value="답변완료">비회원</option>
+	                    <p class="inputbox_title">답글허용</p>
+	                    <div class="inputbox_input selectbox">
+	                        <select name="reply_type">
+	                            <option value="1" selected>허용</option>
+	                            <option value="0">비허용</option>
 	                        </select>
-	                        <span class="inputbox_icon down"><i class="fas fa-chevron-down"></i></span>
+	                    </div>
+	                </div>
+	                <div class="inputbox">
+	                    <p class="inputbox_title">쓰기권한</p>
+	                    <div class="inputbox_input selectbox">
+	                        <select name="write_right">
+	                            <option value="관리자" selected>관리자</option>
+	                            <option value="회원">회원</option>
+	                            <option value="비회원">비회원</option>
+	                        </select>
+	                    </div>
+	                </div>
+	                <div class="inputbox">
+	                    <p class="inputbox_title">읽기권한</p>
+	                    <div class="inputbox_input selectbox">
+	                        <select name="read_right">
+	                            <option value="관리자" selected>관리자</option>
+	                            <option value="회원">회원</option>
+	                            <option value="비회원">비회원</option>
+ 	                        </select>
 	                    </div>
 	                </div>
 	                <div class="submit">

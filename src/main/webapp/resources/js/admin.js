@@ -92,6 +92,13 @@ function searchDetail() {
 function modalOpen(){ document.getElementById("modal").style.display = 'flex'; }
 function modalClose(){ document.getElementById("modal").style.display = 'none'; }
 
+
+// 팝업창 오픈
+function popupOpen(link) {
+	window.open(link, '_blank', 'width=1000,height=800');
+}
+
+
 //
 // 상세검색
 /*const btnSearchDetail = document.querySelector(".btn_search_detail");

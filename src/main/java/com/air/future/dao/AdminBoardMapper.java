@@ -6,11 +6,12 @@ import java.util.HashMap;
 import org.apache.ibatis.session.RowBounds;
 
 import com.air.future.vo.Board;
+import com.air.future.vo.Post;
 
 public interface AdminBoardMapper {
 	
 	// 게시물 리스트
-	public ArrayList<Board> getPostList(HashMap<String, String> searchList,RowBounds rb);
+	public ArrayList<HashMap<String, String>> getPostList(HashMap<String, String> searchList,RowBounds rb);
 	
 	// 게시물 총 갯수
 	public int getTotal(HashMap<String, String> map);
@@ -30,10 +31,10 @@ public interface AdminBoardMapper {
 	public int getSettingTotal();
 	
 	// 게시판 삭제
-	public int deleteBoard(String reply_type);
+	public int deleteBoard(String board_name);
 	
 	//게시판 추가하기
-	public int insertBoard(HashMap<String, String> map);
+	public int insertBoard(Board board);
 
 	
 }
