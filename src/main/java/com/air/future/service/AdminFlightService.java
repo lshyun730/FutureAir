@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.air.future.dao.AdminFlightDAO;
 import com.air.future.util.PageNavigator;
 import com.air.future.vo.Destination;
+import com.air.future.vo.Route;
 
 @Service
 public class AdminFlightService {
@@ -89,9 +90,14 @@ public class AdminFlightService {
 -------------- 
 */
 	// 취향지 리스트
-	public ArrayList<Destination> destinationList() {
-		ArrayList<Destination> destinationList = dao.destinationList();
+	public ArrayList<ArrayList<Destination>> destinationList() {
+		ArrayList<ArrayList<Destination>> destinationList = dao.destinationList();
 		return destinationList;
+	}
+
+	public Route getRoute(String route_num) {
+		Route route = dao.getRoute(route_num);
+		return route;
 	}
 
 

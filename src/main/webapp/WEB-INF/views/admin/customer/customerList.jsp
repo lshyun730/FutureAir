@@ -104,7 +104,7 @@
 						<c:forEach var="customerList" items="${customerListAll}" varStatus="status">		
 							<tr>
 								<td><input type="checkbox" name="tableSelect" value="${customerList.customer_id}"></td>
-								<td><a href="javascript:popupOpen('customerInfo?id=${customerList.customer_id}')">${customerList.customer_id }</a></td>
+								<td><a href="javascript:popupOpen('customerInfo?id=${customerList.customer_id}', 1000, 1000)">${customerList.customer_id }</a></td>
 								<td>${customerList.customer_name }</td>
 								<td>${customerList.customer_email }</td>
 								<td>${customerList.customer_phone }</td>
@@ -115,7 +115,17 @@
 								</td>
 								<td>${customerList.customer_country }</td>
 								<td>${customerList.customer_grade }</td>
-								<td class="btn_m_wrap"><div class="btn_m"><span></span></div></td>
+								<td class="more">
+		                            <div class="btn_m_wrap" onclick="click_more(this)">
+		                                <div class="btn_m">
+		                                    <span></span>
+		                                </div>
+		                                <ul class="select_list">
+		                                    <li><a href="#">수정</a></li> 
+		                                    <li><a href="#">삭제</a></li> 
+		                                </ul>
+		                            </div>
+		                        </td>
 							</tr>			
 						</c:forEach>
 		            </tbody>
@@ -159,6 +169,16 @@ function deleteAjax(deleteList) {
 		 }); 				 
 	 }
 }
+
+//액션 이외 선택시 액션 닫힘
+document.addEventListener('click', () => {;
+	var btn_m_wrap = document.getElementsByClassName('btn_m_wrap');
+	for(let i=0; i < btn_m_wrap.length; i ++) {
+	 	if (btn_m_wrap[i].classList.contains('active')) {
+	     	btn_m_wrap[i].classList.remove('active');
+	 	}	
+	}
+})
 </script>
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>

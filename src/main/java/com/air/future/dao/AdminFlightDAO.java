@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.air.future.vo.Destination;
+import com.air.future.vo.Route;
 
 @Repository
 public class AdminFlightDAO {
@@ -80,10 +81,21 @@ public class AdminFlightDAO {
 -------------- 
 */	
 	// 취향지 리스트
-	public ArrayList<Destination> destinationList() {
+	public ArrayList<ArrayList<Destination>> destinationList() {
 		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
-		ArrayList<Destination> destinationList = mapper.destinationList();
+		ArrayList<String> continentsList = mapper.continentsList();
+		ArrayList<ArrayList<Destination>> destinationList = new  ArrayList<ArrayList<Destination>>();
+		
+		for (String continent : continentsList) {
+			destinationList.add(mapper.destinationList(continent));
+		}
 		return destinationList;
 		
+	}
+
+	public Route getRoute(String route_num) {
+		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
+		Route route = mapper.getRoute(route_num);
+		return route;
 	}
 }

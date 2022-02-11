@@ -58,10 +58,6 @@
 	
 </script>
 <!-- Script E -->
-
-
-
-
 <!-- header S -->    
 <%@include file ="../include/header.jsp" %>
 <!-- header E -->
@@ -75,6 +71,7 @@
 		        <div class="flex_content_header">
 		            <h2>회원등급</h2>
 		            <div class="action">
+		                <button class="btn danger" onclick=''>선택삭제</button>
 		                <button class="btn primary" onclick='modalOpen();'>등급추가</button>
 		            </div>
 		        </div>
@@ -106,7 +103,17 @@
 									</c:choose>
 								</td>
 								<td>${customerGrade.the_count }</td>
-								<td class="btn_m_wrap"><div class="btn_m"><span></span></div></td>
+								<td class="more">
+		                            <div class="btn_m_wrap" onclick="click_more(this)">
+		                                <div class="btn_m">
+		                                    <span></span>
+		                                </div>
+		                                <ul class="select_list">
+		                                    <li><a href="#">수정</a></li> 
+		                                    <li><a href="#">삭제</a></li> 
+		                                </ul>
+		                            </div>
+		                        </td>
 							</tr>			
 						</c:forEach>
 		            </tbody>
@@ -185,7 +192,7 @@
 								<td><input type="checkbox" name="tableSelect" value="${customerList.customer_id}"></td>
 								<td>${customerList.customer_joindate }</td>
 								<td>
-									<a href="javascript:popupOpen('customerInfo?id=${customerList.customer_id}')">
+									<a href="javascript:popupOpen('customerInfo?id=${customerList.customer_id}', 1000, 1000)">
 										${customerList.customer_name }
 									</a>
 								</td>
@@ -200,7 +207,17 @@
 									<button class="btn_s more"><span>예약내역</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
 		                        	<button class="btn_s more"><span>마일리지</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
 								</td>
-								<td class="btn_m_wrap"><div class="btn_m"><span></span></div></td>
+								<td class="more">
+		                            <div class="btn_m_wrap" onclick="click_more(this)">
+		                                <div class="btn_m">
+		                                    <span></span>
+		                                </div>
+		                                <ul class="select_list">
+		                                    <li><a href="#">수정</a></li> 
+		                                    <li><a href="#">삭제</a></li> 
+		                                </ul>
+		                            </div>
+		                        </td>
 							</tr>			
 						</c:forEach>
 		            </tbody>
@@ -225,7 +242,7 @@
 	    </section>
 	    <!-- customer list  E -->   
 	</div>
-	    <!-- modal S -->  
+	    <!-- modal 등급추가 S -->  
 	    <section class="modal" id="modal">
 	        <div class="modal_wrap">
 	            <h2>회원등급추가</h2>
@@ -278,9 +295,20 @@
 	        </div>
 	        <div class="bg_black"></div>
 	    </section>
-	    <!-- modal E -->  
+	    <!-- modal 등급추가 E -->  
 </section>
 <!-- content E --> 
+<script>
+//액션 이외 선택시 액션 닫힘
+document.addEventListener('click', () => {;
+	var btn_m_wrap = document.getElementsByClassName('btn_m_wrap');
+	for(let i=0; i < btn_m_wrap.length; i ++) {
+	 	if (btn_m_wrap[i].classList.contains('active')) {
+	     	btn_m_wrap[i].classList.remove('active');
+	 	}	
+	}
+})
+</script>
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>
 <!-- footer E --> 

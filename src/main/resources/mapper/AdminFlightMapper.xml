@@ -138,8 +138,19 @@
 	
 <!-- 공통 -->	
 	<!-- 취향지리스트 -->
-	<select id="destinationList" resultType="destination">
+	<select id="destinationList" resultType="destination" parameterType="String">
 		select * from destination_fa
+		where continents = #{continents}
 	</select>
+	
+	<!-- 대륙리스트 -->
+	<select id="continentsList" resultType="String" parameterType="String">
+		select distinct continents from destination_fa
+	</select>
+	
+	<select id="getRoute" parameterType="String" resultType="route">
+		select * from route_fa where route_num = #{route_num}
+	</select>
+	
 </mapper>
 

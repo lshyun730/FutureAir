@@ -33,8 +33,20 @@ public interface AdminBoardMapper {
 	// 게시판 삭제
 	public int deleteBoard(String board_name);
 	
-	//게시판 추가하기
+	// 게시판 추가하기
 	public int insertBoard(Board board);
+	
+	// 게시판 정보
+	public Board getBoard(String board_name);
+	
+	// 게시판 게시글 리스트 갯수
+	public int getPostTotalByBoard(String board_name);
+	
+	// 게시판 게시글 리스트
+	public ArrayList<Post> getPostListByBoard(String board_name, RowBounds rb);
+
+	// 게시판 공지글 리스트
+	public ArrayList<Post> getNoticeList(String board_name);
 
 	
 }

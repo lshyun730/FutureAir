@@ -20,17 +20,17 @@
 		        </div>
 		        <!-- content header E -->   
 		        <!-- search detail S -->   
-		        <form action="boardManager" method="get" class="search_detail active" id="search_detail">
+		        <form action="postList" method="get" class="search_detail active" id="search_detail">
 		            <div class="inputbox term">
 		                <p class="inputbox_title">작성일</p>
 		                <div class="inputbox_input">
-		                    <input type="date" name="post_date_start" placeholder="2022-01-22" value="${searchList.board_date_start }">
+		                    <input type="date" name="post_date_start" data-placeholder="2022-01-22" value="${searchList.post_date_start }">
 		                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
 		                </div>
 		            </div>
 		            <div class="inputbox">
 		                <div class="inputbox_input">
-		                    <input type="date" name="post_date_end" placeholder="2022-01-22" value="${searchList.board_date_end }">
+		                    <input type="date" name="post_date_end" placeholder="2022-01-22" value="${searchList.post_date_end }">
 		                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
 		                </div>
 		            </div>
@@ -39,8 +39,8 @@
 		                <div class="inputbox_input selectbox">
 		                    <select name="board_name">
 		                        <option value="전체" selected>전체</option>
-		                    	<c:forEach var="topic" items="${topicList}">
-									<option value="${topic}" <c:if test="${topic eq searchList.topic_type}">selected="selected"</c:if> >${topic}</option>		                  
+		                    	<c:forEach var="board" items="${boardList}">
+									<option value="${board}" <c:if test="${board eq searchList.board_name}">selected="selected"</c:if> >${board}</option>		                  
 		                    	</c:forEach>
 		                    </select>
 		                </div>
@@ -49,15 +49,15 @@
 		                <p class="inputbox_title">답변상태</p>
 		                <div class="inputbox_input selectbox">
 		                    <select name="reply_type">
-		                        <option value="전체" selected>전체</option>
-		                        <option value="답변전">답변전</option>
-		                        <option value="답변완료">답변완료</option>
+		                        <option value="전체" <c:if test="${searchList.reply_type eq '전체'}">selected="selected"</c:if> >전체</option>
+		                        <option value="답변전" <c:if test="${searchList.reply_type eq '답변전'}">selected="selected"</c:if> >답변전</option>
+		                        <option value="답변완료" <c:if test="${searchList.reply_type eq '답변완료'}">selected="selected"</c:if> >답변완료</option>
 		                    </select>
 		                </div>
 		            </div>
 		            <div class="inputbox">
 		                <p class="inputbox_title">검색어</p>
-		                <div class="inputbox_input selectbox">
+		                <div class="inputbox_input">
 		                    <input type="text" name="search_text" placeholder="검색어 입력" value="${searchList.search_text}">
 		                    <span class="inputbox_icon"><i class="fas fa-search"></i></span>
 		                </div>
@@ -99,7 +99,7 @@
 		                <tr>
 		                    <td><input type="checkbox" name="tableSelect" value="${post.POST_INDEX}"></td>
 		                    <td>${post.BOARD_NAME}</td>
-		                    <td><a href="#">${post.TITLE}</a></td>
+		                    <td><a href="javascript:popupOpen('postView?post_index=${post.POST_INDEX}', 580)">${post.TITLE}</a></td>
 		                    <td><a href="customerInfo">${post.WRITER}</a></td>
 		                    <td>
 		                    <c:if test="${post.REPLY_TYPE eq '1'}">
@@ -115,7 +115,17 @@
 		                    </td>
 		                    <td>${post.POST_DATE }</td>
 		                    <td>${post.HITS }</td>
-		                    <td class="btn_m_wrap"><div class="btn_m"><span></span></div></td>
+		                    <td class="more">
+		                            <div class="btn_m_wrap" onclick="click_more(this)">
+		                                <div class="btn_m">
+		                                    <span></span>
+		                                </div>
+		                                <ul class="select_list">
+		                                    <li><a href="#">수정</a></li> 
+		                                    <li><a href="#">삭제</a></li> 
+		                                </ul>
+		                            </div>
+		                        </td>
 		                </tr>
 		                </c:forEach>
 		               
@@ -161,6 +171,17 @@ function deleteAjax(deleteList) {
 		 }); 				 
 	 }
 }
+
+
+//액션 이외 선택시 액션 닫힘
+document.addEventListener('click', () => {;
+	var btn_m_wrap = document.getElementsByClassName('btn_m_wrap');
+	for(let i=0; i < btn_m_wrap.length; i ++) {
+	 	if (btn_m_wrap[i].classList.contains('active')) {
+	     	btn_m_wrap[i].classList.remove('active');
+	 	}	
+	}
+})
 </script>
 <%@include file ="../include/footer.jsp" %>
 <!-- footer E --> 

@@ -73,4 +73,32 @@
  		insert into board_fa values(#{board_name}, board_index_seq.nextval,  #{board_type}, #{reply_type}, #{write_right}, #{read_right})
 	</insert>
 	
+	<!-- 게시판 정보 -->
+	<select id="getBoard" parameterType="String" resultType="board">
+		select * from board_fa where board_name = #{board_name}
+	</select>
+
+<!-- 게시판 별 처리 -->
+
+	<!-- 게시판 게시글 리스트 갯수 -->
+	<select id="getPostTotalByBoard" parameterType="String" resultType="int">
+		select count(*) from post_fa
+		where board_name = #{board_name}
+	</select>
+	
+	<!-- 게시판 게시글 리스트 -->
+	<select id="getPostListByBoard" parameterType="String" resultType="post">
+		select post_index, title, writer, to_char(post_date, 'yyyy-mm-dd') post_date, hits from post_fa
+		where board_name = #{board_name}
+		order by post_date desc
+	</select>
+	
+	<!-- 게시판 공지글 리스트 -->
+	<select id="getNoticeList" parameterType="String" resultType="post">
+		select post_index, title, writer, to_char(post_date, 'yyyy-mm-dd') post_date, hits from post_fa
+		where board_name = #{board_name}
+		and notice_index = 1
+		order by post_date desc
+	</select>
+	
 </mapper>

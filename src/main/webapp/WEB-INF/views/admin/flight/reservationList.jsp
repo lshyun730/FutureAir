@@ -52,34 +52,13 @@
 	                <div class="inputbox_input selectbox">
 	                	<select name="departure_name" onchange="changeSelect(this)" id="departure_name">
 	                		<option value="" disabled selected>도시 혹은 공항</option>
-	                		<optgroup label="아시아">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '아시아'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.departure_name}">selected="selected"</c:if> >${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
-	                		<optgroup label="아메리카">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '아메리카'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.departure_name}">selected="selected"</c:if>>${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
-	                		<optgroup label="유럽">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '유럽'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.departure_name}">selected="selected"</c:if>>${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
-	                		<optgroup label="오세아니아">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '오세아니아'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.departure_name}">selected="selected"</c:if>>${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
+	                		<c:forEach var="continent" items="${destinationList}">
+                				<optgroup label="${continent[0].continents}">
+                				<c:forEach var="destination" items="${continent}">
+							        <option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.departure_name}">selected="selected"</c:if> >${destination.airport_name} / ${destination.airport_id}</option>
+                				</c:forEach>
+                				</optgroup>
+					        </c:forEach>
 	                	</select>
 	                </div>
 	            </div>
@@ -88,34 +67,13 @@
 	                <div class="inputbox_input selectbox">
 	                    <select name="arrival_name" onchange="changeSelect(this)"  id="arrival_name">
 	                		<option value="" disabled selected>도시 혹은 공항</option>
-	                		<optgroup label="아시아">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '아시아'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.arrival_name}">selected="selected"</c:if>>${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
-	                		<optgroup label="아메리카">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '아메리카'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.arrival_name}">selected="selected"</c:if>>${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
-	                		<optgroup label="유럽">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '유럽'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.arrival_name}">selected="selected"</c:if>>${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
-	                		<optgroup label="오세아니아">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '오세아니아'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.arrival_name}">selected="selected"</c:if>>${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
+	                		<c:forEach var="continent" items="${destinationList}">
+                				<optgroup label="${continent[0].continents}">
+                				<c:forEach var="destination" items="${continent}">
+							        <option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.departure_name}">selected="selected"</c:if> >${destination.airport_name} / ${destination.airport_id}</option>
+                				</c:forEach>
+                				</optgroup>
+					        </c:forEach>
 	                	</select>
 	                </div>
 	            </div>
@@ -167,7 +125,17 @@
 	                    <td><fmt:formatDate value="${reservation_date}" pattern="yyyy-MM-dd" /></td>
 	                    <td>${reservation.RESERVATION_TYPE}</td>
 	                    <td><fmt:formatNumber value="${reservation.PAYMENT}" pattern="#,###"/> 원</td>
-	                    <td class="btn_m_wrap"><div class="btn_m"><span></span></div></td>
+	                    <td class="more">
+                            <div class="btn_m_wrap" onclick="click_more(this)">
+                                <div class="btn_m">
+                                    <span></span>
+                                </div>
+                                <ul class="select_list">
+                                    <li><a href="#">수정</a></li> 
+                                    <li><a href="#">삭제</a></li> 
+                                </ul>
+                            </div>
+                        </td>
 	                </tr>
             	</c:forEach>
 	            </tbody>
@@ -213,6 +181,17 @@ function deleteAjax(deleteList) {
 		 }); 				 
 	 }
 }
+
+
+//액션 이외 선택시 액션 닫힘
+document.addEventListener('click', () => {;
+	var btn_m_wrap = document.getElementsByClassName('btn_m_wrap');
+	for(let i=0; i < btn_m_wrap.length; i ++) {
+	 	if (btn_m_wrap[i].classList.contains('active')) {
+	     	btn_m_wrap[i].classList.remove('active');
+	 	}	
+	}
+})
 </script>
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>

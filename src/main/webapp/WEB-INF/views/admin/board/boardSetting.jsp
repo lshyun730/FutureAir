@@ -1,14 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<script>
-function insertBoard(){
-	var title = document.getElementsById("title");
-	var topic_type = document.getElementsById("topic_type");
-	var contents = document.getElementsById("contents");
-}
-
-</script>
 <!-- header S -->    
 <%@include file ="../include/header.jsp" %>
 <!-- header E -->
@@ -53,16 +44,26 @@ function insertBoard(){
 		                <tr>
 		                    <td><input type="checkbox" name="tableSelect" value="${board.BOARD_NAME}"></td>
 		                    <td>${board.BOARD_TYPE}</td>
-		                    <td><a href="#">${board.BOARD_NAME}</a></td>
+		                    <td><a href="javascript:popupOpen('updateBoard?board_name=${board.BOARD_NAME}', 500, 500)">${board.BOARD_NAME}</a></td>
 		                    <td>${board.BOARD_ID}</td>
 		                    <td>${board.COUNT_TODAY}/${board.COUNT_ALLDAY}</td>
 		                    <td>${board.READ_RIGHT}/${board.WRITE_RIGHT}</td>
 		                    <td>
-		                        <button class="btn_s more">글쓰기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more" onclick="window.open('boardSettingDelete?topic_type=${board.TOPIC_TYPE}', '_blank', 'width=800,height=800')">글삭제<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more" onclick="window.open('boardSettingNotice?topic_type=${board.TOPIC_TYPE}', '_blank', 'width=800,height=800')">공지글<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+		                        <button class="btn_s more" onclick="location.href='postList?board_name=${board.BOARD_NAME}'">글보기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+		                        <button class="btn_s more" onclick="popupOpen('postWrite?board_name=${board.BOARD_NAME}', 800, 800)">글쓰기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+		                        <button class="btn_s more" onclick="popupOpen('postNotice?board_name=${board.BOARD_NAME}', 800, 800)">공지글<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
 		                    </td>
-		                    <td class="btn_m_wrap"><div class="btn_m"><span></span></div></td>
+		                    <td class="more">
+		                            <div class="btn_m_wrap" onclick="click_more(this)">
+		                                <div class="btn_m">
+		                                    <span></span>
+		                                </div>
+		                                <ul class="select_list">
+		                                    <li><a href="#">수정</a></li> 
+		                                    <li><a href="#">삭제</a></li> 
+		                                </ul>
+		                            </div>
+		                        </td>
 		                </tr>
 		             </c:forEach>
 		            </tbody>
@@ -84,65 +85,65 @@ function insertBoard(){
 	    </section>
 	    <!-- board setting E -->  
 	</div>
-	    <!-- modal S -->  
-	    <section class="modal" id="modal">
-	        <div class="modal_wrap">
-	            <h2>게시판추가</h2>
-	            <form action="insertBoard" class="create_board" method="post">
-	                <div class="inputbox no_icon">
-	                    <p class="inputbox_title">게시판이름</p>
-	                    <div class="inputbox_input">
-	                        <input type="text" placeholder="게시판 이름을 입력해주세요" name="board_name">
-	                    </div>
-	                </div>
-	                <div class="inputbox">
-	                    <p class="inputbox_title">게시판종류</p>
-	                    <div class="inputbox_input selectbox">
-	                        <select name="board_type">
-	                            <option value="운영" selected>운영</option>
-	                            <option value="상담">상담</option>
-	                            <option value="상품">상품</option>
+	<!-- modal S -->  
+    <section class="modal" id="modal">
+        <div class="modal_wrap">
+            <h2>게시판추가</h2>
+            <form action="insertBoard" class="create_board" method="post">
+                <div class="inputbox no_icon">
+                    <p class="inputbox_title">게시판이름</p>
+                    <div class="inputbox_input">
+                        <input type="text" placeholder="게시판 이름을 입력해주세요" name="board_name">
+                    </div>
+                </div>
+                <div class="inputbox">
+                    <p class="inputbox_title">게시판종류</p>
+                    <div class="inputbox_input selectbox">
+                        <select name="board_type">
+                            <option value="운영" selected>운영</option>
+                            <option value="상담">상담</option>
+                            <option value="상품">상품</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="inputbox">
+                    <p class="inputbox_title">답글허용</p>
+                    <div class="inputbox_input selectbox">
+                        <select name="reply_type">
+                            <option value="1" selected>허용</option>
+                            <option value="0">비허용</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="inputbox">
+                    <p class="inputbox_title">쓰기권한</p>
+                    <div class="inputbox_input selectbox">
+                        <select name="write_right">
+                            <option value="관리자" selected>관리자</option>
+                            <option value="회원">회원</option>
+                            <option value="비회원">비회원</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="inputbox">
+                    <p class="inputbox_title">읽기권한</p>
+                    <div class="inputbox_input selectbox">
+                        <select name="read_right">
+                            <option value="관리자" selected>관리자</option>
+                            <option value="회원">회원</option>
+                            <option value="비회원">비회원</option>
 	                        </select>
-	                    </div>
-	                </div>
-	                <div class="inputbox">
-	                    <p class="inputbox_title">답글허용</p>
-	                    <div class="inputbox_input selectbox">
-	                        <select name="reply_type">
-	                            <option value="1" selected>허용</option>
-	                            <option value="0">비허용</option>
-	                        </select>
-	                    </div>
-	                </div>
-	                <div class="inputbox">
-	                    <p class="inputbox_title">쓰기권한</p>
-	                    <div class="inputbox_input selectbox">
-	                        <select name="write_right">
-	                            <option value="관리자" selected>관리자</option>
-	                            <option value="회원">회원</option>
-	                            <option value="비회원">비회원</option>
-	                        </select>
-	                    </div>
-	                </div>
-	                <div class="inputbox">
-	                    <p class="inputbox_title">읽기권한</p>
-	                    <div class="inputbox_input selectbox">
-	                        <select name="read_right">
-	                            <option value="관리자" selected>관리자</option>
-	                            <option value="회원">회원</option>
-	                            <option value="비회원">비회원</option>
- 	                        </select>
-	                    </div>
-	                </div>
-	                <div class="submit">
-	                    <input type="submit" value="추가하기">
-	                </div>
-	            </form>
-	            <button class="close" onclick="javascript:modalClose()"><i class="fas fa-times"></i></button>
-	        </div>
-	        <div class="bg_black"></div>
-	    </section>
-	    <!-- modal E -->  
+                    </div>
+                </div>
+                <div class="submit">
+                    <input type="submit" value="추가하기">
+                </div>
+            </form>
+            <button class="close" onclick="javascript:modalClose()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="bg_black"></div>
+    </section>
+    <!-- modal E -->     
 </section>
 <!-- content E --> 
 <script>
@@ -164,9 +165,18 @@ function deleteAjax(deleteList) {
 		 }); 				 
 	 }
 }
-</script>
-s
 
+
+//액션 이외 선택시 액션 닫힘
+document.addEventListener('click', () => {;
+	var btn_m_wrap = document.getElementsByClassName('btn_m_wrap');
+	for(let i=0; i < btn_m_wrap.length; i ++) {
+	 	if (btn_m_wrap[i].classList.contains('active')) {
+	     	btn_m_wrap[i].classList.remove('active');
+	 	}	
+	}
+})
+</script>
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>
 <!-- footer E --> 

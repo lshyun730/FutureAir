@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.apache.ibatis.session.RowBounds;
 
 import com.air.future.vo.Destination;
+import com.air.future.vo.Route;
 
 public interface AdminFlightMapper {
 
@@ -41,7 +42,11 @@ public interface AdminFlightMapper {
 // 공통
 	
 	// 취향지 리스트
-	public ArrayList<Destination> destinationList();
+	public ArrayList<Destination> destinationList(String destinationList);
+	
+	public ArrayList<String> continentsList();
+
+	public Route getRoute(String route_num);
 
 
 	

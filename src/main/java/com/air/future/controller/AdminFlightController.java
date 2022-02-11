@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.air.future.service.AdminFlightService;
 import com.air.future.util.PageNavigator;
 import com.air.future.vo.Destination;
+import com.air.future.vo.Route;
 
 
 @RequestMapping(value = "admin/flight")
@@ -55,7 +56,7 @@ public class AdminFlightController {
 		
 		int total = service.getRouteTotal(searchList);
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
-		ArrayList<Destination> destinationList =  service.destinationList();
+		ArrayList<ArrayList<Destination>> destinationList =  service.destinationList();
 		ArrayList<HashMap<String, String>> routeList = service.routeList(searchList, navi);
 		
 		model.addAttribute("searchMap", searchList);
@@ -64,6 +65,17 @@ public class AdminFlightController {
 		model.addAttribute("navi", navi);
 		
 		return "admin/flight/flightList";
+	}
+	
+	// 비행일정 수정이동
+	@RequestMapping(value = "flightUpdate", method = RequestMethod.GET)
+	public String flightUpdate(String route_num, Model model) {
+		ArrayList<ArrayList<Destination>> destinationList =  service.destinationList();
+		Route route = service.getRoute(route_num);
+		
+		model.addAttribute("destinationList", destinationList);
+		model.addAttribute("route", route);
+		return "admin/flight/flightUpdate";
 	}
 	
 	
@@ -108,7 +120,7 @@ public class AdminFlightController {
 		
 		int total = service.getReservationTotal(searchList);
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
-		ArrayList<Destination> destinationList =  service.destinationList();
+		ArrayList<ArrayList<Destination>> destinationList =  service.destinationList();
 		ArrayList<HashMap<String, String>> reservationList = service.reservationList(searchList, navi);
 		
 		model.addAttribute("searchMap", searchList);

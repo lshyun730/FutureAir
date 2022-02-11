@@ -57,7 +57,7 @@
     
             <span class="gnb_txt">BOARD</span>
             <li>
-                <a href="${pageContext.request.contextPath}/admin/board/boardManager">게시물관리
+                <a href="${pageContext.request.contextPath}/admin/board/postList">게시물관리
                     <span class="icon"><i class="fas fa-pen-alt"></i></span>
                 </a>
             </li>
