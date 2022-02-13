@@ -22,6 +22,8 @@ public interface AdminBoardMapper {
 	// 게시물 삭제
 	public int deletePost(String board_index);
 	
+	// 게시글 정보
+	public Post getPost(String post_index);	
 
 	
 	// 게시판 리스트
@@ -47,6 +49,8 @@ public interface AdminBoardMapper {
 
 	// 게시판 공지글 리스트
 	public ArrayList<Post> getNoticeList(String board_name);
+
+
 
 	
 }

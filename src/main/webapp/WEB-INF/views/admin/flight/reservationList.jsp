@@ -21,27 +21,27 @@
 	        <!-- content header E -->   
 	        <!-- search detail S -->
 	        <form action="#" class="search_detail active" id="search_detail">
-	            <div class="inputbox term">
+	            <div class="inputbox term icon">
 	                <p class="inputbox_title">출발일</p>
 	                <div class="inputbox_input">
 	                    <input type="date" id="departure_date_start" name="departure_date_start" value="${searchMap.departure_date_start}" onchange="checkDate(this)">
 	                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
 	                </div>
 	            </div>
-	            <div class="inputbox">
+	            <div class="inputbox icon">
 	                <div class="inputbox_input">
 	                    <input type="date" id="departure_date_end" name="departure_date_end" value="${searchMap.departure_date_end}"  onchange="checkDate(this)">
 	                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
 	                </div>
 	            </div>
-	            <div class="inputbox term">
+	            <div class="inputbox term icon">
 	                <p class="inputbox_title">예약일</p>
 	                <div class="inputbox_input">
 	                    <input type="date" id="reservation_date_start" name="reservation_date_start" value="${searchMap.reservation_date_start}">
 	                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
 	                </div>
 	            </div>
-	            <div class="inputbox">
+	            <div class="inputbox icon">
 	                <div class="inputbox_input">
 	                    <input type="date"  id="reservation_date_end" name="reservation_date_end" value="${searchMap.reservation_date_end}">
 	                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
@@ -77,7 +77,7 @@
 	                	</select>
 	                </div>
 	            </div>
-	            <div class="inputbox">
+	            <div class="inputbox icon">
 	                <p class="inputbox_title">예약자 </p>
 	                <div class="inputbox_input">
 	                    <input type="text" placeholder="홍길동" name="customer_name">
@@ -131,7 +131,6 @@
                                     <span></span>
                                 </div>
                                 <ul class="select_list">
-                                    <li><a href="#">수정</a></li> 
                                     <li><a href="#">삭제</a></li> 
                                 </ul>
                             </div>

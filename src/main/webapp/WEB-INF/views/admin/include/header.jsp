@@ -62,7 +62,7 @@
                 </a>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}/admin/board/boardSetting">게시판설정
+                <a href="${pageContext.request.contextPath}/admin/board/boardList">게시판설정
                     <span class="icon"><i class="fas fa-cog"></i></span>
                 </a>
             </li>

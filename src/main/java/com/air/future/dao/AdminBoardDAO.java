@@ -111,5 +111,11 @@ public class AdminBoardDAO {
 		ArrayList<Post> noticeList = mapper.getNoticeList(board_name);
 		return noticeList;
 	}
+
+	public Post getPost(String post_index) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		Post post = mapper.getPost(post_index);
+		return post;
+	}
 	
 }

@@ -32,7 +32,7 @@
 		                    <th>게시판ID</th>
 		                    <th>새글/총갯수</th>
 		                    <th>권한(읽기/쓰기)</th>
-		                    <th>게시물관리</th>
+		                    <th>게시판관리</th>
 		                    <th>액션</th>
 		                </tr>
 		            </thead>
@@ -44,13 +44,13 @@
 		                <tr>
 		                    <td><input type="checkbox" name="tableSelect" value="${board.BOARD_NAME}"></td>
 		                    <td>${board.BOARD_TYPE}</td>
-		                    <td><a href="javascript:popupOpen('updateBoard?board_name=${board.BOARD_NAME}', 500, 500)">${board.BOARD_NAME}</a></td>
+		                    <td><a href="">${board.BOARD_NAME}</a></td>
 		                    <td>${board.BOARD_ID}</td>
 		                    <td>${board.COUNT_TODAY}/${board.COUNT_ALLDAY}</td>
 		                    <td>${board.READ_RIGHT}/${board.WRITE_RIGHT}</td>
 		                    <td>
 		                        <button class="btn_s more" onclick="location.href='postList?board_name=${board.BOARD_NAME}'">글보기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more" onclick="popupOpen('postWrite?board_name=${board.BOARD_NAME}', 800, 800)">글쓰기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+		                        <button class="btn_s more" onclick="popupOpen('postWrite?board_name=${board.BOARD_NAME}', 500, 600)">글쓰기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
 		                        <button class="btn_s more" onclick="popupOpen('postNotice?board_name=${board.BOARD_NAME}', 800, 800)">공지글<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
 		                    </td>
 		                    <td class="more">
@@ -59,7 +59,7 @@
 		                                    <span></span>
 		                                </div>
 		                                <ul class="select_list">
-		                                    <li><a href="#">수정</a></li> 
+		                                    <li><a href="javascript:popupOpen('updateBoard?board_name=${board.BOARD_NAME}', 500, 500)">수정</a></li> 
 		                                    <li><a href="#">삭제</a></li> 
 		                                </ul>
 		                            </div>
@@ -90,7 +90,7 @@
         <div class="modal_wrap">
             <h2>게시판추가</h2>
             <form action="insertBoard" class="create_board" method="post">
-                <div class="inputbox no_icon">
+                <div class="inputbox width100">
                     <p class="inputbox_title">게시판이름</p>
                     <div class="inputbox_input">
                         <input type="text" placeholder="게시판 이름을 입력해주세요" name="board_name">
@@ -132,7 +132,7 @@
                             <option value="관리자" selected>관리자</option>
                             <option value="회원">회원</option>
                             <option value="비회원">비회원</option>
-	                        </select>
+	                    </select>
                     </div>
                 </div>
                 <div class="submit">

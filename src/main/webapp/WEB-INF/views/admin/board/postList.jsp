@@ -21,14 +21,14 @@
 		        <!-- content header E -->   
 		        <!-- search detail S -->   
 		        <form action="postList" method="get" class="search_detail active" id="search_detail">
-		            <div class="inputbox term">
+		            <div class="inputbox term icon">
 		                <p class="inputbox_title">작성일</p>
 		                <div class="inputbox_input">
 		                    <input type="date" name="post_date_start" data-placeholder="2022-01-22" value="${searchList.post_date_start }">
 		                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
 		                </div>
 		            </div>
-		            <div class="inputbox">
+		            <div class="inputbox icon">
 		                <div class="inputbox_input">
 		                    <input type="date" name="post_date_end" placeholder="2022-01-22" value="${searchList.post_date_end }">
 		                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
@@ -55,7 +55,7 @@
 		                    </select>
 		                </div>
 		            </div>
-		            <div class="inputbox">
+		            <div class="inputbox icon">
 		                <p class="inputbox_title">검색어</p>
 		                <div class="inputbox_input">
 		                    <input type="text" name="search_text" placeholder="검색어 입력" value="${searchList.search_text}">
@@ -99,7 +99,7 @@
 		                <tr>
 		                    <td><input type="checkbox" name="tableSelect" value="${post.POST_INDEX}"></td>
 		                    <td>${post.BOARD_NAME}</td>
-		                    <td><a href="javascript:popupOpen('postView?post_index=${post.POST_INDEX}', 580)">${post.TITLE}</a></td>
+		                    <td><a href="#">${post.TITLE}</a></td>
 		                    <td><a href="customerInfo">${post.WRITER}</a></td>
 		                    <td>
 		                    <c:if test="${post.REPLY_TYPE eq '1'}">
@@ -121,7 +121,7 @@
 		                                    <span></span>
 		                                </div>
 		                                <ul class="select_list">
-		                                    <li><a href="#">수정</a></li> 
+		                                    <li><a href="javascript:popupOpen('postUpdate?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}', 500, 600)">수정</a></li> 
 		                                    <li><a href="#">삭제</a></li> 
 		                                </ul>
 		                            </div>

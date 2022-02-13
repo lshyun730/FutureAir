@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.air.future.vo.Airplane;
 import com.air.future.vo.Destination;
 import com.air.future.vo.Route;
 
@@ -97,5 +98,17 @@ public class AdminFlightDAO {
 		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
 		Route route = mapper.getRoute(route_num);
 		return route;
+	}
+
+	public int insertFlight(HashMap<String, String> routeForm) {
+		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
+		int result = mapper.insertFlight(routeForm);
+		return result;
+	}
+
+	public ArrayList<Airplane> getAirplaneList() {
+		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
+		ArrayList<Airplane> planeList = mapper.getAirplaneList();
+		return planeList;
 	}
 }

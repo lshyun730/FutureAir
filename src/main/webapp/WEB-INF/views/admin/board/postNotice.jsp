@@ -41,7 +41,7 @@
             </tbody>
         </table>
         <div class="submit">
-            <input type="submit" value="공지글해재">
+            <input type="submit" value="공지글해제">
         </div>
     </section>
     

@@ -109,7 +109,7 @@
 		                                    <span></span>
 		                                </div>
 		                                <ul class="select_list">
-		                                    <li><a href="#">수정</a></li> 
+		                                    <li><a href="javascript:popupOpen('customerGradeUpdate', 550, 600)">수정</a></li> 
 		                                    <li><a href="#">삭제</a></li> 
 		                                </ul>
 		                            </div>
@@ -147,14 +147,14 @@
 		                    </select>
 		                </div>
 		            </div>
-		            <div class="inputbox">
+		            <div class="inputbox icon">
 		                <p class="inputbox_title">이름</p>
 		                <div class="inputbox_input">
 		                    <input type="text" id="customer_name" name="customer_name" placeholder="홍길동" value="${customer_name}">
 		                    <span class="inputbox_icon"><i class="fas fa-user"></i></span>
 		                </div>
 		            </div>
-		            <div class="inputbox">
+		            <div class="inputbox icon">
 		                <p class="inputbox_title">아이디</p>
 		                <div class="inputbox_input">
 		                    <input type="text" id="customer_id" name="customer_id" placeholder="future123" value="${customer_id}">

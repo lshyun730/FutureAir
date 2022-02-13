@@ -11,5 +11,7 @@ public class Post {
 	private String contents;
 	private String post_date;
 	private int hits;
+	private String notice_index;	
+	private String post_type;	
 	private String reply_index;
 }

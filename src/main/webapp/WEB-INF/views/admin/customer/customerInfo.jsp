@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
     <title>미래항공 관리자페이지</title>
 </head>
-<body>
+<body style="">
     <!-- customer detail  S -->  
     <div class="customer_detail">
         <div class="inner">

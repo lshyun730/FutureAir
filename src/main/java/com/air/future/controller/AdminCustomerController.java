@@ -77,17 +77,6 @@ public class AdminCustomerController {
 		return result;
 	}
 	
-	/*
-	// 회원등급 이동 및 회원등급, 회원등급별 회원관리 부분 불러오기(customerGrade.jsp)
-	@RequestMapping(value = "customerGrade", method = RequestMethod.GET)
-	public String customerGrade(Model model) {
-		ArrayList<Grade> customerGradeAll = service.customerGradeAll(); 	// 설정된 회원등급 및 등급에 따른 회원수 불러오는 파트
-		ArrayList<Customer> customerListAll = service.customerListAll();	// 회원등급 별 회원관리를 위한 회원정보 불러오는 파트
-		model.addAttribute("customerGradeAll", customerGradeAll);
-		model.addAttribute("customerListAll", customerListAll);
-		return "admin/customer/customerGrade";
-	}*/
-	
 	// 회원등급 이동 및 회원등급, 회원등급별 회원관리 부분 불러오기(customerGrade.jsp)
 	// 회원정보 검색을 통해 회원등급 별 회원관리 부분에 회원정보 값 불러오기(customerGrade.jsp)
 	@RequestMapping(value = "customerGrade", method = RequestMethod.GET)
@@ -187,5 +176,15 @@ public class AdminCustomerController {
 	@RequestMapping(value = "customerReservationDetail", method = RequestMethod.GET)
 	public String customerReservationDetail(Model model) {
 		return "admin/customer/customerReservationDetail";
+	}
+	
+	@RequestMapping(value="customerUpdate", method = RequestMethod.GET)
+	public String customerUpdate() {
+		return "admin/customer/customerUpdate";
+	}
+	
+	@RequestMapping(value="customerGradeUpdate", method = RequestMethod.GET)
+	public String customerGradeUpdate() {
+		return "admin/customer/customerGradeUpdate";
 	}
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 
+import com.air.future.vo.Airplane;
 import com.air.future.vo.Destination;
 import com.air.future.vo.Route;
 
@@ -20,6 +21,7 @@ public interface AdminFlightMapper {
 	
 	// 비행일정 삭제
 	public int deleteRoute(String route_num);
+	
 	
 	
 	
@@ -47,6 +49,10 @@ public interface AdminFlightMapper {
 	public ArrayList<String> continentsList();
 
 	public Route getRoute(String route_num);
+
+	public int insertFlight(HashMap<String, String> routeForm);
+
+	public ArrayList<Airplane> getAirplaneList();
 
 
 	

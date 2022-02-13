@@ -44,6 +44,12 @@
 		where post_index = to_number(#{board_index})
 	</delete>
 	
+	<!-- 게시물 정보 -->
+	<select id="getPost" parameterType="String" resultType="post">
+		select * from post_fa 
+		where post_index = #{post_index}
+	</select>
+	
 	
 <!-- 게시판관리 -->
 	<!-- 게시판 리스트 -->

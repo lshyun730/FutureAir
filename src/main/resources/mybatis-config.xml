@@ -11,6 +11,7 @@
 		<typeAlias type="com.air.future.vo.Route" alias="route"/>
 		<typeAlias type="com.air.future.vo.Destination" alias="destination"/>
 		<typeAlias type="com.air.future.vo.Board" alias="board"/>
+		<typeAlias type="com.air.future.vo.Airplane" alias="airplane"/>
 	</typeAliases>
 	
 	<mappers>

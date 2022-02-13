@@ -43,17 +43,18 @@ public class AdminBoardController {
 								@RequestParam(value = "search_text", defaultValue = "") String searchtext,
 								Model model) {
 		
-		HashMap<String, String> searchList = new HashMap<>();
+		// 전달받은 파라미터 저장
+		HashMap<String, String> searchList = new HashMap<>(); 
 		searchList.put("post_date_start", post_date_start);
 		searchList.put("post_date_end", post_date_end);
 		searchList.put("board_name", board_name);
 		searchList.put("reply_type", reply_type);
 		searchList.put("search_text", searchtext);
 		
-		int total = service.getTotal(searchList);
-		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total); 
-		ArrayList<HashMap<String, String>> postList = service.getPostList(searchList,navi);
-		ArrayList<String> boardList = service.getTopicList();
+		int total = service.getTotal(searchList); // 게시물 갯수
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total); // 페이징처리
+		ArrayList<HashMap<String, String>> postList = service.getPostList(searchList,navi); // 게시물리스트
+		ArrayList<String> boardList = service.getTopicList(); // 게시판이름리스트
 		
 		model.addAttribute("searchList", searchList);
 		model.addAttribute("postList", postList);
@@ -63,68 +64,86 @@ public class AdminBoardController {
 		return "admin/board/postList";
 	}
 	
-	//게시물 삭제하기
+	//게시물 리스트 삭제
 	@RequestMapping(value = "deletePost", method = RequestMethod.POST)
 	@ResponseBody
 	public int boardDelete(HttpServletRequest request) {
-		String[] deleteList = request.getParameterValues("deleteList");
-		int result = service.deletePost(deleteList);
+		String[] deleteList = request.getParameterValues("deleteList"); // 삭제할 게시물 번호 리스트
+		int result = service.deletePost(deleteList); // 게시물 삭제
 		return result;
 	}
 	
-	// 게시글 보기/수정 이동
-	@RequestMapping(value = "postView", method = RequestMethod.GET)
-	public String postView(String post_index, Model model) {
-		return "admin/board/postView";
+	// 게시글 수정 이동
+	@RequestMapping(value = "postUpdate", method = RequestMethod.GET)
+	public String postUpdate(String post_index, String board_name, Model model) {
+		ArrayList<String> boardList = service.getTopicList(); // 게시판 이름 리스트
+		Post post = service.getPost(post_index); // 게시물 정보
+		
+		model.addAttribute("post", post);
+		model.addAttribute("board_name", board_name);
+		model.addAttribute("boardList", boardList);
+		return "admin/board/postUpdate";
 	}
 		
 	
 /* 
 --------------
-게시판 팝업
+게시판 설정
 -------------- 
 */	
 	// 게시판설정 페이지 이동
-	@RequestMapping(value = "boardSetting", method = RequestMethod.GET)
-	public String boardSetting(@RequestParam(value = "page", defaultValue = "1") int page,
-								Model model) {
+	@RequestMapping(value = "boardList", method = RequestMethod.GET)
+	public String boardSetting(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
 
-		int settingTotal = service.getSettingTotal();
-		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, settingTotal);
-		ArrayList<HashMap<String, String>> boardList = service.getBoardList(navi);
+		int settingTotal = service.getSettingTotal(); // 게시판 갯수
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, settingTotal); //페이징처리
+		ArrayList<HashMap<String, String>> boardList = service.getBoardList(navi); // 게시판 리스트
 		
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("navi", navi);
-		return "admin/board/boardSetting";
+		return "admin/board/boardList";
 	}
 
 	// 게시판삭제
 	@RequestMapping(value = "deleteBoard", method = RequestMethod.POST)
 	@ResponseBody
 	public int deleteBoard(HttpServletRequest request) {
-		String[] deleteList = request.getParameterValues("deleteList");
-		int result = service.deleteBoard(deleteList);
+		String[] deleteList = request.getParameterValues("deleteList"); // 삭제할 게시판 이름 리스트
+		int result = service.deleteBoard(deleteList); // 게시판 삭제
 		return result;
 	}
 	
-	// 게시물관리 - 글쓰기
+	// 게시판 추가
+	@RequestMapping(value = "insertBoard", method = RequestMethod.POST)
+	public String insertBoard(Board board) {
+		service.insertBoard(board); // 게시판 추가
+		return "redirect:/admin/board/boardList";
+	}
+
+	
+/* 
+--------------
+게시판 설정 - 팝업
+-------------- 
+*/	
+	// 게시판관리 - 글쓰기
 	@RequestMapping(value = "postWrite", method = RequestMethod.GET)
 	public String postWrite(String board_name, Model model) {
-		ArrayList<String> boardList = service.getTopicList();
+		ArrayList<String> boardList = service.getTopicList(); // 게시판 이름 리스트
 		
 		model.addAttribute("board_name", board_name);
 		model.addAttribute("boardList", boardList);
 		return "admin/board/postWrite";
 	}
 	
-	// 게시물관리 - 공지글
+	// 게시판관리 - 공지글
 	@RequestMapping(value = "postNotice", method = RequestMethod.GET)
 	public String postNotice(@RequestParam(value = "page", defaultValue = "1") int page, String board_name, Model model) {
 		
-		int total = service.getPostTotalByBoard(board_name);
-		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);	
-		ArrayList<Post> noticeList = service.getNoticeList(board_name);
-		ArrayList<Post> postList = service.getPostListByBoard(board_name, navi);
+		int total = service.getPostTotalByBoard(board_name); // 게시물 갯수
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total); // 페이징처리	
+		ArrayList<Post> noticeList = service.getNoticeList(board_name); // 공지글 리스트
+		ArrayList<Post> postList = service.getPostListByBoard(board_name, navi); // 게시글 리스트
 		
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("postList", postList);
@@ -134,27 +153,11 @@ public class AdminBoardController {
 		return "admin/board/postNotice";
 	}
 		
-	// 게시판 추가
-	@RequestMapping(value = "insertBoard", method = RequestMethod.POST)
-	public String insertBoard(Board board) {
-		service.insertBoard(board);
-		return "redirect:/admin/board/boardSetting";
-	}
-	
 	// 게시판 수정 이동
 	@RequestMapping(value = "updateBoard", method = RequestMethod.GET)
 	public String updateBoard(String board_name, Model model) {
-		Board board = service.getBoard(board_name);
+		Board board = service.getBoard(board_name); // 게시판 정보
 		model.addAttribute("board", board);
 		return "admin/board/boardUpdate";
-	}
-	
-	// 게시판 수정
-	@ResponseBody
-	@RequestMapping(value = "updateBoard", method = RequestMethod.POST)
-	public int updateBoard(Board board) {
-//		int result = service.updateBoard(board);
-//		return result;
-		return 0;
 	}
 }

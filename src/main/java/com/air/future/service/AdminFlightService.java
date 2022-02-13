@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.air.future.dao.AdminFlightDAO;
 import com.air.future.util.PageNavigator;
+import com.air.future.vo.Airplane;
 import com.air.future.vo.Destination;
 import com.air.future.vo.Route;
 
@@ -98,6 +99,21 @@ public class AdminFlightService {
 	public Route getRoute(String route_num) {
 		Route route = dao.getRoute(route_num);
 		return route;
+	}
+
+	public int insertFlight(HashMap<String, String> routeForm) {
+		String departure_date = routeForm.get("departure_date") + " " + routeForm.get("departure_time");
+		String arrival_date = routeForm.get("arrival_date") + " " + routeForm.get("arrival_time");
+		
+		routeForm.put("departure_date", departure_date);
+		routeForm.put("arrival_date", arrival_date);
+		int result = dao.insertFlight(routeForm);
+		return result;
+	}
+
+	public ArrayList<Airplane> getAirplaneList() {
+		ArrayList<Airplane> planeList = dao.getAirplaneList();
+		return planeList;
 	}
 
 

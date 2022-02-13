@@ -107,5 +107,10 @@ public class AdminBoardService {
 		return noticeList;
 	}
 
+	public Post getPost(String post_index) {
+		Post post = dao.getPost(post_index);
+		return post;
+	}
+
 	
 }

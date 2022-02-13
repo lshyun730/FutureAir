@@ -15,7 +15,7 @@
 <body style="background: #fff">
 <!-- popup S -->  
 <section class="popup" id="popup">
-	<form action="flightUpdate" class="flight_update" method="post">
+	<form action="" class="flight_update">
         <h2>비행정보</h2>
         <section>
         	<h3>기본정보</h3>
@@ -29,9 +29,9 @@
 	        	</colgroup>
 	            <tr>
 	                <th>비행번호</th>
-	                <td><input type="text" value=" ${route.route_num}" readonly="readonly"/> </td>
+	                <td><input type="text"/> </td>
 	                <th>비행기아이디</th>
- 	                <td><input type="text" value=" ${route.airplane_id}" disabled="disabled"/></td>
+ 	                <td><input type="text"/></td>
 	            </tr>
         	</table>
         	<!-- table E --> 
@@ -54,7 +54,7 @@
 	                     	<c:forEach var="continent" items="${destinationList}">
 	               				<optgroup label="${continent[0].continents}">
 	               				<c:forEach var="destination" items="${continent}">
-							        <option value="${destination.airport_name}" <c:if test="${destination.airport_name eq route.departure_name}">selected="selected"</c:if> >${destination.airport_name} / ${destination.airport_id}</option>
+							        <option value="${destination.airport_name}">${destination.airport_name} / ${destination.airport_id}</option>
 	               				</c:forEach>
 	               				</optgroup>
 					        </c:forEach>
@@ -67,7 +67,7 @@
 	                    	<c:forEach var="continent" items="${destinationList}">
 	               				<optgroup label="${continent[0].continents}">
 	               				<c:forEach var="destination" items="${continent}">
-							        <option value="${destination.airport_name}" <c:if test="${destination.airport_name eq route.arrival_name}">selected="selected"</c:if> >${destination.airport_name} / ${destination.airport_id}</option>
+							        <option value="${destination.airport_name}" >${destination.airport_name} / ${destination.airport_id}</option>
 	               				</c:forEach>
 	               				</optgroup>
 					        </c:forEach>
@@ -75,29 +75,23 @@
                     </td>
 	            </tr>
 	            <tr>
-	            	<fmt:parseDate value="${route.departure_date}" var="departure_date_time" pattern="yyyy-MM-dd HH:mm:ss.S"/>
-	               	<fmt:formatDate var="departure_date" pattern="yyyy-MM-dd" value="${departure_date_time}"/>
-	               	<fmt:formatDate var="departure_time" pattern="HH:mm" value="${departure_date_time}"/>
-	               	<fmt:parseDate value="${route.arrival_date}" var="arrival_date_time" pattern="yyyy-MM-dd HH:mm:ss.S"/>
-	                <fmt:formatDate var="arrival_date" pattern="yyyy-MM-dd" value="${arrival_date_time}"/>
-	               	<fmt:formatDate var="arrival_time" pattern="HH:mm" value="${arrival_date_time}"/>
 	                <th>출발날짜</th>
 	                <td>
-						<input type="date" name="departure_date" value="${departure_date}">
+						<input type="date" name="departure_date">
 					</td>
 	                <th>출발시간</th>
 	                <td>
-	                	<input type="time" name="departure_time" value="${departure_time}">
+	                	<input type="time" name="departure_time">
 	                </td>
 	            </tr>
 	            <tr>
 	                <th>도착날짜</th>
 	                <td>
-						<input type="date" name="arrival_date" value="${arrival_date}">
+						<input type="date" name="arrival_date">
 					</td>
 	                <th>도착시간</th>
 	                <td>
-	                	<input type="time" name="arrival_time" value="${arrival_time}">
+	                	<input type="time" name="arrival_time">
 	                </td>
 	            </tr>
         	</table>
@@ -117,25 +111,20 @@
 	        	</colgroup>
 	            <tr>
 	                <th>일반석</th>
-	                <td><input type="number" name="normal_price" value="${route.normal_price}"></td>
+	                <td><input type="number" name="normal_price"></td>
 	                <th>프레스티지석</th>
-	                <td><input type="number" name="prestige_price" value="${route.normal_price}"></td>
+	                <td><input type="number" name="prestige_price"></td>
 	                <th>일등석</th>
-	                <td><input type="number" name="first_price" value="${route.normal_price}"></td>
+	                <td><input type="number" name="first_price"></td>
 	            </tr>
         	</table>
         	<!-- table E --> 
         </section>
         <div class="submit">
-            <input type="submit" value="수정하기" onclick="updateFlight()">
+            <input type="submit" value="수정하기" onclick="updateBoard()">
         </div>
 	</form>
 </section>
 <!-- popup E -->  
-<script>
-	function updateFlight() {
-		
-	}
-</script>
 </body>
 </html>

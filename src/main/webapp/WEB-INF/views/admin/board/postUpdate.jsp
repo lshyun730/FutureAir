@@ -14,12 +14,12 @@
 <body style="background: #fff">
 <!-- popup S -->  
 <section class="popup" id="popup">
-        <h2>게시글작성</h2>
-        <form class="view_post">
+        <h2>게시글수정</h2>
+        <form class="post_update">
             <div class="inputbox no_icon width100">
                 <p class="inputbox_title">제목</p>
                 <div class="inputbox_input">
-                    <input type="text" placeholder="제목을 입력해주세요" name="board_name">
+                    <input type="text" placeholder="게시판 이름을 입력해주세요" name="board_name" value="${post.title}">
                 </div>
             </div>
             <div class="inputbox">
@@ -37,23 +37,23 @@
                 <div class="inputbox_input selectbox">
                     <select name="post_type" id="post_type" <c:if test="${board_name ne 'FAQ'}">disabled="disabled"</c:if>>
                         <option value="" selected>선택</option>
-                        <option value="항공권예매">항공권예매</option>
-                        <option value="마일리지">마일리지</option>
-                        <option value="체크인">체크인</option>
-                        <option value="수하물">수하물</option>
-                        <option value="공항">공항</option>
-                        <option value="홈페이지이용">홈페이지이용</option>
+                        <option value="항공권예매" <c:if test="${post.post_type eq '항공권예매'}">selected="selected"</c:if> >항공권예매</option>
+                        <option value="마일리지"<c:if test="${post.post_type eq '마일리지'}">selected="selected"</c:if> >마일리지</option>
+                        <option value="체크인"<c:if test="${post.post_type eq '체크인'}">selected="selected"</c:if> >체크인</option>
+                        <option value="수하물"<c:if test="${post.post_type eq '수하물'}">selected="selected"</c:if> >수하물</option>
+                        <option value="공항"<c:if test="${post.post_type eq '공항'}">selected="selected"</c:if> >공항</option>
+                        <option value="홈페이지이용"<c:if test="${post.post_type eq '홈페이지이용'}">selected="selected"</c:if> >홈페이지이용</option>
                     </select>
                 </div>
             </div>
             <div class="inputbox width100">
                 <p class="inputbox_title">내용</p>
                 <div class="inputbox_input textbox">
-                	<textarea rows="" cols=""></textarea>
+                	<textarea>${post.contents}</textarea>
                 </div>
             </div>
             <div class="submit">
-                <input type="submit" value="추가하기" onclick="return insertBoard()">
+                <input type="submit" value="수정하기" onclick="">
             </div>
         </form>
 </section>

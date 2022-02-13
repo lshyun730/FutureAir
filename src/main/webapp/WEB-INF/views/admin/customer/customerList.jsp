@@ -21,28 +21,28 @@
 		        <!-- content header E -->   
 		        <!-- search detail S -->   
 		        <form action="customerList" class="search_detail active" method="get" id="search_detail">
-		            <div class="inputbox">
+		            <div class="inputbox icon">
 		                <p class="inputbox_title">이름</p>
 		                <div class="inputbox_input">
 		                    <input type="text" id="customer_name" name="customer_name" placeholder="홍길동" value="${customer_name}">
 		                    <span class="inputbox_icon"><i class="fas fa-user"></i></span>
 		                </div>
 		            </div>
-		            <div class="inputbox">
+		            <div class="inputbox icon">
 		                <p class="inputbox_title">아이디</p>
 		                <div class="inputbox_input">
 		                    <input type="text" id="customer_id" name="customer_id" placeholder="future123" value="${customer_id}">
 		                    <span class="inputbox_icon"><i class="fas fa-portrait"></i></span>
 		                </div>
 		            </div>
-		            <div class="inputbox">
+		            <div class="inputbox icon">
 		                <p class="inputbox_title">이메일</p>
 		                <div class="inputbox_input">
 		                    <input type="text" id="customer_email" name="customer_email" placeholder="future@gmail.com" value="${customer_email}">
 		                    <span class="inputbox_icon"><i class="fas fa-envelope"></i></span>
 		                </div>
 		            </div>
-		            <div class="inputbox">
+		            <div class="inputbox icon">
 		                <p class="inputbox_title">전화번호</p>
 		                <div class="inputbox_input">
 		                    <input type="text" id="customer_phone" name="customer_phone" placeholder="01012341234" value="${customer_phone}">
@@ -104,7 +104,7 @@
 						<c:forEach var="customerList" items="${customerListAll}" varStatus="status">		
 							<tr>
 								<td><input type="checkbox" name="tableSelect" value="${customerList.customer_id}"></td>
-								<td><a href="javascript:popupOpen('customerInfo?id=${customerList.customer_id}', 1000, 1000)">${customerList.customer_id }</a></td>
+								<td><a href="javascript:popupOpen('customerInfo?id=${customerList.customer_id}', 1000, 600)">${customerList.customer_id }</a></td>
 								<td>${customerList.customer_name }</td>
 								<td>${customerList.customer_email }</td>
 								<td>${customerList.customer_phone }</td>
@@ -121,7 +121,7 @@
 		                                    <span></span>
 		                                </div>
 		                                <ul class="select_list">
-		                                    <li><a href="#">수정</a></li> 
+		                                    <li><a href="javascript:popupOpen('customerUpdate?route_num=${customerList.customer_id}', 550, 680)">수정</a></li> 
 		                                    <li><a href="#">삭제</a></li> 
 		                                </ul>
 		                            </div>
