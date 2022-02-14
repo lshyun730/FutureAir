@@ -9,7 +9,7 @@
 <section class="contents">
 	<div class="row">
 	    <!-- board manager S -->   
-	    <section class="width100">
+	    <section class="content width100">
 	    	<div class="inner">
 		        <!-- content header S -->   
 		        <div class="flex_content_header">
@@ -134,7 +134,7 @@
 		        <!-- table E --> 
 		        <!-- content footer S --> 
 		        <div class="flex_content_footer">
-		            <button class="btn danger" form="boardform"  onclick="javascript:checkDelete()">선택삭제</button>
+		            <button class="btn danger" form="boardform"  onclick="javascript:checkDelete(this)">선택삭제</button>
 		            <div class="navi">
 		                <a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})"><i class="fas fa-chevron-left"></i></a>
 		                <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">

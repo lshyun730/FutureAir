@@ -80,10 +80,8 @@
             </form>
         </div>
         
-        <div class="info item">
-            <div class="bell">
-                <span class="bell_icon"><i class="far fa-bell"></i></span>
-            </div>
+        <div class="info">
+            <button class="bell" onclick="location.href='${pageContext.request.contextPath}/'"></button>
             <div class="profile">
                 <div class="profile_img">
                     <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt="profile">

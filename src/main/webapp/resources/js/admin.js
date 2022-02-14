@@ -28,13 +28,15 @@ function pagingFormSubmit(currentPage) {
 
 /* 체크박스 전체 선택 & 전체 선택 취소 */
 function selectAll(selectAll)  {
-  const checkboxes = document.getElementsByName('tableSelect');
-  checkboxes.forEach(checkbox => checkbox.checked = selectAll.checked)
+	const table = selectAll.closest('.table'); 
+  	const checkboxes = table.querySelectorAll('input[name="tableSelect"]');
+  	checkboxes.forEach(checkbox => checkbox.checked = selectAll.checked)
 }
 
 /* 체크박스 선택 삭제 */
-function checkDelete() {
-	 const checkboxes = document.getElementsByName('tableSelect'); 
+function checkDelete(deleteBox) {
+	 const content = deleteBox.closest('.content'); 
+	 const checkboxes = content.querySelectorAll('input[name="tableSelect"]');
 	 const deleteList = new Array();
 	 
 	 checkboxes.forEach(checkbox => {

@@ -57,9 +57,8 @@ fix
 .util .info  {grid-column: 4/5; background: transparent; box-shadow: none; display: flex; justify-content: space-between; padding: 0; } 
 .util .info .bell, 
 .util .info .profile{ background-color: var(--white); border-radius: 0.625rem; box-shadow:0.25rem 0.25rem 0.875rem rgba(0, 0, 0, 0.1); padding: 0.625rem; box-sizing: border-box; height: 3.75rem; } 
-.util .info .bell { position: relative; width: 3.75rem; margin-right: 1.875rem; text-align: center; } 
-.util .info .bell_icon { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); } 
-.util .info .bell_icon i { font-size: 1.25rem; } 
+.util .info .bell {position: relative; width: 3.75rem; margin-right: 1.875rem; text-align: center; } 
+.util .info .bell::after {content:"\f072"; font-family: "Font Awesome 5 Free";font-weight: 900; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);font-size: 1.25rem; } 
 .util .profile .btn_m {right: 0.625rem;}
 
 /* contents */

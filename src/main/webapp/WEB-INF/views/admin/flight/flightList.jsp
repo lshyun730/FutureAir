@@ -9,7 +9,7 @@
 <section class="contents">
 	<div class="row">
     <!-- flight status S -->   
-    <section class="flight_status width100">
+    <section class="content flight_status width100">
     	<div class="inner">
         <!-- content header S -->   
         <div class="flex_content_header">
@@ -131,7 +131,7 @@
         <!-- table E --> 
         <!-- content footer S --> 
         <div class="flex_content_footer">
-            <button class="btn danger" onclick="javascript:checkDelete()">선택삭제</button>
+            <button class="btn danger" onclick="javascript:checkDelete(this)">선택삭제</button>
             <div class="navi">
            	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
                <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">

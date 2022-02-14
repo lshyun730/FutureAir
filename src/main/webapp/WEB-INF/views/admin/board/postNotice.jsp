@@ -13,7 +13,7 @@
     <title>미래항공 관리자페이지</title>
 </head>
 <body style="background: #fff;">
-    <section class="board_blank">
+    <section class="content board_blank">
         <h2>공지글</h2>
         <table class="table">
             <thead>
@@ -45,7 +45,7 @@
         </div>
     </section>
     
-    <section class="board_blank">
+    <section class="content board_blank">
         <h2>공지글지정</h2>
         <table class="table">
             <colgroup>
@@ -77,7 +77,7 @@
             </tbody>
         </table>
         <div class="flex_content_footer">
-	        <button class="btn danger" form="boardform" onclick="javascript:checkDelete()">선택삭제</button>
+	        <button class="btn danger" form="boardform" onclick="javascript:checkDelete(this)">선택삭제</button>
 	        <div class="navi">
 	           	<a href="postNotice?page=${navi.currentPage - navi.pagePerGroup}&board_name=${board_name}" class="prev"></a>
 	               	<c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">

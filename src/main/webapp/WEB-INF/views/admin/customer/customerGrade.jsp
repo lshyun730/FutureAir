@@ -4,60 +4,6 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Script S -->
-<script type="text/javascript">
-	// 등급이름 중복체킹을 위한 전역변수
-	const gradeChecker = false;
-
-	// 등급 추가하기
-	function gradeAdd(){
-		
-		const grade			= document.getElementById("grade");
-		const mileage_exp	= document.getElementById("mileage_exp");
-		const mileage_scope	= document.getElementById("mileage_scope");
-		const mileage_ratio	= document.getElementById("mileage_ratio");
-		const pay_scope		= document.getElementById("pay_scope");
-		const pay_ratio		= document.getElementById("pay_ratio");
-		const promo_terms 	= document.getElementById("promo_terms");
-
-		if (gradeCheker == false){
-			alert("등급명이 중복입니다.");	return false;
-		}
-		
-		if (grade.value == "" || mileage_exp.value == "" || mileage_scope.value == "" || mileage_ratio.value == ""
-			|| pay_scope.value == "" || pay_ratio.value == "" || promo_terms.value == "") {
-			alert("값을 빠짐없이 입력해주시길 바랍니다."); 						return false;
-		}
-		
-		if(isNaN(mileage_exp.value) == true || isNaN(mileage_scope.value) == true || isNaN(mileage_ratio.value) == true
-				|| isNaN(pay_scope.value) == true || isNaN(pay_ratio.value) == true){
-			alert("등급 명칭을 제외한 나머지는 숫자로 입력해 주시길 바랍니다."); 		return false;
-		}
-		
-		return true;
-	}	
-
-	//등급 명칭 중복 검사하기
-	function checkGrade(){
-		const inputGrade = $("#grade").val();
-		$.ajax({
-			data 	: { grade : inputGrade },
-			url		: "checkGradeName",
-			type	: "post",
-			dataType : "text",
-			success	: function(data) {
-					if (data != '0'){
-						alert("지금 입력하신 등급명은 중복입니다. 등급명은 중복된 값을 사용할 수 없습니다.");
-						gradeCheker = false;
-					} else {
-						gradeCheker = true;
-					}
-				}
-			})
-		}
-	
-</script>
-<!-- Script E -->
 <!-- header S -->    
 <%@include file ="../include/header.jsp" %>
 <!-- header E -->
@@ -65,13 +11,13 @@
 <section class=" contents">
 	<div class="row">
 	    <!-- customer grade S -->
-	    <section class="width100">
+	    <section class="content width100">
 	    	<div class="inner">
 		        <!-- content header S -->   
 		        <div class="flex_content_header">
 		            <h2>회원등급</h2>
 		            <div class="action">
-		                <button class="btn danger" onclick=''>선택삭제</button>
+		                <button class="btn danger" onclick='checkDelete(this)'>선택삭제</button>
 		                <button class="btn primary" onclick='modalOpen();'>등급추가</button>
 		            </div>
 		        </div>
@@ -125,7 +71,7 @@
 	</div>
 	<div class="row">
 	    <!-- customer list S -->
-	    <section class="width100">
+	    <section class="content width100">
 	    	<div class="inner">
 		        <!-- content header S --> 
 		        <div class="flex_content_header">
@@ -308,6 +254,58 @@ document.addEventListener('click', () => {;
 	 	}	
 	}
 })
+
+
+
+// 등급이름 중복체킹을 위한 전역변수
+const gradeChecker = false;
+
+// 등급 추가하기
+function gradeAdd(){
+	
+	const grade			= document.getElementById("grade");
+	const mileage_exp	= document.getElementById("mileage_exp");
+	const mileage_scope	= document.getElementById("mileage_scope");
+	const mileage_ratio	= document.getElementById("mileage_ratio");
+	const pay_scope		= document.getElementById("pay_scope");
+	const pay_ratio		= document.getElementById("pay_ratio");
+	const promo_terms 	= document.getElementById("promo_terms");
+
+	if (gradeCheker == false){
+		alert("등급명이 중복입니다.");	return false;
+	}
+	
+	if (grade.value == "" || mileage_exp.value == "" || mileage_scope.value == "" || mileage_ratio.value == ""
+		|| pay_scope.value == "" || pay_ratio.value == "" || promo_terms.value == "") {
+		alert("값을 빠짐없이 입력해주시길 바랍니다."); 						return false;
+	}
+	
+	if(isNaN(mileage_exp.value) == true || isNaN(mileage_scope.value) == true || isNaN(mileage_ratio.value) == true
+			|| isNaN(pay_scope.value) == true || isNaN(pay_ratio.value) == true){
+		alert("등급 명칭을 제외한 나머지는 숫자로 입력해 주시길 바랍니다."); 		return false;
+	}
+	
+	return true;
+}	
+
+//등급 명칭 중복 검사하기
+function checkGrade(){
+	const inputGrade = $("#grade").val();
+	$.ajax({
+		data 	: { grade : inputGrade },
+		url		: "checkGradeName",
+		type	: "post",
+		dataType : "text",
+		success	: function(data) {
+				if (data != '0'){
+					alert("지금 입력하신 등급명은 중복입니다. 등급명은 중복된 값을 사용할 수 없습니다.");
+					gradeCheker = false;
+				} else {
+					gradeCheker = true;
+				}
+			}
+		})
+	}
 </script>
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>
