@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="https://cdn.ckeditor.com/4.17.2/basic/ckeditor.js"></script>
 
 <!-- header S -->    
 <%@include file ="../include/header.jsp" %>
@@ -108,18 +109,6 @@
 		            </tbody>
 		        </table>
 		        <!-- table E --> 
-		        <!-- content footer S --> 
-		        <div class="flex_content_footer">
-		            <button class="btn danger">선택삭제</button>
-		            <div class="navi">
-		                <a href="#"><i class="fas fa-chevron-left"></i></a>
-		                <a href="#" class="active">1</a>
-		                <a href="#">2</a>
-		                <a href="#">3</a>
-		                <a href="#"><i class="fas fa-chevron-right"></i></a>
-		            </div>
-		        </div>
-		        <!-- content footer E --> 
 	        </div>
 	    </section>
 	    <!-- mail setting E -->   
@@ -132,49 +121,32 @@
 		        </div>
 		        <!-- content header E -->  
 		        <!-- sand mail form S -->   
-		        <form action="#" class="sand_mail_form">
-		            <div class="inputbox icon">
-		                <p class="inputbox_title">발송자이름</p>
-		                <div class="inputbox_input">
-		                    <input type="text" placeholder="Future Air">
-		                    <span class="inputbox_icon"><i class="fas fa-user"></i></span>
-		                </div>
-		            </div>
-		            <div class="inputbox icon">
-		                <p class="inputbox_title">발송자 이메일</p>
-		                <div class="inputbox_input">
-		                    <input type="text" placeholder="도시 혹은 공항">
-		                    <span class="inputbox_icon"><i class="fas fa-envelope"></i></span>
-		                </div>
-		            </div>
+		        <form class="sand_mail_form" onsubmit="return sendMail()" id="send_mail_form">
+			            <div class="inputbox">
+			                <p class="inputbox_title">보내는사람</p>
+			                <div class="inputbox_input">
+			                    <input type="text" name="form_name" value="미래항공" readonly="readonly">
+			                </div>
+			            </div>
+			            <div class="inputbox">
+			                <p class="inputbox_title">등급</p>
+			                <div class="inputbox_input selectbox">
+			                    <select name="grade">
+			                        <option value="전체" selected>전체</option>
+			                    	<c:forEach var="grade" items="${gradeList}">
+			                        <option value="${grade.grade}">${grade.grade}</option>
+			                    	</c:forEach>
+			                    </select>
+			                </div>
+			            </div>
 		            <div class="inputbox">
-		                <p class="inputbox_title">메일수신거부</p>
-		                <div class="inputbox_input selectbox"> 
-		                    <select>
-		                        <option value="전체" selected>포함</option>
-		                        <option value="도착">미포함</option>
-		                    </select>
-		                </div>
-		            </div>
-		            <div class="inputbox">
-		                <p class="inputbox_title">등급</p>
-		                <div class="inputbox_input selectbox">
-		                    <select>
-		                        <option value="전체" selected>일반</option>
-		                        <option value="도착">실버</option>
-		                        <option value="비행">골드</option>
-		                        <option value="대기">플래티늄</option>
-		                    </select>
-		                </div>
-		            </div>
-		            <div class="inputbox no_icon">
 		                <p class="inputbox_title">제목</p>
 		                <div class="inputbox_input">
-		                    <input type="text" placeholder="제목을 입력해주세요">
+		                    <input type="text" placeholder="제목을 입력해주세요" name="title">
 		                </div>
 		            </div>
-		            <div class="textbox">
-		                <textarea placeholder="내용을 입력해 주세요"></textarea>
+		            <div class="textbox" >
+		                <textarea placeholder="내용을 입력해 주세요" name="body" id="editor_body"></textarea>
 		            </div>
 		            <div class="content_footer">
 		                <button class="btn">미리보기</button>
@@ -207,7 +179,9 @@
                     </div>
                 </div>
                 <div class="textbox">
-                    <textarea placeholder="내용을 입력해 주세요"></textarea>
+                	<div>
+                    	<textarea placeholder="내용을 입력해 주세요"></textarea>
+                    </div>
                 </div>
                 <div class="submit">
                     <input type="submit" value="수정하기">
@@ -220,6 +194,24 @@
     <!-- modal rewrite E -->  
 </section>
 <!-- content E --> 
+<script>
+
+CKEDITOR.replace( 'editor_body' ); 
+
+function sendMail() {
+	const date = CKEDITOR.instances.editor_body.getData();
+	const body = document.querySelector('textarea[name="body"]'); 
+	body.value = date;
+  	$.ajax({
+	    type: 'POST',
+	    url: 'sendMail',
+	    data: $('#send_mail_form').serialize(),
+	    success: function (data) {
+	    	alert('메일을 전송하였습니다')
+	    }
+	});  
+}
+</script>
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>
 <!-- footer E --> 

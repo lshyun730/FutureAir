@@ -39,8 +39,24 @@
 		</if>
 	</select>
 	
+	<!-- 비행일정 업데이트 -->
+	<update id="updateFlight" parameterType="HashMap">
+		update route_fa 
+		set 
+			departure_date = TO_DATE(#{departure_date}, 'YYYY-MM-DD HH24:MI:SS'), 
+			arrival_date = TO_DATE(#{arrival_date}, 'YYYY-MM-DD HH24:MI:SS'), 
+			departure_name = #{departure_name}, 
+			arrival_name = #{arrival_name},
+			eta = trunc((TO_DATE(#{arrival_date}, 'YYYY-MM-DD HH24:MI:SS') - TO_DATE(#{departure_date}, 'YYYY-MM-DD HH24:MI:SS')) * 24 * 60), 
+			normal_price = #{normal_price},
+			prestige_price = #{prestige_price},
+			first_price = #{first_price}
+		where 
+			route_num = #{route_num}
+	</update>
+	
 	<!-- 비행일정 삭제 -->
-	<delete id="deleteRoute" parameterType="String">
+	<delete id="deleteRoute" parameterType="String"> 
 		delete from route_fa
 		where route_num = #{route_num}
 	</delete>
@@ -60,6 +76,7 @@
 			#{first_price})
 	</insert>
 
+	<!-- 비행기아이디리스트 -->
 	<select id="getAirplaneList" resultType="airplane">
 		select * from airplane_fa
 	</select>

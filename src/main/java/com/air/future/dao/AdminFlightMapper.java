@@ -54,6 +54,8 @@ public interface AdminFlightMapper {
 
 	public ArrayList<Airplane> getAirplaneList();
 
+	public int updateFlight(HashMap<String, String> routeForm);
+
 
 	
 }

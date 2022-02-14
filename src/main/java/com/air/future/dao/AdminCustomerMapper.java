@@ -54,6 +54,10 @@ public interface AdminCustomerMapper {
 	public String mileageFUsable(String id);
 	// 회원 마일리지 내역
 	public List<HashMap<String, String>> mileageBalance(String id);
+	
+	
+	// 등급으로 회원검색 - 메일보내기
+	public ArrayList<Customer> getCustomerBygrade(String customer_grade);
 
 	
 

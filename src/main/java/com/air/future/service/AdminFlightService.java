@@ -46,9 +46,15 @@ public class AdminFlightService {
 		int total = dao.getRouteTotal(searchList);
 		return total;
 	}
-	
+		
 	// 비행 선택삭제
-	public int deleteRoute(String[] deleteList) {
+	public int deleteRoute(String route_num) {
+		int result = dao.deleteRoute(route_num);
+		return result;
+	}
+	
+	// 비행 선택리스트 삭제
+	public int deleteRouteList(String[] deleteList) {
 		int result = 0;
 		for (String route_num : deleteList) {
 			result = dao.deleteRoute(route_num);
@@ -75,6 +81,12 @@ public class AdminFlightService {
 	}
 
 	// 예약 선택삭제
+	public int deleteReservation(String reservation_num) {
+		int result = dao.deleteReservation(reservation_num);
+		return result;
+	}
+
+	// 예약 선택삭제 리스트
 	public int deleteReservation(String[] deleteList) {
 		int result = 0;
 		for (String reservation_num : deleteList) {
@@ -114,6 +126,16 @@ public class AdminFlightService {
 	public ArrayList<Airplane> getAirplaneList() {
 		ArrayList<Airplane> planeList = dao.getAirplaneList();
 		return planeList;
+	}
+
+	public int updateFlight(HashMap<String, String> routeForm) {
+		String departure_date = routeForm.get("departure_date") + " " + routeForm.get("departure_time");
+		String arrival_date = routeForm.get("arrival_date") + " " + routeForm.get("arrival_time");
+		
+		routeForm.put("departure_date", departure_date);
+		routeForm.put("arrival_date", arrival_date);
+		int result = dao.updateFlight(routeForm);
+		return result;
 	}
 
 

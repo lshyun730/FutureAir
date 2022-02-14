@@ -15,7 +15,7 @@
 <body style="background: #fff">
 <!-- popup S -->  
 <section class="popup" id="popup">
-	<form action="flightUpdate" class="flight_update" method="post">
+	<form class="flight_update" onsubmit="return updateFlight()">
         <h2>비행정보</h2>
         <section>
         	<h3>기본정보</h3>
@@ -29,9 +29,9 @@
 	        	</colgroup>
 	            <tr>
 	                <th>비행번호</th>
-	                <td><input type="text" value=" ${route.route_num}" readonly="readonly"/> </td>
+	                <td><input type="text" name="route_num" value=" ${route.route_num}" readonly="readonly"/> </td>
 	                <th>비행기아이디</th>
- 	                <td><input type="text" value=" ${route.airplane_id}" disabled="disabled"/></td>
+ 	                <td><input type="text" name="airplane_id" value=" ${route.airplane_id}" readonly="readonly"/></td>
 	            </tr>
         	</table>
         	<!-- table E --> 
@@ -127,14 +127,23 @@
         	<!-- table E --> 
         </section>
         <div class="submit">
-            <input type="submit" value="수정하기" onclick="updateFlight()">
+            <input type="submit" value="수정하기">
         </div>
 	</form>
 </section>
 <!-- popup E -->  
 <script>
 	function updateFlight() {
-		
+	 	$.ajax({
+		    type: 'POST',
+		    url: 'flightUpdate',
+		    data: $('.flight_update').serialize(),
+		    success: function (data) {
+		    	if(data==1) {
+			        alert('수정되었습니다');
+				}
+		    }
+		}); 
 	}
 </script>
 </body>

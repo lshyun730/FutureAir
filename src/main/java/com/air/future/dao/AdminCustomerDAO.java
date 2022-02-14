@@ -1,6 +1,7 @@
 package com.air.future.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -136,6 +137,13 @@ public class AdminCustomerDAO {
 		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
 		List<HashMap<String, String>> result = mapper.mileageBalance(id);
 		return result;
+	}
+
+	// 등급으로 회원검색 - 메일보내기
+	public ArrayList<Customer> getCustomerBygrade(String customer_grade) {
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		ArrayList<Customer> customerList = mapper.getCustomerBygrade(customer_grade);
+		return customerList;
 	}
 
 

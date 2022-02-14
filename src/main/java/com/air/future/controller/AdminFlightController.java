@@ -81,11 +81,13 @@ public class AdminFlightController {
 		return "admin/flight/flightUpdate";
 	}
 	
-	// 비행일정 수정
-	@RequestMapping(value = "flightUpdate", method = RequestMethod.POST)
-	public String flightUpdate(Route route, Model model) {
-		System.out.println(route);
-		return "admin/flight/flightList";
+	// 비행일정 상세
+	@RequestMapping(value = "flightView", method = RequestMethod.GET)
+	public String flightView(String route_num, Model model) {
+		Route route = service.getRoute(route_num);
+		
+		model.addAttribute("route", route);
+		return "admin/flight/flightView";
 	}
 	
 	// 비행일정 삽입
@@ -97,22 +99,30 @@ public class AdminFlightController {
 		return"admin/flight/flightList";
 	}
 	
-	// 비행일정 상세
-	@RequestMapping(value = "flightView", method = RequestMethod.GET)
-	public String flightView(String route_num, Model model) {
-		Route route = service.getRoute(route_num);
-		
-		model.addAttribute("route", route);
-		return "admin/flight/flightView";
+	// 비행일정 수정
+	@RequestMapping(value = "flightUpdate", method = RequestMethod.POST)
+	@ResponseBody
+	public int flightUpdate(@RequestParam HashMap<String, String> routeForm, Model model) {
+		int result = service.updateFlight(routeForm);
+		return result;
 	}
 
 	
 	// 비행일정 삭제
-	@RequestMapping(value = "deleteRoute", method = RequestMethod.POST)
+	@RequestMapping(value = "flightDelete", method = RequestMethod.POST)
+	@ResponseBody
+	public int flightDelete(HttpServletRequest request) {
+		String route_num = request.getParameter("route_num");
+		int result = service.deleteRoute(route_num);
+		return result;
+	}
+	
+	// 비행일정리스트 삭제
+	@RequestMapping(value = "flightDeleteList", method = RequestMethod.POST)
 	@ResponseBody
 	public int deleteRoute(HttpServletRequest request) {
 		String[] deleteList = request.getParameterValues("deleteList");
-		int result = service.deleteRoute(deleteList);
+		int result = service.deleteRouteList(deleteList);
 		return result;
 	}
 	
@@ -161,7 +171,17 @@ public class AdminFlightController {
 	}
 	
 	// 예약 삭제
-	@RequestMapping(value = "deleteReservation", method = RequestMethod.POST)
+	@RequestMapping(value = "reservationDelete", method = RequestMethod.POST)
+	@ResponseBody
+	public int reservationDelete(HttpServletRequest request) {
+		String route_num = request.getParameter("reservation_num");
+		int result = service.deleteReservation(route_num);
+		return result;
+	}
+	
+	
+	// 예약리스트 삭제
+	@RequestMapping(value = "reservationDeleteList", method = RequestMethod.POST)
 	@ResponseBody
 	public int deleteReservation(HttpServletRequest request, Model model) {
 		String[] deleteList = request.getParameterValues("deleteList");

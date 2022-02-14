@@ -120,7 +120,7 @@
                                 </div>
                                 <ul class="select_list">
                                     <li><a href="javascript:popupOpen('flightUpdateForm?route_num=${route.ROUTE_NUM}', 1000, 620)">수정</a></li> 
-                                    <li><a href="#">삭제</a></li> 
+                                    <li><a href="javascript:flightDelete('${route.ROUTE_NUM}')">삭제</a></li> 
                                 </ul>
                             </div>
                         </td>
@@ -249,7 +249,7 @@
 function deleteAjax(deleteList) {
 	if(confirm("정말 삭제하시겠습니까?")){
 		 $.ajax({
-				url : 'deleteRoute',
+				url : 'flightDeleteList',
 				data : {
 					deleteList : deleteList
 				},
@@ -265,6 +265,26 @@ function deleteAjax(deleteList) {
 	 }
 }
 
+function flightDelete(route_num) {
+ 	if(confirm("정말 삭제하시겠습니까?")){
+		 $.ajax({
+				url : 'flightDelete',
+				data : {
+					route_num : route_num
+				},
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data==1) {
+						alert('삭제에 성공하였습니다');		
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
+
+
 function flightInsert() {
 	const form = $('#flight_insert').serialize();
 	console.log(form);
@@ -273,7 +293,7 @@ function flightInsert() {
 	    url: 'flightInsert',
 	    data: $('#flight_insert').serialize(),
 	    success: function (data) {
-	        //성공시로직
+	    	alert('비행일정이 추가되었습니다')
 	    },
 	    error: function (xhr, status, error) {
 	        console.log(error,xhr,status );

@@ -131,7 +131,7 @@
                                     <span></span>
                                 </div>
                                 <ul class="select_list">
-                                    <li><a href="#">삭제</a></li> 
+                                    <li><a href="javascript:reservationDelete('${reservation.RESERVATION_NUM}')">삭제</a></li> 
                                 </ul>
                             </div>
                         </td>
@@ -165,7 +165,7 @@
 function deleteAjax(deleteList) {
 	if(confirm("정말 삭제하시겠습니까?")){
 		 $.ajax({
-				url : 'deleteReservation',
+				url : 'reservationDeleteList',
 				data : {
 					deleteList : deleteList
 				},
@@ -181,6 +181,24 @@ function deleteAjax(deleteList) {
 	 }
 }
 
+function reservationDelete(reservation_num) {
+ 	if(confirm("정말 삭제하시겠습니까?")){
+		 $.ajax({
+				url : 'reservationDelete',
+				data : {
+					reservation_num : reservation_num
+				},
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data==1) {
+						alert('삭제에 성공하였습니다');		
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
 
 //액션 이외 선택시 액션 닫힘
 document.addEventListener('click', () => {;
