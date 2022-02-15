@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.air.future.vo.Airplane;
 import com.air.future.vo.Customer;
 import com.air.future.vo.Grade;
+import com.air.future.vo.Route;
+import com.air.future.vo.Schedule;
 
 @Repository
 public class AdminCustomerDAO {
@@ -44,7 +49,8 @@ public class AdminCustomerDAO {
 	public int customerDelete(String customer_id) {
 		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
 		mapper.mileageDelete(customer_id);
-		mapper.reservationDelete(customer_id);
+		//mapper.reservationDelete(customer_id);
+		System.out.println("123123123123123");
 		int result = mapper.customerDelete(customer_id);
 		return result;
 	}
@@ -137,6 +143,50 @@ public class AdminCustomerDAO {
 		List<HashMap<String, String>> result = mapper.mileageBalance(id);
 		return result;
 	}
+	
+	// 팝업창 : 예약 내역 불러오기 위한 부분
+	public List<HashMap<String, String>> getCommonReservation(HashMap<String, String> value) {
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		List<HashMap<String, String>> result = mapper.getCommonReservation(value);
+		return result;
+	}
+	
+	// 팝업창: 예약 세부내역 불러오기 위한 Payment부분
+	public String getPayment(String reservation_num) {
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		String payment = mapper.getPayment(reservation_num);
+		return payment;
+	}
+	
+	// 팝업창: 예약 세부내역 불러오기 위한 Schedule부분
+	public ArrayList<Schedule> getSchedule(String reservation_num){
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		ArrayList<Schedule> scheduleList = mapper.getSchedule(reservation_num);
+		return scheduleList;
+	}
+	// 팝업창: 예약 세부내역 불러오기 위한 Route부분
+	public ArrayList<Route> getRoute(ArrayList<Schedule> scheduleList){
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		ArrayList<Route> routeList = mapper.getRoute(scheduleList);
+		return routeList;
+	}
+	// 팝업창: 예약 세부내역 불러오기 위한 Airplane부분
+	public ArrayList<Airplane> getAirplane(ArrayList<Route> routeList) {
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		ArrayList<Airplane> airplaneList = mapper.getAirplane(routeList);
+		return airplaneList;
+	}
+	// 팝업창: 예약 세부내역 불러오기 위한 getName부분
+	public String getName(String id) {
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		String name = mapper.getName(id);
+		return name;
+	}
+
+
+	
+
+
 
 
 

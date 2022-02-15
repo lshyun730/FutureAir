@@ -49,47 +49,44 @@
 	
 	
 <!-- 예약현황 -->
-	<!-- 예약일정리스트 -->
-	<select id="reservationList" parameterType="HashMap" resultType="HashMap">
-		select last.*,
-			case when reser_type.reservation_type = '1' then '편도'
-			     when reser_type.reservation_type = '2' then '왕복'
-			     else '다구간'
-			end as reservation_type
-		from (select s.reservation_num, c.customer_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment  
-		    from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
-		    where r.reservation_num = s.reservation_num
-		    and s.route_num = rou.route_num
-		    and c.customer_id = r.customer_id
-		    and c.customer_name = s.passenger_name
-		    <if test="departure_date_start != ''">
-				and to_char(rou.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
-		    </if>
-		    <if test="departure_date_end != ''">
-			    and to_char(rou.departure_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{departure_date_end}
-		    </if>
-		    <if test="reservation_date_start != ''">
-				and to_char(r.reservation_date, 'YYYY-MM-DD') >= #{reservation_date_start}
-		    </if>
-		    <if test="reservation_date_end != ''">
-				and to_char(r.reservation_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{reservation_date_end}
-		    </if>
-			<if test="departure_name != ''">
-			and rou.departure_name = #{departure_name}
-			</if>
-			<if test="arrival_name != ''">
-			and rou.arrival_name = #{arrival_name}
-			</if>
-			<if test="customer_name != ''">
-			and c.customer_name like  '%'||#{customer_name}||'%'
-			</if>
-		    order by r.reservation_num desc) last, 
-		    (select reservation_num, count(reservation_num) reservation_type
-		    from schedule_fa
-		    group by reservation_num) reser_type
-		where last.reservation_num = reser_type.reservation_num
-	</select>	
-	
+   <!-- 예약일정리스트 -->
+   <select id="reservationList" parameterType="HashMap" resultType="HashMap">
+      select last.*,
+        case when last.count = '1' then '편도'
+             when last.count = '2' then '왕복'
+             else '다구간'
+        end as reservation_type 
+        from (select s.reservation_num, c.customer_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment  , count(s.reservation_num) count
+          from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
+          where r.reservation_num = s.reservation_num
+          and s.route_num = rou.route_num
+          and c.customer_id = r.customer_id
+          and c.customer_name = s.passenger_name
+          <if test="departure_date_start != ''">
+            and to_char(rou.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
+          </if>
+          <if test="departure_date_end != ''">
+             and to_char(rou.departure_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{departure_date_end}
+          </if>
+          <if test="reservation_date_start != ''">
+            and to_char(r.reservation_date, 'YYYY-MM-DD') >= #{reservation_date_start}
+          </if>
+          <if test="reservation_date_end != ''">
+            and to_char(r.reservation_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{reservation_date_end}
+          </if>
+         <if test="departure_name != ''">
+         and rou.departure_name = #{departure_name}
+         </if>
+         <if test="arrival_name != ''">
+         and rou.arrival_name = #{arrival_name}
+         </if>
+         <if test="customer_name != ''">
+         and c.customer_name like  '%'||#{customer_name}||'%'
+         </if>
+         group by s.reservation_num, c.customer_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment
+         order by s.reservation_num desc) last
+   </select>
+   
 	<!-- 예약일정갯수 -->
 	<select id="getReservationTotal" parameterType="HashMap" resultType="int">
 		select count(*)  

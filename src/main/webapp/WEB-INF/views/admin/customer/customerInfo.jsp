@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <html>
 <head>
@@ -47,7 +48,10 @@
                         </tr>
                         <tr>
                             <th>생년월일</th>
-                            <td>${customerList.customer_birth }</td>
+                            <td>
+                                <fmt:parseDate value="${customerList.customer_birth }" var="birth" pattern="yyyymmdd"/>
+                            	<fmt:formatDate value="${birth }" pattern="yyyy-MM-dd"/>
+                           	</td>
                             <th>성별</th>
                             <td>${customerList.customer_gender }</td>
                         </tr>
@@ -55,7 +59,10 @@
                             <th>회원등급</th>
                             <td>${customerList.customer_grade }</td>
                             <th>가입날짜</th>
-                            <td>${customerList.customer_birth }</td>
+                            <td>
+                            	<fmt:parseDate value="${customerList.customer_joindate }" var="joinDate" pattern="yyyymmdd"/>
+                            	<fmt:formatDate value="${joinDate }" pattern="yyyy-MM-dd"/>
+                            </td>
                         </tr>
                         <tr>
                             <th>전화번호</th>
@@ -77,9 +84,9 @@
                     <table class="table">
                         <tr>
                             <th>마일리지</th>
-                            <td>${mileage }</td>
+                            <td><fmt:formatNumber value="${mileage }" pattern="#,###" /></td>
                             <th>총결제금액</th>
-                            <td>${customerFullPay }</td>
+                            <td><fmt:formatNumber value="${customerFullPay }" pattern="#,###" />원</td>
                         </tr>
                     </table>
                 </section>

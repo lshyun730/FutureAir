@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.air.future.dao.AdminCustomerDAO;
-import com.air.future.vo.Customer;
-import com.air.future.vo.Grade;
+import com.air.future.dao.AdminCustomerMapper;
+import com.air.future.vo.*;
 
 @Service
 public class AdminCustomerService {
@@ -71,7 +71,9 @@ public class AdminCustomerService {
 		int result = 0;
 		for(String customer_id : customers) {
 			result = dao.customerDelete(customer_id);
-			if(result == 0) return 0;
+			if(result == 0) {
+				return 0;
+			} 
 		}
 		return result;
 	}
@@ -152,6 +154,42 @@ public class AdminCustomerService {
 	public List<HashMap<String, String>> mileageBalance(String id){
 		return dao.mileageBalance(id);
 	}
+	
+	
+	// 팝업창 : 예약 전체내역 불러오기 위한 부분
+	public List<HashMap<String, String>> getCommonReservation(String id, String reservation_start, String reservation_end){
+		HashMap<String, String> value = new HashMap<>();
+		value.put("customer_id", id);
+		value.put("reservation_start", reservation_start);
+		value.put("reservation_end", reservation_end);
+		List<HashMap<String, String>> result = dao.getCommonReservation(value);
+		return result;
+	}
+	
+	// 팝업창: 예약 세부내역 불러오기 위한 Payment부분
+	public String getPayment(String reservation_num) {
+		return dao.getPayment(reservation_num);
+	}
+	// 팝업창: 예약 세부내역 불러오기 위한 Schedule부분
+	public ArrayList<Schedule> getSchedule(String reservation_num){
+		return dao.getSchedule(reservation_num);
+	}
+	// 팝업창: 예약 세부내역 불러오기 위한 Route부분
+	public ArrayList<Route> getRoute(ArrayList<Schedule> scheduleList){
+		return dao.getRoute(scheduleList);
+	}
+	// 팝업창: 예약 세부내역 불러오기 위한 Airplane부분
+	public ArrayList<Airplane> getAirplane(ArrayList<Route> routeList) {
+		return dao.getAirplane(routeList);
+	}
+	// 팝업창 : 예약 세부내역 불러오기 위한 getName부분
+	public String getName(String id) {
+		return dao.getName(id);
+	}
+
+	
+	
+	
 
 
 

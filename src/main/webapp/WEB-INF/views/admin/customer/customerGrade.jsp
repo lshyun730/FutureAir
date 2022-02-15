@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Script S -->
 <script type="text/javascript">
@@ -47,7 +46,6 @@
 			dataType : "text",
 			success	: function(data) {
 					if (data != '0'){
-						alert("지금 입력하신 등급명은 중복입니다. 등급명은 중복된 값을 사용할 수 없습니다.");
 						gradeCheker = false;
 					} else {
 						gradeCheker = true;
@@ -55,12 +53,8 @@
 				}
 			})
 		}
-	
 </script>
 <!-- Script E -->
-
-
-
 
 <!-- header S -->    
 <%@include file ="../include/header.jsp" %>
@@ -126,7 +120,7 @@
 		        </div>
 		        <!-- content header E -->   
 		        <!-- search detail S -->   
-		        <form action="customerGrade" id="pagingForm" class="search_detail active" method="get" onsubmit="return search()">
+		        <form action="customerGrade" id="search_detail" class="search_detail active" method="get" onsubmit="return search()">
 		            <div class="inputbox">
 		                <p class="inputbox_title">등급</p>
 		                <div class="inputbox_input selectbox">
@@ -197,8 +191,12 @@
 								</td>
 								<td>${customerList.customer_grade }</td>
 								<td>
-									<button class="btn_s more"><span>예약내역</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        	<button class="btn_s more"><span>마일리지</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+									<button class="btn_s more" onclick="javascript:popupOpen('customerReservation?id=${customerList.customer_id}')">
+										<span>예약내역</span><span class="icon"><i class="fas fa-chevron-right"></i></span>
+									</button>
+		                        	<button class="btn_s more" onclick="javascript:popupOpen('customerMileage?id=${customerList.customer_id}')">
+		                        		<span>마일리지</span><span class="icon"><i class="fas fa-chevron-right"></i></span>
+		                        	</button>
 								</td>
 								<td class="btn_m_wrap"><div class="btn_m"><span></span></div></td>
 							</tr>			

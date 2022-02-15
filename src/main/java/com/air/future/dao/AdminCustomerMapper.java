@@ -6,8 +6,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.air.future.vo.Customer;
-import com.air.future.vo.Grade;
+import com.air.future.vo.*;
 
 public interface AdminCustomerMapper {
 	
@@ -20,6 +19,8 @@ public interface AdminCustomerMapper {
 	
 	// 회원 마일리지(mileage_fa) 삭제하기
 	public int mileageDelete(String customer_id);
+	// 회원 스케쥴(schedule_fa) 삭제하기
+	public int scheduleDelete(String customer_id);
 	// 회원 예약(reservation_fa) 삭제하기
 	public int reservationDelete(String customer_id);
 	// 회원(customer_fa) 삭제하기
@@ -54,9 +55,22 @@ public interface AdminCustomerMapper {
 	public String mileageFUsable(String id);
 	// 회원 마일리지 내역
 	public List<HashMap<String, String>> mileageBalance(String id);
-
 	
-
+	// 팝업창 : 예약 내역 불러오기 위한 부분
+	public List<HashMap<String, String>> getCommonReservation(HashMap<String, String> value);
+	// 팝업창: 예약 세부내역 불러오기 위한 Payment부분
+	public String getPayment(String reservation_num);
+	// 팝업창: 예약 세부내역 불러오기 위한 Schedule부분
+	public ArrayList<Schedule> getSchedule(String reservation_num);
+	// 팝업창: 예약 세부내역 불러오기 위한 Route부분
+	public ArrayList<Route> getRoute(ArrayList<Schedule> scheduleList);
+	// 팝업창: 예약 세부내역 불러오기 위한 Airplane부분
+	public ArrayList<Airplane> getAirplane(ArrayList<Route> routeList);
+	// 팝업창 : 예약 세부내역 불러오기 위한 이름 가져오기
+	public String getName(String id);
+	
+	
+	
 	
 	
 	
