@@ -225,11 +225,5 @@
 			)
 	</insert>
 	
-	<!-- 등급별 회원검색 - 메일보내기 -->
-	<select id="getCustomerBygrade" parameterType="String" resultType="customer">
-		select customer_id, customer_name, customer_email
-		from customer_fa
-		<if test="!value.equals('전체')">	where customer_grade = #{value}	</if>
-	</select>
-	
+
 </mapper>

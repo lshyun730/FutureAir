@@ -29,9 +29,9 @@
 	        	</colgroup>
 	            <tr>
 	                <th>비행번호</th>
-	                <td><input type="text" name="route_num" value=" ${route.route_num}" readonly="readonly"/> </td>
+	                <td><input type="text" name="route_num" value="${route.route_num}" readonly="readonly"/> </td>
 	                <th>비행기아이디</th>
- 	                <td><input type="text" name="airplane_id" value=" ${route.airplane_id}" readonly="readonly"/></td>
+ 	                <td><input type="text" name="airplane_id" value="${route.airplane_id}" readonly="readonly"/></td>
 	            </tr>
         	</table>
         	<!-- table E --> 
@@ -140,7 +140,9 @@
 		    data: $('.flight_update').serialize(),
 		    success: function (data) {
 		    	if(data==1) {
-			        alert('수정되었습니다');
+		    		alert('수정되었습니다');
+		    		 	opener.location.reload();
+		    		window.close();
 				}
 		    }
 		}); 

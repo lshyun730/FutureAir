@@ -128,9 +128,12 @@ sub page
 */
 
 /* 비행일정 */
-.popup form.flight_update {display: block;}
+.popup form.flight_update,
+.popup form.mail_update {display: block;}
 .popup form.flight_update td input,
-.popup form.flight_update td select {border: 1px solid var(--light); border-radius: 3px; padding: 5px; width: 100%}
+.popup form.flight_update td select,
+.popup form.mail_update td input,
+.popup form.mail_update td select {border: 1px solid var(--light); border-radius: 3px; padding: 5px; width: 100%}
 
 /* 예약현황 */
 
@@ -145,8 +148,13 @@ sub page
 .sand_mail_form .textbox {grid-column: 1/3;}
 .sand_mail_form .content_footer {grid-column: 1/3; text-align: center;padding-top: 1.25rem;}
 .sand_mail_form .content_footer button:nth-child(1) {background: var(--light); margin-right:0.25rem ;}
-.cke_chrome {grid-column: 1/3 ;}
-.cke_top {background: var(--secondary)!important}
+.mail_body {min-height: 28rem}
+.mail_body h1, .mail_body h2, .mail_body h3{font-size: 1.2rem; font-family: 'Noto Sans CJK KR'}
+.mail_view .table {margin-bottom: 3.75rem !important}
+.mail_view .table th,
+.mail_update .table th {vertical-align: top}
+.cke_chrome {grid-column: 1/3; border: 1px solid var(--light) !important; border-radius: 0.625rem}
+.cke_top {background: var(--secondary)!important; border-bottom: 1px solid var(--light) !important;}
 
 
 /* 메일발송 수정하기 모달 */
@@ -297,7 +305,7 @@ td.more{padding:0 1.875rem;}
 .modal_wrap .close {position: absolute; top: 1.875rem; right: 1.875rem; cursor: pointer;}
 
 /* 팝업 */
-.popup {width: 100%; height: 100%; background: #fff; padding: 1.875rem;}
+.popup {width: 100%; background: #fff; padding: 1.875rem;}
 .popup h2 {padding-bottom: 1.875rem;}
 .popup h3 {padding: 0.625rem 0}
 .popup .table {margin-bottom: 1.875rem }

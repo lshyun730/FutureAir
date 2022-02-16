@@ -26,86 +26,18 @@
 		                </tr>
 		            </thead>
 		            <tbody>
-		                <tr>
-		                    <td>신규회원가입</td>
-		                    <td><label class="checkbox"><input type="checkbox"> 사용함</label></td>
-		                    <td>
-		                        <button class="btn_s more">수정하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more">미리보기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                    </td>
-		                </tr>
-		                <tr>
-		                    <td>신규회원가입</td>
-		                    <td><label class="checkbox"><input type="checkbox"> 사용함</label></td>
-		                    <td>
-		                        <button class="btn_s more">수정하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more">미리보기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                    </td>
-		                </tr>
-		                <tr>
-		                    <td>신규회원가입</td>
-		                    <td><label class="checkbox"><input type="checkbox"> 사용함</label></td>
-		                    <td>
-		                        <button class="btn_s more">수정하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more">미리보기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                    </td>
-		                </tr>
-		                <tr>
-		                    <td>신규회원가입</td>
-		                    <td><label class="checkbox"><input type="checkbox"> 사용함</label></td>
-		                    <td>
-		                        <button class="btn_s more">수정하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more">미리보기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                    </td>
-		                </tr>
-		                <tr>
-		                    <td>신규회원가입</td>
-		                    <td><label class="checkbox"><input type="checkbox"> 사용함</label></td>
-		                    <td>
-		                        <button class="btn_s more">수정하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more">미리보기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                    </td>
-		                </tr>
-		                <tr>
-		                    <td>신규회원가입</td>
-		                    <td><label class="checkbox"><input type="checkbox"> 사용함</label></td>
-		                    <td>
-		                        <button class="btn_s more">수정하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more">미리보기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                    </td>
-		                </tr>
-		                <tr>
-		                    <td>신규회원가입</td>
-		                    <td><label class="checkbox"><input type="checkbox"> 사용함</label></td>
-		                    <td>
-		                        <button class="btn_s more">수정하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more">미리보기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                    </td>
-		                </tr>
-		                <tr>
-		                    <td>신규회원가입</td>
-		                    <td><label class="checkbox"><input type="checkbox"> 사용함</label></td>
-		                    <td>
-		                        <button class="btn_s more">수정하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more">미리보기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                    </td>
-		                </tr>
-		                <tr>
-		                    <td>신규회원가입</td>
-		                    <td><label class="checkbox"><input type="checkbox"> 사용함</label></td>
-		                    <td>
-		                        <button class="btn_s more">수정하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more">미리보기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                    </td>
-		                </tr>
-		                <tr>
-		                    <td>신규회원가입</td>
-		                    <td><label class="checkbox"><input type="checkbox"> 사용함</label></td>
-		                    <td>
-		                        <button class="btn_s more">수정하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more">미리보기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                    </td>
-		                </tr>
+		            	<c:forEach var="mail" items="${mailList}">
+			                <tr>
+			                    <td>${mail.mail_type} </td>
+			                    <td>
+			                    	<label class="checkbox"><input type="checkbox" <c:if test="${mail.mail_check eq '1' }"> checked="checked"</c:if> onchange="location.href='mailCheckChange?mail_num=${mail.mail_num}&mail_check=${mail.mail_check }'"> 사용함</label>
+			                    </td>
+			                    <td>
+			                        <button class="btn_s more" onclick="popupOpen('mailUpdateForm?mail_num=${mail.mail_num}', 1000, 800)">수정하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+			                        <button class="btn_s more" onclick="popupOpen('mailView?mail_num=${mail.mail_num}', 1000, 600)">미리보기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+			                    </td>
+			                </tr>
+		            	</c:forEach>
 		            </tbody>
 		        </table>
 		        <!-- table E --> 

@@ -114,9 +114,8 @@ public class AdminFlightDAO {
 
 	public int updateFlight(HashMap<String, String> routeForm) {
 		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
-		int result = mapper.updateFlight(routeForm);
-		System.out.println(routeForm);
-		System.out.println(result);
+		int result = 0;
+		result = mapper.updateFlight(routeForm);
 		return result;
 	}
 }

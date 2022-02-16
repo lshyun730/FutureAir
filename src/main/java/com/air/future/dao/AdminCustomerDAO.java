@@ -139,12 +139,7 @@ public class AdminCustomerDAO {
 		return result;
 	}
 
-	// 등급으로 회원검색 - 메일보내기
-	public ArrayList<Customer> getCustomerBygrade(String customer_grade) {
-		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
-		ArrayList<Customer> customerList = mapper.getCustomerBygrade(customer_grade);
-		return customerList;
-	}
+
 
 
 
