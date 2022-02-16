@@ -49,7 +49,7 @@
 	            <tr>
 	                <th>출발지</th>
 	                <td>
-	                	<select name="departure_name" onchange="changeSelect(this)" id="departure_name">
+	                	<select name="departure_name" onchange="changeSelect(this)" id="departure_name" required="required">
 	                     	<option value="" disabled selected>도시 혹은 공항</option>
 	                     	<c:forEach var="continent" items="${destinationList}">
 	               				<optgroup label="${continent[0].continents}">
@@ -62,7 +62,7 @@
                     </td>
 	                <th>도착지</th>
 	                <td>
-		                <select name="arrival_name" onchange="changeSelect(this)" id="arrival_name">
+		                <select name="arrival_name" onchange="changeSelect(this)" id="arrival_name" required="required">
 	                    	<option value="" disabled selected>도시 혹은 공항</option>
 	                    	<c:forEach var="continent" items="${destinationList}">
 	               				<optgroup label="${continent[0].continents}">
@@ -83,21 +83,21 @@
 	               	<fmt:formatDate var="arrival_time" pattern="HH:mm" value="${arrival_date_time}"/>
 	                <th>출발날짜</th>
 	                <td>
-						<input type="date" name="departure_date" value="${departure_date}">
+						<input type="date" name="departure_date" value="${departure_date}" required="required">
 					</td>
 	                <th>출발시간</th>
 	                <td>
-	                	<input type="time" name="departure_time" value="${departure_time}">
+	                	<input type="time" name="departure_time" value="${departure_time}" required="required">
 	                </td>
 	            </tr>
 	            <tr>
 	                <th>도착날짜</th>
 	                <td>
-						<input type="date" name="arrival_date" value="${arrival_date}">
+						<input type="date" name="arrival_date" value="${arrival_date}" required="required">
 					</td>
 	                <th>도착시간</th>
 	                <td>
-	                	<input type="time" name="arrival_time" value="${arrival_time}">
+	                	<input type="time" name="arrival_time" value="${arrival_time}" required="required">
 	                </td>
 	            </tr>
         	</table>
@@ -117,11 +117,11 @@
 	        	</colgroup>
 	            <tr>
 	                <th>일반석</th>
-	                <td><input type="number" name="normal_price" value="${route.normal_price}"></td>
+	                <td><input type="number" name="normal_price" value="${route.normal_price}" required="required"></td>
 	                <th>프레스티지석</th>
-	                <td><input type="number" name="prestige_price" value="${route.normal_price}"></td>
+	                <td><input type="number" name="prestige_price" value="${route.normal_price}" required="required"></td>
 	                <th>일등석</th>
-	                <td><input type="number" name="first_price" value="${route.normal_price}"></td>
+	                <td><input type="number" name="first_price" value="${route.normal_price}" required="required"></td>
 	            </tr>
         	</table>
         	<!-- table E --> 

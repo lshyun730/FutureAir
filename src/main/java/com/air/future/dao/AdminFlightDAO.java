@@ -23,28 +23,57 @@ public class AdminFlightDAO {
 비행일정 페이지
 -------------- 
 */
-	// 비행 리스트 갯수 
+	// 비행일정 갯수 검색
 	public int getRouteTotal(HashMap<String, String> searchList) {
 		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
 		int total = mapper.getRouteTotal(searchList);
 		return total;
 	}
 
-	// 비행일정 리스트
+	// 비행일정 리스트 검색
 	public ArrayList<HashMap<String, String>> routeList(HashMap<String, String> searchList, int startRecord, int countPerPage) {
 		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
 		RowBounds rb = new RowBounds(startRecord, countPerPage);
 		ArrayList<HashMap<String, String>> routeList = mapper.routeList(searchList,rb);
 		return routeList;
 	}
+	
+	// 비행일정 검색
+	public Route getRoute(String route_num) {
+		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
+		Route route = mapper.getRoute(route_num);
+		return route;
+	}
 
-	// 비행 선택삭제
+	// 비행일정 추가
+	public int insertFlight(HashMap<String, String> routeForm) {
+		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
+		int result = mapper.insertFlight(routeForm);
+		return result;
+	}
+
+	// 비행일정 업데이트
+	public int updateFlight(HashMap<String, String> routeForm) {
+		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
+		int result = 0;
+		result = mapper.updateFlight(routeForm);
+		return result;
+	}
+	
+	// 비행일정 삭제
 	public int deleteRoute(String route_num) {
 		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
 		int result = mapper.deleteRoute(route_num);
 		return result;
 	}
 	
+	// 비행기 리스트 검색 
+	public ArrayList<Airplane> getAirplaneList() {
+		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
+		ArrayList<Airplane> planeList = mapper.getAirplaneList();
+		return planeList;
+	}
+
 	
 /* 
 --------------
@@ -91,31 +120,7 @@ public class AdminFlightDAO {
 			destinationList.add(mapper.destinationList(continent));
 		}
 		return destinationList;
-		
 	}
 
-	public Route getRoute(String route_num) {
-		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
-		Route route = mapper.getRoute(route_num);
-		return route;
-	}
 
-	public int insertFlight(HashMap<String, String> routeForm) {
-		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
-		int result = mapper.insertFlight(routeForm);
-		return result;
-	}
-
-	public ArrayList<Airplane> getAirplaneList() {
-		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
-		ArrayList<Airplane> planeList = mapper.getAirplaneList();
-		return planeList;
-	}
-
-	public int updateFlight(HashMap<String, String> routeForm) {
-		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
-		int result = 0;
-		result = mapper.updateFlight(routeForm);
-		return result;
-	}
 }

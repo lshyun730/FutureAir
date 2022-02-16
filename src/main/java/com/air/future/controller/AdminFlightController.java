@@ -55,17 +55,17 @@ public class AdminFlightController {
 		searchList.put("departure_date_start", departure_date_start);
 		searchList.put("departure_date_end", departure_date_end);
 		
-		int total = service.getRouteTotal(searchList);
-		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
-		ArrayList<ArrayList<Destination>> destinationList =  service.destinationList();
-		ArrayList<HashMap<String, String>> routeList = service.routeList(searchList, navi);
-		ArrayList<Airplane> planeList = service.getAirplaneList();
+		int total = service.getRouteTotal(searchList); // 검색된리스트갯수
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total); // 페이징처리
+		ArrayList<ArrayList<Destination>> destinationList =  service.destinationList(); // 지역리스트
+		ArrayList<HashMap<String, String>> routeList = service.routeList(searchList, navi); // 검색된 비행일정리스트
+		ArrayList<Airplane> planeList = service.getAirplaneList(); // 비행기종류 리스트
 		
 		model.addAttribute("searchMap", searchList);
 		model.addAttribute("destinationList", destinationList);
 		model.addAttribute("routeList", routeList);
-		model.addAttribute("navi", navi);
 		model.addAttribute("planeList", planeList);
+		model.addAttribute("navi", navi);
 		
 		return "admin/flight/flightList";
 	}
@@ -73,8 +73,8 @@ public class AdminFlightController {
 	// 비행일정 수정이동
 	@RequestMapping(value = "flightUpdateForm", method = RequestMethod.GET)
 	public String flightUpdateForm(String route_num, Model model) {
-		ArrayList<ArrayList<Destination>> destinationList =  service.destinationList();
-		Route route = service.getRoute(route_num);
+		ArrayList<ArrayList<Destination>> destinationList =  service.destinationList(); // 지역리스트
+		Route route = service.getRoute(route_num); // 수정할 비행일정 정보
 		
 		model.addAttribute("destinationList", destinationList);
 		model.addAttribute("route", route);
@@ -84,7 +84,7 @@ public class AdminFlightController {
 	// 비행일정 상세
 	@RequestMapping(value = "flightView", method = RequestMethod.GET)
 	public String flightView(String route_num, Model model) {
-		Route route = service.getRoute(route_num);
+		Route route = service.getRoute(route_num); // 상세 확인할 비행일정 정보
 		
 		model.addAttribute("route", route);
 		return "admin/flight/flightView";
@@ -93,17 +93,16 @@ public class AdminFlightController {
 	// 비행일정 삽입
 	@RequestMapping(value = "flightInsert", method = RequestMethod.POST)
 	@ResponseBody
-	public String flightInsert(@RequestParam HashMap<String, String> routeForm, Model model) {
-		System.out.println(routeForm);
-		service.insertFlight(routeForm);
-		return"admin/flight/flightList";
+	public int flightInsert(@RequestParam HashMap<String, String> routeForm, Model model) {
+		int result = service.insertFlight(routeForm); // 비행일정삽입
+		return result;
 	}
 	
 	// 비행일정 수정
 	@RequestMapping(value = "flightUpdate", method = RequestMethod.POST)
 	@ResponseBody
 	public int flightUpdate(@RequestParam HashMap<String, String> routeForm, Model model) {
-		int result = service.updateFlight(routeForm);
+		int result = service.updateFlight(routeForm); // 비행일정수정
 		return result;
 	}
 
@@ -112,8 +111,8 @@ public class AdminFlightController {
 	@RequestMapping(value = "flightDelete", method = RequestMethod.POST)
 	@ResponseBody
 	public int flightDelete(HttpServletRequest request) {
-		String route_num = request.getParameter("route_num");
-		int result = service.deleteRoute(route_num);
+		String route_num = request.getParameter("route_num"); 
+		int result = service.deleteRoute(route_num); // 비행일정삭제
 		return result;
 	}
 	
@@ -122,7 +121,7 @@ public class AdminFlightController {
 	@ResponseBody
 	public int deleteRoute(HttpServletRequest request) {
 		String[] deleteList = request.getParameterValues("deleteList");
-		int result = service.deleteRouteList(deleteList);
+		int result = service.deleteRouteList(deleteList); // 비행일정리스트 삭제
 		return result;
 	}
 	
@@ -156,10 +155,10 @@ public class AdminFlightController {
 		searchList.put("reservation_date_end", reservation_date_end);
 		searchList.put("customer_name", customer_name);
 		
-		int total = service.getReservationTotal(searchList);
-		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
-		ArrayList<ArrayList<Destination>> destinationList =  service.destinationList();
-		ArrayList<HashMap<String, String>> reservationList = service.reservationList(searchList, navi);
+		int total = service.getReservationTotal(searchList); // 검색된 리스트 갯수
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total); // 페이징처리
+		ArrayList<ArrayList<Destination>> destinationList =  service.destinationList(); // 지역리스트
+		ArrayList<HashMap<String, String>> reservationList = service.reservationList(searchList, navi); // 검색된 예약 리스트
 		
 		model.addAttribute("searchMap", searchList);
 		model.addAttribute("destinationList", destinationList);
@@ -175,7 +174,7 @@ public class AdminFlightController {
 	@ResponseBody
 	public int reservationDelete(HttpServletRequest request) {
 		String route_num = request.getParameter("reservation_num");
-		int result = service.deleteReservation(route_num);
+		int result = service.deleteReservation(route_num); // 예약삭제
 		return result;
 	}
 	
@@ -185,7 +184,7 @@ public class AdminFlightController {
 	@ResponseBody
 	public int deleteReservation(HttpServletRequest request, Model model) {
 		String[] deleteList = request.getParameterValues("deleteList");
-		int result = service.deleteReservation(deleteList);
+		int result = service.deleteReservation(deleteList); // 예약리스트 삭제
 		return result;
 	}
 		

@@ -5,7 +5,8 @@
 <mapper namespace="com.air.future.dao.AdminFlightMapper">
 
 <!-- 비행일정 -->
-	<!-- 비행일정리스트 -->
+
+	<!-- 비행일정 리스트 검색 -->
 	<select id="routeList" resultType="HashMap" parameterType="HashMap">
 		select r.* , a.airplane_id from route_fa r, airplane_fa a
 		where r.airplane_id = a.airplane_id 
@@ -23,7 +24,7 @@
 		order by route_num
 	</select>
 	
-	<!-- 비행일정갯수 -->
+	<!-- 비행일정 갯수 검색 -->
 	<select id="getRouteTotal" resultType="int" parameterType="HashMap">
 		select count(*) from route_fa
  		where to_char(departure_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{departure_date_end}
@@ -38,6 +39,26 @@
 		and route_num = #{route_num}
 		</if>
 	</select>
+	
+	<!-- 비행일정 검색 -->
+	<select id="getRoute" parameterType="String" resultType="route">
+		select * from route_fa where route_num = #{route_num}
+	</select>
+	
+	<!-- 비행일정 추가 -->
+	<insert id="insertFlight">
+		insert into route_fa values(
+			concat('F' , lpad(route_index_seq.nextval, 5, '0')), 
+			#{airplane_id}, 
+			TO_DATE(#{departure_date}, 'YYYY-MM-DD HH24:MI:SS'), 
+			TO_DATE(#{arrival_date}, 'YYYY-MM-DD HH24:MI:SS'), 
+			#{departure_name}, 
+			#{arrival_name}, 
+			trunc((TO_DATE(#{arrival_date}, 'YYYY-MM-DD HH24:MI:SS') - TO_DATE(#{departure_date}, 'YYYY-MM-DD HH24:MI:SS')) * 24 * 60), 
+			#{normal_price}, 
+			#{prestige_price}, 
+			#{first_price})
+	</insert>
 	
 	<!-- 비행일정 업데이트 -->
 	<update id="updateFlight">
@@ -61,22 +82,8 @@
 		where route_num = #{route_num}
 	</delete>
 	
-	<!-- 비행일정 추가 -->
-	<insert id="insertFlight">
-		insert into route_fa values(
-			concat('F' , lpad(route_index_seq.nextval, 5, '0')), 
-			#{airplane_id}, 
-			TO_DATE(#{departure_date}, 'YYYY-MM-DD HH24:MI:SS'), 
-			TO_DATE(#{arrival_date}, 'YYYY-MM-DD HH24:MI:SS'), 
-			#{departure_name}, 
-			#{arrival_name}, 
-			trunc((TO_DATE(#{arrival_date}, 'YYYY-MM-DD HH24:MI:SS') - TO_DATE(#{departure_date}, 'YYYY-MM-DD HH24:MI:SS')) * 24 * 60), 
-			#{normal_price}, 
-			#{prestige_price}, 
-			#{first_price})
-	</insert>
 
-	<!-- 비행기아이디리스트 -->
+	<!-- 비행기 리스트 검색 -->
 	<select id="getAirplaneList" resultType="airplane">
 		select * from airplane_fa
 	</select>
@@ -84,6 +91,7 @@
   
 
 <!-- 예약현황 -->	
+
    <!-- 예약일정리스트 -->
    <select id="reservationList" parameterType="HashMap" resultType="HashMap">
    	select a.*,  case when b.count = '1' then '편도'when b.count = '2' then '왕복' else '다구간' end as reservation_type  from 
@@ -174,6 +182,7 @@
 	
 	
 <!-- 공통 -->	
+
 	<!-- 취향지리스트 -->
 	<select id="destinationList" resultType="destination" parameterType="String">
 		select * from destination_fa
@@ -185,9 +194,7 @@
 		select distinct continents from destination_fa
 	</select>
 	
-	<select id="getRoute" parameterType="String" resultType="route">
-		select * from route_fa where route_num = #{route_num}
-	</select>
+	
 	
 </mapper>
 
