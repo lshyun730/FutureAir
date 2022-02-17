@@ -16,7 +16,7 @@
 		        <div class="flex_content_header">
 		            <h2>회원등급</h2>
 		            <div class="action">
-		                <button class="btn danger" onclick='checkDelete(this)'>선택삭제</button>
+		                <button class="btn danger" form="gradeTable" onclick='javascript:gradeDeleter(this);'>선택삭제</button>
 		                <button class="btn primary" onclick='modalOpen();'>등급추가</button>
 		            </div>
 		        </div>
@@ -54,8 +54,8 @@
 		                                    <span></span>
 		                                </div>
 		                                <ul class="select_list">
-		                                    <li><a href="javascript:popupOpen('customerGradeUpdate', 550, 600)">수정</a></li> 
-		                                    <li><a href="#">삭제</a></li> 
+		                                    <li><a href="javascript:popupOpen('customerGradeUpdate?grade=${customerGrade.grade}', 550, 600)">수정</a></li> 
+		                                    <li><a href="javascript:gradeDeletePoint('${customerGrade.grade}')">삭제</a></li> 
 		                                </ul>
 		                            </div>
 		                        </td>
@@ -162,8 +162,8 @@
 		                                    <span></span>
 		                                </div>
 		                                <ul class="select_list">
-		                                    <li><a href="#">수정</a></li> 
-		                                    <li><a href="#">삭제</a></li> 
+		                                    <li><a href="javascript:popupOpen('customerUpdate?customer_id=${customerList.customer_id}', 550, 680)">수정</a></li> 
+		                                    <li><a href="javascript:actionDelete('${customerList.customer_id }')">삭제</a></li> 
 		                                </ul>
 		                            </div>
 		                        </td>
@@ -306,8 +306,79 @@ document.addEventListener('click', () => {;
 						gradeCheker = true;
 					}
 				}
-			})
-		}
+			}
+		})
+	}
+
+//선택삭제
+function deleteAjax(deleteList) {
+	
+	if(confirm("정말 삭제하시겠습니까?")){
+		 $.ajax({
+				url : 'customerDelete',
+				data : { deleteList : deleteList },
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data==1) {
+						alert('삭제에 성공하였습니다');		
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
+
+//액션창 회원 삭제
+function actionDelete(customer_id){
+	if(customer_id.lengh != 0){
+		const deleteList = new Array();
+		deleteList.push(customer_id);
+		deleteAjax(deleteList);
+	} else {
+		alert("삭제에 실패하였습니다.");
+	}
+}
+
+
+// 등급 삭제(선택 삭제 부분)
+function gradeDeleter(deleteBox) {
+	 const content 		= deleteBox.closest('.content'); 
+	 const checkboxes 	= content.querySelectorAll('input[name="tableSelect"]');
+	 const deleteList 	= new Array();
+
+	 checkboxes.forEach(checkbox => {
+		 if(checkbox.checked) deleteList.push(checkbox.value);
+	 })
+	
+	 if(checkboxes.length == deleteList.length){
+		 alert("삭제를 위해서는 최소한 한 개 이상의 등급이 남아있어야 합니다.");
+	 } else if(deleteList.length == 0) {
+		alert("선택된 항목이 없습니다");
+	 } else {
+		gradeDeletePoint(deleteList);
+	 }
+}
+// 액션창 등급 삭제
+function gradeDeletePoint(deleteGrade) {
+	if(confirm("정말 삭제하시겠습니까?")){
+		 $.ajax({
+				url : 'gradeDelete',
+				data : {deleteList : deleteGrade},
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data == 1000) {
+						alert('삭제를 위해서는 최소한 한 개 이상의 등급은 남아있어야 합니다.');
+					} else if(data != 0){
+						alert('삭제에 성공하였습니다');		
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
+
 </script>
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>
