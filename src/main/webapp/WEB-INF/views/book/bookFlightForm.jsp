@@ -37,7 +37,7 @@
                     <option value="김포">김포</option>
                 </select>
             </div>
-            <div>
+            <div class="flight_date">
                 <p class="title">탑승일</p>
                 <input type="date" name="departure_date">
             </div>

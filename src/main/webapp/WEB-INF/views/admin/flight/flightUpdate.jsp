@@ -15,7 +15,7 @@
 <body style="background: #fff">
 <!-- popup S -->  
 <section class="popup" id="popup">
-	<form action="flightUpdate" class="flight_update" method="post">
+	<form class="flight_update" onsubmit="return updateFlight()">
         <h2>비행정보</h2>
         <section>
         	<h3>기본정보</h3>
@@ -29,9 +29,9 @@
 	        	</colgroup>
 	            <tr>
 	                <th>비행번호</th>
-	                <td><input type="text" value=" ${route.route_num}" readonly="readonly"/> </td>
+	                <td><input type="text" name="route_num" value="${route.route_num}" readonly="readonly"/> </td>
 	                <th>비행기아이디</th>
- 	                <td><input type="text" value=" ${route.airplane_id}" disabled="disabled"/></td>
+ 	                <td><input type="text" name="airplane_id" value="${route.airplane_id}" readonly="readonly"/></td>
 	            </tr>
         	</table>
         	<!-- table E --> 
@@ -49,7 +49,7 @@
 	            <tr>
 	                <th>출발지</th>
 	                <td>
-	                	<select name="departure_name" onchange="changeSelect(this)" id="departure_name">
+	                	<select name="departure_name" onchange="changeSelect(this)" id="departure_name" required="required">
 	                     	<option value="" disabled selected>도시 혹은 공항</option>
 	                     	<c:forEach var="continent" items="${destinationList}">
 	               				<optgroup label="${continent[0].continents}">
@@ -62,7 +62,7 @@
                     </td>
 	                <th>도착지</th>
 	                <td>
-		                <select name="arrival_name" onchange="changeSelect(this)" id="arrival_name">
+		                <select name="arrival_name" onchange="changeSelect(this)" id="arrival_name" required="required">
 	                    	<option value="" disabled selected>도시 혹은 공항</option>
 	                    	<c:forEach var="continent" items="${destinationList}">
 	               				<optgroup label="${continent[0].continents}">
@@ -83,21 +83,21 @@
 	               	<fmt:formatDate var="arrival_time" pattern="HH:mm" value="${arrival_date_time}"/>
 	                <th>출발날짜</th>
 	                <td>
-						<input type="date" name="departure_date" value="${departure_date}">
+						<input type="date" name="departure_date" value="${departure_date}" required="required">
 					</td>
 	                <th>출발시간</th>
 	                <td>
-	                	<input type="time" name="departure_time" value="${departure_time}">
+	                	<input type="time" name="departure_time" value="${departure_time}" required="required">
 	                </td>
 	            </tr>
 	            <tr>
 	                <th>도착날짜</th>
 	                <td>
-						<input type="date" name="arrival_date" value="${arrival_date}">
+						<input type="date" name="arrival_date" value="${arrival_date}" required="required">
 					</td>
 	                <th>도착시간</th>
 	                <td>
-	                	<input type="time" name="arrival_time" value="${arrival_time}">
+	                	<input type="time" name="arrival_time" value="${arrival_time}" required="required">
 	                </td>
 	            </tr>
         	</table>
@@ -117,24 +117,35 @@
 	        	</colgroup>
 	            <tr>
 	                <th>일반석</th>
-	                <td><input type="number" name="normal_price" value="${route.normal_price}"></td>
+	                <td><input type="number" name="normal_price" value="${route.normal_price}" required="required"></td>
 	                <th>프레스티지석</th>
-	                <td><input type="number" name="prestige_price" value="${route.normal_price}"></td>
+	                <td><input type="number" name="prestige_price" value="${route.normal_price}" required="required"></td>
 	                <th>일등석</th>
-	                <td><input type="number" name="first_price" value="${route.normal_price}"></td>
+	                <td><input type="number" name="first_price" value="${route.normal_price}" required="required"></td>
 	            </tr>
         	</table>
         	<!-- table E --> 
         </section>
         <div class="submit">
-            <input type="submit" value="수정하기" onclick="updateFlight()">
+            <input type="submit" value="수정하기">
         </div>
 	</form>
 </section>
 <!-- popup E -->  
 <script>
 	function updateFlight() {
-		
+	 	$.ajax({
+		    type: 'POST',
+		    url: 'flightUpdate',
+		    data: $('.flight_update').serialize(),
+		    success: function (data) {
+		    	if(data==1) {
+		    		alert('수정되었습니다');
+		    		 	opener.location.reload();
+		    		window.close();
+				}
+		    }
+		}); 
 	}
 </script>
 </body>

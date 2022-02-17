@@ -69,20 +69,18 @@
 		order by promo_terms
 	</select>
 	
-	<!-- 회원정보(customer_fa) 삭제를 위한 마일리자(mileage_fa) 삭제하기 -->
-	<delete id="mileageDelete" parameterType="String">
+	<!-- 회원정보(customer_fa) 삭제를 위한 마일리지(mileage_fa) 삭제하기 -->
+	<delete id="mileageDelete" parameterType="string">
 		delete from mileage_fa 
 		where mileage_id = #{customer_id}
 	</delete>
-	
 	<!-- 회원정보(customer_fa) 삭제를 위한 예약 부분(reservation_fa) 삭제하기 -->
-	<delete id="reservationDelete" parameterType="String">
+	<delete id="reservationDelete" parameterType="string">
 		delete from reservation_fa 
 		where customer_id = #{customer_id}
 	</delete>
-	
 	<!-- 회원정보(customer_fa) 삭제하기 -->
-	<delete id="customerDelete" parameterType="String">
+	<delete id="customerDelete" parameterType="string">
 		delete from customer_fa 
 		where customer_id = #{customer_id}
 	</delete>
@@ -121,7 +119,7 @@
 		</where>
 	</select>
 	
-	<!-- 회원정보 팝업창 정보에 필요한 회원정보 불러오기(customerInfo.jsp) -->
+	<!-- 팝업창 : 회원정보 팝업창 정보에 필요한 회원정보 불러오기(customerInfo.jsp) -->
 	<select id="customerInfoFind" parameterType="customer" resultType="customer">
 		select customer_id
 				, customer_name
@@ -211,7 +209,7 @@
 		</where>
 	</select>
 	
-	<!-- 등급 추가하기-->
+	<!-- 등급 추가하기 -->
 	<insert id="gradeAdd" parameterType="grade">
 		insert into customer_grade_fa
 		values(customer_grade_seq.nextval
@@ -225,6 +223,7 @@
 			)
 	</insert>
 	
+
 	
 	<!-- 팝업창 : 회원정보 수정하기에서 회원정보 가져오기(customerUpdate.jsp) -->
 	<select id="userInfoFind" parameterType="string" resultType="customer">
@@ -311,5 +310,4 @@
 			</foreach>
 		</where>
 	</delete>
-	
 </mapper>

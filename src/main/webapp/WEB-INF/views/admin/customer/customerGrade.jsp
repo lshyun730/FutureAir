@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- header S -->    
 <%@include file ="../include/header.jsp" %>
@@ -79,7 +78,7 @@
 		        </div>
 		        <!-- content header E -->   
 		        <!-- search detail S -->   
-		        <form action="customerGrade" id="pagingForm" class="search_detail active" method="get" onsubmit="return search()">
+		        <form action="customerGrade" id="search_detail" class="search_detail active" method="get" onsubmit="return search()">
 		            <div class="inputbox">
 		                <p class="inputbox_title">등급</p>
 		                <div class="inputbox_input selectbox">
@@ -150,8 +149,12 @@
 								</td>
 								<td>${customerList.customer_grade }</td>
 								<td>
-									<button class="btn_s more"><span>예약내역</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        	<button class="btn_s more"><span>마일리지</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+									<button class="btn_s more" onclick="javascript:popupOpen('customerReservation?id=${customerList.customer_id}')">
+										<span>예약내역</span><span class="icon"><i class="fas fa-chevron-right"></i></span>
+									</button>
+		                        	<button class="btn_s more" onclick="javascript:popupOpen('customerMileage?id=${customerList.customer_id}')">
+		                        		<span>마일리지</span><span class="icon"><i class="fas fa-chevron-right"></i></span>
+		                        	</button>
 								</td>
 								<td class="more">
 		                            <div class="btn_m_wrap" onclick="click_more(this)">
@@ -257,51 +260,51 @@ document.addEventListener('click', () => {;
 
 
 
-// 등급이름 중복체킹을 위한 전역변수
-const gradeChecker = false;
+	// 등급이름 중복체킹을 위한 전역변수
+	const gradeChecker = false;
 
-// 등급 추가하기
-function gradeAdd(){
-	
-	const grade			= document.getElementById("grade");
-	const mileage_exp	= document.getElementById("mileage_exp");
-	const mileage_scope	= document.getElementById("mileage_scope");
-	const mileage_ratio	= document.getElementById("mileage_ratio");
-	const pay_scope		= document.getElementById("pay_scope");
-	const pay_ratio		= document.getElementById("pay_ratio");
-	const promo_terms 	= document.getElementById("promo_terms");
+	// 등급 추가하기
+	function gradeAdd(){
+		
+		const grade			= document.getElementById("grade");
+		const mileage_exp	= document.getElementById("mileage_exp");
+		const mileage_scope	= document.getElementById("mileage_scope");
+		const mileage_ratio	= document.getElementById("mileage_ratio");
+		const pay_scope		= document.getElementById("pay_scope");
+		const pay_ratio		= document.getElementById("pay_ratio");
+		const promo_terms 	= document.getElementById("promo_terms");
 
-	if (gradeCheker == false){
-		alert("등급명이 중복입니다.");	return false;
-	}
-	
-	if (grade.value == "" || mileage_exp.value == "" || mileage_scope.value == "" || mileage_ratio.value == ""
-		|| pay_scope.value == "" || pay_ratio.value == "" || promo_terms.value == "") {
-		alert("값을 빠짐없이 입력해주시길 바랍니다."); 						return false;
-	}
-	
-	if(isNaN(mileage_exp.value) == true || isNaN(mileage_scope.value) == true || isNaN(mileage_ratio.value) == true
-			|| isNaN(pay_scope.value) == true || isNaN(pay_ratio.value) == true){
-		alert("등급 명칭을 제외한 나머지는 숫자로 입력해 주시길 바랍니다."); 		return false;
-	}
-	
-	return true;
-}	
+		if (gradeCheker == false){
+			alert("등급명이 중복입니다.");	return false;
+		}
+		
+		if (grade.value == "" || mileage_exp.value == "" || mileage_scope.value == "" || mileage_ratio.value == ""
+			|| pay_scope.value == "" || pay_ratio.value == "" || promo_terms.value == "") {
+			alert("값을 빠짐없이 입력해주시길 바랍니다."); 						return false;
+		}
+		
+		if(isNaN(mileage_exp.value) == true || isNaN(mileage_scope.value) == true || isNaN(mileage_ratio.value) == true
+				|| isNaN(pay_scope.value) == true || isNaN(pay_ratio.value) == true){
+			alert("등급 명칭을 제외한 나머지는 숫자로 입력해 주시길 바랍니다."); 		return false;
+		}
+		
+		return true;
+	}	
 
-//등급 명칭 중복 검사하기
-function checkGrade(){
-	const inputGrade = $("#grade").val();
-	$.ajax({
-		data 	: { grade : inputGrade },
-		url		: "checkGradeName",
-		type	: "post",
-		dataType : "text",
-		success	: function(data) {
-				if (data != '0'){
-					alert("지금 입력하신 등급명은 중복입니다. 등급명은 중복된 값을 사용할 수 없습니다.");
-					gradeCheker = false;
-				} else {
-					gradeCheker = true;
+	//등급 명칭 중복 검사하기
+	function checkGrade(){
+		const inputGrade = $("#grade").val();
+		$.ajax({
+			data 	: { grade : inputGrade },
+			url		: "checkGradeName",
+			type	: "post",
+			dataType : "text",
+			success	: function(data) {
+					if (data != '0'){
+						gradeCheker = false;
+					} else {
+						gradeCheker = true;
+					}
 				}
 			}
 		})
@@ -375,8 +378,6 @@ function gradeDeletePoint(deleteGrade) {
 		 }); 				 
 	 }
 }
-
-
 
 </script>
 <!-- footer S -->

@@ -45,7 +45,7 @@
 		            <div class="inputbox icon">
 		                <p class="inputbox_title">전화번호</p>
 		                <div class="inputbox_input">
-		                    <input type="text" id="customer_phone" name="customer_phone" placeholder="01012341234" value="${customer_phone}">
+		                    <input type="text" id="customer_phone" name="customer_phone" placeholder="010-1234-1234" value="${customer_phone}">
 		                    <span class="inputbox_icon"><i class="fas fa-phone"></i></span>
 		                </div>
 		            </div>
@@ -64,10 +64,11 @@
 		                <div class="inputbox_input selectbox">
 		                    <select id="customer_grade" name="customer_grade">
 		                    	<option value="전체" <c:if test="${customer_grade eq '전체'}">selected</c:if>>전체</option>
-		                        <option value="일반" <c:if test="${customer_grade eq '일반'}">selected</c:if>>일반</option>
-		                        <option value="실버" <c:if test="${customer_grade eq '실버'}">selected</c:if>>실버</option>
-		                        <option value="골드" <c:if test="${customer_grade eq '골드'}">selected</c:if>>골드</option>
-		                        <option value="플래티늄" <c:if test="${customer_grade eq '플래티늄'}">selected</c:if>>플래티늄</option>
+		                        <c:forEach var="customerGrade" items="${customerGradeAll}" varStatus="status">
+		                        	<c:forEach var="c_g" items="${customerGrade.grade }">
+										<option value="${c_g }" <c:if test="${customer_grade eq c_g}">selected</c:if>>${c_g }</option>
+		                        	</c:forEach>
+		                    	</c:forEach>
 		                    </select>
 		                </div>
 		            </div>
