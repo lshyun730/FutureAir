@@ -14,12 +14,14 @@
 		<typeAlias type="com.air.future.vo.Reservation" alias="reservation"/>
 		<typeAlias type="com.air.future.vo.Schedule" alias="schedule"/>
 		<typeAlias type="com.air.future.vo.Airplane" alias="airplane"/>
+		<typeAlias type="com.air.future.vo.Mail" alias="mail"/>
 	</typeAliases>
 	
 	<mappers>
-	<mapper resource="mapper/AdminMapper.xml"/>
-	<mapper resource="mapper/AdminFlightMapper.xml"/>
-	<mapper resource="mapper/AdminCustomerMapper.xml"/>
-	<mapper resource="mapper/AdminBoardMapper.xml"/>
+		<mapper resource="mapper/AdminMapper.xml"/>
+		<mapper resource="mapper/AdminFlightMapper.xml"/>
+		<mapper resource="mapper/AdminCustomerMapper.xml"/>
+		<mapper resource="mapper/AdminBoardMapper.xml"/>
+		<mapper resource="mapper/AdminMailMapper.xml"/>	
 	</mappers>
 </configuration>

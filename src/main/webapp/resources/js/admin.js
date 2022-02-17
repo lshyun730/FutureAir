@@ -28,14 +28,15 @@ function pagingFormSubmit(currentPage) {
 
 /* 체크박스 전체 선택 & 전체 선택 취소 */
 function selectAll(selectAll)  {
-  const checkboxes = document.getElementsByName('tableSelect');
-  
-  checkboxes.forEach(checkbox => checkbox.checked = selectAll.checked)
+	const table = selectAll.closest('.table'); 
+  	const checkboxes = table.querySelectorAll('input[name="tableSelect"]');
+  	checkboxes.forEach(checkbox => checkbox.checked = selectAll.checked)
 }
 
 /* 체크박스 선택 삭제 */
-function checkDelete() {
-	 const checkboxes = document.getElementsByName('tableSelect'); 
+function checkDelete(deleteBox) {
+	 const content = deleteBox.closest('.content'); 
+	 const checkboxes = content.querySelectorAll('input[name="tableSelect"]');
 	 const deleteList = new Array();
 	 
 	 checkboxes.forEach(checkbox => {
@@ -94,11 +95,40 @@ function modalClose(){ document.getElementById("modal").style.display = 'none'; 
 
 
 // 팝업창 오픈
-function popupOpen(link) {
-	window.open(link, '_blank', 'width=1000,height=800');
+function popupCustomerOpen(link) {
+	window.open(link, '_blank', 'width=1000, height=800');
 }
 
+// 팝업창 오픈
+function popupOpen(link, width, height) {
+	const popupX = (window.screen.width / 2) - (width / 2);
+	const popupY= (window.screen.height /2) - (height / 2);
+	window.open(link, '_blank', 'width=' + width + ',height=' + height + ',left=' + popupX + ',top=' + popupY );
+}
 
+// ... 버튼
+function click_more(element){
+    var btn_m_wrap = document.getElementsByClassName('btn_m_wrap');
+    for(let i=0; i < btn_m_wrap.length; i ++) {
+        event.stopPropagation()
+        if (btn_m_wrap[i] == element) {
+            element.classList.toggle('active');
+        }else if (btn_m_wrap[i].classList.contains('active')) {
+            btn_m_wrap[i].classList.remove('active');
+        }
+    }
+}
+
+function checkBoardName(element) {
+	const postType = document.getElementById('post_type');
+	if(element.value == 'FAQ') {
+		postType.disabled = false;
+	}
+	if(element.value != 'FAQ') {
+		postType.value="";
+		postType.disabled = true;
+	}
+}
 //
 // 상세검색
 /*const btnSearchDetail = document.querySelector(".btn_search_detail");

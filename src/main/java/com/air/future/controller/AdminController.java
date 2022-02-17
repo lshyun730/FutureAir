@@ -79,7 +79,7 @@ public class AdminController {
 		return graphReservation;
 	}
 	
-	// 예약분석그래프
+	// 항공편상황그래프
 	@RequestMapping(value = "graphFlightState", method = RequestMethod.GET)
 	@ResponseBody
 	public HashMap<String, String> graphFlightState(Model model) {

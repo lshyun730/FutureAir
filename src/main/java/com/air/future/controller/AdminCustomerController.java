@@ -215,4 +215,14 @@ public class AdminCustomerController {
 		
 		return "admin/customer/customerReservationDetail";
 	}
+	
+	@RequestMapping(value="customerUpdate", method = RequestMethod.GET)
+	public String customerUpdate() {
+		return "admin/customer/customerUpdate";
+	}
+	
+	@RequestMapping(value="customerGradeUpdate", method = RequestMethod.GET)
+	public String customerGradeUpdate() {
+		return "admin/customer/customerGradeUpdate";
+	}
 }

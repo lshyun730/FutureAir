@@ -209,7 +209,7 @@
 		</where>
 	</select>
 	
-	<!-- 등급 추가하기-->
+	<!-- 등급 추가하기 -->
 	<insert id="gradeAdd" parameterType="grade">
 		insert into customer_grade_fa
 		values(customer_grade_seq.nextval

@@ -121,6 +121,7 @@ fieldset {
 button {
 	border: 0;
 	background-color: transparent;
+	cursor: pointer;
 }
 
 /* 반응형 */
@@ -134,3 +135,11 @@ select option[value=""][disabled] {
 	color: var(--gray)
 }
 
+input[type="date"]::-webkit-inner-spin-button, input[type="time"]::-webkit-inner-spin-button {display: none;}
+input[type="date"]::-webkit-calendar-picker-indicator, input[type="time"]::-webkit-calendar-picker-indicator  { position:absolute; width:100%; opacity: 0;}
+
+/* input[type=date]::-webkit-datetime-edit-text { -webkit-appearance: none; display: none; }
+input[type=date]::-webkit-datetime-edit-month-field{ -webkit-appearance: none; display: none; } 
+input[type=date]::-webkit-datetime-edit-day-field { -webkit-appearance: none; display: none; } 
+input[type=date]::-webkit-datetime-edit-year-field { -webkit-appearance: none; display: none; }
+ */

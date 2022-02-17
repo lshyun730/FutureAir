@@ -86,5 +86,36 @@ public class AdminBoardDAO {
 		int result = mapper.deleteBoard(board_name);
 		return result;
 	}
+
+	public Board getBoard(String board_name) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		Board board = mapper.getBoard(board_name);
+		return board;
+	}
+
+	public int getPostTotalByBoard(String board_name) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		int result = mapper.getPostTotalByBoard(board_name);
+		return result;
+	}
+
+	public ArrayList<Post> getPostListByBoard(String board_name, int startRecord, int countPerPage) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		RowBounds rb = new RowBounds(startRecord, countPerPage);
+		ArrayList<Post> postList = mapper.getPostListByBoard(board_name, rb);
+		return postList;
+	}
+
+	public ArrayList<Post> getNoticeList(String board_name) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		ArrayList<Post> noticeList = mapper.getNoticeList(board_name);
+		return noticeList;
+	}
+
+	public Post getPost(String post_index) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		Post post = mapper.getPost(post_index);
+		return post;
+	}
 	
 }

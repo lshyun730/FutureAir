@@ -316,7 +316,6 @@ $.ajax({
 		success : function(data) {
 			let labelList = Object.keys(data);
 			let countList = Object.values(data);
-			console.log(labelList);
 			new Chart(document.getElementById('flightChart'), {
 			    type: 'doughnut', 
 			    data: { 

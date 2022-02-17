@@ -57,12 +57,12 @@
     
             <span class="gnb_txt">BOARD</span>
             <li>
-                <a href="${pageContext.request.contextPath}/admin/board/boardManager">게시물관리
+                <a href="${pageContext.request.contextPath}/admin/board/postList">게시물관리
                     <span class="icon"><i class="fas fa-pen-alt"></i></span>
                 </a>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}/admin/board/boardSetting">게시판설정
+                <a href="${pageContext.request.contextPath}/admin/board/boardList">게시판설정
                     <span class="icon"><i class="fas fa-cog"></i></span>
                 </a>
             </li>
@@ -80,10 +80,8 @@
             </form>
         </div>
         
-        <div class="info item">
-            <div class="bell">
-                <span class="bell_icon"><i class="far fa-bell"></i></span>
-            </div>
+        <div class="info">
+            <button class="bell" onclick="location.href='${pageContext.request.contextPath}/'"></button>
             <div class="profile">
                 <div class="profile_img">
                     <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt="profile">

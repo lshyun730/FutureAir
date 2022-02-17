@@ -55,7 +55,7 @@ public interface AdminCustomerMapper {
 	public String mileageFUsable(String id);
 	// 회원 마일리지 내역
 	public List<HashMap<String, String>> mileageBalance(String id);
-	
+
 	// 팝업창 : 예약 내역 불러오기 위한 부분
 	public List<HashMap<String, String>> getCommonReservation(HashMap<String, String> value);
 	// 팝업창: 예약 세부내역 불러오기 위한 Payment부분

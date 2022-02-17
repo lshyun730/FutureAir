@@ -9,7 +9,7 @@
 <section class="contents">
 	<div class="row">
     <!-- reservation status S -->
-    <section class="reservation_status width100">
+    <section class="content reservation_status width100">
     	<div class="inner">
 	        <!-- content header S -->   
 	        <div class="flex_content_header">
@@ -21,27 +21,27 @@
 	        <!-- content header E -->   
 	        <!-- search detail S -->
 	        <form action="#" class="search_detail active" id="search_detail">
-	            <div class="inputbox term">
+	            <div class="inputbox term icon">
 	                <p class="inputbox_title">출발일</p>
 	                <div class="inputbox_input">
 	                    <input type="date" id="departure_date_start" name="departure_date_start" value="${searchMap.departure_date_start}" onchange="checkDate(this)">
 	                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
 	                </div>
 	            </div>
-	            <div class="inputbox">
+	            <div class="inputbox icon">
 	                <div class="inputbox_input">
 	                    <input type="date" id="departure_date_end" name="departure_date_end" value="${searchMap.departure_date_end}"  onchange="checkDate(this)">
 	                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
 	                </div>
 	            </div>
-	            <div class="inputbox term">
+	            <div class="inputbox term icon">
 	                <p class="inputbox_title">예약일</p>
 	                <div class="inputbox_input">
 	                    <input type="date" id="reservation_date_start" name="reservation_date_start" value="${searchMap.reservation_date_start}">
 	                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
 	                </div>
 	            </div>
-	            <div class="inputbox">
+	            <div class="inputbox icon">
 	                <div class="inputbox_input">
 	                    <input type="date"  id="reservation_date_end" name="reservation_date_end" value="${searchMap.reservation_date_end}">
 	                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
@@ -52,34 +52,13 @@
 	                <div class="inputbox_input selectbox">
 	                	<select name="departure_name" onchange="changeSelect(this)" id="departure_name">
 	                		<option value="" disabled selected>도시 혹은 공항</option>
-	                		<optgroup label="아시아">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '아시아'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.departure_name}">selected="selected"</c:if> >${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
-	                		<optgroup label="아메리카">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '아메리카'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.departure_name}">selected="selected"</c:if>>${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
-	                		<optgroup label="유럽">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '유럽'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.departure_name}">selected="selected"</c:if>>${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
-	                		<optgroup label="오세아니아">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '오세아니아'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.departure_name}">selected="selected"</c:if>>${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
+	                		<c:forEach var="continent" items="${destinationList}">
+                				<optgroup label="${continent[0].continents}">
+                				<c:forEach var="destination" items="${continent}">
+							        <option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.departure_name}">selected="selected"</c:if> >${destination.airport_name} / ${destination.airport_id}</option>
+                				</c:forEach>
+                				</optgroup>
+					        </c:forEach>
 	                	</select>
 	                </div>
 	            </div>
@@ -88,38 +67,17 @@
 	                <div class="inputbox_input selectbox">
 	                    <select name="arrival_name" onchange="changeSelect(this)"  id="arrival_name">
 	                		<option value="" disabled selected>도시 혹은 공항</option>
-	                		<optgroup label="아시아">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '아시아'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.arrival_name}">selected="selected"</c:if>>${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
-	                		<optgroup label="아메리카">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '아메리카'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.arrival_name}">selected="selected"</c:if>>${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
-	                		<optgroup label="유럽">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '유럽'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.arrival_name}">selected="selected"</c:if>>${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
-	                		<optgroup label="오세아니아">
-	                			<c:forEach var="destination" items="${destinationList}">
-	                				<c:if test="${destination.continents eq '오세아니아'}">
-							        	<option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.arrival_name}">selected="selected"</c:if>>${destination.airport_name} / ${destination.airport_id}</option>
-	                				</c:if>
-						        </c:forEach>
-	                		</optgroup>
+	                		<c:forEach var="continent" items="${destinationList}">
+                				<optgroup label="${continent[0].continents}">
+                				<c:forEach var="destination" items="${continent}">
+							        <option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.departure_name}">selected="selected"</c:if> >${destination.airport_name} / ${destination.airport_id}</option>
+                				</c:forEach>
+                				</optgroup>
+					        </c:forEach>
 	                	</select>
 	                </div>
 	            </div>
-	            <div class="inputbox">
+	            <div class="inputbox icon">
 	                <p class="inputbox_title">예약자 </p>
 	                <div class="inputbox_input">
 	                    <input type="text" placeholder="홍길동" name="customer_name">
@@ -167,7 +125,16 @@
 	                    <td><fmt:formatDate value="${reservation_date}" pattern="yyyy-MM-dd" /></td>
 	                    <td>${reservation.RESERVATION_TYPE}</td>
 	                    <td><fmt:formatNumber value="${reservation.PAYMENT}" pattern="#,###"/> 원</td>
-	                    <td class="btn_m_wrap"><div class="btn_m"><span></span></div></td>
+	                    <td class="more">
+                            <div class="btn_m_wrap" onclick="click_more(this)">
+                                <div class="btn_m">
+                                    <span></span>
+                                </div>
+                                <ul class="select_list">
+                                    <li><a href="javascript:reservationDelete('${reservation.RESERVATION_NUM}')">삭제</a></li> 
+                                </ul>
+                            </div>
+                        </td>
 	                </tr>
             	</c:forEach>
 	            </tbody>
@@ -175,7 +142,7 @@
 	        <!-- table E --> 
 	        <!-- content footer S --> 
 	        <div class="flex_content_footer">
-	            <button class="btn danger" onclick="javascript:checkDelete()">선택삭제</button>
+	            <button class="btn danger" onclick="javascript:checkDelete(this)">선택삭제</button>
 	            <div class="navi">
 	           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
 	               <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
@@ -198,7 +165,7 @@
 function deleteAjax(deleteList) {
 	if(confirm("정말 삭제하시겠습니까?")){
 		 $.ajax({
-				url : 'deleteReservation',
+				url : 'reservationDeleteList',
 				data : {
 					deleteList : deleteList
 				},
@@ -213,6 +180,35 @@ function deleteAjax(deleteList) {
 		 }); 				 
 	 }
 }
+
+function reservationDelete(reservation_num) {
+ 	if(confirm("정말 삭제하시겠습니까?")){
+		 $.ajax({
+				url : 'reservationDelete',
+				data : {
+					reservation_num : reservation_num
+				},
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data==1) {
+						alert('삭제에 성공하였습니다');		
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
+
+//액션 이외 선택시 액션 닫힘
+document.addEventListener('click', () => {;
+	var btn_m_wrap = document.getElementsByClassName('btn_m_wrap');
+	for(let i=0; i < btn_m_wrap.length; i ++) {
+	 	if (btn_m_wrap[i].classList.contains('active')) {
+	     	btn_m_wrap[i].classList.remove('active');
+	 	}	
+	}
+})
 </script>
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>

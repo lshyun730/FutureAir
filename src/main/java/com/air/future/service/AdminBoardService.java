@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.air.future.dao.AdminBoardDAO;
 import com.air.future.vo.Board;
+import com.air.future.vo.Post;
 
 
 @Service
@@ -49,7 +50,6 @@ public class AdminBoardService {
 	public int getTotal(HashMap<String, String> searchList){
 		int getTotal = dao.getTotal(searchList);
 		return getTotal;
-
 	}
 
 	
@@ -84,7 +84,32 @@ public class AdminBoardService {
 	public int insertBoard(Board board) {
 		int result = dao.insertBoard(board);
 		return result;
-		
+	}
+	
+	// 게시판 정보
+	public Board getBoard(String board_name) {
+		Board board = dao.getBoard(board_name);
+		return board;
+	}
+
+	public int getPostTotalByBoard(String board_name) {
+		int total = dao.getPostTotalByBoard(board_name);
+		return total;
+	}
+
+	public ArrayList<Post> getPostListByBoard(String board_name, PageNavigator navi) {
+		ArrayList<Post> postList = dao.getPostListByBoard(board_name, navi.getStartRecord(),navi.getCountPerPage());
+		return postList;
+	}
+
+	public ArrayList<Post> getNoticeList(String board_name) {
+		ArrayList<Post> noticeList = dao.getNoticeList(board_name);
+		return noticeList;
+	}
+
+	public Post getPost(String post_index) {
+		Post post = dao.getPost(post_index);
+		return post;
 	}
 
 	
