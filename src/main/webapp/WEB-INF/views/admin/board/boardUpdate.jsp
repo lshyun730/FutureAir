@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,11 +14,12 @@
 <!-- popup S -->  
     <section class="popup" id="popup">
             <h2>게시판 수정</h2>
-            <form class="create_board" action=funUpdateBoard method="get">
+            <form class="create_board" id="updateForm">
             	<input type="hidden" id="board_id" name="board_id" value="${board.board_id }">
                 <div class="inputbox no_icon width100">
                     <p class="inputbox_title">게시판이름</p>
                     <div class="inputbox_input">
+                    	<input type="hidden" id="board_front" name="board_front" value="${board.board_name }">
                         <input type="text" placeholder="게시판 이름을 입력해주세요" id="board_name" name="board_name" value="${board.board_name }">
                     </div>
                 </div>
@@ -61,9 +63,9 @@
                     </div>
                 </div>
                 <div class="submit">
-                    <input type="submit" value="수정하기" onclick="updateBoard()">
+                    <input type="button" value="수정하기" onclick="updateBoard()">
                 </div>
-            </form>
+           </form>
     </section>
     <!-- modal E -->  
 <script>
@@ -79,6 +81,44 @@
 		}
 	 });
 } */
+
+	function updateBoard(){
+
+		var board_name = document.getElementById('board_name').value
+
+		if(board_name ==''){
+			alert('이름을 한글자 이상 입력해주세요');
+			return false;
+		}
+
+		$.ajax({
+			url : 'boardUpdateAjax',
+			data : {"board_front": $('#board_front').val(),
+		       		"board_name": $('#board_name').val(),
+		       		"board_id" : $('#board_id').val(),
+		       		"board_type" : $('#board_type').val(),
+		       		"reply_type" : $('#reply_type').val(),
+		       		"write_right" : $('#write_right').val(),
+		       		"read_right" : $('#read_right').val()},
+			traditional : true, 
+			type : 'post',
+			success : function(data) {
+
+				if(data == 1) {
+					opener.parent.location.reload();
+					window.close();
+				}else if(data ==2){
+					opener.parent.location.reload();
+					window.close();
+				}else{
+					opener.parent.location.reload();
+					window.close();
+				}
+			}
+	 });
+		
+		return true;
+	}
 </script>
 </body>
 </html>

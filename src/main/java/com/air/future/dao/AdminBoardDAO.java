@@ -158,4 +158,13 @@ public class AdminBoardDAO {
 			
 	}
 	
+	//게시판 수정시 필수사항
+	public int updateBoardPlus(HashMap<String, String> change) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		int result = mapper.updateBoardPlus(change);
+		
+		return result;
+
+	}
+	
 }

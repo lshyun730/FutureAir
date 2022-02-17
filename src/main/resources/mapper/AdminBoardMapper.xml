@@ -114,6 +114,11 @@
 		where board_id = #{board_id}
 	</update>
 	
+	<!-- 게시판 설정시 게시글도 수정해주기 -->
+	<update id="updateBoardPlus" parameterType="HashMap">
+		update post_fa set board_name = #{board_name} where board_name = #{board_front}
+	</update>
+	
 	<!-- 게시글 수정하기 버튼 -->
 	<update id="funPostUpdate" parameterType="post">
 		update post_fa set title = #{title}, writer = #{writer}, board_name = #{board_name}, contents =#{contents},

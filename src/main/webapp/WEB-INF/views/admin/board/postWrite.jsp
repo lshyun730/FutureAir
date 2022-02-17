@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,11 +16,11 @@
 <!-- popup S -->  
 <section class="popup" id="popup">
         <h2>게시글작성</h2>
-        <form class="view_post" action="funpostWrite" method="get">
+        <form class="view_post"  id="updateForm">
             <div class="inputbox no_icon width100">
                 <p class="inputbox_title">제목</p>
                 <div class="inputbox_input">
-                    <input type="text" placeholder="제목을 입력해주세요" name="board_title" id="board_title">
+                    <input type="text" placeholder="제목을 입력해주세요" name="title" id="title">
                 </div>
             </div>
             <div class="inputbox">
@@ -53,10 +54,48 @@
                 </div>
             </div>
             <div class="submit">
-                <input type="submit" value="추가하기" onclick="return insertBoard()">
+                <input type="button" value="추가하기" onclick="insertBoard()">
             </div>
         </form>
 </section>
 <!-- popup E -->  
 </body>
+<script type="text/javascript">
+	function insertBoard(){
+		var title = document.getElementById('title').value
+		var contents = document.getElementById('contents').value
+
+		if(title ==''){
+			alert('제목을 한글자 이상 입력해주세요');
+			return false;
+		}
+
+		if(contents ==''){
+			alert('내용을 한글자 이상 입력해주세요');
+			return false;
+		}
+
+		 $.ajax({
+				url : 'postWriteAjax',
+				data : {"board_name" : $('#board_name').val(),
+						"title" : $('#title').val(),
+						"post_type" : $('#post_type').val(),
+						"contents" :$('#contents').val()		
+								},
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					console.log(data);
+					if(data == 1) {
+						alert('수행완료!');
+						opener.parent.location.reload();
+						window.close();
+					}
+				}
+		 });
+		
+		return true;
+		
+	}
+</script>
 </html>

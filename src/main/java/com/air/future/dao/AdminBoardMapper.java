@@ -53,6 +53,8 @@ public interface AdminBoardMapper {
 	
 	//게시판 설정 수정하기
 	public int updateBoard(Board board);
+	//게시판 수정시 필수사항
+	public int updateBoardPlus(HashMap<String, String> change);
 	
 	//게시물 관리 수정하기
 	public int funPostUpdate(Post post);
@@ -65,6 +67,7 @@ public interface AdminBoardMapper {
 	
 	//고정글 추가하기
 	public int insertNotice(Post post);
+	
 
 	
 }

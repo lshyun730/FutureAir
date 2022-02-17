@@ -120,6 +120,14 @@ public class AdminBoardService {
 		return result;
 	}
 	
+	//게시판 수정시 필수사항
+	public int updateBoardPlus(HashMap<String, String> change) {
+		int result = dao.updateBoardPlus(change);
+			
+		return result;
+
+	}
+	
 	//게시물 관리 수정하기
 	public int funPostUpdate(Post post) {
 		int result = dao.funPostUpdate(post);

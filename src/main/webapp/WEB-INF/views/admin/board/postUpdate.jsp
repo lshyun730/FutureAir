@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,13 +16,13 @@
 <!-- popup S -->  
 <section class="popup" id="popup">
         <h2>게시글수정</h2>
-        <form class="post_update" action="funPostUpdate" method="get">
+        <form id="updateForm" class="post_update"  onsubmit="return postUpdate();">
         	<input type="hidden" id="post_index" name="post_index" value="${post.post_index}">
         	<input type="hidden" id="writer" name="writer" value="${post.writer}">
             <div class="inputbox no_icon width100">
                 <p class="inputbox_title">제목</p>
                 <div class="inputbox_input">
-                    <input type="text" placeholder="게시판 이름을 입력해주세요" name="board_title" id="board_title" value="${post.title}">
+                    <input type="text" placeholder="게시판 이름을 입력해주세요" name="title" id="title" value="${post.title}">
                 </div>
             </div>
             <div class="inputbox">
@@ -55,10 +56,46 @@
                 </div>
             </div>
             <div class="submit">
-                <input type="submit" value="수정하기" onclick="">
+                <input type="submit" value="수정하기">
             </div>
         </form>
 </section>
 <!-- popup E -->  
 </body>
+<script>
+	function postUpdate(){
+		var title = document.getElementById('title').value
+		var contents = document.getElementById('contents').value
+
+		
+		
+		if(title ==''){
+			alert('제목을 한글자 이상 입력해주세요');
+			return false;
+		}
+
+		if(contents ==''){
+			alert('내용을 한글자 이상 입력해주세요');
+			return false;
+		}
+
+		 $.ajax({
+				url : 'postUpdateAjax',
+				data : $("#updateForm").serialize(),
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data == 1) {
+						opener.parent.location.reload();
+						window.close();
+					}
+				}
+		 });
+		
+		return true;
+		
+	}
+
+
+</script>
 </html>
