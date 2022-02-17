@@ -107,6 +107,7 @@
 			|| email == "" || phone == "" || address == ""){
 			alert("빈 값을 넣을 수 없습니다."); return false;
 		}
+		
 		opener.parent.location.reload();
 		return true;
 		

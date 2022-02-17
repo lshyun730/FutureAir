@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
 <mapper namespace="com.air.future.dao.AdminCustomerMapper">
-
 	<!-- 페이징 처리 : 회원정보 검색을 위한 총 개수 확인하기 -->
 	<select id="customerGetTotal" parameterType="customer" resultType="int">
 		select count(*)
@@ -139,7 +139,7 @@
 	
 	<!-- 팝업창 : 회원정보 팝업창 정보에 필요한 개인 마일리지 정보 불러오기(customerInfo.jsp) -->
 	<select id="customerMileageFind" parameterType="string" resultType="string">
-		select sum(mileage_point) as mileage_point
+		select NVL(sum(mileage_point), '0') as mileage_point
 		from mileage_fa
 		<where>
 			mileage_id = #{mileage_id}
@@ -275,6 +275,7 @@
 	<select id="countGrade" resultType="int">
 		select count(*) from customer_grade_fa
 	</select>
+	
 	<update id="gradeDown" parameterType="list">
 		update customer_fa
 		set customer_grade = NVL((select grade
@@ -310,4 +311,365 @@
 			</foreach>
 		</where>
 	</delete>
+	
+	
+	<select id="getCommonReservation" parameterType="hashmap" resultType="hashmap">
+		select
+			reservation_num
+			, passenger_name
+			, customer_id
+			, to_char(reservation_date, 'YYYY-MM-DD') reservation_date
+			, to_char(departure_date, 'YYYY-MM-DD') departure_date
+			, payment
+			, departure_name
+			, arrival_name
+		from	
+			(select 
+					full_table.reservation_num
+					, full_table.passenger_name
+					, full_table.customer_id
+					, full_table.reservation_date
+					, full_table.departure_date
+					, full_table.payment
+					, full_table.departure_name
+					, full_table.arrival_name
+			from (
+					select reservation.reservation_num
+							, schedule.passenger_name
+							, customer.customer_id
+							, route.departure_name
+							, route.arrival_name
+							, route.departure_date
+							, reservation.reservation_date
+							, reservation.payment
+					from reservation_fa reservation
+							, schedule_fa schedule
+							, route_fa route
+							, customer_fa customer
+					<where>
+						reservation.reservation_num = schedule.reservation_num
+						and schedule.route_num	= route.route_num
+						and reservation.customer_id = customer.customer_id
+						and schedule.passenger_name = customer.customer_name
+					</where>
+				 ) full_table,
+				 (
+					select reservation.reservation_num
+						   , count(reservation.reservation_num) as count
+					from schedule_fa schedule
+							, reservation_fa reservation
+							, customer_fa customer
+					<where>
+						schedule.reservation_num = reservation.reservation_num
+						and customer.customer_name = schedule.passenger_name
+						and customer.customer_id = reservation.customer_id
+					</where>
+					group by reservation.reservation_num
+							, schedule.passenger_name 
+				 ) counter
+			<where>
+					full_table.reservation_num = counter.reservation_num
+				and counter.count &lt; 2
+			</where>
+			
+			union all
+			
+			select 
+					full_table_start.reservation_num
+					, full_table_start.passenger_name
+					, full_table_start.customer_id
+					, full_table_start.reservation_date
+					, full_table_start.departure_date
+					, full_table_start.payment
+					, CASE
+						WHEN full_table_start.type = '출발' THEN full_table_start.departure_name
+					  END AS departure_name
+					, CASE
+						WHEN full_table_end.type = '도착' THEN full_table_end.arrival_name
+					  END AS arrival_name
+			from (
+					select reservation.reservation_num
+							, schedule.passenger_name
+							, schedule.type
+							, customer.customer_id
+							, route.departure_name
+							, route.arrival_name
+							, route.departure_date
+							, reservation.reservation_date
+							, reservation.payment
+					from reservation_fa reservation
+							, schedule_fa schedule
+							, route_fa route
+							, customer_fa customer
+					<where>
+							reservation.reservation_num = schedule.reservation_num
+						and schedule.route_num	= route.route_num
+						and reservation.customer_id = customer.customer_id
+						and schedule.passenger_name = customer.customer_name
+						and schedule.type IN ('출발')
+					</where>
+				 ) full_table_start,
+				 (
+					select reservation.reservation_num
+							, schedule.passenger_name
+							, schedule.type
+							, customer.customer_id
+							, route.departure_name
+							, route.arrival_name
+							, route.departure_date
+							, reservation.reservation_date
+							, reservation.payment
+					from reservation_fa reservation
+							, schedule_fa schedule
+							, route_fa route
+							, customer_fa customer
+					<where>
+							reservation.reservation_num = schedule.reservation_num
+						and schedule.route_num	= route.route_num
+						and reservation.customer_id = customer.customer_id
+						and schedule.passenger_name = customer.customer_name
+						and schedule.type IN ('도착')
+					</where>
+				 ) full_table_end,
+				 (
+					select reservation.reservation_num
+							, count(reservation.reservation_num) as count
+					from schedule_fa schedule
+							, reservation_fa reservation
+							, customer_fa customer
+					<where>
+							schedule.reservation_num = reservation.reservation_num
+						and customer.customer_name = schedule.passenger_name
+					</where>
+					group by reservation.reservation_num, schedule.passenger_name 
+				 ) counter
+			<where>
+				full_table_start.reservation_num = counter.reservation_num
+				and full_table_end.reservation_num = counter.reservation_num
+				and counter.count &gt; 1
+			</where>
+			)
+		<where>
+			1=1
+			<if test="!customer_id.equals('')">
+				and customer_id = #{customer_id}
+			</if>
+			<if test="!reservation_start.equals('')">
+				and reservation_date <![CDATA[>=]]> to_date(#{reservation_start}, 'YYYY-MM-DD')
+			</if>
+			<if test="!reservation_end.equals('')">
+				and reservation_date <![CDATA[<=]]> to_date(#{reservation_end}, 'YYYY-MM-DD') + 1			
+			</if>
+		</where>
+		order by reservation_date, departure_date
+	</select>
+	
+	
+	
+		<select id="reservationGetTotal" parameterType="hashmap" resultType="int">
+		select
+			count(*)
+		from	
+			(select 
+					full_table.reservation_num
+					, full_table.passenger_name
+					, full_table.customer_id
+					, full_table.reservation_date
+					, full_table.departure_date
+					, full_table.payment
+					, full_table.departure_name
+					, full_table.arrival_name
+			from (
+					select reservation.reservation_num
+							, schedule.passenger_name
+							, customer.customer_id
+							, route.departure_name
+							, route.arrival_name
+							, route.departure_date
+							, reservation.reservation_date
+							, reservation.payment
+					from reservation_fa reservation
+							, schedule_fa schedule
+							, route_fa route
+							, customer_fa customer
+					<where>
+						reservation.reservation_num = schedule.reservation_num
+						and schedule.route_num	= route.route_num
+						and reservation.customer_id = customer.customer_id
+						and schedule.passenger_name = customer.customer_name
+					</where>
+				 ) full_table,
+				 (
+					select reservation.reservation_num
+						   , count(reservation.reservation_num) as count
+					from schedule_fa schedule
+							, reservation_fa reservation
+							, customer_fa customer
+					<where>
+						schedule.reservation_num = reservation.reservation_num
+						and customer.customer_name = schedule.passenger_name
+						and customer.customer_id = reservation.customer_id
+					</where>
+					group by reservation.reservation_num
+							, schedule.passenger_name 
+				 ) counter
+			<where>
+					full_table.reservation_num = counter.reservation_num
+				and counter.count &lt; 2
+			</where>
+			
+			union all
+			
+			select 
+					full_table_start.reservation_num
+					, full_table_start.passenger_name
+					, full_table_start.customer_id
+					, full_table_start.reservation_date
+					, full_table_start.departure_date
+					, full_table_start.payment
+					, CASE
+						WHEN full_table_start.type = '출발' THEN full_table_start.departure_name
+					  END AS departure_name
+					, CASE
+						WHEN full_table_end.type = '도착' THEN full_table_end.arrival_name
+					  END AS arrival_name
+			from (
+					select reservation.reservation_num
+							, schedule.passenger_name
+							, schedule.type
+							, customer.customer_id
+							, route.departure_name
+							, route.arrival_name
+							, route.departure_date
+							, reservation.reservation_date
+							, reservation.payment
+					from reservation_fa reservation
+							, schedule_fa schedule
+							, route_fa route
+							, customer_fa customer
+					<where>
+							reservation.reservation_num = schedule.reservation_num
+						and schedule.route_num	= route.route_num
+						and reservation.customer_id = customer.customer_id
+						and schedule.passenger_name = customer.customer_name
+						and schedule.type IN ('출발')
+					</where>
+				 ) full_table_start,
+				 (
+					select reservation.reservation_num
+							, schedule.passenger_name
+							, schedule.type
+							, customer.customer_id
+							, route.departure_name
+							, route.arrival_name
+							, route.departure_date
+							, reservation.reservation_date
+							, reservation.payment
+					from reservation_fa reservation
+							, schedule_fa schedule
+							, route_fa route
+							, customer_fa customer
+					<where>
+							reservation.reservation_num = schedule.reservation_num
+						and schedule.route_num	= route.route_num
+						and reservation.customer_id = customer.customer_id
+						and schedule.passenger_name = customer.customer_name
+						and schedule.type IN ('도착')
+					</where>
+				 ) full_table_end,
+				 (
+					select reservation.reservation_num
+							, count(reservation.reservation_num) as count
+					from schedule_fa schedule
+							, reservation_fa reservation
+							, customer_fa customer
+					<where>
+							schedule.reservation_num = reservation.reservation_num
+						and customer.customer_name = schedule.passenger_name
+					</where>
+					group by reservation.reservation_num, schedule.passenger_name 
+				 ) counter
+			<where>
+				full_table_start.reservation_num = counter.reservation_num
+				and full_table_end.reservation_num = counter.reservation_num
+				and counter.count &gt; 1
+			</where>
+			)
+		<where>
+			1=1
+			<if test="!customer_id.equals('')">
+				and customer_id = #{customer_id}
+			</if>
+			<if test="!reservation_start.equals('')">
+				and reservation_date <![CDATA[>=]]> to_date(#{reservation_start}, 'YYYY-MM-DD')
+			</if>
+			<if test="!reservation_end.equals('')">
+				and reservation_date <![CDATA[<=]]> to_date(#{reservation_end}, 'YYYY-MM-DD') + 1			
+			</if>
+		</where>
+		order by reservation_date, departure_date
+	</select>
+	
+
+	
+		<!-- 팝업창 : 예약 세부내역 불러오기(가격) -->
+	<select id="getPayment" parameterType="string" resultType="string">
+		select payment
+		from reservation_fa
+		<where>
+			reservation_num = #{reservation_num}
+		</where>
+	</select>
+	
+	<select id="getSchedule" parameterType="string" resultType="schedule">
+		select route_num, passenger_name, passport_num, seat_class
+		from schedule_fa
+		<where>
+			reservation_num = #{reservation_num}
+		</where>
+	</select>
+	
+		<select id="getRoute" parameterType="list" resultType="route">
+		select route_num
+				, airplane_id
+				, to_char(departure_date, 'YYYY-MM-DD HH24:MI') as departure_date
+				, to_char(arrival_date, 'YYYY-MM-DD HH24:MI') as arrival_date
+				, departure_name
+				, arrival_name
+				, eta
+		from route_fa
+		where route_num in
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			#{item.route_num}
+		</foreach>	
+	</select>
+
+	<select id="getAirplane" parameterType="list" resultType="airplane">
+		select *
+		from airplane_fa
+		where airplane_id in
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			#{item.airplane_id}
+		</foreach>
+	</select>
+	
+	<select id="getName" parameterType="string" resultType="string">
+		select customer_name
+		from customer_fa
+		<where>
+		 	customer_id = #{customer_id}
+		</where>
+	</select>
+	
+	
+	<!-- 팝업창에 필요한 회원 이름과 등급 가져오기 -->
+	<select id="getCustomerNG" parameterType="string" resultType="customer">
+		select customer_name, customer_grade
+		from customer_fa
+		<where>
+			customer_id = #{customer_id}
+		</where>
+	</select>
+	
+	
 </mapper>

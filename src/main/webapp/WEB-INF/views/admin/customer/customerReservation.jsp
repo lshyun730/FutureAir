@@ -25,10 +25,7 @@
                     </ul>
                 </nav>
                 <div class="profile">
-                    <div class="profile_img">
-                        <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt="proifle">
-                    </div>
-                    <p class="profile__info">홍길동<span>일반등급</span></p>
+                    <p class="profile__info">${customer.customer_name }<span>${customer.customer_grade }등급</span></p>
                 </div>
             </header>
             <!-- customer header E --> 
@@ -59,6 +56,7 @@
                                 <input type="submit" value="검색">
                             </div>
                         </div>
+                        <input type="hidden" id="id" name="id" value="${id }">
                     </form>
                     <!-- search detail E -->
                     <!-- table S --> 
@@ -95,6 +93,17 @@
                         </tbody>
                     </table>
                     <!-- table E --> 
+                        <!-- content footer S --> 
+        <div class="flex_content_footer">
+            <div class="navi">
+	           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
+               	<c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
+					<a href="javascript:pagingFormSubmit(${counter})" <c:if test="${navi.currentPage == counter}"> class="active"</c:if>>${counter}</a>
+				</c:forEach>
+	           	<a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})" class="next"></a>
+           </div>
+        </div>
+	<!-- content footer E --> 
                 </section>
                 <!-- customer content E -->  
             </div>
@@ -102,5 +111,6 @@
         <!-- customer contents  E -->  
     </div>
     <!-- customer detail  E -->  
+
 </body>
 </html>

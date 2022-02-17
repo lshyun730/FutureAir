@@ -144,6 +144,7 @@ public class AdminCustomerController {
 		Customer customerList 	= service.customerInfoFind(id);	// 회원 세부정보 회원 정보 리스트를 불러오는 파트
 		String mileage 			= service.customerMileageFind(id);		// 회원 세부정보 회원 마일리지를 불러오는 파트
 		String customerFullPay 	= service.customerFullPay(id);	// 회원 세부정보 회원 총결제금액을 불러오는 파트
+		
 		model.addAttribute("id", id);
 		model.addAttribute("customerList", customerList);
 		model.addAttribute("mileage", mileage);
@@ -154,6 +155,7 @@ public class AdminCustomerController {
 	// 팝업창 : 회원 마일리지 세부정보(customerMileage.jsp)
 	@RequestMapping(value = "customerMileage", method = RequestMethod.GET)
 	public String customerMileage(Model model, String id) {
+		Customer customer 		= service.getCustomerNG(id);
 		String mileageAll 		= service.mileageAll(id);
 		String mileageUsed 		= service.mileageUsed(id);
 		String mileageUsable 	= service.mileageUsable(id);
@@ -161,6 +163,7 @@ public class AdminCustomerController {
 		List<HashMap<String, String>> mileageBalance = service.mileageBalance(id);
 
 		model.addAttribute("id", id);
+		model.addAttribute("customer", customer);
 		model.addAttribute("mileageAll", mileageAll);
 		model.addAttribute("mileageUsed", mileageUsed);
 		model.addAttribute("mileageUsable", mileageUsable);
@@ -172,18 +175,27 @@ public class AdminCustomerController {
 	// 팝업창 : 회원별 전체 예약 확인하기(customerReservation.jsp)
 	@RequestMapping(value = "customerReservation", method = RequestMethod.GET)
 	public String customerReservation(Model model
+										, @RequestParam(value="page", defaultValue = "1") int page
 										, @RequestParam(value = "id", defaultValue = "") String id
 										, @RequestParam(value = "reservation_start", defaultValue = "") String reservation_start
 										, @RequestParam(value = "reservation_end", defaultValue = "") String reservation_end
 										) {
 		
-		List<HashMap<String, String>> reservationList 
-			= service.getCommonReservation(id, reservation_start, reservation_end);
+		Customer customer = service.getCustomerNG(id);
 		
+		int total 			= service.reservationGetTotal(id, reservation_start, reservation_end);
+		PageNavigator navi 	= new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<HashMap<String, String>> reservationList = service.getCommonReservation(id, reservation_start, reservation_end);
+		
+
+		
+		model.addAttribute("customer", customer);
 		model.addAttribute("reservationList", reservationList);
 		model.addAttribute("id", id);
 		model.addAttribute("reservation_start", reservation_start);
 		model.addAttribute("reservation_end", reservation_end);
+		model.addAttribute("navi", navi);
 		
 		return "admin/customer/customerReservation";
 	}
@@ -191,6 +203,7 @@ public class AdminCustomerController {
 	// 팝업창 : 회원별 세부 예약 내역 확인하기(customerReservationDetail.jsp)
 	@RequestMapping(value = "customerReservationDetail", method = RequestMethod.GET)
 	public String customerReservationDetail(Model model, String id, String reservationNum) {
+		Customer customer 					= service.getCustomerNG(id);
 		String name							= service.getName(id);
 		String payment 						= service.getPayment(reservationNum);
 		ArrayList<Schedule> scheduleList 	= service.getSchedule(reservationNum);
@@ -205,6 +218,7 @@ public class AdminCustomerController {
 			}
 		}
 
+		model.addAttribute("customer", customer);
 		model.addAttribute("id", id);
 		model.addAttribute("name", name);
 		model.addAttribute("reservationNum", reservationNum);

@@ -24,10 +24,7 @@
                     </ul>
                 </nav>
                 <div class="profile">
-                    <div class="profile_img">
-                        <img src="../../../images/profile.jpg" alt="proifle">
-                    </div>
-                    <p class="profile__info">홍길동<span>일반등급</span></p>
+                    <p class="profile__info">${customer.customer_name }<span>${customer.customer_grade }등급</span></p>
                 </div>
             </header>
             <!-- customer header E --> 
