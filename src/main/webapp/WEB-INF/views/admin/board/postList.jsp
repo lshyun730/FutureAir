@@ -62,7 +62,6 @@
 		                    <span class="inputbox_icon"><i class="fas fa-search"></i></span>
 		                </div>
 		            </div>
-		            
 		            <div class="inputbox submit">
 		                <div class="inputbox_input">
 		                    <input type="submit" value="검색" onclick="pagingFormSubmit(1)">
@@ -116,16 +115,16 @@
 		                    <td>${post.POST_DATE }</td>
 		                    <td>${post.HITS }</td>
 		                    <td class="more">
-		                            <div class="btn_m_wrap" onclick="click_more(this)">
-		                                <div class="btn_m">
-		                                    <span></span>
-		                                </div>
-		                                <ul class="select_list">
-		                                    <li><a href="javascript:popupOpen('postUpdate?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}', 500, 600)">수정</a></li> 
-		                                    <li><a href="#">삭제</a></li> 
-		                                </ul>
-		                            </div>
-		                        </td>
+	                            <div class="btn_m_wrap" onclick="click_more(this)">
+	                                <div class="btn_m">
+	                                    <span></span>
+	                                </div>
+	                                <ul class="select_list">
+	                                    <li><a href="javascript:popupOpen('postUpdate?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}', 500, 600)">수정</a></li> 
+	                                    <li><a href="#">삭제</a></li> 
+	                                </ul>
+	                            </div>
+	                        </td>
 		                </tr>
 		                </c:forEach>
 		               

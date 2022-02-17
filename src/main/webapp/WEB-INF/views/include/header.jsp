@@ -156,7 +156,8 @@
 									<li><a href="#"><span style="display: block; width: 150px; height: 120px; background: #000;"></span></a></li>
 								</ul>
 							</div>
-						</div></li>
+						</div>
+					</li>
 				</ul>
 			</nav>
 			<div class="search">
