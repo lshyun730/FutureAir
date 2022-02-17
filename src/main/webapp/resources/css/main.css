@@ -95,6 +95,48 @@ login
 .login .sns_login li a#google {background-image: url(../images/common/ico-google.svg)}
 
 
+
+/*
+-----------------------
+join
+-----------------------
+*/
+/* 공통 */
+.join {width: 42.5rem;margin: 3.75rem auto;}
+.join h2 {text-align: center; font-weight: normal;}
+.join h2 .name{color: var(--primary); }
+.join .steps{display: flex; justify-content: center;margin-bottom: 1.875rem;}
+.join .steps li{position: relative;;padding: 1.825rem 6rem 1.825rem 1.825rem; color: var(--gray);}
+.join .steps li.active{color: var(--primary);}
+.join .steps li::before {font-family: "Font Awesome 5 Free";font-weight: 900; content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);font-size: 0.875rem;}
+.join .steps li:nth-child(1)::before {content: "\f15c";}
+.join .steps li:nth-child(2)::before {content: "\f304";}
+.join .steps li:nth-child(3){padding-right: 0;}
+.join .steps li:nth-child(3)::before {content: "\f00c";}
+.join .steps li::after {position: absolute;;right: 1.875rem; top: 50%; transform: translateY(-50%);content: ""; width: 50px; height: 1px; background: var(--lightgray);}
+.join .steps li:nth-child(3)::after{display: none;}
+.join .submit {margin-top: 1.875rem;}
+
+/* 약관동의 */
+.join .agree_form ul li{padding: 1.875rem 0;}
+.join .agree_form ul li label {color: var(--gray); }
+.join .agree_form ul li .required {color: var(--primary);}
+.join .agree_form ul li .agree_cts{border: 1px solid var(--gray); padding: 20px; height: 120px; overflow-y: scroll; margin-top: 5px;}
+
+/* 정보입력 */
+.join .join_form table {padding: 1.875rem 0;}
+.join .join_form table th {font-weight: normal;text-align: left; vertical-align: text-top; padding: 15px 0;} 
+.join .join_form table td {margin: 20px 0}
+.join .join_form table td .desc {font-size: 0.75rem;}
+.join .join_form input[type="password"] {margin-bottom: 1.25rem;}
+.join .join_form .flex{display: flex;}
+.join .join_form .flex .white {margin-left: 10px;}
+
+/* 가입완료 */
+.join .btn_wrap {text-align: center; padding: 60px;}
+.join .btn_wrap button.light {margin-right: 10px;}
+
+
 /*
 -----------------------
 book
@@ -179,6 +221,32 @@ airport
 
 /*
 -----------------------
+service
+-----------------------
+*/
+/* 공지사항 */
+.notice .title_box {margin-bottom: 60px;}
+.notice .searchForm {text-align: center;}
+.notice .searchForm input[type="text"] {width: 30%;}
+.notice .searchForm input[type="submit"] {width: 100px; padding: 0.7rem; height: auto;}
+
+/* 자주묻는질문 */
+.faq .faq_nav {display: flex;justify-content: center;}
+.faq .faq_nav li {padding: 0 20px;}
+.faq .faq_nav li a:hover {color: var(--primary);font-weight: bold;}
+/* .faq .faq_nav li.active a{color: var(--primary); font-weight: bold; text-decoration: underline;} */
+.faq table.faq_list td{text-align: left;padding :0;}
+.faq table.faq_list td .quest, table.faq_list td .answer { padding: 20px 100px; position: relative;}
+.faq table.faq_list td .quest::before{content: "Q";font-weight: bold; position: absolute; left: 30px;}
+.faq table.faq_list td .quest::after{font-family: "Font Awesome 5 Free";font-weight: 900; content: "\f078"; position: absolute; right: 30px;}
+.faq table.faq_list td .answer {display: none;}
+.faq table.faq_list td .answer {background: var(--secondary);}
+.faq table.faq_list td .answer::before{content: "A";font-weight: bold; position: absolute; left: 30px;}
+
+
+
+/*
+-----------------------
 fooer
 -----------------------
 */
@@ -215,9 +283,9 @@ p, li{line-height: 150%;}
 
 /* 인풋 */
 input[type="submit"] {width: 100%;height: 3.5rem; border: 0; border-radius: 0.313rem; color: #fff; background: var(--primary);}
-input[type="date"] {width: 100%; border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0; border-radius: 3px;}
-input[type="text"], input[type="password"] {width: 100%; border:1px solid var(--lightgray); padding: 0.625rem; border-radius: 3px; box-sizing: border-box;}
+input[type="text"], input[type="password"], input[type="date"], input[type="number"] {width: 100%; border:1px solid var(--lightgray); height: 3rem;padding: 0 20px; border-radius: 3px; box-sizing: border-box;}
 select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0;}
+.flight_date input[type="date"] {width: 100%; border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0; border-radius: 3px;}
 
 /* 인풋 박스형태 */
 .border_input input{border: 1px solid var(--lightgray); padding: 0.625rem;}
@@ -227,8 +295,10 @@ select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.3
 .border_input input:checked + label {background: var(--primary); color: #fff;}
 
 /* 버튼 */
-.btn_primary {width: 7.5rem;height: 3.5rem; border: 0; border-radius: 0.313rem; color: #fff; background: var(--primary);}
+.btn_primary {width: 7.5rem;height: 3rem; border: 0; border-radius: 3px; color: #fff; background: var(--primary); margin:  0 auto;}
 .btn_primary.light {background: var(--light); color: #000; }
+.btn_primary.white {background: #fff; color: var(--lightgray); border: 1px solid var(--lightgray);}
+
 
 /* 탭메뉴 */
 .tab_menu input.tab_list {font-weight: bold;visibility: hidden; display: none;}
@@ -271,5 +341,14 @@ select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.3
 .selectList li:first-child a{border-top-left-radius: 0.313rem; border-bottom-left-radius: 0.313rem;}
 .selectList li:last-child a{border-top-right-radius: 0.313rem; border-bottom-right-radius: 0.313rem;}
 .selectList li.active a{background: var(--primary); color: #fff;}
+
+
+/* 페이지네비 */
+.navi {text-align: center;padding-top: 60px;display: flex; justify-content: center;}
+.navi a {text-align: center; width: 40px;height: 40px; line-height: 40px;}
+.navi a.icon {border: 1px solid var(--light);}
+.navi a.icon img {width: auto; height: 13px;}
+.navi a.active {color: var(--primary); position: relative;font-weight: bold;}
+.navi a.active::after {content: ""; display: block; width:50%; height: 3px; background: var(--primary); position: absolute; left: 50%; bottom: 0; transform: translate(-50%,-100%);}
 
 

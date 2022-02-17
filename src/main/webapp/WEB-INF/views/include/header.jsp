@@ -127,23 +127,33 @@
 						<div class="gnb_cont">
 							<div class="inner">
 								<ul class="gnb_dep2">
+									<li><a href="#">고객지원</a>
+										<ul class="gnb_dep3">
+											<li><a href="#">공지사항</a></li>
+											<li><a href="#">자주묻는질문</a></li>
+											<li><a href="#">1:1 문의</a></li>
+										</ul>
+									</li>
 									<li><a href="#">회원혜택</a>
 										<ul class="gnb_dep3">
 											<li><a href="#">회원안내</a></li>
 											<li><a href="#">제휴사 할인</a></li>
-										</ul></li>
+										</ul>
+									</li>
 									<li><a href="#">마일리지 적립</a>
 										<ul class="gnb_dep3">
 											<li><a href="#">마일리지 적립</a></li>
 											<li><a href="#">마일리지 적립몰</a></li>
-										</ul></li>
+										</ul>
+									</li>
 									<li><a href="#">마일리지 사용</a>
 										<ul class="gnb_dep3">
 											<li><a href="#">미래항공</a></li>
 											<li><a href="#">마일리지 몰</a></li>
 											<li><a href="#">제휴 항공사</a></li>
-										</ul></li>
-									<li><a href="#"><span style="display: block; width: 200px; height: 120px; background: #000;"></span></a></li>
+										</ul>
+									</li>
+									<li><a href="#"><span style="display: block; width: 150px; height: 120px; background: #000;"></span></a></li>
 								</ul>
 							</div>
 						</div></li>

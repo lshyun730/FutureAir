@@ -92,11 +92,11 @@
                     </select>
                 </div>
             </div>
-            <div>
+            <div class="flight_date">
                 <p class="title">출발일</p>
-                <input type="date" name="departure_date">
+                <input type="date" name="departure_date" >
             </div>
-            <div>
+            <div class="flight_date">
                 <p class="title">도착일</p>
                 <input type="date" name="arrival_date">
             </div>
