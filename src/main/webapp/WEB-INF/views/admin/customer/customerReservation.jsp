@@ -25,10 +25,7 @@
                     </ul>
                 </nav>
                 <div class="profile">
-                    <div class="profile_img">
-                        <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt="proifle">
-                    </div>
-                    <p class="profile__info">홍길동<span>일반등급</span></p>
+                    <p class="profile__info">${customer.customer_name }<span>${customer.customer_grade }등급</span></p>
                 </div>
             </header>
             <!-- customer header E --> 
@@ -41,16 +38,16 @@
                     <h2>전체 예약내역</h2>
                     <!-- search detail S -->
                     <form action="customerReservation" class="search_detail active" id="serch_detail">
-                        <div class="inputbox term icon">
+                        <div class="inputbox term">
                             <p class="inputbox_title">예약일</p>
                             <div class="inputbox_input">
-                                <input type="date" id="reservation_start" name="reservation_start" placeholder="2022-01-22">
+                                <input type="text" id="reservation_start" name="reservation_start" placeholder="2022-01-22">
                                 <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
                             </div>
                         </div>
-                        <div class="inputbox icon">
+                        <div class="inputbox">
                             <div class="inputbox_input">
-                                <input type="date" id="reservation_end" name="reservation_end" placeholder="2022-01-22">
+                                <input type="text" id="reservation_end" name="reservation_end" placeholder="2022-01-22">
                                 <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
                             </div>
                         </div>
@@ -59,25 +56,27 @@
                                 <input type="submit" value="검색">
                             </div>
                         </div>
+                        <input type="hidden" id="id" name="id" value="${id }">
                     </form>
                     <!-- search detail E -->
                     <!-- table S --> 
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>예약일</th>
+                                <th><input type="checkbox"></th>
                                 <th>예약번호</th>
                                 <th>승객</th>
                                 <th>출발지</th>
                                 <th>도착지</th>
                                 <th>출발일</th>
+                                <th>예약일</th>
                                 <th>결제가격</th>
                             </tr>
                         </thead>
                         <tbody>
                         	<c:forEach var="rList" items="${reservationList }" varStatus="status">
 	                            <tr>
-	                                <td>${rList['RESERVATION_DATE'] }</td>
+	                                <td><input type="checkbox"></td>
 	                                <td>
 	                                	<a href="${pageContext.request.contextPath}/admin/customer/customerReservationDetail?id=${rList['CUSTOMER_ID'] }&reservationNum=${rList['RESERVATION_NUM'] }">
 	                                		${rList['RESERVATION_NUM'] }
@@ -86,14 +85,25 @@
 	                                <td>${rList['PASSENGER_NAME'] }</td>
 	                                <td>${rList['DEPARTURE_NAME'] }</td>
 	                                <td>${rList['ARRIVAL_NAME'] }</td>
+	                                <td>${rList['RESERVATION_DATE'] }</td>
 	                                <td>${rList['DEPARTURE_DATE'] }</td>
 	                                <td><fmt:formatNumber value="${rList['PAYMENT'] }" pattern="#,###" />원</td>
 	                            </tr>
 							</c:forEach>
                         </tbody>
                     </table>
-                    <!-- table E -->
-		    </div> 
+                    <!-- table E --> 
+                        <!-- content footer S --> 
+        <div class="flex_content_footer">
+            <div class="navi">
+	           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
+               	<c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
+					<a href="javascript:pagingFormSubmit(${counter})" <c:if test="${navi.currentPage == counter}"> class="active"</c:if>>${counter}</a>
+				</c:forEach>
+	           	<a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})" class="next"></a>
+           </div>
+        </div>
+	<!-- content footer E --> 
                 </section>
                 <!-- customer content E -->  
             </div>
@@ -101,5 +111,6 @@
         <!-- customer contents  E -->  
     </div>
     <!-- customer detail  E -->  
+
 </body>
 </html>
