@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.air.future.vo.Admin;
 import com.air.future.vo.Board;
 import com.air.future.vo.Post;
 
@@ -116,6 +117,45 @@ public class AdminBoardDAO {
 		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
 		Post post = mapper.getPost(post_index);
 		return post;
+	}
+	//게시판 설정 수정하기
+	public int updateBoard(Board board) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		int result = mapper.updateBoard(board);
+		return result;
+	}
+	
+	//게시물 관리 수정하기
+	public int funPostUpdate(Post post) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		int result = mapper.funPostUpdate(post);
+		return result;
+	}
+	
+	//관리자 정보 가져오기
+	public Admin getAdmin() {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		Admin admin = mapper.getAdmin();
+		
+		return admin;
+		
+	}
+	
+	//게시판 설정에서 게시물 추가하기
+	public int insertPost(Post post) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		int result = mapper.insertPost(post);
+		
+		return result;
+	}
+	
+	//고정글 추가하기
+	public int insertNotice(Post post) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		int result = mapper.insertNotice(post);
+			
+		return result;
+			
 	}
 	
 }

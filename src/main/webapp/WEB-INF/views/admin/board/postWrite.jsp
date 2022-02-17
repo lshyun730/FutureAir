@@ -15,17 +15,17 @@
 <!-- popup S -->  
 <section class="popup" id="popup">
         <h2>게시글작성</h2>
-        <form class="view_post">
+        <form class="view_post" action="funpostWrite" method="get">
             <div class="inputbox no_icon width100">
                 <p class="inputbox_title">제목</p>
                 <div class="inputbox_input">
-                    <input type="text" placeholder="제목을 입력해주세요" name="board_name">
+                    <input type="text" placeholder="제목을 입력해주세요" name="board_title" id="board_title">
                 </div>
             </div>
             <div class="inputbox">
                 <p class="inputbox_title">게시판</p>
                 <div class="inputbox_input selectbox">
-                    <select name="board_name" onchange="checkBoardName(this)">
+                    <select name="board_name" onchange="checkBoardName(this)" id="board_name">
                     	<c:forEach var="board" items="${boardList}">
 							<option value="${board}" <c:if test="${board eq board_name}">selected="selected"</c:if> >${board}</option>		                  
                     	</c:forEach>
@@ -49,7 +49,7 @@
             <div class="inputbox width100">
                 <p class="inputbox_title">내용</p>
                 <div class="inputbox_input textbox">
-                	<textarea rows="" cols=""></textarea>
+                	<textarea rows="" cols="" id="contents" name="contents"></textarea>
                 </div>
             </div>
             <div class="submit">

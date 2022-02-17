@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.air.future.dao.AdminBoardDAO;
+import com.air.future.dao.AdminBoardMapper;
+import com.air.future.vo.Admin;
 import com.air.future.vo.Board;
 import com.air.future.vo.Post;
 
@@ -111,6 +113,40 @@ public class AdminBoardService {
 		Post post = dao.getPost(post_index);
 		return post;
 	}
-
+	
+	//게시판 설정 수정하기
+	public int updateBoard(Board board) {
+		int result = dao.updateBoard(board);
+		return result;
+	}
+	
+	//게시물 관리 수정하기
+	public int funPostUpdate(Post post) {
+		int result = dao.funPostUpdate(post);
+		return result;
+	}
+	
+	//관리자 정보 가져오기
+	public Admin getAdmin() {
+		Admin admin = dao.getAdmin();
+			
+		return admin;
+			
+	}
+	
+	//게시판 설정에서 게시물 추가하기
+	public int insertPost(Post post) {
+		int result = dao.insertPost(post);
+			
+		return result;
+	}
+	
+	//고정글 추가하기
+	public int insertNotice(Post post) {
+		int result = dao.insertNotice(post);
+				
+		return result;
+				
+	}
 	
 }

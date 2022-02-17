@@ -15,17 +15,19 @@
 <!-- popup S -->  
 <section class="popup" id="popup">
         <h2>게시글수정</h2>
-        <form class="post_update">
+        <form class="post_update" action="funPostUpdate" method="get">
+        	<input type="hidden" id="post_index" name="post_index" value="${post.post_index}">
+        	<input type="hidden" id="writer" name="writer" value="${post.writer}">
             <div class="inputbox no_icon width100">
                 <p class="inputbox_title">제목</p>
                 <div class="inputbox_input">
-                    <input type="text" placeholder="게시판 이름을 입력해주세요" name="board_name" value="${post.title}">
+                    <input type="text" placeholder="게시판 이름을 입력해주세요" name="board_title" id="board_title" value="${post.title}">
                 </div>
             </div>
             <div class="inputbox">
                 <p class="inputbox_title">게시판</p>
                 <div class="inputbox_input selectbox">
-                    <select name="board_name" onchange="checkBoardName(this)">
+                    <select name="board_name" onchange="checkBoardName(this)" id="board_name">
                     	<c:forEach var="board" items="${boardList}">
 							<option value="${board}" <c:if test="${board eq board_name}">selected="selected"</c:if> >${board}</option>		                  
                     	</c:forEach>
@@ -49,7 +51,7 @@
             <div class="inputbox width100">
                 <p class="inputbox_title">내용</p>
                 <div class="inputbox_input textbox">
-                	<textarea>${post.contents}</textarea>
+                	<textarea id="contents" name="contents">${post.contents}</textarea>
                 </div>
             </div>
             <div class="submit">
