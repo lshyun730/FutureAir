@@ -44,7 +44,8 @@ public class AdminCustomerDAO {
 	public int customerDelete(String customer_id) {
 		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
 		mapper.mileageDelete(customer_id);
-		mapper.reservationDelete(customer_id);
+		//mapper.scheduleDelete(customer_id);
+		//mapper.reservationDelete(customer_id);
 		int result = mapper.customerDelete(customer_id);
 		return result;
 	}
@@ -137,6 +138,48 @@ public class AdminCustomerDAO {
 		List<HashMap<String, String>> result = mapper.mileageBalance(id);
 		return result;
 	}
+
+	// 팝업창 : 회원정보 수정하기에서 회원정보 가져오기(customerUpdate.jsp)
+	public Customer userInfoFind(String id) {
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		Customer customer = mapper.userInfoFind(id);
+		return customer;
+	}
+
+	// 팝업창 : 회원정보 수정하기에서 회원정보 수정하기(customerUpdate.jsp)
+	public int userInfoChange(Customer customer) {
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		int result = mapper.userInfoChange(customer);
+		return result;
+	}
+
+	// 팝업창 : 회원 등급 수정하기 부분의 회원등급 정보 가져오기(customerGradeUpdate.jsp)
+	public Grade customerGradeSet(String grade) {
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		Grade gradeSet = mapper.customerGradeSet(grade);
+		return gradeSet;
+	}
+
+	// 팝업창 : 회원 등급 수정하기 부분의 회원등급 수정하기(customerGradeUpdate.jsp)
+	public int customerGradeChange(Grade gradeSet) {
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		int result = mapper.customerGradeChange(gradeSet);
+		return result;
+	}
+
+	public int gradeDelete(ArrayList<String> values) {
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		mapper.gradeDown(values);
+		int result2 = mapper.gradeDelete(values);
+		return result2;
+	}
+
+	public int countGrade() {
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		int result = mapper.countGrade();
+		return result;
+	}
+
 
 
 

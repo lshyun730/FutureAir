@@ -20,6 +20,8 @@ public interface AdminCustomerMapper {
 	
 	// 회원 마일리지(mileage_fa) 삭제하기
 	public int mileageDelete(String customer_id);
+	// 회원 스케쥴(schedule_fa_ 삭제하기
+	public int scheduleDelete(String customer_id);
 	// 회원 예약(reservation_fa) 삭제하기
 	public int reservationDelete(String customer_id);
 	// 회원(customer_fa) 삭제하기
@@ -54,6 +56,24 @@ public interface AdminCustomerMapper {
 	public String mileageFUsable(String id);
 	// 회원 마일리지 내역
 	public List<HashMap<String, String>> mileageBalance(String id);
+	
+	// 팝업창 : 회원정보 수정하기에서 회원정보 가져오기(customerUpdate.jsp)
+	public Customer userInfoFind(String id);
+	// 팝업창 : 회원정보 수정하기에서 회원정보 수정하기(customerUpdate.jsp)
+	public int userInfoChange(Customer customer);
+	
+	// 팝업창 : 회원 등급 수정하기 부분의 회원등급 정보 가져오기(customerGradeUpdate.jsp)
+	public Grade customerGradeSet(String grade);
+	// 팝업창 : 회원 등급 수정하기 부분의 회원등급 수정하기(customerGradeUpdate.jsp)
+	public int customerGradeChange(Grade gradeSet);
+	
+	// 회원 등급 삭제하기 전 삭제할 회원등급에 있는 사람 회원등급 낮추기
+	public int gradeDown(ArrayList<String> values);
+	// 회원 등급 삭제하기
+	public int gradeDelete(ArrayList<String> values);
+	// 회원 등급 개수 확인하기
+	public int countGrade();
+
 
 	
 

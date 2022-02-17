@@ -121,8 +121,8 @@
 		                                    <span></span>
 		                                </div>
 		                                <ul class="select_list">
-		                                    <li><a href="javascript:popupOpen('customerUpdate?route_num=${customerList.customer_id}', 550, 680)">수정</a></li> 
-		                                    <li><a href="#">삭제</a></li> 
+		                                    <li><a href="javascript:popupOpen('customerUpdate?customer_id=${customerList.customer_id}', 550, 680)">수정</a></li> 
+		                                    <li><a href="javascript:actionDelete('${customerList.customer_id }')">삭제</a></li> 
 		                                </ul>
 		                            </div>
 		                        </td>
@@ -168,6 +168,17 @@ function deleteAjax(deleteList) {
 				}
 		 }); 				 
 	 }
+}
+
+//액션창 회원 삭제
+function actionDelete(customer_id){
+	if(customer_id.lengh != 0){
+		const deleteList = new Array();
+		deleteList.push(customer_id);
+		deleteAjax(deleteList);
+	} else {
+		alert("삭제에 실패하였습니다.");
+	}
 }
 
 //액션 이외 선택시 액션 닫힘

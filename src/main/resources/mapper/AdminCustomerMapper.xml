@@ -225,4 +225,91 @@
 			)
 	</insert>
 	
+	
+	<!-- 팝업창 : 회원정보 수정하기에서 회원정보 가져오기(customerUpdate.jsp) -->
+	<select id="userInfoFind" parameterType="string" resultType="customer">
+		select *
+		from customer_fa
+		<where>
+			customer_id = #{customer_id}
+		</where>
+	</select>
+	<!-- 팝업창 : 회원정보 수정하기에서 회원정보 수정하기(customerUpdate.jsp) -->
+	<update id="userInfoChange" parameterType="customer">
+		update customer_fa
+		set
+			customer_gender = #{customer_gender}
+			, customer_country = #{customer_country}
+			, customer_email = #{customer_email}
+			, customer_birth = #{customer_birth}
+			, customer_address = #{customer_address}
+			, customer_phone = #{customer_phone}
+			, customer_grade = #{customer_grade}
+		<where>
+			customer_id = #{customer_id}
+		</where>
+	</update>
+	
+	<select id="customerGradeSet" parameterType="string" resultType="grade">
+		select *
+		from customer_grade_fa
+		<where>
+			grade = #{grade}
+		</where>
+	</select>
+	<update id="customerGradeChange" parameterType="grade">
+		update customer_grade_fa
+		set
+			grade = #{grade}
+			, mileage_scope = #{mileage_scope}
+			, mileage_ratio = #{mileage_ratio}
+			, mileage_exp = #{mileage_exp}
+			, pay_scope = #{pay_scope}
+			, pay_ratio = #{pay_ratio}
+			, promo_terms = #{promo_terms}
+		<where>
+			grade = #{grade}
+		</where>
+	</update>
+	
+	
+	<select id="countGrade" resultType="int">
+		select count(*) from customer_grade_fa
+	</select>
+	<update id="gradeDown" parameterType="list">
+		update customer_fa
+		set customer_grade = NVL((select grade
+                       			 from	(select grade 
+                        				from customer_grade_fa
+                        				where promo_terms &lt; (select min(promo_terms)
+                                            					from customer_grade_fa
+                                            					where grade IN 
+                                            					<foreach collection="list" item="item" open="(" close=")" separator=",">
+																		#{item}
+																</foreach>
+                                            					)
+                        				order by promo_terms desc
+                        				)
+                        		where rownum = 1
+                        		), (select grade
+									from customer_grade_fa
+									where promo_terms = (select min(promo_terms) from customer_grade_fa)
+									)
+								)
+		where
+			customer_grade IN
+			<foreach collection="list" item="type" open="(" close=")" separator=",">
+					#{type}
+			</foreach> 
+	</update>
+	<delete id="gradeDelete" parameterType="list">
+		delete from customer_grade_fa
+		<where>
+			grade IN
+			<foreach collection="list" item="type" open="(" close=")" separator=",">
+				#{type}
+			</foreach>
+		</where>
+	</delete>
+	
 </mapper>

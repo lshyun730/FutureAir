@@ -153,6 +153,61 @@ public class AdminCustomerService {
 		return dao.mileageBalance(id);
 	}
 
+	// 팝업창 : 회원정보 수정하기에서 회원정보 가져오기(customerUpdate.jsp)
+	public Customer userInfoFind(String id) {
+		return dao.userInfoFind(id);
+	}
+
+	// 팝업창 : 회원정보 수정하기에서 회원정보 수정하기(customerUpdate.jsp)
+	public int userInfoChange(String customer_id, String customer_name, String customer_birth
+								, String customer_country, String customer_gender, String customer_grade
+								, String customer_email, String customer_phone, String customer_address) {
+		Customer customer = new Customer();
+		customer.setCustomer_id(customer_id);
+		customer.setCustomer_name(customer_name);
+		customer.setCustomer_birth(customer_birth.replaceAll("[^0-9]",""));
+		customer.setCustomer_country(customer_country);
+		customer.setCustomer_gender(customer_gender);
+		customer.setCustomer_grade(customer_grade);
+		customer.setCustomer_email(customer_email);
+		customer.setCustomer_phone(customer_phone);
+		customer.setCustomer_address(customer_address);
+		return dao.userInfoChange(customer);
+	}
+
+	
+	// 팝업창 : 회원 등급 수정하기 부분의 회원등급 정보 가져오기(customerGradeUpdate.jsp)
+	public Grade customerGradeSet(String grade) {
+		return dao.customerGradeSet(grade);
+	}
+	// 팝업창 : 회원 등급 수정하기 부분의 회원등급 수정하기(customerGradeUpdate.jsp)
+	public int customerGradeChange(String grade, int mileage_scope, int mileage_ratio, int mileage_exp
+									, int pay_scope, int pay_ratio, int promo_terms) {
+		Grade gradeSet = new Grade();
+		gradeSet.setGrade(grade);
+		gradeSet.setMileage_scope(mileage_scope);
+		gradeSet.setMileage_ratio(mileage_ratio);
+		gradeSet.setMileage_exp(mileage_exp);
+		gradeSet.setPay_scope(pay_scope);
+		gradeSet.setPay_ratio(pay_ratio);
+		gradeSet.setPromo_terms(promo_terms);
+		return dao.customerGradeChange(gradeSet);
+	}
+
+	public int gradeDelete(String[] deleteList) {
+		ArrayList<String> values = new ArrayList<>();
+		for(String s : deleteList) {
+			values.add(s);
+		}
+		return dao.gradeDelete(values);
+	}
+
+	public int countGrade() {
+		return dao.countGrade();
+	}
+
+	
+	// 회원 등급 삭제하기 위한 등급조절
 
 
 }
