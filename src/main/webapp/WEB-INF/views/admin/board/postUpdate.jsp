@@ -16,9 +16,8 @@
 <!-- popup S -->  
 <section class="popup" id="popup">
         <h2>게시글수정</h2>
-        <form id="updateForm" class="post_update"  onsubmit="return postUpdate();">
+        <form onsubmit="return postUpdate();" id="updateForm">
         	<input type="hidden" id="post_index" name="post_index" value="${post.post_index}">
-        	<input type="hidden" id="writer" name="writer" value="${post.writer}">
             <div class="inputbox no_icon width100">
                 <p class="inputbox_title">제목</p>
                 <div class="inputbox_input">
@@ -38,8 +37,8 @@
             <div class="inputbox">
                 <p class="inputbox_title">소분류</p>
                 <div class="inputbox_input selectbox">
-                    <select name="post_type" id="post_type" <c:if test="${board_name ne 'FAQ'}">disabled="disabled"</c:if>>
-                        <option value="" selected>선택</option>
+                    <select name="post_type" id="post_type">
+                        <option value="" selected>선택안함</option>
                         <option value="항공권예매" <c:if test="${post.post_type eq '항공권예매'}">selected="selected"</c:if> >항공권예매</option>
                         <option value="마일리지"<c:if test="${post.post_type eq '마일리지'}">selected="selected"</c:if> >마일리지</option>
                         <option value="체크인"<c:if test="${post.post_type eq '체크인'}">selected="selected"</c:if> >체크인</option>
@@ -66,9 +65,6 @@
 	function postUpdate(){
 		var title = document.getElementById('title').value
 		var contents = document.getElementById('contents').value
-
-		
-		
 		if(title ==''){
 			alert('제목을 한글자 이상 입력해주세요');
 			return false;
@@ -80,22 +76,20 @@
 		}
 
 		 $.ajax({
-				url : 'postUpdateAjax',
+				url : 'postUpdate',
 				data : $("#updateForm").serialize(),
 				traditional : true, 
 				type : 'post',
 				success : function(data) {
 					if(data == 1) {
+						alert('수정이 완료되었습니다')
 						opener.parent.location.reload();
 						window.close();
 					}
 				}
 		 });
-		
 		return true;
-		
 	}
-
 
 </script>
 </html>

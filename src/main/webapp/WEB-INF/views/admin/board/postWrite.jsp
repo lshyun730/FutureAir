@@ -16,7 +16,7 @@
 <!-- popup S -->  
 <section class="popup" id="popup">
         <h2>게시글작성</h2>
-        <form class="view_post"  id="updateForm">
+        <form id="post_write">
             <div class="inputbox no_icon width100">
                 <p class="inputbox_title">제목</p>
                 <div class="inputbox_input">
@@ -36,8 +36,8 @@
             <div class="inputbox">
                 <p class="inputbox_title">소분류</p>
                 <div class="inputbox_input selectbox">
-                    <select name="post_type" id="post_type" <c:if test="${board_name ne 'FAQ'}">disabled="disabled"</c:if>>
-                        <option value="" selected>선택</option>
+                    <select name="post_type" id="post_type">
+                        <option value="" selected>선택안함</option>
                         <option value="항공권예매">항공권예매</option>
                         <option value="마일리지">마일리지</option>
                         <option value="체크인">체크인</option>
@@ -54,14 +54,14 @@
                 </div>
             </div>
             <div class="submit">
-                <input type="button" value="추가하기" onclick="insertBoard()">
+                <input type="button" value="추가하기" onclick="postWrite()">
             </div>
         </form>
 </section>
 <!-- popup E -->  
 </body>
 <script type="text/javascript">
-	function insertBoard(){
+	function postWrite(){
 		var title = document.getElementById('title').value
 		var contents = document.getElementById('contents').value
 
@@ -76,18 +76,14 @@
 		}
 
 		 $.ajax({
-				url : 'postWriteAjax',
-				data : {"board_name" : $('#board_name').val(),
-						"title" : $('#title').val(),
-						"post_type" : $('#post_type').val(),
-						"contents" :$('#contents').val()		
-								},
+			 url : 'postWrite',
+				data : $('#post_write').serialize(),
+				dataType : "json",
 				traditional : true, 
 				type : 'post',
 				success : function(data) {
-					console.log(data);
-					if(data == 1) {
-						alert('수행완료!');
+					if(data >= 1) {
+						alert('수정이 완료되었습니다')
 						opener.parent.location.reload();
 						window.close();
 					}

@@ -14,8 +14,9 @@
 <!-- popup S -->  
     <section class="popup" id="popup">
             <h2>게시판 수정</h2>
-            <form class="create_board" id="updateForm">
+            <form id="update_board">
             	<input type="hidden" id="board_id" name="board_id" value="${board.board_id }">
+            	<input type="hidden" name="board_name_old" value="${board.board_name }">
                 <div class="inputbox no_icon width100">
                     <p class="inputbox_title">게시판이름</p>
                     <div class="inputbox_input">
@@ -63,62 +64,34 @@
                     </div>
                 </div>
                 <div class="submit">
-                    <input type="button" value="수정하기" onclick="updateBoard()">
+                    <input type="button" value="수정하기" onclick="return updateBoard()">
                 </div>
            </form>
     </section>
     <!-- modal E -->  
 <script>
-/* function updateBoard() {
-	$.ajax({
-		url : 'updateBoard',
-		data : $('#create_board').serialize(),
+function updateBoard() {
+	var board_name = document.getElementById('board_name').value
+	if(board_name =='')  {
+		alert('이름을 한글자 이상 입력해주세요');
+		return false;
+	} 
+ 	$.ajax({
+		url : 'boardUpdate',
+		data : $('#update_board').serialize(),
 		dataType : "json",
 		traditional : true, 
 		type : 'post',
 		success : function(data) {
-			alert('게시판을 추가하였습니다.');	
-		}
-	 });
-} */
-
-	function updateBoard(){
-
-		var board_name = document.getElementById('board_name').value
-
-		if(board_name ==''){
-			alert('이름을 한글자 이상 입력해주세요');
-			return false;
-		}
-
-		$.ajax({
-			url : 'boardUpdateAjax',
-			data : {"board_front": $('#board_front').val(),
-		       		"board_name": $('#board_name').val(),
-		       		"board_id" : $('#board_id').val(),
-		       		"board_type" : $('#board_type').val(),
-		       		"reply_type" : $('#reply_type').val(),
-		       		"write_right" : $('#write_right').val(),
-		       		"read_right" : $('#read_right').val()},
-			traditional : true, 
-			type : 'post',
-			success : function(data) {
-
-				if(data == 1) {
-					opener.parent.location.reload();
-					window.close();
-				}else if(data ==2){
-					opener.parent.location.reload();
-					window.close();
-				}else{
-					opener.parent.location.reload();
-					window.close();
-				}
-			}
-	 });
-		
-		return true;
-	}
+			alert('수정이 완료되었습니다');
+			opener.parent.location.reload();
+			window.close();
+		} ,
+		error:function(request,status,error){
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+       }
+	 }); 
+}
 </script>
 </body>
 </html>

@@ -155,17 +155,6 @@ function click_more(element){
     }
 }
 
-function checkBoardName(element) {
-	const postType = document.getElementById('post_type');
-	if(element.value == 'FAQ') {
-		postType.disabled = false;
-	}
-	if(element.value != 'FAQ') {
-		postType.value="";
-		postType.disabled = true;
-	}
-}
-//
 // 상세검색
 /*const btnSearchDetail = document.querySelector(".btn_search_detail");
 btnSearchDetail.addEventListener("click", searchDetail);*/

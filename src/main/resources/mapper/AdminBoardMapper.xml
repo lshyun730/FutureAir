@@ -41,14 +41,30 @@
 	 <!-- 게시물 삭제 -->
 	<delete id="deletePost" parameterType="String">
 		delete from post_fa 
-		where post_index = to_number(#{board_index})
+		where post_index = #{post_index}
 	</delete>
 	
+
 	<!-- 게시물 정보 -->
 	<select id="getPost" parameterType="String" resultType="post">
 		select * from post_fa 
 		where post_index = #{post_index}
 	</select>
+	
+	<!-- 게시판 수정 -->
+	<update id="updateBoard" parameterType="HashMap">
+		update board_fa set board_name = #{board_name}, board_type = #{board_type}, reply_type = #{reply_type},
+		write_right = #{write_right}, read_right = #{read_right}
+		where board_id = to_number(#{board_id})
+	</update>
+	
+	<!-- 게시글 제목 수정 - 게시판 수정시 -->
+	<update id="updatePostBoardName" parameterType="HashMap">
+		update post_fa 
+		set board_name = #{board_name} 
+		where board_name = #{board_name_old}
+	</update>
+	
 	
 	
 <!-- 게시판관리 -->
@@ -83,9 +99,15 @@
 	<select id="getBoard" parameterType="String" resultType="board">
 		select * from board_fa where board_name = #{board_name}
 	</select>
+	
+	<!-- 게시물 삭제 게시판이름으로 이름으로 -->
+	<delete id="deletePostByBoardname" parameterType="String">
+		delete from post_fa 
+		where board_name = #{board_name}
+	</delete>
+	 
 
 <!-- 게시판 별 처리 -->
-
 	<!-- 게시판 게시글 리스트 갯수 -->
 	<select id="getPostTotalByBoard" parameterType="String" resultType="int">
 		select count(*) from post_fa
@@ -107,34 +129,18 @@
 		order by post_date desc
 	</select>
 	
-	<!-- 게시판 설정 수정하기 버튼 -->
-	<update id="updateBoard" parameterType="board">
-		update board_fa set board_name = #{board_name}, board_type = #{board_type}, reply_type = #{reply_type},
-		write_right = #{write_right}, read_right = #{read_right}
-		where board_id = #{board_id}
-	</update>
-	
-	<!-- 게시판 설정시 게시글도 수정해주기 -->
-	<update id="updateBoardPlus" parameterType="HashMap">
-		update post_fa set board_name = #{board_name} where board_name = #{board_front}
-	</update>
-	
-	<!-- 게시글 수정하기 버튼 -->
-	<update id="funPostUpdate" parameterType="post">
-		update post_fa set title = #{title}, writer = #{writer}, board_name = #{board_name}, contents =#{contents},
-			post_type = #{post_type,jdbcType=VARCHAR} 
+
+	<!-- 게시글 수정 -->
+	<update id="PostUpdate" parameterType="HashMap">
+		update post_fa 
+			set title = #{title}, board_name = #{board_name}, contents =#{contents}, post_type = #{post_type} 
 		where post_index = #{post_index}
 	</update>
-	
-	<!-- 작성자 아이디 가져오기 -->
-	<select id="getAdmin" resultType="admin">
-		select * from admin_fa
-	</select>
-	
+
 	<!-- 게시판에서 넣기  -->
-	<insert id="insertPost" parameterType="post">
+	<insert id="insertPost" parameterType="HashMap">
 		insert into post_fa(post_index, title, writer, board_name, contents, post_type) values
-		(post_index_seq.nextval, #{title}, #{writer}, #{board_name}, #{contents}, #{post_type,jdbcType=VARCHAR})
+		(post_index_seq.nextval, #{title}, '관리자', #{board_name}, #{contents}, #{post_type,jdbcType=VARCHAR})
 	</insert>
 	
 	<!-- 고정글로 추가하기 -->

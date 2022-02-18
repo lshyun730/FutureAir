@@ -170,6 +170,7 @@ sub page
 /* 게시판설정 */
 .board_blank {width: 800px; margin: 1.875rem auto; padding: 0 1.875rem;}
 .board_blank .submit {text-align: center;padding: 2.5rem;}
+.board_blank.board_notice .flex_content_footer {justify-content: flex-end;}
 
 /* 회원상세 */
 .customer_detail {height: 100%;}
