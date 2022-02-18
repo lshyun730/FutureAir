@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- header S -->    
 <%@include file ="../include/header.jsp" %>
@@ -17,7 +16,7 @@
 		        <div class="flex_content_header">
 		            <h2>회원등급</h2>
 		            <div class="action">
-		                <button class="btn danger" onclick='checkDelete(this)'>선택삭제</button>
+		                <button class="btn danger" form="gradeTable" onclick='javascript:gradeDeleter(this);'>선택삭제</button>
 		                <button class="btn primary" onclick='modalOpen();'>등급추가</button>
 		            </div>
 		        </div>
@@ -55,8 +54,8 @@
 		                                    <span></span>
 		                                </div>
 		                                <ul class="select_list">
-		                                    <li><a href="javascript:popupOpen('customerGradeUpdate', 550, 600)">수정</a></li> 
-		                                    <li><a href="#">삭제</a></li> 
+		                                    <li><a href="javascript:popupOpen('customerGradeUpdate?grade=${customerGrade.grade}', 550, 600)">수정</a></li> 
+		                                    <li><a href="javascript:gradeDeletePoint('${customerGrade.grade}')">삭제</a></li> 
 		                                </ul>
 		                            </div>
 		                        </td>
@@ -79,7 +78,7 @@
 		        </div>
 		        <!-- content header E -->   
 		        <!-- search detail S -->   
-		        <form action="customerGrade" id="pagingForm" class="search_detail active" method="get" onsubmit="return search()">
+		        <form action="customerGrade" id="search_detail" class="search_detail active" method="get" onsubmit="return search()">
 		            <div class="inputbox">
 		                <p class="inputbox_title">등급</p>
 		                <div class="inputbox_input selectbox">
@@ -150,8 +149,12 @@
 								</td>
 								<td>${customerList.customer_grade }</td>
 								<td>
-									<button class="btn_s more"><span>예약내역</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        	<button class="btn_s more"><span>마일리지</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+									<button class="btn_s more" onclick="javascript:popupOpen('customerReservation?id=${customerList.customer_id}')">
+										<span>예약내역</span><span class="icon"><i class="fas fa-chevron-right"></i></span>
+									</button>
+		                        	<button class="btn_s more" onclick="javascript:popupOpen('customerMileage?id=${customerList.customer_id}')">
+		                        		<span>마일리지</span><span class="icon"><i class="fas fa-chevron-right"></i></span>
+		                        	</button>
 								</td>
 								<td class="more">
 		                            <div class="btn_m_wrap" onclick="click_more(this)">
@@ -159,8 +162,8 @@
 		                                    <span></span>
 		                                </div>
 		                                <ul class="select_list">
-		                                    <li><a href="#">수정</a></li> 
-		                                    <li><a href="#">삭제</a></li> 
+		                                    <li><a href="javascript:popupOpen('customerUpdate?customer_id=${customerList.customer_id}', 550, 680)">수정</a></li> 
+		                                    <li><a href="javascript:actionDelete('${customerList.customer_id }')">삭제</a></li> 
 		                                </ul>
 		                            </div>
 		                        </td>
@@ -257,55 +260,125 @@ document.addEventListener('click', () => {;
 
 
 
-// 등급이름 중복체킹을 위한 전역변수
-const gradeChecker = false;
+	// 등급이름 중복체킹을 위한 전역변수
+	const gradeChecker = false;
 
-// 등급 추가하기
-function gradeAdd(){
-	
-	const grade			= document.getElementById("grade");
-	const mileage_exp	= document.getElementById("mileage_exp");
-	const mileage_scope	= document.getElementById("mileage_scope");
-	const mileage_ratio	= document.getElementById("mileage_ratio");
-	const pay_scope		= document.getElementById("pay_scope");
-	const pay_ratio		= document.getElementById("pay_ratio");
-	const promo_terms 	= document.getElementById("promo_terms");
+	// 등급 추가하기
+	function gradeAdd(){
+		
+		const grade			= document.getElementById("grade");
+		const mileage_exp	= document.getElementById("mileage_exp");
+		const mileage_scope	= document.getElementById("mileage_scope");
+		const mileage_ratio	= document.getElementById("mileage_ratio");
+		const pay_scope		= document.getElementById("pay_scope");
+		const pay_ratio		= document.getElementById("pay_ratio");
+		const promo_terms 	= document.getElementById("promo_terms");
 
-	if (gradeCheker == false){
-		alert("등급명이 중복입니다.");	return false;
-	}
-	
-	if (grade.value == "" || mileage_exp.value == "" || mileage_scope.value == "" || mileage_ratio.value == ""
-		|| pay_scope.value == "" || pay_ratio.value == "" || promo_terms.value == "") {
-		alert("값을 빠짐없이 입력해주시길 바랍니다."); 						return false;
-	}
-	
-	if(isNaN(mileage_exp.value) == true || isNaN(mileage_scope.value) == true || isNaN(mileage_ratio.value) == true
-			|| isNaN(pay_scope.value) == true || isNaN(pay_ratio.value) == true){
-		alert("등급 명칭을 제외한 나머지는 숫자로 입력해 주시길 바랍니다."); 		return false;
-	}
-	
-	return true;
-}	
+		if (gradeCheker == false){
+			alert("등급명이 중복입니다.");	return false;
+		}
+		
+		if (grade.value == "" || mileage_exp.value == "" || mileage_scope.value == "" || mileage_ratio.value == ""
+			|| pay_scope.value == "" || pay_ratio.value == "" || promo_terms.value == "") {
+			alert("값을 빠짐없이 입력해주시길 바랍니다."); 						return false;
+		}
+		
+		if(isNaN(mileage_exp.value) == true || isNaN(mileage_scope.value) == true || isNaN(mileage_ratio.value) == true
+				|| isNaN(pay_scope.value) == true || isNaN(pay_ratio.value) == true){
+			alert("등급 명칭을 제외한 나머지는 숫자로 입력해 주시길 바랍니다."); 		return false;
+		}
+		
+		return true;
+	}	
 
-//등급 명칭 중복 검사하기
-function checkGrade(){
-	const inputGrade = $("#grade").val();
-	$.ajax({
-		data 	: { grade : inputGrade },
-		url		: "checkGradeName",
-		type	: "post",
-		dataType : "text",
-		success	: function(data) {
-				if (data != '0'){
-					alert("지금 입력하신 등급명은 중복입니다. 등급명은 중복된 값을 사용할 수 없습니다.");
-					gradeCheker = false;
-				} else {
-					gradeCheker = true;
+	//등급 명칭 중복 검사하기
+	function checkGrade(){
+		const inputGrade = $("#grade").val();
+		$.ajax({
+			data 	: { grade : inputGrade },
+			url		: "checkGradeName",
+			type	: "post",
+			dataType : "text",
+			success	: function(data) {
+					if (data != '0'){
+						gradeCheker = false;
+					} else {
+						gradeCheker = true;
+					}
 				}
 			}
 		})
 	}
+
+//선택삭제
+function deleteAjax(deleteList) {
+	
+	if(confirm("정말 삭제하시겠습니까?")){
+		 $.ajax({
+				url : 'customerDelete',
+				data : { deleteList : deleteList },
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data==1) {
+						alert('삭제에 성공하였습니다');		
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
+
+//액션창 회원 삭제
+function actionDelete(customer_id){
+	if(customer_id.lengh != 0){
+		const deleteList = new Array();
+		deleteList.push(customer_id);
+		deleteAjax(deleteList);
+	} else {
+		alert("삭제에 실패하였습니다.");
+	}
+}
+
+
+// 등급 삭제(선택 삭제 부분)
+function gradeDeleter(deleteBox) {
+	 const content 		= deleteBox.closest('.content'); 
+	 const checkboxes 	= content.querySelectorAll('input[name="tableSelect"]');
+	 const deleteList 	= new Array();
+
+	 checkboxes.forEach(checkbox => {
+		 if(checkbox.checked) deleteList.push(checkbox.value);
+	 })
+	
+	 if(checkboxes.length == deleteList.length){
+		 alert("삭제를 위해서는 최소한 한 개 이상의 등급이 남아있어야 합니다.");
+	 } else if(deleteList.length == 0) {
+		alert("선택된 항목이 없습니다");
+	 } else {
+		gradeDeletePoint(deleteList);
+	 }
+}
+// 액션창 등급 삭제
+function gradeDeletePoint(deleteGrade) {
+	if(confirm("정말 삭제하시겠습니까?")){
+		 $.ajax({
+				url : 'gradeDelete',
+				data : {deleteList : deleteGrade},
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data == 1000) {
+						alert('삭제를 위해서는 최소한 한 개 이상의 등급은 남아있어야 합니다.');
+					} else if(data != 0){
+						alert('삭제에 성공하였습니다');		
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
+
 </script>
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>

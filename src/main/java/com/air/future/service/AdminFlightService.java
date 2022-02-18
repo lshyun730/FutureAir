@@ -47,14 +47,55 @@ public class AdminFlightService {
 		return total;
 	}
 	
+	// 비행일정 검색
+	public HashMap<String, String>  getRoute(String route_num) {
+		HashMap<String, String>  route = dao.getRoute(route_num);
+		return route;
+	}
+	
+	// 비행일정 추가
+	public int insertFlight(HashMap<String, String> routeForm) {
+		String departure_date = routeForm.get("departure_date") + " " + routeForm.get("departure_time");
+		String arrival_date = routeForm.get("arrival_date") + " " + routeForm.get("arrival_time");
+		
+		routeForm.put("departure_date", departure_date);
+		routeForm.put("arrival_date", arrival_date);
+		int result = dao.insertFlight(routeForm);
+		return result;
+	}
+
+	// 비행일정 업데이트
+	public int updateFlight(HashMap<String, String> routeForm) {
+		String departure_date = routeForm.get("departure_date") + " " + routeForm.get("departure_time");
+		String arrival_date = routeForm.get("arrival_date") + " " + routeForm.get("arrival_time");
+		
+		routeForm.put("departure_date", departure_date);
+		routeForm.put("arrival_date", arrival_date);
+		int result = dao.updateFlight(routeForm);
+		return result;
+	}
+		
 	// 비행 선택삭제
-	public int deleteRoute(String[] deleteList) {
+	public int deleteRoute(String route_num) {
+		int result = dao.deleteRoute(route_num);
+		return result;
+	}
+	
+	// 비행 선택리스트 삭제
+	public int deleteRouteList(String[] deleteList) {
 		int result = 0;
 		for (String route_num : deleteList) {
 			result = dao.deleteRoute(route_num);
 		}
 		return result;
 	}
+	
+	// 비행기 리스트 검색
+	public ArrayList<Airplane> getAirplaneList() {
+		ArrayList<Airplane> planeList = dao.getAirplaneList();
+		return planeList;
+	}
+
 	
 	
 /* 
@@ -74,11 +115,17 @@ public class AdminFlightService {
 		return total;
 	}
 
-	// 예약 선택삭제
-	public int deleteReservation(String[] deleteList) {
+	// 예약 선택취소
+	public int reservationCancle(String reservation_num) {
+		int result = dao.reservationCancle(reservation_num);
+		return result;
+	}
+
+	// 예약 선택 리스트 취소 
+	public int reservationCancleList(String[] deleteList) {
 		int result = 0;
 		for (String reservation_num : deleteList) {
-			result = dao.deleteReservation(reservation_num);
+			result = dao.reservationCancle(reservation_num);
 		}
 		return result;
 	}
@@ -96,25 +143,7 @@ public class AdminFlightService {
 		return destinationList;
 	}
 
-	public Route getRoute(String route_num) {
-		Route route = dao.getRoute(route_num);
-		return route;
-	}
-
-	public int insertFlight(HashMap<String, String> routeForm) {
-		String departure_date = routeForm.get("departure_date") + " " + routeForm.get("departure_time");
-		String arrival_date = routeForm.get("arrival_date") + " " + routeForm.get("arrival_time");
-		
-		routeForm.put("departure_date", departure_date);
-		routeForm.put("arrival_date", arrival_date);
-		int result = dao.insertFlight(routeForm);
-		return result;
-	}
-
-	public ArrayList<Airplane> getAirplaneList() {
-		ArrayList<Airplane> planeList = dao.getAirplaneList();
-		return planeList;
-	}
+	
 
 
 }

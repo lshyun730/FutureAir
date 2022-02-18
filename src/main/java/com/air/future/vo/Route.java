@@ -15,4 +15,5 @@ public class Route {
 	private int prestige_price;
 	private int first_price;
 	private Airplane airplane;
+
 }

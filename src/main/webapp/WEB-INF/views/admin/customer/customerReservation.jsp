@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -39,17 +40,17 @@
                 <section class="customer_content">
                     <h2>전체 예약내역</h2>
                     <!-- search detail S -->
-                    <form action="#" class="search_detail active" id="serch_detail">
-                        <div class="inputbox term">
+                    <form action="customerReservation" class="search_detail active" id="serch_detail">
+                        <div class="inputbox term icon">
                             <p class="inputbox_title">예약일</p>
                             <div class="inputbox_input">
-                                <input type="text" placeholder="2022-01-22">
+                                <input type="date" id="reservation_start" name="reservation_start" placeholder="2022-01-22">
                                 <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
                             </div>
                         </div>
-                        <div class="inputbox">
+                        <div class="inputbox icon">
                             <div class="inputbox_input">
-                                <input type="text" placeholder="2022-01-22">
+                                <input type="date" id="reservation_end" name="reservation_end" placeholder="2022-01-22">
                                 <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
                             </div>
                         </div>
@@ -64,30 +65,35 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th><input type="checkbox"></th>
+                                <th>예약일</th>
                                 <th>예약번호</th>
                                 <th>승객</th>
                                 <th>출발지</th>
                                 <th>도착지</th>
                                 <th>출발일</th>
-                                <th>예약일</th>
                                 <th>결제가격</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td><a href="${pageContext.request.contextPath}/admin/customer/customerReservationDetail">R10001</a></td>
-                                <td><a href="#">홍길동</a></td>
-                                <td>부산</td>
-                                <td>인천</td>
-                                <td>2022-03-01</td>
-                                <td>2022-03-01</td>
-                                <td>431,000 원</td>
-                            </tr>
+                        	<c:forEach var="rList" items="${reservationList }" varStatus="status">
+	                            <tr>
+	                                <td>${rList['RESERVATION_DATE'] }</td>
+	                                <td>
+	                                	<a href="${pageContext.request.contextPath}/admin/customer/customerReservationDetail?id=${rList['CUSTOMER_ID'] }&reservationNum=${rList['RESERVATION_NUM'] }">
+	                                		${rList['RESERVATION_NUM'] }
+	                                	</a>
+	                                </td>
+	                                <td>${rList['PASSENGER_NAME'] }</td>
+	                                <td>${rList['DEPARTURE_NAME'] }</td>
+	                                <td>${rList['ARRIVAL_NAME'] }</td>
+	                                <td>${rList['DEPARTURE_DATE'] }</td>
+	                                <td><fmt:formatNumber value="${rList['PAYMENT'] }" pattern="#,###" />원</td>
+	                            </tr>
+							</c:forEach>
                         </tbody>
                     </table>
-                    <!-- table E --> 
+                    <!-- table E -->
+		    </div> 
                 </section>
                 <!-- customer content E -->  
             </div>

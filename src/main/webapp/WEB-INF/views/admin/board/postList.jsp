@@ -62,7 +62,6 @@
 		                    <span class="inputbox_icon"><i class="fas fa-search"></i></span>
 		                </div>
 		            </div>
-		            
 		            <div class="inputbox submit">
 		                <div class="inputbox_input">
 		                    <input type="submit" value="검색" onclick="pagingFormSubmit(1)">

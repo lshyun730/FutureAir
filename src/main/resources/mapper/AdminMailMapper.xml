@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.air.future.dao.AdminMailMapper">
+
+<!-- 자동메일설정 -->	
+	<!-- 자동메일리스트 -->
+	<select id="getMailList" resultType="mail">
+		select * from mail_fa order by mail_num
+	</select>
+	
+	<!-- 자동메일검색 -->
+	<select id="getMail" resultType="mail" parameterType="String">
+		select * from mail_fa
+		where mail_num = #{mail_num}	
+	</select>
+	
+	<!-- 자동발송 on/off -->
+	<update id="mailCheckChange" parameterType="HashMap">
+		update mail_fa
+		set mail_check = #{mail_check}
+		where mail_num = #{mail_num}
+	</update>
+	
+	<!-- 자동메일내용수정 -->
+	<update id="mailUpdate" parameterType="HashMap">
+		update mail_fa
+		set mail_title = #{mail_title}, mail_body= #{mail_body}
+		where mail_num = #{mail_num}
+	</update>
+	
+	
+<!-- 대량메일발송 -->	
+	<!-- 등급별 회원검색 - 메일보내기 -->
+	<select id="getCustomerBygrade" parameterType="String" resultType="customer">
+		select customer_id, customer_name, customer_email
+		from customer_fa
+		<if test="!_parameter.equals('전체')">	where customer_grade = #{customer_grade}</if>
+	</select>
+</mapper>

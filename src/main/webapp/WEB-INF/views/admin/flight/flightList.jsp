@@ -16,7 +16,7 @@
             <h2>비행일정</h2>
             <div class="action">
                 <button class="btn_s dropdown btn_search_detail">상세검색<span class="icon"><i class="fas fa-chevron-down"></i></span></button>
-                <button class="btn primary" onclick="javascript:modalOpen()">비행추가</button>
+                <button class="btn primary" onclick="javascript:popupOpen('flightInsertForm', 1000, 620)">비행추가</button>
             </div>
         </div>
         <!-- content header E -->   
@@ -120,7 +120,7 @@
                                 </div>
                                 <ul class="select_list">
                                     <li><a href="javascript:popupOpen('flightUpdateForm?route_num=${route.ROUTE_NUM}', 1000, 620)">수정</a></li> 
-                                    <li><a href="#">삭제</a></li> 
+                                    <li><a href="javascript:flightDelete('${route.ROUTE_NUM}')">삭제</a></li> 
                                 </ul>
                             </div>
                         </td>
@@ -133,11 +133,11 @@
         <div class="flex_content_footer">
             <button class="btn danger" onclick="javascript:checkDelete(this)">선택삭제</button>
             <div class="navi">
-           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
-               <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
-				<a href="javascript:pagingFormSubmit(${counter})" <c:if test="${navi.currentPage == counter}"> class="active"</c:if>>${counter}</a>
-			</c:forEach>
-           	<a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})" class="next"></a>
+	           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
+	               <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
+					<a href="javascript:pagingFormSubmit(${counter})" <c:if test="${navi.currentPage == counter}">class="active"</c:if>>${counter}</a>
+				</c:forEach>
+	           	<a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})" class="next"></a>
            </div>
         </div>
         <!-- content footer E --> 
@@ -145,7 +145,7 @@
     </section>
     <!-- flight status E -->   
     </div>
-    <!-- modal S -->  
+<%--     <!-- modal S -->  
     <section class="modal" id="modal">
         <div class="modal_wrap">
             <h2>비행일정추가</h2>
@@ -153,7 +153,7 @@
             <div class="inputbox">
                 <p class="inputbox_title">도착지</p>
                 <div class="inputbox_input selectbox">
-                     <select name="departure_name" onchange="changeSelect(this)" id="departure_name">
+                     <select name="departure_name" onchange="changeSelect(this)" id="departure_name" required="required">
                      	<option value="" disabled selected>도시 혹은 공항</option>
                      	<c:forEach var="continent" items="${destinationList}">
                				<optgroup label="${continent[0].continents}">
@@ -168,12 +168,12 @@
             <div class="inputbox">
                 <p class="inputbox_title">출발지</p>
                 <div class="inputbox_input selectbox">
-                    <select name="arrival_name" onchange="changeSelect(this)" id="arrival_name">
+                    <select name="arrival_name" onchange="changeSelect(this)" id="arrival_name" required="required">
                     	<option value="" disabled selected>도시 혹은 공항</option>
                     	<c:forEach var="continent" items="${destinationList}">
                				<optgroup label="${continent[0].continents}">
                				<c:forEach var="destination" items="${continent}">
-						        <option value="${destination.airport_name}" <c:if test="${destination.airport_name eq route.arrival_name}">selected="selected"</c:if> >${destination.airport_name} / ${destination.airport_id}</option>
+						        <option value="${destination.airport_name}" >${destination.airport_name} / ${destination.airport_id}</option>
                				</c:forEach>
                				</optgroup>
 				        </c:forEach>
@@ -183,31 +183,31 @@
             <div class="inputbox">
                 <p class="inputbox_title">출발날짜</p>
                 <div class="inputbox_input">
-                    <input type="date" name="departure_date">
+                    <input type="date" name="departure_date" required="required">
                 </div>
             </div>
             <div class="inputbox">
                 <p class="inputbox_title">출발시간</p>
                 <div class="inputbox_input">
-                    <input type="time" name="departure_time">
+                    <input type="time" name="departure_time" required="required">
                 </div>
             </div>
             <div class="inputbox">
                 <p class="inputbox_title">도착날짜</p>
                 <div class="inputbox_input">
-                    <input type="date" name="arrival_date">
+                    <input type="date" name="arrival_date" required="required">
                 </div>
             </div>
             <div class="inputbox">
                 <p class="inputbox_title">도착시간</p>
                 <div class="inputbox_input">
-                    <input type="time" name="arrival_time">
+                    <input type="time" name="arrival_time" required="required">
                 </div>
             </div>
             <div class="inputbox">
                 <p class="inputbox_title">비행기ID</p>
                 <div class="inputbox_input selectbox">
-                    <select name="airplane_id">
+                    <select name="airplane_id" required="required">
                     	<c:forEach var="plane" items="${planeList}">
 	                    	<option value="${plane.airplane_id}">${plane.airplane_id}</option>
                     	</c:forEach>
@@ -217,19 +217,19 @@
             <div class="inputbox">
                 <p class="inputbox_title">이코노미 가격</p>
                 <div class="inputbox_input">
-                    <input type="number" name="normal_price" value="${route.normal_price}">
+                    <input type="number" name="normal_price" required="required">
                 </div>
             </div>
             <div class="inputbox">
                 <p class="inputbox_title">프레스티지 가격</p>
                 <div class="inputbox_input">
-                    <input type="number" name="prestige_price" value="${route.normal_price}">
+                    <input type="number" name="prestige_price" required="required">
                 </div>
             </div>
             <div class="inputbox">
                 <p class="inputbox_title">일등석 가격</p>
                 <div class="inputbox_input">
-                    <input type="number" name="first_price" value="${route.normal_price}">
+                    <input type="number" name="first_price" required="required">
                 </div>
             </div>
             <div class="submit">
@@ -240,7 +240,7 @@
         </div>
         <div class="bg_black"></div>
     </section>
-    <!-- modal E --> 
+    <!-- modal E -->  --%>
 </section>
 <!-- content E -->
 <script>
@@ -249,7 +249,7 @@
 function deleteAjax(deleteList) {
 	if(confirm("정말 삭제하시겠습니까?")){
 		 $.ajax({
-				url : 'deleteRoute',
+				url : 'flightDeleteList',
 				data : {
 					deleteList : deleteList
 				},
@@ -265,6 +265,26 @@ function deleteAjax(deleteList) {
 	 }
 }
 
+function flightDelete(route_num) {
+ 	if(confirm("정말 삭제하시겠습니까?")){
+		 $.ajax({
+				url : 'flightDelete',
+				data : {
+					route_num : route_num
+				},
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data==1) {
+						alert('삭제에 성공하였습니다');		
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
+
+
 function flightInsert() {
 	const form = $('#flight_insert').serialize();
 	console.log(form);
@@ -273,7 +293,7 @@ function flightInsert() {
 	    url: 'flightInsert',
 	    data: $('#flight_insert').serialize(),
 	    success: function (data) {
-	        //성공시로직
+	    	alert('비행일정이 추가되었습니다')
 	    },
 	    error: function (xhr, status, error) {
 	        console.log(error,xhr,status );
