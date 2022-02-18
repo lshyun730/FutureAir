@@ -99,12 +99,13 @@
 	                    <th><input type="checkbox" onclick="selectAll(this)"></th>
 	                    <th>예약번호</th>
 	                    <th>승객</th>
+	                    <th>출발일</th>
 	                    <th>출발지</th>
 	                    <th>도착지</th>
-	                    <th>출발일</th>
-	                    <th>예약일</th>
 	                    <th>타입</th>
 	                    <th>결제가격</th>
+	                    <th>예약일</th>
+	                    <th>상태</th>
 	                    <th>액션</th>
 	                </tr>
 	            </thead>
@@ -116,22 +117,32 @@
             		<fmt:parseDate value="${reservation.DEPARTURE_DATE}" var="departure_date" pattern="yyyy-MM-dd HH:mm:ss.S"/>
             		<fmt:parseDate value="${reservation.RESERVATION_DATE}" var="reservation_date" pattern="yyyy-MM-dd HH:mm:ss.S"/>
             		<tr>
-	                    <td><input type="checkbox" name="tableSelect" value="${reservation.RESERVATION_NUM}"></td>
+	                    <td>
+	                    	<input type="checkbox" name="tableSelect" value="${reservation.RESERVATION_NUM}" <c:if test="${reservation.RESERVATION_STATE eq '예약취소'}">disabled</c:if>>
+	                    </td>
 	                    <td><a href="#">${reservation.RESERVATION_NUM}</a></td>
 	                    <td>${reservation.CUSTOMER_NAME}</td>
+	                 	<td><fmt:formatDate value="${departure_date}" pattern="yyyy-MM-dd" /></td>
 	                    <td>${reservation.DEPARTURE_NAME}</td>
 	                    <td>${reservation.ARRIVAL_NAME}</td>
-	                    <td><fmt:formatDate value="${departure_date}" pattern="yyyy-MM-dd" /></td>
-	                    <td><fmt:formatDate value="${reservation_date}" pattern="yyyy-MM-dd" /></td>
 	                    <td>${reservation.RESERVATION_TYPE}</td>
 	                    <td><fmt:formatNumber value="${reservation.PAYMENT}" pattern="#,###"/> 원</td>
+	                    <td><fmt:formatDate value="${reservation_date}" pattern="yyyy-MM-dd" /></td>
+	                    <td>
+	                    	<c:if test="${reservation.RESERVATION_STATE eq '예약완료'}">
+			                    <button class="btn_s status">예약</button>
+	                    	</c:if>
+	                    	<c:if test="${reservation.RESERVATION_STATE eq '예약취소'}">
+			                    <button class="btn_s status status_cancle">취소</button>
+	                    	</c:if>
+	                    </td>
 	                    <td class="more">
                             <div class="btn_m_wrap" onclick="click_more(this)">
                                 <div class="btn_m">
                                     <span></span>
                                 </div>
                                 <ul class="select_list">
-                                    <li><a href="javascript:reservationDelete('${reservation.RESERVATION_NUM}')">삭제</a></li> 
+                                    <li><a href="javascript:reservationDelete('${reservation.RESERVATION_NUM}', '${reservation.RESERVATION_STATE}')">예약취소</a></li> 
                                 </ul>
                             </div>
                         </td>
@@ -142,7 +153,7 @@
 	        <!-- table E --> 
 	        <!-- content footer S --> 
 	        <div class="flex_content_footer">
-	            <button class="btn danger" onclick="javascript:checkDelete(this)">선택삭제</button>
+	            <button class="btn danger" onclick="javascript:checkDelete(this)">선택취소</button>
 	            <div class="navi">
 	           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
 	               <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
@@ -163,9 +174,9 @@
 
 // 선택삭제
 function deleteAjax(deleteList) {
-	if(confirm("정말 삭제하시겠습니까?")){
+	if(confirm("정말 취소하시겠습니까?")){
 		 $.ajax({
-				url : 'reservationDeleteList',
+				url : 'reservationCancleList',
 				data : {
 					deleteList : deleteList
 				},
@@ -173,7 +184,7 @@ function deleteAjax(deleteList) {
 				type : 'post',
 				success : function(data) {
 					if(data==1) {
-						alert('삭제에 성공하였습니다');		
+						alert('예약취소에 성공하였습니다');		
 						location.reload();
 					}
 				}
@@ -181,10 +192,14 @@ function deleteAjax(deleteList) {
 	 }
 }
 
-function reservationDelete(reservation_num) {
- 	if(confirm("정말 삭제하시겠습니까?")){
+function reservationDelete(reservation_num, reservation_state) {
+	if(reservation_state == '예약취소') {
+		alert('이미 취소 된 예약입니다');
+		return;
+	}
+ 	if(confirm("정말 취소하시겠습니까?")){
 		 $.ajax({
-				url : 'reservationDelete',
+				url : 'reservationCancle',
 				data : {
 					reservation_num : reservation_num
 				},
@@ -192,7 +207,7 @@ function reservationDelete(reservation_num) {
 				type : 'post',
 				success : function(data) {
 					if(data==1) {
-						alert('삭제에 성공하였습니다');		
+						alert('예약취소에 성공하였습니다');				
 						location.reload();
 					}
 				}

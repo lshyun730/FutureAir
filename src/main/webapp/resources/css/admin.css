@@ -129,11 +129,14 @@ sub page
 
 /* 비행일정 */
 .popup form.flight_update,
-.popup form.mail_update {display: block;}
+.popup form.mail_update,
+.popup form.flight_insert {display: block;}
 .popup form.flight_update td input,
 .popup form.flight_update td select,
 .popup form.mail_update td input,
-.popup form.mail_update td select {border: 1px solid var(--light); border-radius: 3px; padding: 5px; width: 100%}
+.popup form.mail_update td select,
+.popup form.flight_insert td input,
+.popup form.flight_insert td select {border: 1px solid var(--light); border-radius: 3px; padding: 5px; width: 100%}
 
 /* 예약현황 */
 
@@ -240,7 +243,7 @@ sub page
 /* 작은버튼 */
 .btn_s {border-radius:0.25rem ; display: flex; justify-content: space-around;align-items: center; cursor: pointer;} 
 .btn_s .icon {font-size: .75rem; padding-left: 0.625rem;}
-.btn_s.status { padding: 0.125rem 1.5rem; } 
+.btn_s.status { padding: 0.125rem 1.5rem; background: rgba(101, 177, 45, 0.2); color: var(--green); } 
 .btn_s.status_wait { background: rgba(141, 141, 141, 0.2); color: var(--gray); } 
 .btn_s.status_cancle { background: rgba(216, 0, 39, 0.2); color: var(--red); } 
 .btn_s.status_flight { background: rgba(0, 99, 212, 0.2); color: var(--primary); } 
@@ -256,7 +259,7 @@ td.more{padding:0 1.875rem;}
 .btn_m span::before {content:'';display:block;position: absolute; top: 50%; transform: translateY(calc(-50% + 6px)); width: 3px; height: 3px; background: var(--info); border-radius: 50%;}
 .btn_m span::after {content:'';display:block;position: absolute; top: 50% ; transform: translateY(calc(-50% - 6px)); width: 3px; height: 3px; background: var(--info); border-radius: 50%;}
 .btn_m_wrap {position: relative;  width: 31px; height: 31px}
-.btn_m_wrap .select_list {display: none; box-shadow:0.25rem 0.25rem 0.875rem rgba(0, 0, 0, 0.1); position: absolute; z-index: 999;right: 0; bottom: 0; border: 1px solid var(--light); text-align: center; transform: translateY(100%); background: #fff; border-radius: 3px; width: 100px;}
+.btn_m_wrap .select_list {display: none; box-shadow:0.25rem 0.25rem 0.875rem rgba(0, 0, 0, 0.1); position: absolute; z-index: 999;right: 0; bottom: 0; border: 1px solid var(--light); text-align: center; transform: translateY(100%); background: #fff; border-radius: 3px; width: 120px;}
 .btn_m_wrap .select_list li {border-bottom: 1px solid var(--light);}
 .btn_m_wrap .select_list li:last-child {border-bottom: 1px solid var(--light);}
 .btn_m_wrap .select_list li a {display: block; padding: 0.625rem 1.875rem; text-decoration: none;}
