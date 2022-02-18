@@ -59,7 +59,7 @@
 		                                    <span></span>
 		                                </div>
 		                                <ul class="select_list">
-		                                    <li><a href="javascript:popupOpen('updateBoard?board_name=${board.BOARD_NAME}', 500, 500)">수정</a></li> 
+		                                    <li><a href="javascript:popupOpen('updateBoard?board_name=${board.BOARD_NAME}&board_id=${board.BOARD_ID}', 500, 500)">수정</a></li> 
 		                                    <li><a href="#">삭제</a></li> 
 		                                </ul>
 		                            </div>

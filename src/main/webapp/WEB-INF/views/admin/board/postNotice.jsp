@@ -15,7 +15,9 @@
 <body style="background: #fff;">
     <section class="content board_blank">
         <h2>공지글</h2>
+        <form action="deleteNotice" method="get" onsubmit="return check1()">
         <table class="table">
+        <input type="hidden" name="board_name" id="board_name" value="${board_name}">
             <thead>
                 <tr>
                     <th><input type="checkbox"></th>
@@ -31,7 +33,7 @@
             	</c:if>
             	<c:forEach var="notice" items="${noticeList}">
 	                <tr>
-	                    <td><input type="checkbox" value="${notice.post_index}"></td>
+	                    <td><input type="checkbox" name="post_index" id="post_index" value="${notice.post_index}"></td>
 	                    <td><a href="postView?board_name=${notice.post_index}">${notice.title}</a></td>
 	                    <td>${notice.writer}</td>
 	                    <td>${notice.post_date}</td>
@@ -43,10 +45,13 @@
         <div class="submit">
             <input type="submit" value="공지글해제">
         </div>
+        </form>
     </section>
     
     <section class="content board_blank">
         <h2>공지글지정</h2>
+        <form action="insertNotice" method="get" onsubmit="return check2()">
+        <input type="hidden" name="board_name" id="board_name" value="${board_name}">
         <table class="table">
             <colgroup>
         		<col width="5%">
@@ -67,7 +72,7 @@
             	</c:if>
             	<c:forEach var="post" items="${postList}">
 	                <tr>
-	                    <td><input type="checkbox" name="tableSelect" value="${post.post_index}"></td>
+	                    <td><input type="checkbox" name="tableSelect" id="tableSelect" value="${post.post_index}"></td>
 	                    <td><a href="postView?board_name=${post.post_index}">${post.title}</a></td>
 	                    <td>${post.writer}</td>
 	                    <td>${post.post_date}</td>
@@ -76,6 +81,7 @@
             	</c:forEach>
             </tbody>
         </table>
+        
         <div class="flex_content_footer">
 	        <button class="btn danger" form="boardform" onclick="javascript:checkDelete(this)">선택삭제</button>
 	        <div class="navi">
@@ -89,7 +95,45 @@
         <div class="submit">
             <input type="submit" value="공지글지정">
         </div>
+        </form>
     </section>
 
 </body>
+<script type="text/javascript">
+	function check1(){
+		var post_index = document.getElementsByName('post_index');
+		var num = 0;
+		for(var i =0; i<post_index.length; i++){
+			if(post_index[i].checked ==true){
+				num++;
+				}
+		}
+
+		if(num == 0){
+			alert('하나는 선택해주세요');
+			return false;
+		}
+
+		return true;
+	}
+
+
+	function check2(){
+		var tableSelect = document.getElementsByName('tableSelect');
+		var num = 0;
+		for(var i =0; i<tableSelect.length; i++){
+			if(tableSelect[i].checked ==true){
+				num++;
+				}
+		}
+
+		if(num == 0){
+			alert('하나는 선택해주세요');
+			return false;
+		}
+
+		return true;
+	}
+
+</script>
 </html>

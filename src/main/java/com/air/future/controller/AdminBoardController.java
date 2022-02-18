@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.air.future.service.AdminBoardService;
 import com.air.future.service.PageNavigator;
+import com.air.future.vo.Admin;
 import com.air.future.vo.Board;
 import com.air.future.vo.Post;
 
@@ -84,6 +86,40 @@ public class AdminBoardController {
 		model.addAttribute("boardList", boardList);
 		return "admin/board/postUpdate";
 	}
+	
+	
+	//게시글 수정하기 버튼 기능 수행
+	@RequestMapping(value = "funPostUpdate", method = RequestMethod.GET)
+	public String funPostUpdate(int post_index, String board_title,String post_type ,String writer ,
+								String contents ,String board_name ,Model model) {
+		/*
+		Post post = new Post();
+		post.setContents(contents);
+		post.setPost_index(post_index);
+		post.setTitle(board_title);
+		post.setBoard_name(board_name);
+		post.setWriter(writer);
+		post.setPost_type(post_type);
+		
+		int result = service.funPostUpdate(post);
+		model.addAttribute("post_index", post_index);
+		model.addAttribute("writer", writer);
+		model.addAttribute("board_name", board_name);
+		*/
+		
+		return "redirect:/admin/board/postUpdate";
+	}
+	
+	
+	
+	@RequestMapping(value = "postUpdateAjax", method = RequestMethod.POST)
+	@ResponseBody
+	public int postUpdateAjax(HttpServletRequest request,Post post) {
+		
+		int result = service.funPostUpdate(post);
+		System.out.println(result);
+		return result;
+	}
 		
 	
 /* 
@@ -98,6 +134,7 @@ public class AdminBoardController {
 		int settingTotal = service.getSettingTotal(); // 게시판 갯수
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, settingTotal); //페이징처리
 		ArrayList<HashMap<String, String>> boardList = service.getBoardList(navi); // 게시판 리스트
+		
 		
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("navi", navi);
@@ -119,6 +156,8 @@ public class AdminBoardController {
 		service.insertBoard(board); // 게시판 추가
 		return "redirect:/admin/board/boardList";
 	}
+	
+	
 
 	
 /* 
@@ -136,6 +175,57 @@ public class AdminBoardController {
 		return "admin/board/postWrite";
 	}
 	
+	/*
+	//게시판 글쓰기 기능 구현
+	@RequestMapping(value = "funpostWrite", method = RequestMethod.GET)
+	public String funpostWrite(Model model, String title, String board_name, String post_type, String contents) {
+		
+	
+		
+		Admin admin = service.getAdmin();
+		String writer = admin.getAdmin_id();
+		Post post = new Post();
+		post.setBoard_name(board_name);
+		post.setContents(contents);
+		post.setPost_type(post_type);
+		post.setTitle(title);
+		post.setWriter(writer);
+		
+		int result = service.insertPost(post);
+		
+		
+		return "redirect:/admin/board/postList";
+	}*/
+	
+	
+	//게시물 리스트 삭제
+		@RequestMapping(value = "postWriteAjax", method = RequestMethod.POST)
+		@ResponseBody
+		public int postWriteAjax(HttpServletRequest request,String title, String board_name, String post_type, String contents) {
+			System.out.println(title);
+			System.out.println(board_name);
+			
+			Admin admin = service.getAdmin();
+			String writer = admin.getAdmin_id();
+			Post post = new Post();
+			post.setBoard_name(board_name);
+			post.setContents(contents);
+			post.setPost_type(post_type);
+			post.setTitle(title);
+			post.setWriter(writer);
+		
+			
+			int result = service.insertPost(post);
+			
+			if(result == 1) {
+				return 1;
+			}
+			
+			return 0;
+		}
+	
+	
+	
 	// 게시판관리 - 공지글
 	@RequestMapping(value = "postNotice", method = RequestMethod.GET)
 	public String postNotice(@RequestParam(value = "page", defaultValue = "1") int page, String board_name, Model model) {
@@ -152,12 +242,112 @@ public class AdminBoardController {
 		
 		return "admin/board/postNotice";
 	}
+	//게시판 관리 - 공지글 추가 기능
+	@RequestMapping(value = "insertNotice", method = RequestMethod.GET)
+	public String insertNotice(Model model, int tableSelect[],String board_name) {
+
+		for( int string : tableSelect) {
+			String notice_index = "1";
+			Post post = new Post();
+			post.setNotice_index(notice_index);
+			post.setPost_index(string);
+			int result = service.insertNotice(post);
+			
+		}
+
+		model.addAttribute("board_name", board_name);
+		
+		return "redirect:/admin/board/postNotice";
+	}
+	
+	//게시판 관리 - 공지글 삭제 기능
+	@RequestMapping(value = "deleteNotice", method = RequestMethod.GET)
+	public String deleteNotice(Model model, int post_index[],String board_name) {
+		
+		for( int string : post_index) {
+			String notice_index = "0";
+			Post post = new Post();
+			post.setNotice_index(notice_index);
+			post.setPost_index(string);
+			int result = service.insertNotice(post);
+			
+		}
+
+		model.addAttribute("board_name", board_name);
+		
+		return "redirect:/admin/board/postNotice";
+	}
 		
 	// 게시판 수정 이동
 	@RequestMapping(value = "updateBoard", method = RequestMethod.GET)
-	public String updateBoard(String board_name, Model model) {
+	public String updateBoard(String board_name,int board_id,String board_type ,Model model,String reply_type
+							 ,String write_right, String read_right) {
 		Board board = service.getBoard(board_name); // 게시판 정보
 		model.addAttribute("board", board);
 		return "admin/board/boardUpdate";
 	}
+	
+	
+		@RequestMapping(value = "boardUpdateAjax", method = RequestMethod.POST)
+		@ResponseBody
+		public int boardUpdateAjax(HttpServletRequest request,String board_name,int board_id,String board_type ,String reply_type
+					,String write_right, String read_right, String board_front) {
+			
+			HashMap<String, String> change = new HashMap<>();
+			change.put("board_front", board_front);
+			change.put("board_name",board_name);
+			
+			System.out.println(board_front);
+			System.out.println(board_name);
+			
+			Board updateBoard = new Board();
+			updateBoard.setBoard_id(board_id);
+			updateBoard.setBoard_name(board_name);
+			updateBoard.setBoard_type(board_type);
+			updateBoard.setRead_right(read_right);
+			updateBoard.setReply_type(reply_type);
+			updateBoard.setWrite_right(write_right);
+			
+			int result = service.updateBoard(updateBoard);
+			int result0 = service.updateBoardPlus(change);
+			
+
+			if(result == 1 && result0 == 1) {
+				return 1;
+			}else if(result == 1 && result0 ==0) {
+				return 2;
+			}else {
+			return 0;
+			}
+		}
+	
+	/*
+	//게시판 수정하기 버튼 기능
+	@RequestMapping(value = "funUpdateBoard", method = RequestMethod.GET)
+	public String funUpdateBoard(String board_name,int board_id,String board_type ,Model model,String reply_type
+			 					,String write_right, String read_right, String board_front) {
+
+		HashMap<String, String> change = new HashMap<>();
+		change.put("board_front", board_front);
+		change.put("board_name",board_name);
+		
+		
+		Board updateBoard = new Board();
+		updateBoard.setBoard_id(board_id);
+		updateBoard.setBoard_name(board_name);
+		updateBoard.setBoard_type(board_type);
+		updateBoard.setRead_right(read_right);
+		updateBoard.setReply_type(reply_type);
+		updateBoard.setWrite_right(write_right);
+		int result = service.updateBoard(updateBoard);
+		int result0 = service.updateBoardPlus(change);
+		
+		model.addAttribute("board_name", board_name);
+		model.addAttribute("board_id", board_id);
+		return "redirect:/admin/board/boardList";
+	}
+	*/
+	
+	
+	
 }

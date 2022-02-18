@@ -107,4 +107,39 @@
 		order by post_date desc
 	</select>
 	
+	<!-- 게시판 설정 수정하기 버튼 -->
+	<update id="updateBoard" parameterType="board">
+		update board_fa set board_name = #{board_name}, board_type = #{board_type}, reply_type = #{reply_type},
+		write_right = #{write_right}, read_right = #{read_right}
+		where board_id = #{board_id}
+	</update>
+	
+	<!-- 게시판 설정시 게시글도 수정해주기 -->
+	<update id="updateBoardPlus" parameterType="HashMap">
+		update post_fa set board_name = #{board_name} where board_name = #{board_front}
+	</update>
+	
+	<!-- 게시글 수정하기 버튼 -->
+	<update id="funPostUpdate" parameterType="post">
+		update post_fa set title = #{title}, writer = #{writer}, board_name = #{board_name}, contents =#{contents},
+			post_type = #{post_type,jdbcType=VARCHAR} 
+		where post_index = #{post_index}
+	</update>
+	
+	<!-- 작성자 아이디 가져오기 -->
+	<select id="getAdmin" resultType="admin">
+		select * from admin_fa
+	</select>
+	
+	<!-- 게시판에서 넣기  -->
+	<insert id="insertPost" parameterType="post">
+		insert into post_fa(post_index, title, writer, board_name, contents, post_type) values
+		(post_index_seq.nextval, #{title}, #{writer}, #{board_name}, #{contents}, #{post_type,jdbcType=VARCHAR})
+	</insert>
+	
+	<!-- 고정글로 추가하기 -->
+	<update id="insertNotice" parameterType="post">
+		update post_fa set notice_index = #{notice_index} where post_index = #{post_index}
+	</update>
+	
 </mapper>

@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 
+import com.air.future.vo.Admin;
 import com.air.future.vo.Board;
 import com.air.future.vo.Post;
 
@@ -49,8 +50,24 @@ public interface AdminBoardMapper {
 
 	// 게시판 공지글 리스트
 	public ArrayList<Post> getNoticeList(String board_name);
-
-
+	
+	//게시판 설정 수정하기
+	public int updateBoard(Board board);
+	//게시판 수정시 필수사항
+	public int updateBoardPlus(HashMap<String, String> change);
+	
+	//게시물 관리 수정하기
+	public int funPostUpdate(Post post);
+	
+	//관리자 아이디 가져오기
+	public Admin getAdmin();
+	
+	//게시판 설정에서 게시물 추가하기
+	public int insertPost(Post post);
+	
+	//고정글 추가하기
+	public int insertNotice(Post post);
+	
 
 	
 }
