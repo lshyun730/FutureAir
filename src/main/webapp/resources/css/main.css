@@ -137,6 +137,38 @@ join
 .join .btn_wrap button.light {margin-right: 10px;}
 
 
+
+
+/*
+-----------------------
+mypage
+-----------------------
+*/
+.mypage_main {display: flex; width: 100%; justify-content: space-between; background: var(--secondary);}
+.mypage_main .customer_info {display: flex ;justify-content: space-between; align-items: center; width: 50%; background: var(--primary); color: #fff; padding: 3.125rem 1.875rem;}
+.mypage_main .customer_info .customer_name {position: relative;;font-size: 1.25rem; font-weight: bold; padding-left: 5rem;}
+.mypage_main .customer_info .customer_name::before {content: ''; background: url(../images/sub/img_mypage.png) no-repeat center center; background-size: contain; width: 4rem; height: 4rem; position: absolute; left: 0; top: 50%; transform: translateY(-50%);}
+.mypage_main .customer_info .customer_name span{display: block;font-size: 1rem; font-weight: normal;}
+.mypage_main .customer_info_list li {position: relative; display: flex; justify-content: space-between; padding: 0 1.5rem;}
+.mypage_main .customer_info_list li::before {content: ''; font-family: "Font Awesome 5 Free";font-weight: 900; position: absolute; left: 0; font-size: 0.75rem; top: 2px;} 
+.mypage_main .customer_info_list li:nth-child(1)::before {content: '\f139';}
+.mypage_main .customer_info_list li:nth-child(2)::before {content: '\f51e';}
+.mypage_main .customer_info_list li:nth-child(3)::before {content: '\f2f5';}
+.mypage_main .customer_info_list li a {color: #fff;}
+.mypage_main .customer_info_list span{ justify-content: end; padding-left: 4rem;}
+
+.mypage_main .mypage_nav{width: 60%; display: flex; justify-content: space-around;padding: 3.125rem 1.875rem;}
+.mypage_main .mypage_nav li {font-size: 1.25rem; }
+.mypage_main .mypage_nav li .dep {padding-top: 0.625rem;}
+.mypage_main .mypage_nav li .dep li a{font-size: 1rem; color: var(--gray); display: block; }
+
+.table_header {display: flex; justify-content: space-between; align-items: baseline;}
+.table_header h3 span {font-size: 0.875rem; color: var(--gray); font-weight: normal; padding-left: 0.5rem;}
+.table_header .all_link {position: relative;font-size: 0.875rem; color: var(--gray); padding-right: 0.875rem;}
+.table_header .all_link::after{content:'\f054'; position: absolute; font-family: "Font Awesome 5 Free";font-weight: 900; right: 0; font-size: 0.75rem; top: 50%; transform: translateY(-40%);}
+
+
+
 /*
 -----------------------
 book
