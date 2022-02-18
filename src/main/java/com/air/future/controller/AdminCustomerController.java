@@ -258,8 +258,6 @@ public class AdminCustomerController {
 		return "admin/customer/customerUpdate";
 	}
 
-	
-	
 	// 팝업창 : 회원 등급 수정하기(customerGradeUpdate.jsp)
 	@RequestMapping(value="customerGradeUpdate", method = RequestMethod.GET)
 	public String customerGradeUpdate(Model model
@@ -281,7 +279,10 @@ public class AdminCustomerController {
 		Grade gradeSet = service.customerGradeSet(grade);
 		model.addAttribute("gradeSet", gradeSet);
 		
-		return "admin/customer/customerGradeUpdate";
+		return "admin/customer/
+      
+      
+      
 	}
 	
 	// 팝업창 : 회원등급 삭제 하기(customerGradeUpdate.jsp)

@@ -28,9 +28,9 @@
 	        	</colgroup>
 	            <tr>
 	                <th>비행번호</th>
-	                <td>${route.route_num}</td>
+	                <td>${route.ROUTE_NUM}</td>
 	                <th>비행기아이디</th>
- 	                <td>${route.airplane_id }</td>
+ 	                <td>${route.AIRPLANE_ID }</td>
 	            </tr>
         	</table>
         	<!-- table E --> 
@@ -47,12 +47,12 @@
 	        	</colgroup>
 	            <tr>
 	                <th>출발지</th>
-	                <td>${route.departure_name }</td>
+	                <td>${route.DEPARTURE_NAME }</td>
 	                <th>도착지</th>
-	                <td>${route.arrival_name }</td>
+	                <td>${route.ARRIVAL_NAME }</td>
 	            </tr>
 	            <tr>
-	            	<fmt:parseDate value="${route.departure_date}" var="departure_date_time" pattern="yyyy-MM-dd HH:mm:ss.S"/>
+	            	<fmt:parseDate value="${route.DEPARTURE_DATE}" var="departure_date_time" pattern="yyyy-MM-dd HH:mm:ss.S"/>
 	               	<fmt:formatDate var="departure_date" pattern="yyyy-MM-dd" value="${departure_date_time}"/>
 	               	<fmt:formatDate var="departure_time" pattern="HH:mm" value="${departure_date_time}"/>
 	               	<fmt:parseDate value="${route.arrival_date}" var="arrival_date_time" pattern="yyyy-MM-dd HH:mm:ss.S"/>
@@ -80,11 +80,11 @@
 	        	</colgroup>
 	            <tr>
 	                <th>일반석</th>
-	                <td>${route.normal_price }</td>
+	                <td>${route.NORMAL_PRICE }</td>
 	                <th>프레스티지석</th>
-	                <td>${route.prestige_price }</td>
+	                <td>${route.PRESTIGE_PRICE }</td>
 	                <th>일등석</th>
-	                <td>${route.first_price }</td>
+	                <td>${route.FIRST_PRICE }</td>
 	            </tr>
         	</table>
         	<!-- table E --> 

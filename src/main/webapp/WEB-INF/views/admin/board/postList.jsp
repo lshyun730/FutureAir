@@ -62,7 +62,6 @@
 		                    <span class="inputbox_icon"><i class="fas fa-search"></i></span>
 		                </div>
 		            </div>
-		            
 		            <div class="inputbox submit">
 		                <div class="inputbox_input">
 		                    <input type="submit" value="검색" onclick="pagingFormSubmit(1)">
@@ -121,8 +120,8 @@
 		                                    <span></span>
 		                                </div>
 		                                <ul class="select_list">
-		                                    <li><a href="javascript:popupOpen('postUpdate?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}', 500, 600)">수정</a></li> 
-		                                    <li><a href="#">삭제</a></li> 
+		                                    <li><a href="javascript:popupOpen('postUpdateForm?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}&writer=${post.WRITER}', 500, 600)">수정</a></li> 
+		                                    <li><a href="javascript:deletePost('${post.POST_INDEX}')">삭제</a></li> 
 		                                </ul>
 		                            </div>
 		                        </td>
@@ -153,12 +152,33 @@
 <!-- footer S -->
 
 <script>
+/* 게시물 리스트 삭제 */
 function deleteAjax(deleteList) {
+	if(confirm("정말 삭제하시겠습니까?")){
+		 $.ajax({
+				url : 'deletePostList',
+				data : {
+					deleteList : deleteList
+				},
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data==1) {
+						alert('삭제에 성공하였습니다');		
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
+
+/* 게시물 삭제 */
+function deletePost(post_index) {
 	if(confirm("정말 삭제하시겠습니까?")){
 		 $.ajax({
 				url : 'deletePost',
 				data : {
-					deleteList : deleteList
+					post_index : post_index
 				},
 				traditional : true, 
 				type : 'post',

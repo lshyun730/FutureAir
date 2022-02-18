@@ -78,6 +78,42 @@ function checkDate(dateBox) {
 }
 
 
+/* 출발 시간 날짜 유효성 체크 */
+function InsertDateChange(selectBox) {
+	const departure_date  = document.getElementById("departure_date");
+	const departure_time  = document.getElementById("departure_time");
+	const arrival_date  = document.getElementById("arrival_date");
+	const arrival_time  = document.getElementById("arrival_time");
+
+	// 오늘시간 ex. 2022-01-01 형태
+	const today = new Date();
+	const year = today.getFullYear();
+	const month = ('0' + (today.getMonth() + 1)).slice(-2);
+	const day = ('0' + today.getDate()).slice(-2);
+	const dateString = year + '-' + month  + '-' + day;
+
+	if(departure_date.value != '') {
+		if(dateString > departure_date.value) {
+			alert("오늘 날짜 부터 가능합니다")
+			departure_date.value = dateString;
+			return
+		}
+	}
+	if(departure_date.value != ''  && arrival_date.value != '') {
+		console.log(departure_date.value, arrival_date.value )
+		if(departure_date.value > arrival_date.value){
+			alert("날짜 범위를 확인해 주세요");
+			arrival_date.value = departure_date.value
+		} else if(departure_time.value != ''  && arrival_time.value != '') {
+			if(departure_date.value == arrival_date.value && departure_time.value >= arrival_time.value) {
+				alert("시간 범위를 확인해 주세요");		
+				arrival_time.value = departure_time.value;
+			}
+		}
+	} 
+}
+
+
 // 상세검색 열고닫기 
 function searchDetail() {
 	const clickedClass = "search_detail active";
@@ -119,17 +155,6 @@ function click_more(element){
     }
 }
 
-function checkBoardName(element) {
-	const postType = document.getElementById('post_type');
-	if(element.value == 'FAQ') {
-		postType.disabled = false;
-	}
-	if(element.value != 'FAQ') {
-		postType.value="";
-		postType.disabled = true;
-	}
-}
-//
 // 상세검색
 /*const btnSearchDetail = document.querySelector(".btn_search_detail");
 btnSearchDetail.addEventListener("click", searchDetail);*/

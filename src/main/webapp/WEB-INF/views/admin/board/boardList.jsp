@@ -50,7 +50,7 @@
 		                    <td>${board.READ_RIGHT}/${board.WRITE_RIGHT}</td>
 		                    <td>
 		                        <button class="btn_s more" onclick="location.href='postList?board_name=${board.BOARD_NAME}'">글보기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-		                        <button class="btn_s more" onclick="popupOpen('postWrite?board_name=${board.BOARD_NAME}', 500, 600)">글쓰기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+		                        <button class="btn_s more" onclick="popupOpen('postWriteForm?board_name=${board.BOARD_NAME}', 500, 600)">글쓰기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
 		                        <button class="btn_s more" onclick="popupOpen('postNotice?board_name=${board.BOARD_NAME}', 800, 800)">공지글<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
 		                    </td>
 		                    <td class="more">
@@ -59,8 +59,8 @@
 		                                    <span></span>
 		                                </div>
 		                                <ul class="select_list">
-		                                    <li><a href="javascript:popupOpen('updateBoard?board_name=${board.BOARD_NAME}', 500, 500)">수정</a></li> 
-		                                    <li><a href="#">삭제</a></li> 
+		                                    <li><a href="javascript:popupOpen('boardupdateForm?board_name=${board.BOARD_NAME}', 500, 500)">수정</a></li> 
+		                                    <li><a href="javascript:deleteBoard('${board.BOARD_NAME}')">삭제</a></li> 
 		                                </ul>
 		                            </div>
 		                        </td>
@@ -71,7 +71,7 @@
 		        <!-- table E --> 
 		        <!-- content footer S --> 
 		        <div class="flex_content_footer">
-		            <button class="btn danger" form="boardform" onclick="javascript:checkDelete(this)">선택삭제</button>
+		            <button class="btn danger" onclick="javascript:checkDelete(this)">선택삭제</button>
 		            <div class="navi">
 			           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
 			               <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
@@ -93,13 +93,13 @@
                 <div class="inputbox width100">
                     <p class="inputbox_title">게시판이름</p>
                     <div class="inputbox_input">
-                        <input type="text" placeholder="게시판 이름을 입력해주세요" name="board_name">
+                        <input type="text" placeholder="게시판 이름을 입력해주세요" name="board_name" required>
                     </div>
                 </div>
                 <div class="inputbox">
                     <p class="inputbox_title">게시판종류</p>
                     <div class="inputbox_input selectbox">
-                        <select name="board_type">
+                        <select name="board_type" required>
                             <option value="운영" selected>운영</option>
                             <option value="상담">상담</option>
                             <option value="상품">상품</option>
@@ -109,7 +109,7 @@
                 <div class="inputbox">
                     <p class="inputbox_title">답글허용</p>
                     <div class="inputbox_input selectbox">
-                        <select name="reply_type">
+                        <select name="reply_type" required>
                             <option value="1" selected>허용</option>
                             <option value="0">비허용</option>
                         </select>
@@ -128,7 +128,7 @@
                 <div class="inputbox">
                     <p class="inputbox_title">읽기권한</p>
                     <div class="inputbox_input selectbox">
-                        <select name="read_right">
+                        <select name="read_right" required>
                             <option value="관리자" selected>관리자</option>
                             <option value="회원">회원</option>
                             <option value="비회원">비회원</option>
@@ -150,7 +150,7 @@
 function deleteAjax(deleteList) {
 	if(confirm("정말 삭제하시겠습니까?")){
 		 $.ajax({
-				url : 'deleteBoard',
+				url : 'deleteBoardList',
 				data : {
 					deleteList : deleteList
 				},
@@ -166,6 +166,25 @@ function deleteAjax(deleteList) {
 	 }
 }
 
+/* 게시물 삭제 */
+function deleteBoard(board_name) {
+	if(confirm("정말 삭제하시겠습니까?")){
+		 $.ajax({
+				url : 'deleteBoard',
+				data : {
+					board_name : board_name
+				},
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data==1) {
+						alert('삭제에 성공하였습니다');		
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
 
 //액션 이외 선택시 액션 닫힘
 document.addEventListener('click', () => {;
@@ -176,6 +195,7 @@ document.addEventListener('click', () => {;
 	 	}	
 	}
 })
+
 </script>
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>

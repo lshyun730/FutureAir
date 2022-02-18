@@ -41,8 +41,10 @@
 	</select>
 	
 	<!-- 비행일정 검색 -->
-	<select id="getRoute" parameterType="String" resultType="route">
-		select * from route_fa where route_num = #{route_num}
+	<select id="getRoute" parameterType="String" resultType="HashMap">
+		select * from route_fa r, airplane_fa a 
+			where r.route_num = #{r.route_num}
+			and r.airplane_id = a.airplane_id
 	</select>
 	
 	<!-- 비행일정 추가 -->
@@ -93,7 +95,7 @@
    <!-- 예약일정리스트 -->
    <select id="reservationList" parameterType="HashMap" resultType="HashMap">
    	select a.*,  case when b.count = '1' then '편도'when b.count = '2' then '왕복' else '다구간' end as reservation_type  from 
-		(select s.reservation_num, c.customer_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment
+		(select s.reservation_num, c.customer_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment, r.reservation_state
 		    from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
 		    where r.reservation_num = s.reservation_num 
 		    and s.route_num = rou.route_num
@@ -121,7 +123,7 @@
 			and c.customer_name like  '%'||#{customer_name}||'%'
 			</if>
 		    and s.type = '출발'
-		group by s.reservation_num, c.customer_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment) a,
+		group by s.reservation_num, c.customer_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment, r.reservation_state) a,
 		(select reservation_num, count(*) count from (
 		    select s.reservation_num, s.type
 		            from reservation_fa r, schedule_fa s
@@ -165,16 +167,17 @@
 	</select>
 	
 	<!-- 예약삭제 (schedule_fa) -->
-	<delete id="deleteSchedule" parameterType="String">
+	<!-- <delete id="deleteSchedule" parameterType="String">
 		delete from schedule_fa
 		where reservation_num = #{reservation_num}
-	</delete>
+	</delete> -->
 	
-	<!-- 예약삭제 (reservation_fa) -->
-	<delete id="deleteReservation" parameterType="String">
-		delete from reservation_fa
+	<!-- 예약취소 (reservation_fa) -->
+	<update id="reservationCancle" parameterType="String">
+		update reservation_fa
+		set reservation_state = '예약취소'
 		where reservation_num = #{reservation_num}
-	</delete>
+	</update>
 	
 	
 	

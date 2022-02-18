@@ -254,11 +254,10 @@ public class AdminCustomerService {
 		return dao.countGrade();
 	}
 
+
 	public Customer getCustomerNG(String id) {
 		return dao.getCustomerNG(id);
 	}
-
-
 
 
 

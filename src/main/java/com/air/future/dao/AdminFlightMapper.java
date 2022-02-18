@@ -20,7 +20,7 @@ public interface AdminFlightMapper {
 	public ArrayList<HashMap<String, String>> routeList(HashMap<String, String> searchList, RowBounds rb);
 	
 	// 비행일정 검색
-	public Route getRoute(String route_num);
+	public HashMap<String, String> getRoute(String route_num);
 
 	// 비행일정 추가
 	public int insertFlight(HashMap<String, String> routeForm);
@@ -45,10 +45,10 @@ public interface AdminFlightMapper {
 	public ArrayList<HashMap<String, String>> reservationList(HashMap<String, String> searchList, RowBounds rb);
 	
 	// 예약 삭제 - 스케줄 테이블
-	public void deleteSchedule(String reservation_num);
+	// public void deleteSchedule(String reservation_num);
 	
 	// 예약 삭제 - 예약 테이블
-	public int deleteReservation(String reservation_num);
+	public int reservationCancle(String reservation_num);
 
 	
 	

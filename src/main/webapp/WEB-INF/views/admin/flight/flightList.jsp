@@ -16,7 +16,7 @@
             <h2>비행일정</h2>
             <div class="action">
                 <button class="btn_s dropdown btn_search_detail">상세검색<span class="icon"><i class="fas fa-chevron-down"></i></span></button>
-                <button class="btn primary" onclick="javascript:modalOpen()">비행추가</button>
+                <button class="btn primary" onclick="javascript:popupOpen('flightInsertForm', 1000, 620)">비행추가</button>
             </div>
         </div>
         <!-- content header E -->   
@@ -145,7 +145,7 @@
     </section>
     <!-- flight status E -->   
     </div>
-    <!-- modal S -->  
+<%--     <!-- modal S -->  
     <section class="modal" id="modal">
         <div class="modal_wrap">
             <h2>비행일정추가</h2>
@@ -240,7 +240,7 @@
         </div>
         <div class="bg_black"></div>
     </section>
-    <!-- modal E --> 
+    <!-- modal E -->  --%>
 </section>
 <!-- content E -->
 <script>

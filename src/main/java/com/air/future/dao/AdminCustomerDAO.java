@@ -240,6 +240,7 @@ public class AdminCustomerDAO {
 		return result;
 	}
 
+
 	public Customer getCustomerNG(String id) {
 		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
 		Customer customer = mapper.getCustomerNG(id);

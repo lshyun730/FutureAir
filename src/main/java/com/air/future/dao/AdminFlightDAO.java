@@ -39,9 +39,9 @@ public class AdminFlightDAO {
 	}
 	
 	// 비행일정 검색
-	public Route getRoute(String route_num) {
+	public HashMap<String, String>  getRoute(String route_num) {
 		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
-		Route route = mapper.getRoute(route_num);
+		HashMap<String, String>  route = mapper.getRoute(route_num);
 		return route;
 	}
 
@@ -97,10 +97,10 @@ public class AdminFlightDAO {
 
 	// 예약 선택삭제
 	@Transactional
-	public int deleteReservation(String reservation_num) {
+	public int reservationCancle(String reservation_num) {
 		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
-		mapper.deleteSchedule(reservation_num);
-		int result = mapper.deleteReservation(reservation_num);
+		// mapper.deleteSchedule(reservation_num);
+		int result = mapper.reservationCancle(reservation_num);
 		return result;
 	}
 	
