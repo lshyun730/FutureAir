@@ -15,7 +15,7 @@
 		        <div class="flex_content_header">
 		            <h2>게시물관리</h2>
 		            <div class="action">
-		                <button class="btn_s dropdown">상세검색<span class="icon"><i class="fas fa-chevron-down"></i></span></button>
+		                <button class="btn_s dropdown btn_search_detail">상세검색<span class="icon"><i class="fas fa-chevron-down"></i></span></button>
 		            </div>
 		        </div>
 		        <!-- content header E -->   
@@ -110,7 +110,9 @@
 			                </c:if>
 		                    </td>
 		                    <td>
-		                        <button class="btn_s more">답변하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+		                        <button class="btn_s more" onclick="popupOpen('postWriteForm?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}')">답변하기
+		                        	<span class="icon"><i class="fas fa-chevron-right"></i></span>
+		                        </button>
 		                    </td>
 		                    <td>${post.POST_DATE }</td>
 		                    <td>${post.HITS }</td>
@@ -191,6 +193,10 @@ function deletePost(post_index) {
 		 }); 				 
 	 }
 }
+
+//상세검색
+const btnSearchDetail = document.querySelector(".btn_search_detail");
+btnSearchDetail.addEventListener("click", searchDetail);
 
 
 //액션 이외 선택시 액션 닫힘

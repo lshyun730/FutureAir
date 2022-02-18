@@ -175,8 +175,8 @@
 		        <!-- content footer S --> 
 		        <div class="flex_content_footer">
 		            <div>
-		                <button class="btn_s more">마일리지 일괄적립</button>
-		                <button class="btn_s more">등급변경</button>
+		                <button class="btn_s more" onclick="popupOpen('mileageListInsertForm', 550, 300)">마일리지 일괄적립</button>
+		                <button class="btn_s more" onclick="popupOpen('GradeListUpdateForm', 300, 300)">등급변경</button>
 		            </div>
 		            <div class="navi">
 			           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
@@ -188,6 +188,7 @@
 		        </div>
 		        <!-- content footer E --> 
 	        </div>
+	        <div class="bg_black"></div>
 	    </section>
 	    <!-- customer list  E -->   
 	</div>

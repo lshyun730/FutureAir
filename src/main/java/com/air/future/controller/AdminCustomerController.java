@@ -294,4 +294,16 @@ public class AdminCustomerController {
 			return 1000;
 		}
 	}
+	
+	// 마일리지 일괄적립
+	@RequestMapping(value = "mileageListInsertForm", method = RequestMethod.GET)
+	public String mileageListInsertForm(Model model) {
+		return "admin/customer/mileageListInsert";
+	}
+	
+	// 마일리지 일괄적립
+	@RequestMapping(value = "GradeListUpdateForm", method = RequestMethod.GET)
+	public String GradeListUpdateForm(Model model) {
+		return "admin/customer/gradeListUpdate";
+	}
 }

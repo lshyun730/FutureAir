@@ -215,6 +215,11 @@ function reservationDelete(reservation_num, reservation_state) {
 	 }
 }
 
+
+//상세검색
+const btnSearchDetail = document.querySelector(".btn_search_detail");
+btnSearchDetail.addEventListener("click", searchDetail);
+
 //액션 이외 선택시 액션 닫힘
 document.addEventListener('click', () => {;
 	var btn_m_wrap = document.getElementsByClassName('btn_m_wrap');

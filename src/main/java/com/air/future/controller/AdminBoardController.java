@@ -103,7 +103,16 @@ public class AdminBoardController {
 		int result = service.PostUpdate(post);
 		return result;
 	}
-
+	
+	// 답변하기 이동
+	@RequestMapping(value = "replyWriteForm", method = RequestMethod.GET)
+	public String replyWriteForm(String post_index, String board_name, Model model) {
+		model.addAttribute("post_index", post_index);
+		model.addAttribute("board_name", board_name);
+		return "admin/board/replyWrite";
+	}
+	
+	
 /*
 -------------- 
 게시판설정 페이지
@@ -168,7 +177,7 @@ public class AdminBoardController {
 	
 /*
 -------------- 
-게시판 관리 페이지
+게시판 관리 [글보기, 글쓰기, 공지글]
 --------------
 */
 	// 게시판관리 - 글쓰기 이동

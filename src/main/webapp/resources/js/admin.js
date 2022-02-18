@@ -155,9 +155,7 @@ function click_more(element){
     }
 }
 
-// 상세검색
-/*const btnSearchDetail = document.querySelector(".btn_search_detail");
-btnSearchDetail.addEventListener("click", searchDetail);*/
+
 
 // 메뉴선택
 // const gnbList = document.querySelectorAll(".gnb li a");

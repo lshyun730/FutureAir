@@ -206,6 +206,10 @@ function flightInsert() {
 	}); 
 }
 
+// 상세검색
+const btnSearchDetail = document.querySelector(".btn_search_detail");
+btnSearchDetail.addEventListener("click", searchDetail);
+
 // 액션 이외 선택시 액션 닫힘
 document.addEventListener('click', () => {;
 	var btn_m_wrap = document.getElementsByClassName('btn_m_wrap');
@@ -216,6 +220,7 @@ document.addEventListener('click', () => {;
 	}
 })
 </script>
+
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>
 <!-- footer E --> 

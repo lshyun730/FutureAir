@@ -13,7 +13,7 @@
 		        <div class="flex_content_header">
 		            <h2>게시판 설정</h2>
 		            <div class="action">
-		                <button class="btn primary" onclick="javascript:modalOpen()">게시판추가</button>
+		                <button class="btn primary " onclick="javascript:modalOpen()">게시판추가</button>
 		            </div>
 		        </div>
 		        <!-- content header E -->
