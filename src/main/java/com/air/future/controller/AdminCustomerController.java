@@ -279,10 +279,7 @@ public class AdminCustomerController {
 		Grade gradeSet = service.customerGradeSet(grade);
 		model.addAttribute("gradeSet", gradeSet);
 		
-		return "admin/customer/
-      
-      
-      
+		return "admin/customer/customerGradeUpdate";
 	}
 	
 	// 팝업창 : 회원등급 삭제 하기(customerGradeUpdate.jsp)
