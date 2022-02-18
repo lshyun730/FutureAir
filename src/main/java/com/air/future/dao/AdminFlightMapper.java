@@ -31,6 +31,9 @@ public interface AdminFlightMapper {
 	// 비행일정 삭제
 	public int deleteRoute(String route_num);
 	
+	// 비행번호의 예약된 갯수
+	public int getReservationCountByRoutrnum(String route_num);
+	
 	// 비행기 리스트 검색
 	public ArrayList<Airplane> getAirplaneList();
 	
@@ -59,5 +62,6 @@ public interface AdminFlightMapper {
 	
 	// 대륙 리스트 검색
 	public ArrayList<String> continentsList();
+
 
 }

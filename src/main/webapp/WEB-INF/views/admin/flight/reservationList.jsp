@@ -120,7 +120,7 @@
 	                    <td>
 	                    	<input type="checkbox" name="tableSelect" value="${reservation.RESERVATION_NUM}" <c:if test="${reservation.RESERVATION_STATE eq '예약취소'}">disabled</c:if>>
 	                    </td>
-	                    <td><a href="#">${reservation.RESERVATION_NUM}</a></td>
+	                    <td><a href="javascript:popupOpen('${pageContext.request.contextPath}/admin/customer/customerReservationDetail?id=${reservation.CUSTOMER_ID}&reservationNum=${reservation.RESERVATION_NUM}', 1000, 600)">${reservation.RESERVATION_NUM}</a></td>
 	                    <td>${reservation.CUSTOMER_NAME}</td>
 	                 	<td><fmt:formatDate value="${departure_date}" pattern="yyyy-MM-dd" /></td>
 	                    <td>${reservation.DEPARTURE_NAME}</td>

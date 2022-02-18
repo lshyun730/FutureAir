@@ -84,7 +84,7 @@
                     <table class="table">
                         <tr>
                             <th>마일리지</th>
-                            <td><fmt:formatNumber value="${mileage }" pattern="#,###" /></td>
+                            <td><fmt:formatNumber value="${mileage}" pattern="#,###" /></td>
                             <th>총결제금액</th>
                             <td><fmt:formatNumber value="${customerFullPay }" pattern="#,###" />원</td>
                         </tr>

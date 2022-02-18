@@ -63,6 +63,10 @@ public class AdminFlightDAO {
 	// 비행일정 삭제
 	public int deleteRoute(String route_num) {
 		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
+		int reservationCount = mapper.getReservationCountByRoutrnum(route_num);
+		
+		if (reservationCount > 0) return -1;
+		
 		int result = mapper.deleteRoute(route_num);
 		return result;
 	}

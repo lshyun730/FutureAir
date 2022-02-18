@@ -121,6 +121,7 @@ public class AdminFlightController {
 	public int flightDelete(HttpServletRequest request) {
 		String route_num = request.getParameter("route_num"); 
 		int result = service.deleteRoute(route_num); // 비행일정삭제
+		System.out.println(result);
 		return result;
 	}
 	
@@ -130,6 +131,7 @@ public class AdminFlightController {
 	public int deleteRoute(HttpServletRequest request) {
 		String[] deleteList = request.getParameterValues("deleteList");
 		int result = service.deleteRouteList(deleteList); // 비행일정리스트 삭제
+		System.out.println(result);
 		return result;
 	}
 	

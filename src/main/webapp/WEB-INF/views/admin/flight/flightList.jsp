@@ -145,102 +145,6 @@
     </section>
     <!-- flight status E -->   
     </div>
-<%--     <!-- modal S -->  
-    <section class="modal" id="modal">
-        <div class="modal_wrap">
-            <h2>비행일정추가</h2>
-            <form class="flight_insert" id="flight_insert" onsubmit="return flightInsert()">
-            <div class="inputbox">
-                <p class="inputbox_title">도착지</p>
-                <div class="inputbox_input selectbox">
-                     <select name="departure_name" onchange="changeSelect(this)" id="departure_name" required="required">
-                     	<option value="" disabled selected>도시 혹은 공항</option>
-                     	<c:forEach var="continent" items="${destinationList}">
-               				<optgroup label="${continent[0].continents}">
-               				<c:forEach var="destination" items="${continent}">
-						        <option value="${destination.airport_name}" >${destination.airport_name} / ${destination.airport_id}</option>
-               				</c:forEach>
-               				</optgroup>
-				        </c:forEach>
-                    </select>
-                </div>
-            </div>
-            <div class="inputbox">
-                <p class="inputbox_title">출발지</p>
-                <div class="inputbox_input selectbox">
-                    <select name="arrival_name" onchange="changeSelect(this)" id="arrival_name" required="required">
-                    	<option value="" disabled selected>도시 혹은 공항</option>
-                    	<c:forEach var="continent" items="${destinationList}">
-               				<optgroup label="${continent[0].continents}">
-               				<c:forEach var="destination" items="${continent}">
-						        <option value="${destination.airport_name}" >${destination.airport_name} / ${destination.airport_id}</option>
-               				</c:forEach>
-               				</optgroup>
-				        </c:forEach>
-                    </select>
-                </div>
-            </div>
-            <div class="inputbox">
-                <p class="inputbox_title">출발날짜</p>
-                <div class="inputbox_input">
-                    <input type="date" name="departure_date" required="required">
-                </div>
-            </div>
-            <div class="inputbox">
-                <p class="inputbox_title">출발시간</p>
-                <div class="inputbox_input">
-                    <input type="time" name="departure_time" required="required">
-                </div>
-            </div>
-            <div class="inputbox">
-                <p class="inputbox_title">도착날짜</p>
-                <div class="inputbox_input">
-                    <input type="date" name="arrival_date" required="required">
-                </div>
-            </div>
-            <div class="inputbox">
-                <p class="inputbox_title">도착시간</p>
-                <div class="inputbox_input">
-                    <input type="time" name="arrival_time" required="required">
-                </div>
-            </div>
-            <div class="inputbox">
-                <p class="inputbox_title">비행기ID</p>
-                <div class="inputbox_input selectbox">
-                    <select name="airplane_id" required="required">
-                    	<c:forEach var="plane" items="${planeList}">
-	                    	<option value="${plane.airplane_id}">${plane.airplane_id}</option>
-                    	</c:forEach>
-                    </select>
-                </div>
-            </div>
-            <div class="inputbox">
-                <p class="inputbox_title">이코노미 가격</p>
-                <div class="inputbox_input">
-                    <input type="number" name="normal_price" required="required">
-                </div>
-            </div>
-            <div class="inputbox">
-                <p class="inputbox_title">프레스티지 가격</p>
-                <div class="inputbox_input">
-                    <input type="number" name="prestige_price" required="required">
-                </div>
-            </div>
-            <div class="inputbox">
-                <p class="inputbox_title">일등석 가격</p>
-                <div class="inputbox_input">
-                    <input type="number" name="first_price" required="required">
-                </div>
-            </div>
-            <div class="submit">
-                <input type="submit" value="수정하기" onclick="">
-            </div>
-        </form>
-            <button class="close" onclick="javascript:modalClose()"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="bg_black"></div>
-    </section>
-    <!-- modal E -->  --%>
 </section>
 <!-- content E -->
 <script>
@@ -256,9 +160,11 @@ function deleteAjax(deleteList) {
 				traditional : true, 
 				type : 'post',
 				success : function(data) {
-					if(data==1) {
+					if(data == 1) {
 						alert('삭제에 성공하였습니다');		
 						location.reload();
+					} else if(data == -1) {
+						alert('예약되어있는 비행기입니다. 예약을 취소한후 삭제해주세요');
 					}
 				}
 		 }); 				 
@@ -275,9 +181,11 @@ function flightDelete(route_num) {
 				traditional : true, 
 				type : 'post',
 				success : function(data) {
-					if(data==1) {
+					if(data == 1) {
 						alert('삭제에 성공하였습니다');		
 						location.reload();
+					} else{
+						alert('예약되어있는 비행기입니다. 예약을 취소한후 삭제해주세요');
 					}
 				}
 		 }); 				 
@@ -294,10 +202,7 @@ function flightInsert() {
 	    data: $('#flight_insert').serialize(),
 	    success: function (data) {
 	    	alert('비행일정이 추가되었습니다')
-	    },
-	    error: function (xhr, status, error) {
-	        console.log(error,xhr,status );
-	    },
+	    }
 	}); 
 }
 
