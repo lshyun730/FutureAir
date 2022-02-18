@@ -155,6 +155,15 @@ public class AdminCustomerService {
 		return dao.mileageBalance(id);
 	}
 	
+	// 팝업창 : 예약 전체내역 불러오기 위한 페이징 처리 부분
+	public int reservationGetTotal(String id, String reservation_start, String reservation_end) {
+		HashMap<String, String> value = new HashMap<>();
+		value.put("customer_id", id);
+		value.put("reservation_start", reservation_start);
+		value.put("reservation_end", reservation_end);
+		int result = dao.reservationGetTotal(value);
+		return result;
+	}
 	
 	// 팝업창 : 예약 전체내역 불러오기 위한 부분
 	public List<HashMap<String, String>> getCommonReservation(String id, String reservation_start, String reservation_end){
@@ -163,6 +172,7 @@ public class AdminCustomerService {
 		value.put("reservation_start", reservation_start);
 		value.put("reservation_end", reservation_end);
 		List<HashMap<String, String>> result = dao.getCommonReservation(value);
+
 		return result;
 	}
 	
@@ -244,8 +254,13 @@ public class AdminCustomerService {
 		return dao.countGrade();
 	}
 
-	
-	// 회원 등급 삭제하기 위한 등급조절
+
+	public Customer getCustomerNG(String id) {
+		return dao.getCustomerNG(id);
+	}
+
+
+
 
 
 }
