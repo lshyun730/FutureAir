@@ -130,6 +130,23 @@ public class AdminBoardService {
 		int result = dao.insertPost(post);	
 		return result;
 	}
+	
+	//게시판 답글 추가하기
+	public int insertreplyPost(HashMap<String, String> post) {
+		int result = dao.insertreplyPost(post);
+		
+		return result;
+		
+	}
+	
+	//게시판 답글 추가이후 수정
+	public int updateAfterReply(int post_index) {
+		int result = dao.updateAfterReply(post_index);
+			
+		return result;
+			
+			
+	}
 		
 	
 	

@@ -110,9 +110,11 @@
 			                </c:if>
 		                    </td>
 		                    <td>
-		                        <button class="btn_s more" onclick="popupOpen('postWriteForm?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}')">답변하기
+		                    	<c:if test="${post.REPLY_TYPE eq '1' }">
+		                        <button class="btn_s more" onclick="popupOpen('replyWriteForm?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}&post_title=${post.TITLE}')">답변하기
 		                        	<span class="icon"><i class="fas fa-chevron-right"></i></span>
 		                        </button>
+		                        </c:if>
 		                    </td>
 		                    <td>${post.POST_DATE }</td>
 		                    <td>${post.HITS }</td>

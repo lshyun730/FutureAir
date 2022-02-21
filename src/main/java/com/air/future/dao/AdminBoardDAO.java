@@ -164,6 +164,25 @@ public class AdminBoardDAO {
 		return result;
 	}
 	
+	//게시판 답글 추가하기
+	public int insertreplyPost(HashMap<String, String> post) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		int result = mapper.insertreplyPost(post);
+		
+		return result;
+		
+	}
+	
+	//게시판 답글 추가이후 수정
+	public int updateAfterReply(int post_index) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		int result = mapper.updateAfterReply(post_index);
+		
+		return result;
+		
+		
+	}
+	
 	// 고정글 추가하기
 	public int insertNotice(Post post) {
 		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
