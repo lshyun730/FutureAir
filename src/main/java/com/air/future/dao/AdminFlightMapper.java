@@ -37,6 +37,8 @@ public interface AdminFlightMapper {
 	// 비행기 리스트 검색
 	public ArrayList<Airplane> getAirplaneList();
 	
+	// 비행일정상세 - 예약고객리스트
+	public ArrayList<HashMap<String, String>> getReservationByRoutenum(String route_num);
 	
 	
 // 예약현황	
@@ -62,6 +64,7 @@ public interface AdminFlightMapper {
 	
 	// 대륙 리스트 검색
 	public ArrayList<String> continentsList();
+
 
 
 }

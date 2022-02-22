@@ -113,6 +113,31 @@ function InsertDateChange(selectBox) {
 	} 
 }
 
+// 예약취소 확인
+function reservationDelete(reservation_num, reservation_state) {
+	if(reservation_state == '예약취소') {
+		alert('이미 취소 된 예약입니다');
+		return;
+	}
+ 	if(confirm("정말 취소하시겠습니까?")){
+		 $.ajax({
+				url : 'reservationCancle',
+				data : {
+					reservation_num : reservation_num
+				},
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data==1) {
+						alert('예약취소에 성공하였습니다');				
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
+
+
 
 // 상세검색 열고닫기 
 function searchDetail() {
@@ -144,7 +169,7 @@ function popupOpen(link, width, height) {
 
 // ... 버튼
 function click_more(element){
-    var btn_m_wrap = document.getElementsByClassName('btn_m_wrap');
+    const btn_m_wrap = document.getElementsByClassName('btn_m_wrap');
     for(let i=0; i < btn_m_wrap.length; i ++) {
         event.stopPropagation()
         if (btn_m_wrap[i] == element) {
@@ -154,17 +179,6 @@ function click_more(element){
         }
     }
 }
-
-
-
-// 메뉴선택
-// const gnbList = document.querySelectorAll(".gnb li a");
-// console.log(gnbList)
-// gnbList.addEventListener("click", gnbActive);
-
-
-
-
 
 
 

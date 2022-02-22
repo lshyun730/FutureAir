@@ -137,6 +137,8 @@ sub page
 .popup form.mail_update td select,
 .popup form.flight_insert td input,
 .popup form.flight_insert td select {border: 1px solid var(--light); border-radius: 3px; padding: 5px; width: 100%}
+.popup form.flight_view {display: block}
+.popup form.flight_view .reser_table {margin-bottom: 0}
 
 /* 예약현황 */
 
@@ -182,7 +184,6 @@ sub page
 .customer_detail .customer_header .profile { flex-grow: 0; } 
 .customer_detail .customer_contents { background-color: var(--white); min-height:100%} 
 .customer_detail .customer_content {padding: 1.875rem 0 ;}
-.customer_detail .customer_content .table {}
 .customer_detail .search_detail {grid-template-columns: repeat(3, 1fr)}
 .customer_detail .flight_info {position: relative;;display: flex; justify-content: space-between; text-align: center; margin-right: 1.5rem; margin-left: 0;}
 .customer_detail .flight_info span {display: block; font-size: 1.25rem; font-weight: bold;}
@@ -190,7 +191,7 @@ sub page
 .customer_detail .flight_info .direction::before {content:''; position: absolute; width: 0.313rem; height: 0.313rem; background: #000; display: block; transform: translate(-50% , -50%); top: 50%; left: 0; border-radius: 50%;} 
 .customer_detail .flight_info .direction::after {content:''; position: absolute; width: 0.313rem; height: 0.313rem; background: #000; display: block; transform: translate(50% , -50%); top: 50%; right: 0; border-radius: 50%;} 
 .customer_detail .customer_content .inputbox.submit {grid-column: 3/4}
-
+.customer_detail .customer_contents .flex_content_footer {justify-content: flex-end;}
 
 /* 
 ---------------------------

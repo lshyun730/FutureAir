@@ -151,9 +151,10 @@ public class AdminCustomerDAO {
 	}
 	
 	// 팝업창 : 예약 내역 불러오기 위한 부분
-	public List<HashMap<String, String>> getCommonReservation(HashMap<String, String> value) {
+	public ArrayList<HashMap<String, String>> getCommonReservation(HashMap<String, String> value) {
 		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
-		List<HashMap<String, String>> result = mapper.getCommonReservation(value);
+		ArrayList<HashMap<String, String>> result = mapper.getCommonReservation(value);
+		System.out.println(result);
 		return result;
 	}
 	
@@ -243,6 +244,12 @@ public class AdminCustomerDAO {
 		 mapper.getCustomerNG(id); 
 		 return customer; 
 	 }
+
+	public ArrayList<HashMap<String, String>> getscheduleByresernum(String reservation_num) {
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		ArrayList<HashMap<String, String>> getscheduleByresernum = mapper.getscheduleByresernum(reservation_num);
+		return getscheduleByresernum;
+	}
 
 
 

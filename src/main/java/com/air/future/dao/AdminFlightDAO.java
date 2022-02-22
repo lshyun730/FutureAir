@@ -77,6 +77,13 @@ public class AdminFlightDAO {
 		ArrayList<Airplane> planeList = mapper.getAirplaneList();
 		return planeList;
 	}
+	
+	// 비행일정상세 - 예약고객리스트
+	public ArrayList<HashMap<String, String>> getReservationByRoutenum(String route_num) {
+		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
+		ArrayList<HashMap<String, String>> reservationList = mapper.getReservationByRoutenum(route_num);
+		return reservationList;
+	}
 
 	
 /* 
@@ -125,6 +132,7 @@ public class AdminFlightDAO {
 		}
 		return destinationList;
 	}
+
 
 
 }

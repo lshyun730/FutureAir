@@ -83,7 +83,7 @@ public interface AdminCustomerMapper {
 	// 팝업창 : 예약 전체내역 불러오기 위한 페이징 처리 부분
 	public int reservationGetTotal(HashMap<String, String> value);
 	// 팝업창 : 예약 내역 불러오기 위한 부분
-	public List<HashMap<String, String>> getCommonReservation(HashMap<String, String> value);
+	public ArrayList<HashMap<String, String>> getCommonReservation(HashMap<String, String> value);
 	// 팝업창: 예약 세부내역 불러오기 위한 Payment부분
 	public String getPayment(String reservation_num);
 	// 팝업창: 예약 세부내역 불러오기 위한 Schedule부분
@@ -96,6 +96,9 @@ public interface AdminCustomerMapper {
 	public String getName(String id);
 	// 팝업창에 필요한 회원 이름과 등급 가져오기
 	public Customer getCustomerNG(String id);
+	
+	// 회원정보상세
+	public ArrayList<HashMap<String, String>> getscheduleByresernum(String reservation_num);
 
 	
 	

@@ -95,6 +95,14 @@ public class AdminFlightService {
 		ArrayList<Airplane> planeList = dao.getAirplaneList();
 		return planeList;
 	}
+	
+	// 비행일정상세 - 예약고객리스트
+	public ArrayList<HashMap<String, String>> getReservationByRoutenum(String route_num) {
+		ArrayList<HashMap<String, String>> reservationList = dao.getReservationByRoutenum(route_num);
+		return reservationList;
+	}
+
+	
 
 	
 	
@@ -143,7 +151,7 @@ public class AdminFlightService {
 		return destinationList;
 	}
 
-	
+
 
 
 }

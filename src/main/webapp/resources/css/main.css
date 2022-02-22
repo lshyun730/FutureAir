@@ -188,7 +188,8 @@ book
 .weekList li.navigation a {padding: 0; height: 100%;display: flex; flex-direction: column; justify-content: center;}
 .weekList li a{display: block; padding: 1.875rem; background: var(--secondary);}
 .weekList li a span {display: block; font-style: 0.875rem;}
-.weekList li.active a{background: var(--primary); color: #fff; font-size: bold;}
+.weekList li a span.pick_date {display: none}
+.weekList li a.dayActive{background: var(--primary); color: #fff; font-size: bold;}
 
 /* 항공권리스트 */
 .flight_list { margin: 3.75rem 0;}
@@ -317,7 +318,7 @@ p, li{line-height: 150%;}
 input[type="submit"] {width: 100%;height: 3.5rem; border: 0; border-radius: 0.313rem; color: #fff; background: var(--primary);}
 input[type="text"], input[type="password"], input[type="date"], input[type="number"] {width: 100%; border:1px solid var(--lightgray); height: 3rem;padding: 0 20px; border-radius: 3px; box-sizing: border-box;}
 select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0;}
-.flight_date input[type="date"] {width: 100%; border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0; border-radius: 3px;}
+.flight_date input {width: 100%; border:0; border-bottom: 1px solid var(--gray); padding: 0.313rem 0; border-radius: 3px; height: auto}
 
 /* 인풋 박스형태 */
 .border_input input{border: 1px solid var(--lightgray); padding: 0.625rem;}
@@ -369,10 +370,11 @@ select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.3
 
 /* 선택리스트 */
 .selectList {display: flex;}
-.selectList li a{display: block;padding: 0.625rem 0; width: 7.5rem;text-align: center;; background: var(--secondary);}
-.selectList li:first-child a{border-top-left-radius: 0.313rem; border-bottom-left-radius: 0.313rem;}
-.selectList li:last-child a{border-top-right-radius: 0.313rem; border-bottom-right-radius: 0.313rem;}
-.selectList li.active a{background: var(--primary); color: #fff;}
+.selectList input {display: none} 
+.selectList input:checked + label{background: var(--primary); color: #fff; cursor: pointer;}
+.selectList label{display: block;padding: 0.625rem 0; width: 7.5rem;text-align: center;; background: var(--secondary);}
+.selectList label:first-child {border-top-left-radius: 0.313rem; border-bottom-left-radius: 0.313rem;}
+.selectList label:last-child {border-top-right-radius: 0.313rem; border-bottom-right-radius: 0.313rem;}
 
 
 /* 페이지네비 */

@@ -182,51 +182,27 @@ public class AdminCustomerController {
 										) {
 		
 		Customer customer = service.getCustomerNG(id);
-		
-		int total 			= service.reservationGetTotal(id, reservation_start, reservation_end);
+		int total = service.reservationGetTotal(id, reservation_start, reservation_end);
 		PageNavigator navi 	= new PageNavigator(countPerPage, pagePerGroup, page, total);
-		
-		List<HashMap<String, String>> reservationList = service.getCommonReservation(id, reservation_start, reservation_end);
-		
-
-		
+		ArrayList<HashMap<String, String>> reservationList = service.getCommonReservation(id, reservation_start, reservation_end);
+				
 		model.addAttribute("customer", customer);
-		model.addAttribute("reservationList", reservationList);
 		model.addAttribute("id", id);
+		model.addAttribute("reservationList", reservationList);
 		model.addAttribute("reservation_start", reservation_start);
 		model.addAttribute("reservation_end", reservation_end);
 		model.addAttribute("navi", navi);
-		
 		return "admin/customer/customerReservation";
 	}
 	
 	// 팝업창 : 회원별 세부 예약 내역 확인하기(customerReservationDetail.jsp)
 	@RequestMapping(value = "customerReservationDetail", method = RequestMethod.GET)
-	public String customerReservationDetail(Model model, String id, String reservationNum) {
-		Customer customer 					= service.getCustomerNG(id);
-		String name							= service.getName(id);
-		String payment 						= service.getPayment(reservationNum);
-		ArrayList<Schedule> scheduleList 	= service.getSchedule(reservationNum);
-		ArrayList<Route> getRoute 			= service.getRoute(scheduleList);
-		ArrayList<Airplane> airplaneList	= service.getAirplane(getRoute);
-		
-		for(Airplane a : airplaneList) {
-			for(Route r : getRoute) {
-				if(a.getAirplane_id().equals(r.getAirplane_id())) {
-					r.setAirplane(a);
-				}
-			}
-		}
-
+	public String customerReservationDetail(Model model, String id, String reservation_num) {
+		Customer customer = service.getCustomerNG(id);
+		ArrayList<HashMap<String, String>> scheduleList = service.getscheduleByresernum(reservation_num); 
+		model.addAttribute("scheduleList", scheduleList);
 		model.addAttribute("customer", customer);
 		model.addAttribute("id", id);
-		model.addAttribute("name", name);
-		model.addAttribute("reservationNum", reservationNum);
-		model.addAttribute("payment", payment);
-		model.addAttribute("scheduleList", scheduleList);
-		model.addAttribute("getRoute", getRoute);
-		//model.addAttribute("airplaneList", airplaneList);
-		
 		return "admin/customer/customerReservationDetail";
 	}
 	

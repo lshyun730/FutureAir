@@ -96,17 +96,24 @@
 		select * from airplane_fa
 	</select>
 	
+	<!-- 비행일정상세 - 예약현황 -->
+	<select id="getReservationByRoutenum" parameterType="String" resultType="HashMap">
+		select * from reservation_fa r, schedule_fa s
+		where r.reservation_num = s.reservation_num
+		and s.route_num = #{route_num}
+	</select>
+	
 
 <!-- 예약현황 -->	
    <!-- 예약일정리스트 -->
    <select id="reservationList" parameterType="HashMap" resultType="HashMap">
    	select a.*,  case when b.count = '1' then '편도'when b.count = '2' then '왕복' else '다구간' end as reservation_type  from 
-		(select s.reservation_num, r.customer_id, c.customer_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment, r.reservation_state
-		    from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
-		    where r.reservation_num = s.reservation_num 
-		    and s.route_num = rou.route_num
-		    and c.customer_id = r.customer_id
-		    and c.customer_name = s.passenger_name
+    (select s.reservation_num, r.customer_id, s.passenger_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment, r.reservation_state
+        from reservation_fa r, schedule_fa s, route_fa rou
+        where r.reservation_num = s.reservation_num 
+        and s.route_num = rou.route_num
+        and s.customer_id = r.customer_id
+        and s.type = '출발'
 		    <if test="departure_date_start != ''">
             and to_char(rou.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
 			</if>
@@ -129,7 +136,7 @@
 			and c.customer_name like  '%'||#{customer_name}||'%'
 			</if>
 		    and s.type = '출발'
-		group by s.reservation_num, r.customer_id,  c.customer_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment, r.reservation_state) a,
+		group by s.reservation_num, r.customer_id,  s.passenger_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment, r.reservation_state) a,
 		(select reservation_num, count(*) count from (
 		    select s.reservation_num, s.type
 		            from reservation_fa r, schedule_fa s
@@ -143,11 +150,11 @@
 	<!-- 예약일정갯수 -->
 	<select id="getReservationTotal" parameterType="HashMap" resultType="int">
 		select count(*)
-		    from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
-		    where r.reservation_num = s.reservation_num 
-		    and s.route_num = rou.route_num
-		    and c.customer_id = r.customer_id
-		    and c.customer_name = s.passenger_name
+		    from reservation_fa r, schedule_fa s, route_fa rou
+	        where r.reservation_num = s.reservation_num 
+	        and s.route_num = rou.route_num
+	        and s.customer_id = r.customer_id
+	        and s.type = '출발'
 		    <if test="departure_date_start != ''">
             and to_char(rou.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
 			</if>

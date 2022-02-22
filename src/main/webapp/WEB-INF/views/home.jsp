@@ -1,6 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
-<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!-- header S -->    
 <%@include file ="include/header.jsp" %>
@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <form action="#" method="post" class="quick_reservation">
+    <form action="book/flightBook" method="get" class="quick_reservation">
         <div class="inner">
             <div class="trip_type">
                 <p class="title">여행타입</p>

@@ -106,7 +106,7 @@
             		<fmt:formatDate var="arrival_date" pattern="yyyy-MM-dd" value="${arrival_date_time}"/>
             		<tr>
 	                    <td><input type="checkbox" name="tableSelect" value="${route.ROUTE_NUM}"></td>
-	                    <td><a href="javascript:popupOpen('flightView?route_num=${route.ROUTE_NUM}', 1000, 500)">${route.ROUTE_NUM}</a></td>
+	                    <td><a href="javascript:popupOpen('flightView?route_num=${route.ROUTE_NUM}', 1000, 800)">${route.ROUTE_NUM}</a></td>
 	                    <td>${route.DEPARTURE_NAME}</td>
 	                    <td>${route.ARRIVAL_NAME}</td>
  	                    <td>${departure_date}</td>

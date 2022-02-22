@@ -120,8 +120,8 @@
 	                    <td>
 	                    	<input type="checkbox" name="tableSelect" value="${reservation.RESERVATION_NUM}" <c:if test="${reservation.RESERVATION_STATE eq '예약취소'}">disabled</c:if>>
 	                    </td>
-	                    <td><a href="javascript:popupOpen('${pageContext.request.contextPath}/admin/customer/customerReservationDetail?id=${reservation.CUSTOMER_ID}&reservationNum=${reservation.RESERVATION_NUM}', 1000, 600)">${reservation.RESERVATION_NUM}</a></td>
-	                    <td>${reservation.CUSTOMER_NAME}</td>
+	                    <td><a href="javascript:popupOpen('${pageContext.request.contextPath}/admin/customer/customerReservationDetail?id=${reservation.CUSTOMER_ID}&reservation_num=${reservation.RESERVATION_NUM}', 1000, 600)">${reservation.RESERVATION_NUM}</a></td>
+	                    <td>${reservation.PASSENGER_NAME}</td>
 	                 	<td><fmt:formatDate value="${departure_date}" pattern="yyyy-MM-dd" /></td>
 	                    <td>${reservation.DEPARTURE_NAME}</td>
 	                    <td>${reservation.ARRIVAL_NAME}</td>
@@ -192,28 +192,6 @@ function deleteAjax(deleteList) {
 	 }
 }
 
-function reservationDelete(reservation_num, reservation_state) {
-	if(reservation_state == '예약취소') {
-		alert('이미 취소 된 예약입니다');
-		return;
-	}
- 	if(confirm("정말 취소하시겠습니까?")){
-		 $.ajax({
-				url : 'reservationCancle',
-				data : {
-					reservation_num : reservation_num
-				},
-				traditional : true, 
-				type : 'post',
-				success : function(data) {
-					if(data==1) {
-						alert('예약취소에 성공하였습니다');				
-						location.reload();
-					}
-				}
-		 }); 				 
-	 }
-}
 
 
 //상세검색

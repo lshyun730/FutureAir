@@ -24,9 +24,6 @@
                     </ul>
                 </nav>
                 <div class="profile">
-                    <div class="profile_img">
-                        <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt="proifle">
-                    </div>
                     <p class="profile__info">${customer.customer_name }<span>${customer.customer_grade }등급</span></p>
                 </div>
             </header>
