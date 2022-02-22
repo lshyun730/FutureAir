@@ -9,13 +9,14 @@
 	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdn.ckeditor.com/4.17.2/basic/ckeditor.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
 	<title>미래항공 관리자페이지</title>
 </head>
 <body style="background: #fff">
 <!-- popup S -->  
 <section class="popup" id="popup">
-        <h2>게시글작성</h2>
+        <h2>답변작성</h2>
         <form id="reply_write">
             <div class="inputbox no_icon width100">
                 <p class="inputbox_title">제목</p>
@@ -29,7 +30,7 @@
             <div class="inputbox width100">
                 <p class="inputbox_title">내용</p>
                 <div class="inputbox_input textbox">
-                	<textarea rows="" cols="" id="contents" name="contents"></textarea>
+                	<textarea id="editor_body" name="contents"></textarea>
                 </div>
             </div>
             <div class="submit">
@@ -70,7 +71,10 @@
 		 });
 		
 		return true;
-		
 	}
+	
+	CKEDITOR.replace( 'editor_body', {
+		height:200
+	} ); 
 </script>
 </html>

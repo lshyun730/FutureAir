@@ -103,6 +103,7 @@ public class AdminBoardController {
 	@RequestMapping(value = "postUpdate", method = RequestMethod.POST)
 	@ResponseBody
 	public int postUpdate(@RequestParam HashMap<String, String> post) {
+		System.out.println(post);
 		int result = service.PostUpdate(post);
 		return result;
 	}

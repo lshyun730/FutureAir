@@ -45,7 +45,9 @@ fix
 .gnb .gnb_txt:nth-child(1) {padding-top: 0;}
 .gnb li { margin: 0 1.875rem; } 
 .gnb li a { position: relative; display: block; padding:1.125rem 3.125rem; border-radius: 0.625rem; font-family: 'S-CoreDream-4'; font-size: 0.938rem;} 
-.gnb li.active a { background: var(--primary); color: var(--white); } 
+.gnb li.active a,
+.gnb li.active:hover a { background: var(--primary); color: var(--white); } 
+.gnb li:hover a {background: var(--secondary)}
 .gnb li a .icon { position: absolute; left: 1.25rem; top: 50%; transform: translateY(calc(-50% - 1px));  } 
 
 

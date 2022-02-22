@@ -9,6 +9,7 @@
 	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdn.ckeditor.com/4.17.2/basic/ckeditor.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
 	<title>미래항공 관리자페이지</title>
 </head>
@@ -38,19 +39,19 @@
                 <div class="inputbox_input selectbox">
                     <select name="post_type" id="post_type">
                         <option value="" selected>선택안함</option>
-                        <option value="항공권예매">항공권예매</option>
+                        <option value="항공권예매">항공권예약</option>
                         <option value="마일리지">마일리지</option>
                         <option value="체크인">체크인</option>
                         <option value="수하물">수하물</option>
                         <option value="공항">공항</option>
-                        <option value="홈페이지이용">홈페이지이용</option>
+                        <option value="홈페이지 이용">홈페이지 이용</option>
                     </select>
                 </div>
             </div>
             <div class="inputbox width100">
                 <p class="inputbox_title">내용</p>
                 <div class="inputbox_input textbox">
-                	<textarea rows="" cols="" id="contents" name="contents"></textarea>
+                	<textarea id="editor_body" name="contents"></textarea>
                 </div>
             </div>
             <div class="submit">
@@ -63,7 +64,8 @@
 <script type="text/javascript">
 	function postWrite(){
 		var title = document.getElementById('title').value
-		var contents = document.getElementById('contents').value
+		const contents = CKEDITOR.instances.editor_body.getData()
+		const textarea = document.querySelector('textarea[name="contents"]'); 
 
 		if(title ==''){
 			alert('제목을 한글자 이상 입력해주세요');
@@ -74,6 +76,8 @@
 			alert('내용을 한글자 이상 입력해주세요');
 			return false;
 		}
+		
+		textarea.value = contents;
 
 		 $.ajax({
 			 url : 'postWrite',
@@ -83,15 +87,17 @@
 				type : 'post',
 				success : function(data) {
 					if(data >= 1) {
-						alert('수정이 완료되었습니다')
+						alert('작성이 완료되었습니다')
 						opener.parent.location.reload();
 						window.close();
 					}
 				}
 		 });
-		
 		return true;
-		
 	}
+	
+	CKEDITOR.replace( 'editor_body', {
+		height:200
+	} ); 
 </script>
 </html>
