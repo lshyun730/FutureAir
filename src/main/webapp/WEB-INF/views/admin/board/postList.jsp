@@ -96,7 +96,6 @@
 	            	</c:if>
 		            <c:forEach var="post" items="${postList}">
 		                <tr>
-		                <c:if test="${post.REPLY_INDEX ne '-1' }">
 		                    <td><input type="checkbox" name="tableSelect" value="${post.POST_INDEX}"></td>
 		                    <td>${post.BOARD_NAME}</td>
 		                    <td><a href="#">${post.TITLE}</a></td>
@@ -120,20 +119,18 @@
 		                    <td>${post.POST_DATE }</td>
 		                    <td>${post.HITS }</td>
 		                    <td class="more">
-		                            <div class="btn_m_wrap" onclick="click_more(this)">
-		                                <div class="btn_m">
-		                                    <span></span>
-		                                </div>
-		                                <ul class="select_list">
-		                                    <li><a href="javascript:popupOpen('postUpdateForm?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}&writer=${post.WRITER}', 500, 600)">수정</a></li> 
-		                                    <li><a href="javascript:deletePost('${post.POST_INDEX}')">삭제</a></li> 
-		                                </ul>
-		                            </div>
-		                        </td>
-		                      </c:if>
+	                            <div class="btn_m_wrap" onclick="click_more(this)">
+	                                <div class="btn_m">
+	                                    <span></span>
+	                                </div>
+	                                <ul class="select_list">
+	                                    <li><a href="javascript:popupOpen('postUpdateForm?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}&writer=${post.WRITER}', 500, 600)">수정</a></li> 
+	                                    <li><a href="javascript:deletePost('${post.POST_INDEX}')">삭제</a></li> 
+	                                </ul>
+	                            </div>
+	                        </td>
 		                </tr>
 		                </c:forEach>
-		               
 		            </tbody>
 		        </table>
 		        <!-- table E --> 
@@ -141,11 +138,11 @@
 		        <div class="flex_content_footer">
 		            <button class="btn danger" form="boardform"  onclick="javascript:checkDelete(this)">선택삭제</button>
 		            <div class="navi">
-		                <a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})"><i class="fas fa-chevron-left"></i></a>
+		                <a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
 		                <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
 							<a href="javascript:pagingFormSubmit(${counter})" <c:if test="${navi.currentPage == counter}">class="active"</c:if>>${counter}</a>
 						</c:forEach>
-		                <a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})"><i class="fas fa-chevron-right"></i></a>
+		                <a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})" class="next"></a>
 		            </div>
 		        </div>
 		        <!-- content footer E --> 

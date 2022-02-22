@@ -57,6 +57,8 @@ public class AdminBoardController {
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total); // 페이징처리
 		ArrayList<HashMap<String, String>> postList = service.getPostList(searchList, navi); // 게시물리스트
 		ArrayList<String> boardList = service.getTopicList(); // 게시판이름리스트
+		
+		System.out.println(postList.size());
 
 		model.addAttribute("searchList", searchList);
 		model.addAttribute("postList", postList);
@@ -143,7 +145,7 @@ public class AdminBoardController {
 		int settingTotal = service.getSettingTotal(); // 게시판 갯수
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, settingTotal); // 페이징처리
 		ArrayList<HashMap<String, String>> boardList = service.getBoardList(navi); // 게시판 리스트
-
+		
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("navi", navi);
 		return "admin/board/boardList";

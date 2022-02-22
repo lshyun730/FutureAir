@@ -192,7 +192,7 @@ document.addEventListener('click', () => {;
 	for(let i=0; i < btn_m_wrap.length; i ++) {
 	 	if (btn_m_wrap[i].classList.contains('active')) {
 	     	btn_m_wrap[i].classList.remove('active');
-	 	}	
+	 	}
 	}
 })
 </script>
