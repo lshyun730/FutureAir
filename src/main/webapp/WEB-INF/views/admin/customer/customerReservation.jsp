@@ -38,14 +38,14 @@
                     <h2>전체 예약내역</h2>
                     <!-- search detail S -->
                     <form action="customerReservation" class="search_detail active" id="serch_detail">
-                        <div class="inputbox term icon">
+                        <div class="inputbox term">
                             <p class="inputbox_title">예약일</p>
                             <div class="inputbox_input">
                                 <input type="date" id="reservation_start" name="reservation_start" value="${reservation_start}">
                                 <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
                             </div>
                         </div>
-                        <div class="inputbox icon">
+                        <div class="inputbox">
                             <div class="inputbox_input">
                                 <input type="date" id="reservation_end" name="reservation_end"  value="${reservation_end}">
                                 <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
@@ -66,7 +66,7 @@
                                 <th>예약번호</th>
                                 <th>승객</th>
                                 <th>출발일</th>
-<!--                                 <th>출발지</th>
+<!--                            <th>출발지</th>
                                 <th>도착지</th> -->
                                 <th>결제가격</th>
                                 <th>예약일</th>
@@ -100,7 +100,7 @@
                         </tbody>
                     </table>
                     <!-- table E --> 
-                   <!-- content footer S --> 
+        <!-- content footer S --> 
         <div class="flex_content_footer">
             <div class="navi">
 	           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
@@ -111,7 +111,6 @@
            </div>
         </div>
 	<!-- content footer E --> 
-
                 </section>
                 <!-- customer content E -->  
             </div>

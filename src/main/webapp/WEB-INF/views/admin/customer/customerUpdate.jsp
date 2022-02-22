@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +15,7 @@
 <!-- popup S -->  
     <section class="popup" id="popup">
             <h2>회원수정</h2>
-            <form action="customerUpdate" method="get" class="update_customer" onsubmit="return customerUpdateSet();">
+            <form id="updateForm" class="update_customer" onsubmit="return customerUpdateAjax();">
 	            <div class="inputbox">
 	                <p class="inputbox_title">아이디</p>
 	                <div class="inputbox_input">
@@ -91,6 +92,7 @@
     </section>
     <!-- modal E -->  
 <script>
+/*
 	function customerUpdateSet(){
 		
 		const id = document.getElementById('customer_id').value;
@@ -107,10 +109,44 @@
 			|| email == "" || phone == "" || address == ""){
 			alert("빈 값을 넣을 수 없습니다."); return false;
 		}
-
 		opener.parent.location.reload();
 		return true;
 		
+	}
+*/
+
+
+	function customerUpdateAjax() {
+
+		const id = document.getElementById('customer_id').value;
+		const name = document.getElementById('customer_name').value;
+		const country = document.getElementById('customer_country').value;
+		const gender = document.getElementById('customer_gender').value;
+		const grade = document.getElementById('customer_grade').value;
+		const email = document.getElementById('customer_email').value;
+		const phone = document.getElementById('customer_phone').value;
+		const address = document.getElementById('customer_address').value;
+
+
+		if( id == "" || name == "" || country == "" || gender == "" || grade == ""
+			|| email == "" || phone == "" || address == ""){
+			alert("빈 값을 넣을 수 없습니다."); return false;
+		}
+
+		
+
+		 $.ajax({
+				url : 'customerUpdateAjax',
+				data : $("#updateForm").serialize(),
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data == 1) {
+						opener.parent.location.reload();
+						window.close();
+					}
+				}
+		 }); 				 
 	}
 </script>
 </body>

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.air.future.service.AdminCustomerService;
+import com.air.future.service.HomeControllerService;
 import com.air.future.util.PageNavigator;
-import com.air.future.vo.*;
+import com.air.future.vo.Airplane;
+import com.air.future.vo.Customer;
+import com.air.future.vo.Grade;
+import com.air.future.vo.Route;
+import com.air.future.vo.Schedule;
 
 @Transactional
 @RequestMapping(value = "admin/customer")
@@ -72,14 +78,7 @@ public class AdminCustomerController {
 		return "admin/customer/customerList";
 	}
 
-	// 회원정보 삭제버튼을 통한 회원정보 삭제하기(customerList.jsp)
-	@RequestMapping(value = "customerDelete", method = RequestMethod.POST)
-	@ResponseBody
-	public int customerDelete(HttpServletRequest request) {
-		String[] deleteList = request.getParameterValues("deleteList");
-		int result = service.customerDelete(deleteList);							// 삭제 요청한 회원 삭제하기
-		return result;
-	}
+
 	
 	// 회원등급 이동 및 회원등급, 회원등급별 회원관리 부분 불러오기(customerGrade.jsp)
 	// 회원정보 검색을 통해 회원등급 별 회원관리 부분에 회원정보 값 불러오기(customerGrade.jsp)
@@ -107,26 +106,6 @@ public class AdminCustomerController {
 		model.addAttribute("customerListAll", customerListAll);
 		model.addAttribute("navi", navi);
 		
-		return "admin/customer/customerGrade";
-	}
-	
-	// 모달창으로 받은 등급 관련 정보 추가하기(customerGrade.jsp > modal)
-	@RequestMapping(value = "gradeAdd", method = RequestMethod.POST)
-	public String gradeAdd(Model model
-							, String grade
-							, String mileage_exp
-							, String mileage_scope
-							, String mileage_ratio
-							, String pay_scope
-							, String pay_ratio
-							, String promo_terms) {
-		
-		service.gradeAdd(grade, mileage_exp, mileage_scope, mileage_ratio
-							, pay_scope, pay_ratio, promo_terms);			// 등급 추가 파트
-		ArrayList<Grade> customerGradeAll = service.customerGradeAll(); 	// 설정된 회원등급 및 등급에 따른 회원수 불러오는 파트
-		ArrayList<Customer> customerListAll = service.customerListAll();	// 회원등급 별 회원관리를 위한 회원정보 불러오는 파트
-		model.addAttribute("customerGradeAll", customerGradeAll);
-		model.addAttribute("customerListAll", customerListAll);
 		return "admin/customer/customerGrade";
 	}
 	
@@ -175,31 +154,29 @@ public class AdminCustomerController {
 	// 팝업창 : 회원별 전체 예약 확인하기(customerReservation.jsp)
 	@RequestMapping(value = "customerReservation", method = RequestMethod.GET)
 	public String customerReservation(Model model
-										, @RequestParam(value="page", defaultValue = "1") int page
+										, @RequestParam(value = "page", defaultValue = "1") int page
 										, @RequestParam(value = "id", defaultValue = "") String id
 										, @RequestParam(value = "reservation_start", defaultValue = "") String reservation_start
 										, @RequestParam(value = "reservation_end", defaultValue = "") String reservation_end
 										) {
 		
 		Customer customer = service.getCustomerNG(id);
+
 		int total = service.reservationGetTotal(id, reservation_start, reservation_end);
 		PageNavigator navi 	= new PageNavigator(countPerPage, pagePerGroup, page, total);
 		ArrayList<HashMap<String, String>> reservationList = service.getCommonReservation(id, reservation_start, reservation_end);
 				
 		model.addAttribute("customer", customer);
-		model.addAttribute("id", id);
-		model.addAttribute("reservationList", reservationList);
-		model.addAttribute("reservation_start", reservation_start);
-		model.addAttribute("reservation_end", reservation_end);
-		model.addAttribute("navi", navi);
 		return "admin/customer/customerReservation";
 	}
 	
 	// 팝업창 : 회원별 세부 예약 내역 확인하기(customerReservationDetail.jsp)
 	@RequestMapping(value = "customerReservationDetail", method = RequestMethod.GET)
+
 	public String customerReservationDetail(Model model, String id, String reservation_num) {
 		Customer customer = service.getCustomerNG(id);
 		ArrayList<HashMap<String, String>> scheduleList = service.getscheduleByresernum(reservation_num); 
+
 		model.addAttribute("scheduleList", scheduleList);
 		model.addAttribute("customer", customer);
 		model.addAttribute("id", id);
@@ -207,23 +184,10 @@ public class AdminCustomerController {
 	}
 	
 	
+	/*
 	// 팝업창 : 회원정보 수정하기 열기(customerUpdate.jsp)
 	@RequestMapping(value="customerUpdate", method = RequestMethod.GET)
-	public String customerUpdate(Model model
-									, @RequestParam(value="customer_id", defaultValue = "") String customer_id
-									, @RequestParam(value="customer_name", defaultValue = "") String customer_name
-									, @RequestParam(value="customer_birth", defaultValue = "") String customer_birth
-									, @RequestParam(value="customer_country", defaultValue = "") String customer_country
-									, @RequestParam(value="customer_gender", defaultValue = "") String customer_gender
-									, @RequestParam(value="customer_grade", defaultValue = "") String customer_grade
-									, @RequestParam(value="customer_email", defaultValue = "") String customer_email
-									, @RequestParam(value="customer_phone", defaultValue = "") String customer_phone
-									, @RequestParam(value="customer_address", defaultValue = "") String customer_address) {
-		// 회원정보 업데이트하기		
-		if (!customer_birth.equals("")) {
-			service.userInfoChange(customer_id, customer_name, customer_birth, customer_country, customer_gender
-									,customer_grade, customer_email, customer_phone, customer_address);
-		}
+	public String customerUpdate(Model model, @RequestParam(value="customer_id", defaultValue = "") String customer_id) {
 		
 		// 설정된 회원등급 및 등급에 따른 회원수 불러오는 파트
 		ArrayList<Grade> customerGradeAll = service.customerGradeAll();
@@ -232,33 +196,19 @@ public class AdminCustomerController {
 		model.addAttribute("customer", customer);
 		model.addAttribute("customerGradeAll", customerGradeAll);
 		return "admin/customer/customerUpdate";
-	}
+	}*/
+
 
 	// 팝업창 : 회원 등급 수정하기(customerGradeUpdate.jsp)
 	@RequestMapping(value="customerGradeUpdate", method = RequestMethod.GET)
-	public String customerGradeUpdate(Model model
-										, @RequestParam(value="grade", defaultValue = "") String grade
-										, @RequestParam(value="mileage_scope", defaultValue = "0") int mileage_scope
-										, @RequestParam(value="mileage_ratio", defaultValue = "0") int mileage_ratio
-										, @RequestParam(value="mileage_exp", defaultValue = "0") int mileage_exp
-										, @RequestParam(value="pay_scope", defaultValue = "0") int pay_scope
-										, @RequestParam(value="pay_ratio", defaultValue = "0") int pay_ratio
-										, @RequestParam(value="promo_terms", defaultValue = "0") int promo_terms) {
-		
-		//회원 등급 정보 업데이트하기
-		if(mileage_exp != 0 && promo_terms != 0) {
-			int result = service.customerGradeChange(grade, mileage_scope, mileage_ratio, mileage_exp
-														,pay_scope, pay_ratio, promo_terms);
-		}
-		
+	public String customerGradeUpdate(Model model, @RequestParam(value="grade", defaultValue = "") String grade) {
 		// 설정된 회원등급과 관련된 정보 불러오는 파트
 		Grade gradeSet = service.customerGradeSet(grade);
 		model.addAttribute("gradeSet", gradeSet);
-		
 		return "admin/customer/customerGradeUpdate";
 	}
 	
-	// 팝업창 : 회원등급 삭제 하기(customerGradeUpdate.jsp)
+	// 팝업창 : 회원등급 삭제 AJAX 처리(customerGradeUpdate.jsp)
 	@RequestMapping(value = "gradeDelete", method = RequestMethod.POST)
 	@ResponseBody
 	public int gradeDelete(HttpServletRequest request) {
@@ -270,16 +220,34 @@ public class AdminCustomerController {
 			return 1000;
 		}
 	}
-	
-	// 마일리지 일괄적립
-	@RequestMapping(value = "mileageListInsertForm", method = RequestMethod.GET)
-	public String mileageListInsertForm(Model model) {
-		return "admin/customer/mileageListInsert";
+	// 회원정보 삭제버튼을 통한 회원정보 삭제 AJAX 처리(customerList.jsp)
+	@RequestMapping(value = "customerDelete", method = RequestMethod.POST)
+	@ResponseBody
+	public int customerDelete(HttpServletRequest request) {
+		String[] deleteList = request.getParameterValues("deleteList");
+		int result = service.customerDelete(deleteList);							// 삭제 요청한 회원 삭제하기
+		return result;
 	}
-	
-	// 마일리지 일괄적립
-	@RequestMapping(value = "GradeListUpdateForm", method = RequestMethod.GET)
-	public String GradeListUpdateForm(Model model) {
-		return "admin/customer/gradeListUpdate";
+	// customerGrade.jsp 등급추가 모달창 AJAX 처리
+	@ResponseBody
+	@RequestMapping(value = "gradeAddAjax", method = RequestMethod.POST)
+	public int gradeAddAjax(HttpServletRequest request, Grade grade) {
+		int result = service.gradeAdd(grade);
+		return result;
+	}
+	// customerUpdate.jsp AJAX 처리
+	@ResponseBody
+	@RequestMapping(value = "customerUpdateAjax", method = RequestMethod.POST)
+	public int customerUpdateAjax(HttpServletRequest request, Customer customer) {
+		int result = service.userInfoChange(customer);
+		return result;
+	}
+	// customerGradeUpdate.jsp AJAX 처리
+	@ResponseBody
+	@RequestMapping(value = "gradeUpdateAjax", method = RequestMethod.POST)
+	public int graderUpdateAjax(HttpServletRequest request, Grade grade) {
+		int result = service.customerGradeChange(grade);
+		return result;
+
 	}
 }

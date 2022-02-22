@@ -66,6 +66,7 @@ public interface AdminCustomerMapper {
 	// 팝업창 : 회원정보 수정하기에서 회원정보 수정하기(customerUpdate.jsp)
 	public int userInfoChange(Customer customer);
 	
+	
 	// 팝업창 : 회원 등급 수정하기 부분의 회원등급 정보 가져오기(customerGradeUpdate.jsp)
 	public Grade customerGradeSet(String grade);
 	// 팝업창 : 회원 등급 수정하기 부분의 회원등급 수정하기(customerGradeUpdate.jsp)
@@ -99,6 +100,7 @@ public interface AdminCustomerMapper {
 	
 	// 회원정보상세
 	public ArrayList<HashMap<String, String>> getscheduleByresernum(String reservation_num);
+
 
 	
 	

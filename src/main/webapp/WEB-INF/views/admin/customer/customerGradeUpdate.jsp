@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +14,7 @@
 <!-- popup S -->  
     <section class="popup" id="popup">
             <h2>등급수정</h2>
-            <form action="customerGradeUpdate" method="get" class="update_customer" onsubmit="return gradeUpdateSet();">
+            <form id="gradeForm" class="update_customer" onsubmit="gradeUpdateAjax();">
 	            <div class="inputbox">
                     <p class="inputbox_title">등급이름</p>
                     <div class="inputbox_input">
@@ -61,6 +62,7 @@
     </section>
     <!-- modal E -->  
 <script>
+/*
 	function gradeUpdateSet(){
 		const grade = document.getElementById('grade').value;
 		const mileage_scope = document.getElementById('mileage_scope').value;
@@ -77,6 +79,38 @@
 		opener.parent.location.reload();
 		return true;
 	}
+	*/
+
+	function gradeUpdateAjax() {
+
+		const grade = document.getElementById('grade').value;
+		const mileage_scope = document.getElementById('mileage_scope').value;
+		const mileage_ratio = document.getElementById('mileage_ratio').value;
+		const mileage_exp = document.getElementById('mileage_exp').value;
+		const pay_scope = document.getElementById('pay_scope').value;
+		const pay_ratio = document.getElementById('pay_ratio').value;
+		const promo_terms = document.getElementById('promo_terms').value;
+
+		if(grade == "" || mileage_scope == "" || mileage_ratio == "" || mileage_exp == ""
+			|| pay_scope == "" || pay_ratio == "" || promo_terms == ""){
+			alert("값을 모두 채워 주십시오."); return false;
+		}
+		
+
+		 $.ajax({
+				url : 'gradeUpdateAjax',
+				data : $("#gradeForm").serialize(),
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data == 1) {
+						opener.parent.location.reload();
+						window.close();
+					}
+				}
+		 }); 				 
+	}
+
 
 </script>
 </body>
