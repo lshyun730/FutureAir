@@ -139,6 +139,7 @@ public class AdminBoardService {
 		
 	}
 	
+	/*
 	//게시판 답글 추가이후 수정
 	public int updateAfterReply(int post_index) {
 		int result = dao.updateAfterReply(post_index);
@@ -147,6 +148,7 @@ public class AdminBoardService {
 			
 			
 	}
+	*/
 		
 	
 	

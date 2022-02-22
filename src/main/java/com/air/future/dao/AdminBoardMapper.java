@@ -82,6 +82,6 @@ public interface AdminBoardMapper {
 	public int insertreplyPost(HashMap<String, String> post);
 	
 	//게시판 답글 추가이후 수정
-	public int updateAfterReply(int post_index);
+	public int updateAfterReply(HashMap<String, String> post);
 	
 }

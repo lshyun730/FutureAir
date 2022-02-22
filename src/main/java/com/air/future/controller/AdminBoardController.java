@@ -121,14 +121,13 @@ public class AdminBoardController {
 		@ResponseBody
 		public int replyWrite(@RequestParam HashMap<String, String> postForm, int post_index, Model model) {
 			
-			
+			//답변하기 ajax
 			int result = service.insertreplyPost(postForm);
-			int change = service.updateAfterReply(post_index);
+			//답변완료로 업데이트
+			//int change = service.updateAfterReply(post_index);
 			
-			if(result >= 1 && change >= 1) {
-				return 1;
-			}
-			return 0;
+			
+			return result;
 		}
 	
 	

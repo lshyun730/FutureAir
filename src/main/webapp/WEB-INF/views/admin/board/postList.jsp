@@ -96,6 +96,7 @@
 	            	</c:if>
 		            <c:forEach var="post" items="${postList}">
 		                <tr>
+		                <c:if test="${post.REPLY_INDEX ne '-1' }">
 		                    <td><input type="checkbox" name="tableSelect" value="${post.POST_INDEX}"></td>
 		                    <td>${post.BOARD_NAME}</td>
 		                    <td><a href="#">${post.TITLE}</a></td>
@@ -129,6 +130,7 @@
 		                                </ul>
 		                            </div>
 		                        </td>
+		                      </c:if>
 		                </tr>
 		                </c:forEach>
 		               

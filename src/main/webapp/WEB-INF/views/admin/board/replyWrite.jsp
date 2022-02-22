@@ -20,7 +20,7 @@
             <div class="inputbox no_icon width100">
                 <p class="inputbox_title">제목</p>
                 <div class="inputbox_input">
-                    <input type="text" name="title" id="title" readonly value="re) ${post_title}">
+                    <input type="text" name="title" id="title" value="re) ${post_title}">
                 </div>
             </div>
             <input type="hidden" id="board_name" name="board_name" value="${board_name}">

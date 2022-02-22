@@ -9,7 +9,7 @@
 	<select id="getPostList" parameterType="HashMap" resultType="HashMap">
 		select p.post_index, p.title, p.writer, p.board_name,p.post_type,p.reply_index,p.contents, to_char(p.post_date, 'YYYY-MM-DD') as post_date, p.hits, p.reply_index, b.reply_type
 		from post_fa p, board_fa b 
-		where p.board_name = b.board_name and p.reply_index !='-1' or reply_index is null
+		where p.board_name = b.board_name
 		<if test="!post_date_start.equals('')">and to_char(p.post_date, 'YYYY-MM-DD') >= #{post_date_start}</if>
 		<if test="!post_date_end.equals('')">and to_char(p.post_date, 'YYYY-MM-DD') &lt;= #{post_date_end}</if>	
 		<if test="!board_name.equals('전체')">and p.board_name = #{board_name}</if>	
@@ -17,7 +17,7 @@
  		<if test="reply_type.equals('답변완료')">and p.reply_index is not null</if>
 		<if test="reply_type.equals('답변전')">and p.reply_index is null</if>
 		<if test="!search_text.equals('')">and p.title like '%' || #{search_text} || '%'</if>
-		order by p.post_date desc
+		order by p.post_index desc
 	</select>
 	
 	<!-- 게시물 리스트 갯수 -->
@@ -150,7 +150,7 @@
 	</insert>
 	
 	<!-- 게시판 답글 달리면 상태 변환 -->
-	<update id="updateAfterReply" parameterType="int">
+	<update id="updateAfterReply" parameterType="HashMap">
 		update post_fa
 			set reply_index = '0' where post_index = #{post_index}
 	</update>
