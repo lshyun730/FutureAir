@@ -7,8 +7,8 @@
 <!-- 게시글관리 -->
 	<!-- 게시물 리스트 -->
 	<select id="getPostList" parameterType="HashMap" resultType="HashMap">
-		select p.post_index, p.title, p.writer, p.board_name, p.contents, to_char(p.post_date, 'YYYY-MM-DD') as post_date, p.hits, p.reply_index, b.reply_type
-		from post_fa p, board_fa b
+		select p.post_index, p.title, p.writer, p.board_name,p.post_type,p.reply_index,p.contents, to_char(p.post_date, 'YYYY-MM-DD') as post_date, p.hits, p.reply_index, b.reply_type
+		from post_fa p, board_fa b 
 		where p.board_name = b.board_name
 		<if test="!post_date_start.equals('')">and to_char(p.post_date, 'YYYY-MM-DD') >= #{post_date_start}</if>
 		<if test="!post_date_end.equals('')">and to_char(p.post_date, 'YYYY-MM-DD') &lt;= #{post_date_end}</if>	
@@ -17,7 +17,7 @@
  		<if test="reply_type.equals('답변완료')">and p.reply_index is not null</if>
 		<if test="reply_type.equals('답변전')">and p.reply_index is null</if>
 		<if test="!search_text.equals('')">and p.title like '%' || #{search_text} || '%'</if>
-		order by p.post_date desc
+		order by p.post_index desc
 	</select>
 	
 	<!-- 게시물 리스트 갯수 -->
@@ -116,7 +116,7 @@
 	
 	<!-- 게시판 게시글 리스트 -->
 	<select id="getPostListByBoard" parameterType="String" resultType="post">
-		select post_index, title, writer, to_char(post_date, 'yyyy-mm-dd') post_date, hits from post_fa
+		select post_index, title, writer, to_char(post_date, 'yyyy-mm-dd') post_date, hits, post_type from post_fa
 		where board_name = #{board_name}
 		order by post_date desc
 	</select>
@@ -142,6 +142,18 @@
 		insert into post_fa(post_index, title, writer, board_name, contents, post_type) values
 		(post_index_seq.nextval, #{title}, '관리자', #{board_name}, #{contents}, #{post_type,jdbcType=VARCHAR})
 	</insert>
+	
+	<!-- 게시판 답글 달기 -->
+	<insert id="insertreplyPost" parameterType="HashMap">
+		insert into post_fa(post_index, title, writer, board_name, contents, post_type, reply_index) values
+		(post_index_seq.nextval, #{title}, '관리자', #{board_name}, #{contents}, #{post_type,jdbcType=VARCHAR}, '-1')
+	</insert>
+	
+	<!-- 게시판 답글 달리면 상태 변환 -->
+	<update id="updateAfterReply" parameterType="HashMap">
+		update post_fa
+			set reply_index = '0' where post_index = #{post_index}
+	</update>
 	
 	<!-- 고정글로 추가하기 -->
 	<update id="insertNotice" parameterType="post">

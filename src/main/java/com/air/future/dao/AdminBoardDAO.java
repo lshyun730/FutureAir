@@ -164,6 +164,34 @@ public class AdminBoardDAO {
 		return result;
 	}
 	
+	//게시판 답글 추가하기
+	public int insertreplyPost(HashMap<String, String> post) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		int result = mapper.insertreplyPost(post);
+		
+		//추가 이후 답변 상태 수정
+		int change = mapper.updateAfterReply(post);
+		
+		if(result == 1 && change == 1) {
+			return 1;
+		}else {
+			return 0;
+		}
+		
+	}
+	
+	/*
+	//게시판 답글 추가이후 수정
+	public int updateAfterReply(HashMap<String, String> post) {
+		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);
+		int result = mapper.updateAfterReply(post);
+		
+		return result;
+		
+		
+	}
+	*/
+	
 	// 고정글 추가하기
 	public int insertNotice(Post post) {
 		AdminBoardMapper mapper = sqlSession.getMapper(AdminBoardMapper.class);

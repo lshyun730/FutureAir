@@ -43,6 +43,7 @@ public class AdminBoardController {
 			@RequestParam(value = "board_name", defaultValue = "전체") String board_name,
 			@RequestParam(value = "reply_type", defaultValue = "전체") String reply_type,
 			@RequestParam(value = "search_text", defaultValue = "") String searchtext, Model model) {
+		
 
 		// 전달받은 파라미터 저장
 		HashMap<String, String> searchList = new HashMap<>();
@@ -106,11 +107,28 @@ public class AdminBoardController {
 	
 	// 답변하기 이동
 	@RequestMapping(value = "replyWriteForm", method = RequestMethod.GET)
-	public String replyWriteForm(String post_index, String board_name, Model model) {
+	public String replyWriteForm(String post_index, String board_name, Model model,String post_title,String post_type) {
+		
+		model.addAttribute("post_type", post_type);
+		model.addAttribute("post_title", post_title);
 		model.addAttribute("post_index", post_index);
 		model.addAttribute("board_name", board_name);
 		return "admin/board/replyWrite";
 	}
+	
+	// 게시판관리 - 답변하기 기능
+		@RequestMapping(value = "replyWrite", method = RequestMethod.POST)
+		@ResponseBody
+		public int replyWrite(@RequestParam HashMap<String, String> postForm, int post_index, Model model) {
+			
+			//답변하기 ajax
+			int result = service.insertreplyPost(postForm);
+			//답변완료로 업데이트
+			//int change = service.updateAfterReply(post_index);
+			
+			
+			return result;
+		}
 	
 	
 /*
