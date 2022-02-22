@@ -166,7 +166,13 @@ public class AdminCustomerController {
 		PageNavigator navi 	= new PageNavigator(countPerPage, pagePerGroup, page, total);
 		ArrayList<HashMap<String, String>> reservationList = service.getCommonReservation(id, reservation_start, reservation_end);
 				
+		model.addAttribute("id", id);
 		model.addAttribute("customer", customer);
+		model.addAttribute("reservation_start", reservation_start);
+		model.addAttribute("reservation_end", reservation_end);
+		model.addAttribute("reservationList", reservationList);
+		model.addAttribute("navi", navi);
+		
 		return "admin/customer/customerReservation";
 	}
 	
@@ -183,22 +189,6 @@ public class AdminCustomerController {
 		return "admin/customer/customerReservationDetail";
 	}
 	
-	
-	/*
-	// 팝업창 : 회원정보 수정하기 열기(customerUpdate.jsp)
-	@RequestMapping(value="customerUpdate", method = RequestMethod.GET)
-	public String customerUpdate(Model model, @RequestParam(value="customer_id", defaultValue = "") String customer_id) {
-		
-		// 설정된 회원등급 및 등급에 따른 회원수 불러오는 파트
-		ArrayList<Grade> customerGradeAll = service.customerGradeAll();
-		// 기존 회원정보를 들고오는 파트
-		Customer customer = service.userInfoFind(customer_id);
-		model.addAttribute("customer", customer);
-		model.addAttribute("customerGradeAll", customerGradeAll);
-		return "admin/customer/customerUpdate";
-	}*/
-
-
 	// 팝업창 : 회원 등급 수정하기(customerGradeUpdate.jsp)
 	@RequestMapping(value="customerGradeUpdate", method = RequestMethod.GET)
 	public String customerGradeUpdate(Model model, @RequestParam(value="grade", defaultValue = "") String grade) {

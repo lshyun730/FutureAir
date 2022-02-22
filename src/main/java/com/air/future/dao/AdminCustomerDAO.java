@@ -245,13 +245,6 @@ public class AdminCustomerDAO {
 	}
 
 
-
-	 public Customer getCustomerNG(String id) { AdminCustomerMapper mapper =
-		 sqlSession.getMapper(AdminCustomerMapper.class); Customer customer =
-		 mapper.getCustomerNG(id); 
-		 return customer; 
-	 }
-
 	public ArrayList<HashMap<String, String>> getscheduleByresernum(String reservation_num) {
 		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
 		ArrayList<HashMap<String, String>> getscheduleByresernum = mapper.getscheduleByresernum(reservation_num);

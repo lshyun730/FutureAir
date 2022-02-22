@@ -66,8 +66,6 @@
                                 <th>예약번호</th>
                                 <th>승객</th>
                                 <th>출발일</th>
-<!--                            <th>출발지</th>
-                                <th>도착지</th> -->
                                 <th>결제가격</th>
                                 <th>예약일</th>
                                 <th>상태</th>
@@ -83,8 +81,6 @@
 	                                </td>
 	                                <td>${reservation.PASSENGER_NAME }</td>
 	                                <td>${reservation.DEPARTURE_DATE }</td>
-<%-- 	                                <td>${reservation.DEPARTURE_NAME }</td>
-	                                <td>${reservation.ARRIVAL_NAME }</td> --%>
 	                                <td><fmt:formatNumber value="${reservation.PAYMENT }" pattern="#,###" />원</td>
 	                                <td>${reservation.RESERVATION_DATE}</td>
 	                                <td>
