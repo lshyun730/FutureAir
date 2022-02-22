@@ -1,16 +1,13 @@
 package com.air.future.dao;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.air.future.vo.Airplane;
 import com.air.future.vo.Customer;
@@ -154,9 +151,10 @@ public class AdminCustomerDAO {
 	}
 	
 	// 팝업창 : 예약 내역 불러오기 위한 부분
-	public List<HashMap<String, String>> getCommonReservation(HashMap<String, String> value) {
+	public ArrayList<HashMap<String, String>> getCommonReservation(HashMap<String, String> value) {
 		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
-		List<HashMap<String, String>> result = mapper.getCommonReservation(value);
+		ArrayList<HashMap<String, String>> result = mapper.getCommonReservation(value);
+		System.out.println(result);
 		return result;
 	}
 	
@@ -244,6 +242,20 @@ public class AdminCustomerDAO {
 		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
 		Customer customer = mapper.getCustomerNG(id);
 		return customer;
+	}
+
+
+
+	 public Customer getCustomerNG(String id) { AdminCustomerMapper mapper =
+		 sqlSession.getMapper(AdminCustomerMapper.class); Customer customer =
+		 mapper.getCustomerNG(id); 
+		 return customer; 
+	 }
+
+	public ArrayList<HashMap<String, String>> getscheduleByresernum(String reservation_num) {
+		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
+		ArrayList<HashMap<String, String>> getscheduleByresernum = mapper.getscheduleByresernum(reservation_num);
+		return getscheduleByresernum;
 	}
 
 

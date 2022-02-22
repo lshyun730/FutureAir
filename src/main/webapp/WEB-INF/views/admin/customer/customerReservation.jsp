@@ -41,13 +41,13 @@
                         <div class="inputbox term">
                             <p class="inputbox_title">예약일</p>
                             <div class="inputbox_input">
-                                <input type="text" id="reservation_start" name="reservation_start" placeholder="2022-01-22">
+                                <input type="date" id="reservation_start" name="reservation_start" value="${reservation_start}">
                                 <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
                             </div>
                         </div>
                         <div class="inputbox">
                             <div class="inputbox_input">
-                                <input type="text" id="reservation_end" name="reservation_end" placeholder="2022-01-22">
+                                <input type="date" id="reservation_end" name="reservation_end"  value="${reservation_end}">
                                 <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
                             </div>
                         </div>
@@ -63,37 +63,44 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th><input type="checkbox"></th>
                                 <th>예약번호</th>
                                 <th>승객</th>
-                                <th>출발지</th>
-                                <th>도착지</th>
                                 <th>출발일</th>
-                                <th>예약일</th>
+<!--                            <th>출발지</th>
+                                <th>도착지</th> -->
                                 <th>결제가격</th>
+                                <th>예약일</th>
+                                <th>상태</th>
                             </tr>
                         </thead>
                         <tbody>
-                        	<c:forEach var="rList" items="${reservationList }" varStatus="status">
+                        	<c:forEach var="reservation" items="${reservationList}" varStatus="status">
 	                            <tr>
-	                                <td><input type="checkbox"></td>
 	                                <td>
-	                                	<a href="${pageContext.request.contextPath}/admin/customer/customerReservationDetail?id=${rList['CUSTOMER_ID'] }&reservationNum=${rList['RESERVATION_NUM'] }">
-	                                		${rList['RESERVATION_NUM'] }
+	                                	<a href="${pageContext.request.contextPath}/admin/customer/customerReservationDetail?id=${id}&reservation_num=${reservation.RESERVATION_NUM }">
+	                                		${reservation.RESERVATION_NUM }
 	                                	</a>
 	                                </td>
-	                                <td>${rList['PASSENGER_NAME'] }</td>
-	                                <td>${rList['DEPARTURE_NAME'] }</td>
-	                                <td>${rList['ARRIVAL_NAME'] }</td>
-	                                <td>${rList['RESERVATION_DATE'] }</td>
-	                                <td>${rList['DEPARTURE_DATE'] }</td>
-	                                <td><fmt:formatNumber value="${rList['PAYMENT'] }" pattern="#,###" />원</td>
+	                                <td>${reservation.PASSENGER_NAME }</td>
+	                                <td>${reservation.DEPARTURE_DATE }</td>
+<%-- 	                                <td>${reservation.DEPARTURE_NAME }</td>
+	                                <td>${reservation.ARRIVAL_NAME }</td> --%>
+	                                <td><fmt:formatNumber value="${reservation.PAYMENT }" pattern="#,###" />원</td>
+	                                <td>${reservation.RESERVATION_DATE}</td>
+	                                <td>
+                                	<c:if test="${reservation.RESERVATION_STATE eq '예약완료'}">
+					                    <button class="btn_s status">예약</button>
+			                    	</c:if>
+			                    	<c:if test="${reservation.RESERVATION_STATE eq '예약취소'}">
+					                    <button class="btn_s status status_cancle">취소</button>
+			                    	</c:if>
+			                    	</td>
 	                            </tr>
 							</c:forEach>
                         </tbody>
                     </table>
                     <!-- table E --> 
-                        <!-- content footer S --> 
+        <!-- content footer S --> 
         <div class="flex_content_footer">
             <div class="navi">
 	           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>

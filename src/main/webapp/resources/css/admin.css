@@ -129,11 +129,16 @@ sub page
 
 /* 비행일정 */
 .popup form.flight_update,
-.popup form.mail_update {display: block;}
+.popup form.mail_update,
+.popup form.flight_insert {display: block;}
 .popup form.flight_update td input,
 .popup form.flight_update td select,
 .popup form.mail_update td input,
-.popup form.mail_update td select {border: 1px solid var(--light); border-radius: 3px; padding: 5px; width: 100%}
+.popup form.mail_update td select,
+.popup form.flight_insert td input,
+.popup form.flight_insert td select {border: 1px solid var(--light); border-radius: 3px; padding: 5px; width: 100%}
+.popup form.flight_view {display: block}
+.popup form.flight_view .reser_table {margin-bottom: 0}
 
 /* 예약현황 */
 
@@ -167,6 +172,7 @@ sub page
 /* 게시판설정 */
 .board_blank {width: 800px; margin: 1.875rem auto; padding: 0 1.875rem;}
 .board_blank .submit {text-align: center;padding: 2.5rem;}
+.board_blank.board_notice .flex_content_footer {justify-content: flex-end;}
 
 /* 회원상세 */
 .customer_detail {height: 100%;}
@@ -178,7 +184,6 @@ sub page
 .customer_detail .customer_header .profile { flex-grow: 0; } 
 .customer_detail .customer_contents { background-color: var(--white); min-height:100%} 
 .customer_detail .customer_content {padding: 1.875rem 0 ;}
-.customer_detail .customer_content .table {}
 .customer_detail .search_detail {grid-template-columns: repeat(3, 1fr)}
 .customer_detail .flight_info {position: relative;;display: flex; justify-content: space-between; text-align: center; margin-right: 1.5rem; margin-left: 0;}
 .customer_detail .flight_info span {display: block; font-size: 1.25rem; font-weight: bold;}
@@ -186,7 +191,7 @@ sub page
 .customer_detail .flight_info .direction::before {content:''; position: absolute; width: 0.313rem; height: 0.313rem; background: #000; display: block; transform: translate(-50% , -50%); top: 50%; left: 0; border-radius: 50%;} 
 .customer_detail .flight_info .direction::after {content:''; position: absolute; width: 0.313rem; height: 0.313rem; background: #000; display: block; transform: translate(50% , -50%); top: 50%; right: 0; border-radius: 50%;} 
 .customer_detail .customer_content .inputbox.submit {grid-column: 3/4}
-
+.customer_detail .customer_contents .flex_content_footer {justify-content: flex-end;}
 
 /* 
 ---------------------------
@@ -240,7 +245,7 @@ sub page
 /* 작은버튼 */
 .btn_s {border-radius:0.25rem ; display: flex; justify-content: space-around;align-items: center; cursor: pointer;} 
 .btn_s .icon {font-size: .75rem; padding-left: 0.625rem;}
-.btn_s.status { padding: 0.125rem 1.5rem; } 
+.btn_s.status { padding: 0.125rem 1.5rem; background: rgba(101, 177, 45, 0.2); color: var(--green); } 
 .btn_s.status_wait { background: rgba(141, 141, 141, 0.2); color: var(--gray); } 
 .btn_s.status_cancle { background: rgba(216, 0, 39, 0.2); color: var(--red); } 
 .btn_s.status_flight { background: rgba(0, 99, 212, 0.2); color: var(--primary); } 
@@ -256,7 +261,7 @@ td.more{padding:0 1.875rem;}
 .btn_m span::before {content:'';display:block;position: absolute; top: 50%; transform: translateY(calc(-50% + 6px)); width: 3px; height: 3px; background: var(--info); border-radius: 50%;}
 .btn_m span::after {content:'';display:block;position: absolute; top: 50% ; transform: translateY(calc(-50% - 6px)); width: 3px; height: 3px; background: var(--info); border-radius: 50%;}
 .btn_m_wrap {position: relative;  width: 31px; height: 31px}
-.btn_m_wrap .select_list {display: none; box-shadow:0.25rem 0.25rem 0.875rem rgba(0, 0, 0, 0.1); position: absolute; z-index: 999;right: 0; bottom: 0; border: 1px solid var(--light); text-align: center; transform: translateY(100%); background: #fff; border-radius: 3px; width: 100px;}
+.btn_m_wrap .select_list {display: none; box-shadow:0.25rem 0.25rem 0.875rem rgba(0, 0, 0, 0.1); position: absolute; z-index: 999;right: 0; bottom: 0; border: 1px solid var(--light); text-align: center; transform: translateY(100%); background: #fff; border-radius: 3px; width: 120px;}
 .btn_m_wrap .select_list li {border-bottom: 1px solid var(--light);}
 .btn_m_wrap .select_list li:last-child {border-bottom: 1px solid var(--light);}
 .btn_m_wrap .select_list li a {display: block; padding: 0.625rem 1.875rem; text-decoration: none;}
@@ -316,6 +321,7 @@ td.more{padding:0 1.875rem;}
 .popup .inputbox input{padding:0.875rem;}
 .popup .textbox textarea {height:12rem}
 .popup .submit {grid-column: 1/3; margin: 1.6rem auto; text-align: center}
+.popup.gradeListUpdate form{grid-template-columns: repeat(1, 1fr);}
 	
 
 @media(max-width:1540px){

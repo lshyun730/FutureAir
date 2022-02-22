@@ -167,12 +167,12 @@ public class AdminCustomerService {
 	}
 	
 	// 팝업창 : 예약 전체내역 불러오기 위한 부분
-	public List<HashMap<String, String>> getCommonReservation(String id, String reservation_start, String reservation_end){
+	public ArrayList<HashMap<String, String>> getCommonReservation(String id, String reservation_start, String reservation_end){
 		HashMap<String, String> value = new HashMap<>();
 		value.put("customer_id", id);
 		value.put("reservation_start", reservation_start);
 		value.put("reservation_end", reservation_end);
-		List<HashMap<String, String>> result = dao.getCommonReservation(value);
+		ArrayList<HashMap<String, String>> result = dao.getCommonReservation(value);
 
 		return result;
 	}
@@ -242,9 +242,10 @@ public class AdminCustomerService {
 	}
 
 
-
-
-
+	public ArrayList<HashMap<String, String>> getscheduleByresernum(String reservation_num) {
+		ArrayList<HashMap<String, String>> getscheduleByresernum = dao.getscheduleByresernum(reservation_num);
+		return getscheduleByresernum;
+	}
 
 
 }

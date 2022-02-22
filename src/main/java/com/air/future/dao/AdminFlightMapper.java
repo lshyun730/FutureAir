@@ -20,7 +20,7 @@ public interface AdminFlightMapper {
 	public ArrayList<HashMap<String, String>> routeList(HashMap<String, String> searchList, RowBounds rb);
 	
 	// 비행일정 검색
-	public Route getRoute(String route_num);
+	public HashMap<String, String> getRoute(String route_num);
 
 	// 비행일정 추가
 	public int insertFlight(HashMap<String, String> routeForm);
@@ -31,9 +31,14 @@ public interface AdminFlightMapper {
 	// 비행일정 삭제
 	public int deleteRoute(String route_num);
 	
+	// 비행번호의 예약된 갯수
+	public int getReservationCountByRoutrnum(String route_num);
+	
 	// 비행기 리스트 검색
 	public ArrayList<Airplane> getAirplaneList();
 	
+	// 비행일정상세 - 예약고객리스트
+	public ArrayList<HashMap<String, String>> getReservationByRoutenum(String route_num);
 	
 	
 // 예약현황	
@@ -45,10 +50,10 @@ public interface AdminFlightMapper {
 	public ArrayList<HashMap<String, String>> reservationList(HashMap<String, String> searchList, RowBounds rb);
 	
 	// 예약 삭제 - 스케줄 테이블
-	public void deleteSchedule(String reservation_num);
+	// public void deleteSchedule(String reservation_num);
 	
 	// 예약 삭제 - 예약 테이블
-	public int deleteReservation(String reservation_num);
+	public int reservationCancle(String reservation_num);
 
 	
 	
@@ -59,5 +64,7 @@ public interface AdminFlightMapper {
 	
 	// 대륙 리스트 검색
 	public ArrayList<String> continentsList();
+
+
 
 }

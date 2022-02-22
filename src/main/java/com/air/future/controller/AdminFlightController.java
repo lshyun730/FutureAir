@@ -59,36 +59,49 @@ public class AdminFlightController {
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total); // 페이징처리
 		ArrayList<ArrayList<Destination>> destinationList =  service.destinationList(); // 지역리스트
 		ArrayList<HashMap<String, String>> routeList = service.routeList(searchList, navi); // 검색된 비행일정리스트
-		ArrayList<Airplane> planeList = service.getAirplaneList(); // 비행기종류 리스트
 		
 		model.addAttribute("searchMap", searchList);
 		model.addAttribute("destinationList", destinationList);
 		model.addAttribute("routeList", routeList);
-		model.addAttribute("planeList", planeList);
 		model.addAttribute("navi", navi);
 		
 		return "admin/flight/flightList";
 	}
 	
-	// 비행일정 수정이동
+	// 비행일정 수정 이동
 	@RequestMapping(value = "flightUpdateForm", method = RequestMethod.GET)
 	public String flightUpdateForm(String route_num, Model model) {
 		ArrayList<ArrayList<Destination>> destinationList =  service.destinationList(); // 지역리스트
-		Route route = service.getRoute(route_num); // 수정할 비행일정 정보
+		HashMap<String, String>  route = service.getRoute(route_num); // 수정할 비행일정 정보
 		
-		model.addAttribute("destinationList", destinationList);
+		model.addAttribute("destinationList", destinationList); 
 		model.addAttribute("route", route);
 		return "admin/flight/flightUpdate";
 	}
 	
 	// 비행일정 상세
 	@RequestMapping(value = "flightView", method = RequestMethod.GET)
-	public String flightView(String route_num, Model model) {
-		Route route = service.getRoute(route_num); // 상세 확인할 비행일정 정보
-		
-		model.addAttribute("route", route);
+	public String flightView(@RequestParam(value="page", defaultValue="1") int page, String route_num, Model model) {
+		int total = service.getReservationByRoutenum(route_num).size(); // 검색된리스트갯수
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total); // 페이징처리
+		HashMap<String, String>  route = service.getRoute(route_num); // 상세 확인할 비행일정 정보
+		ArrayList<HashMap<String, String>> reservationList = service.getReservationByRoutenum(route_num); // 비행번호의 예약 리스트
+		model.addAttribute("route", route); 
+		model.addAttribute("reservationList", reservationList);
+		model.addAttribute("navi", navi);
 		return "admin/flight/flightView";
 	}
+	
+	// 비행일정 삽입 이동
+	@RequestMapping(value = "flightInsertForm", method = RequestMethod.GET)
+	public String flightView(Model model) {
+		ArrayList<ArrayList<Destination>> destinationList =  service.destinationList(); // 지역리스트
+		ArrayList<Airplane> planeList = service.getAirplaneList(); // 비행기종류 리스트
+		model.addAttribute("destinationList", destinationList);
+		model.addAttribute("planeList", planeList);
+		return "admin/flight/flightInsert";
+	}
+	
 	
 	// 비행일정 삽입
 	@RequestMapping(value = "flightInsert", method = RequestMethod.POST)
@@ -113,6 +126,7 @@ public class AdminFlightController {
 	public int flightDelete(HttpServletRequest request) {
 		String route_num = request.getParameter("route_num"); 
 		int result = service.deleteRoute(route_num); // 비행일정삭제
+		System.out.println(result);
 		return result;
 	}
 	
@@ -122,6 +136,7 @@ public class AdminFlightController {
 	public int deleteRoute(HttpServletRequest request) {
 		String[] deleteList = request.getParameterValues("deleteList");
 		int result = service.deleteRouteList(deleteList); // 비행일정리스트 삭제
+		System.out.println(result);
 		return result;
 	}
 	
@@ -170,21 +185,21 @@ public class AdminFlightController {
 	}
 	
 	// 예약 삭제
-	@RequestMapping(value = "reservationDelete", method = RequestMethod.POST)
+	@RequestMapping(value = "reservationCancle", method = RequestMethod.POST)
 	@ResponseBody
 	public int reservationDelete(HttpServletRequest request) {
 		String route_num = request.getParameter("reservation_num");
-		int result = service.deleteReservation(route_num); // 예약삭제
+		int result = service.reservationCancle(route_num); // 예약취소
 		return result;
 	}
 	
 	
 	// 예약리스트 삭제
-	@RequestMapping(value = "reservationDeleteList", method = RequestMethod.POST)
+	@RequestMapping(value = "reservationCancleList", method = RequestMethod.POST)
 	@ResponseBody
 	public int deleteReservation(HttpServletRequest request, Model model) {
 		String[] deleteList = request.getParameterValues("deleteList");
-		int result = service.deleteReservation(deleteList); // 예약리스트 삭제
+		int result = service.reservationCancleList(deleteList); // 예약리스트 삭제
 		return result;
 	}
 		

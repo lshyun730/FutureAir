@@ -60,8 +60,7 @@ public interface AdminCustomerMapper {
 	public String mileageFUsable(String id);
 	// 회원 마일리지 내역
 	public List<HashMap<String, String>> mileageBalance(String id);
-	
-	
+
 	// 팝업창 : 회원정보 수정하기에서 회원정보 가져오기(customerUpdate.jsp)
 	public Customer userInfoFind(String id);
 	// 팝업창 : 회원정보 수정하기에서 회원정보 수정하기(customerUpdate.jsp)
@@ -73,7 +72,7 @@ public interface AdminCustomerMapper {
 	// 팝업창 : 회원 등급 수정하기 부분의 회원등급 수정하기(customerGradeUpdate.jsp)
 	public int customerGradeChange(Grade gradeSet);
 	
-	
+
 	// 회원 등급 삭제하기 전 삭제할 회원등급에 있는 사람 회원등급 낮추기
 	public int gradeDown(ArrayList<String> values);
 	// 회원 등급 삭제하기
@@ -85,7 +84,7 @@ public interface AdminCustomerMapper {
 	// 팝업창 : 예약 전체내역 불러오기 위한 페이징 처리 부분
 	public int reservationGetTotal(HashMap<String, String> value);
 	// 팝업창 : 예약 내역 불러오기 위한 부분
-	public List<HashMap<String, String>> getCommonReservation(HashMap<String, String> value);
+	public ArrayList<HashMap<String, String>> getCommonReservation(HashMap<String, String> value);
 	// 팝업창: 예약 세부내역 불러오기 위한 Payment부분
 	public String getPayment(String reservation_num);
 	// 팝업창: 예약 세부내역 불러오기 위한 Schedule부분
@@ -98,6 +97,10 @@ public interface AdminCustomerMapper {
 	public String getName(String id);
 	// 팝업창에 필요한 회원 이름과 등급 가져오기
 	public Customer getCustomerNG(String id);
+	
+	// 회원정보상세
+	public ArrayList<HashMap<String, String>> getscheduleByresernum(String reservation_num);
+
 
 	
 	

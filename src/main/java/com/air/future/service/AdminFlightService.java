@@ -48,8 +48,8 @@ public class AdminFlightService {
 	}
 	
 	// 비행일정 검색
-	public Route getRoute(String route_num) {
-		Route route = dao.getRoute(route_num);
+	public HashMap<String, String>  getRoute(String route_num) {
+		HashMap<String, String>  route = dao.getRoute(route_num);
 		return route;
 	}
 	
@@ -95,6 +95,14 @@ public class AdminFlightService {
 		ArrayList<Airplane> planeList = dao.getAirplaneList();
 		return planeList;
 	}
+	
+	// 비행일정상세 - 예약고객리스트
+	public ArrayList<HashMap<String, String>> getReservationByRoutenum(String route_num) {
+		ArrayList<HashMap<String, String>> reservationList = dao.getReservationByRoutenum(route_num);
+		return reservationList;
+	}
+
+	
 
 	
 	
@@ -115,17 +123,17 @@ public class AdminFlightService {
 		return total;
 	}
 
-	// 예약 선택삭제
-	public int deleteReservation(String reservation_num) {
-		int result = dao.deleteReservation(reservation_num);
+	// 예약 선택취소
+	public int reservationCancle(String reservation_num) {
+		int result = dao.reservationCancle(reservation_num);
 		return result;
 	}
 
-	// 예약 선택삭제 리스트
-	public int deleteReservation(String[] deleteList) {
+	// 예약 선택 리스트 취소 
+	public int reservationCancleList(String[] deleteList) {
 		int result = 0;
 		for (String reservation_num : deleteList) {
-			result = dao.deleteReservation(reservation_num);
+			result = dao.reservationCancle(reservation_num);
 		}
 		return result;
 	}
@@ -143,7 +151,7 @@ public class AdminFlightService {
 		return destinationList;
 	}
 
-	
+
 
 
 }

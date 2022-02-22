@@ -15,7 +15,7 @@
 		        <div class="flex_content_header">
 		            <h2>회원정보</h2>
 		            <div class="action">
-		                <button class="btn_s dropdown">상세검색<span class="icon"><i class="fas fa-chevron-down"></i></span></button>
+		                <button class="btn_s dropdown btn_search_detail">상세검색<span class="icon"><i class="fas fa-chevron-down"></i></span></button>
 		            </div>
 		        </div>
 		        <!-- content header E -->   
@@ -181,6 +181,10 @@ function actionDelete(customer_id){
 		alert("삭제에 실패하였습니다.");
 	}
 }
+
+//상세검색
+const btnSearchDetail = document.querySelector(".btn_search_detail");
+btnSearchDetail.addEventListener("click", searchDetail);
 
 //액션 이외 선택시 액션 닫힘
 document.addEventListener('click', () => {;

@@ -1,6 +1,5 @@
 package com.air.future.controller;
 
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.air.future.service.HomeControllerService;
 
-@Transactional
+
 @Controller
 public class HomeController {
 	
@@ -30,14 +29,12 @@ public class HomeController {
 	}
 	
 	
-	
-	
-	
 	// 로그인
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String login() {
 		return "customer/login";
 	}
+  
 	// 로그인 액션
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String loginAction(@RequestParam(value="id", defaultValue = "") String id
@@ -51,6 +48,7 @@ public class HomeController {
 		model.addAttribute("errorMsg", "아이디 혹은 비밀번호가 잘못되었습니다.");
 		return "customer/login";
 	}
+  
 	// 로그아웃
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
@@ -59,19 +57,18 @@ public class HomeController {
 	}
 	
 	
-	
-	
-	
-	// 회원가입
+	// 회원가입 - 회원동의
 	@RequestMapping(value = "join", method = RequestMethod.GET)
 	public String join() {
 		return "customer/joinAgree";
 	}
-	// 회원가입폼 이동
+
+	// 회원가입 - 정보입력
 	@RequestMapping(value = "joinForm", method = RequestMethod.GET)
 	public String joinForm() {
 		return "customer/joinForm";
 	}
+  
 	// 회원가입 ID중복 AJAX 처리
 	@ResponseBody
 	@RequestMapping(value = "validateIdAjax", method = RequestMethod.GET)
@@ -80,6 +77,7 @@ public class HomeController {
 		int result = service.validateIdAjax(id);
 		return result;
 	}
+  
 	// 회원가입 처리
 	@RequestMapping(value = "joinForm", method = RequestMethod.POST)
 	public String joinForm(@RequestParam(value="customer_id", defaultValue = "") String customer_id
@@ -104,8 +102,11 @@ public class HomeController {
 		}
 
 	}
+  
 	/*
 	// 회원가입 완료 창
+	
+	// 회원가입 - 완료
 	@RequestMapping(value = "joinDone", method = RequestMethod.GET)
 	public String joinDone(Model model) {
 		return "customer/joinDone";

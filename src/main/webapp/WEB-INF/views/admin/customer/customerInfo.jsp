@@ -37,6 +37,12 @@
                     <h2>기본정보</h2>
                     <!-- table S --> 
                     <table class="table">
+                    	<colgroup>
+                    		<col width="20%">
+                    		<col width="30%">
+                    		<col width="20%">
+                    		<col width="30%">
+                    	</colgroup>
                         <tr>
                             <th>이름</th>
                             <td>${customerList.customer_name }</td>
@@ -79,9 +85,15 @@
                 <section class="customer_content">
                     <h2>사용정보</h2>
                     <table class="table">
+                    	<colgroup>
+                    		<col width="20%">
+                    		<col width="30%">
+                    		<col width="20%">
+                    		<col width="30%">
+                    	</colgroup>
                         <tr>
                             <th>마일리지</th>
-                            <td><fmt:formatNumber value="${mileage }" pattern="#,###" /></td>
+                            <td><fmt:formatNumber value="${mileage}" pattern="#,###" /></td>
                             <th>총결제금액</th>
                             <td><fmt:formatNumber value="${customerFullPay }" pattern="#,###" />원</td>
                         </tr>

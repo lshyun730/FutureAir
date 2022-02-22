@@ -33,6 +33,28 @@
         <!-- customer contents S -->  
         <div class="customer_contents">
             <div class="inner">
+            <!-- customer content S -->  
+                <section class="customer_content">
+                    <h2>예약내역</h2>
+                    <!-- table S --> 
+                    <table class="table">
+                    	<colgroup>
+                    		<col width="20%">
+                    		<col width="30%">
+                    		<col width="20%">
+                    		<col width="30%">
+                    	</colgroup>
+                    	<fmt:parseDate value="${scheduleList[0].DEPARTURE_DATE}" var="date" pattern="yyyy-mm-dd"/>
+                        <tr>
+                             <th>예약번호</th>
+                             <td>${scheduleList[0].RESERVATION_NUM }</td>
+                             <th>예약날짜</th>
+                             <td><fmt:formatDate value="${date}" pattern="yyyy-MM-dd"/></td>
+                        </tr>
+                    </table>
+                    <!-- table E --> 
+                </section>
+                <!-- customer content E -->  
                 <!-- customer content S -->  
                 <section class="customer_content">
                     <h2>예약내역상세</h2>
@@ -40,33 +62,26 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>예약번호</th>
                                 <th>이름</th>
                                 <th>여권번호</th>
-                                <th>결제가격</th>
+                                <th>분류</th>
                                 <th>여정안내서</th>
                             </tr>
                         </thead>
                         <tbody>
-                        	<c:forEach var="schedule" items="${scheduleList }" varStatus="status">
-	                            <tr>
-	                                <td>${reservationNum }</td>
-	                                <td>${schedule.passenger_name }</td>
-	                                <td>${schedule.passport_num }</td>
-	                                <td>
-	                                	<c:choose>
-	                                		<c:when test="${schedule.passenger_name eq name && status.index eq '0' }">
-	                                			<fmt:formatNumber value="${payment }" pattern="#,###" />원
-	                                		</c:when>
-	                                		<c:otherwise>-</c:otherwise>
-	                                	</c:choose>
-	                                </td>
-	                                <td>
-	                                    <button class="btn_s more"><span>출력</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-	                                    <button class="btn_s more"><span>PDF</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-	                                    <button class="btn_s more"><span>이메일</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
-	                                </td>
-	                            </tr>
+                        	<c:forEach var="schedule" items="${scheduleList}" varStatus="status">
+                        		<c:if test="${schedule.TYPE eq '출발' }">
+		                            <tr>
+		                                <td>${schedule.PASSENGER_NAME }</td>
+		                                <td>${schedule.PASSPORT_NUM }</td>
+		                                <td>${schedule.CUSTOMER_TYPE }</td>
+		                                <td>
+		                                    <button class="btn_s more"><span>출력</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+		                                    <button class="btn_s more"><span>PDF</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+		                                    <button class="btn_s more"><span>이메일</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+		                                </td>
+		                            </tr>
+                        		</c:if>
                             </c:forEach>
                         </tbody>
                     </table>
@@ -92,38 +107,33 @@
                             </tr>
                         </thead>
                         <tbody>
-
-                            <c:forEach var="router" items="${getRoute }" varStatus="status">
-	                            <tr>
-	                                <td>
-	                                	<fmt:parseDate value="${router.departure_date }" var="d_date" pattern="yyyy-mm-dd HH:mm"/>
-	                                	<fmt:formatDate value="${d_date }" pattern="yyyy-MM-dd"/>
-	                                </td>
-	                                <td class="flight_info">
-	                                    <div class="from">${router.departure_name }
-	                                    	<span>
-												<fmt:parseDate value="${router.departure_date }" var="d_time" pattern="yyyy-mm-dd HH:mm"/>
-                            					<fmt:formatDate value="${d_time }" pattern="HH:mm"/>
-	                                    	</span>
-	                                    </div>
-	                                    <div class="to">${router.arrival_name }
-	                                    	<span>
-	                                    		<fmt:parseDate value="${router.arrival_date }" var="a_time" pattern="yyyy-mm-dd HH:mm"/>
-                            					<fmt:formatDate value="${a_time }" pattern="HH:mm"/>
-	                                    	</span>
-	                                    </div>
-	                                    <div class="direction"></div>
-	                                </td>
-	                                <td>${router.airplane_id }</td>
-	                                <td>${router.airplane.airplane_model }</td>
-	                                	<td>
-	                                		<c:forEach var="schedule" items="${scheduleList }" varStatus="status">
-		                                		<c:if test="${schedule.route_num eq router.route_num }">
-		                                			${schedule.seat_class }<br>
-		                                		</c:if>
-	                                		</c:forEach>
-	                                	</td>
-	                            </tr>
+                            <c:forEach var="schedule" items="${scheduleList }" varStatus="status">
+                            	<c:if test="${schedule.ID eq id}">
+		                            <tr>
+		                                <td>
+		                                	<fmt:parseDate value="${schedule.DEPARTURE_DATE}" var="d_date" pattern="yyyy-mm-dd HH:mm"/>
+		                                	<fmt:formatDate value="${d_date}" pattern="yyyy-MM-dd"/>
+		                                	<p>${schedule.TYPE }</p>
+		                                </td>
+		                                <td class="flight_info">
+		                                    <div class="from">${schedule.DEPARTURE_NAME }
+		                                    	<span>
+	                            					<fmt:formatDate value="${d_date }" pattern="HH:mm"/>
+		                                    	</span>
+		                                    </div>
+		                                    <div class="to">${schedule.ARRIVAL_NAME }
+		                                    	<span>
+		                                    		<fmt:parseDate value="${schedule.ARRIVAL_DATE }" var="a_time" pattern="yyyy-mm-dd HH:mm"/>
+	                            					<fmt:formatDate value="${a_time }" pattern="HH:mm"/>
+		                                    	</span>
+		                                    </div>
+		                                    <div class="direction"></div>
+		                                </td>
+		                                <td><a href="javascript:popupOpen('flightView?route_num=${route.ROUTE_NUM}', 1000, 800)">${schedule.ROUTE_NUM }</a></td>
+		                                <td>${schedule.AIRPLANE_ID }</td>
+	                                	<td>${schedule.SEAT_CLASS }</td>
+		                            </tr>
+	                            </c:if>
 							</c:forEach>
 
                         </tbody>

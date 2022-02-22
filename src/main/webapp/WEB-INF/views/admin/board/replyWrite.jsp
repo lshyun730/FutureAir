@@ -20,13 +20,13 @@
             <div class="inputbox no_icon width100">
                 <p class="inputbox_title">제목</p>
                 <div class="inputbox_input">
-                    <input type="text" placeholder="제목을 입력해주세요" name="title" id="title">
+                    <input type="text" name="title" id="title" readonly>
                 </div>
             </div>
             <div class="inputbox">
                 <p class="inputbox_title">게시판</p>
                 <div class="inputbox_input selectbox">
-                    <select name="board_name" onchange="checkBoardName(this)" id="board_name">
+                    <select name="board_name" onchange="checkBoardName(this)" id="board_name" >
                     	<c:forEach var="board" items="${boardList}">
 							<option value="${board}" <c:if test="${board eq board_name}">selected="selected"</c:if> >${board}</option>		                  
                     	</c:forEach>

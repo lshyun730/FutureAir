@@ -224,7 +224,7 @@
 	</insert>
 	
 
-	
+
 	<!-- 팝업창 : 회원정보 수정하기에서 회원정보 가져오기(customerUpdate.jsp) -->
 	<select id="userInfoFind" parameterType="string" resultType="customer">
 		select *
@@ -618,6 +618,63 @@
 		from reservation_fa
 		<where>
 			reservation_num = #{reservation_num}
+		</where>
+
+	</update>
+
+	<!-- 회원 예약내역 리스트 -->
+	<select id="getCommonReservation" parameterType="hashmap" resultType="hashmap">
+		select to_char(r.reservation_date, 'YYYY-MM-DD') reservation_date, r.reservation_num, s.passenger_name, rou.departure_name, rou.arrival_name, to_char(rou.departure_date, 'YYYY-MM-DD') departure_date,  r.reservation_state, r.payment
+		from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
+		where r.reservation_num = s.reservation_num
+		and rou.route_num = s.route_num
+		and c.customer_id = s.customer_id
+		and r.customer_id = #{customer_id}
+		and s.type = '출발'
+		<if test="!reservation_start.equals('')">
+			and reservation_date <![CDATA[>=]]> to_date(#{reservation_start}, 'YYYY-MM-DD')
+		</if>
+		<if test="!reservation_end.equals('')">
+			and reservation_date <![CDATA[<=]]> to_date(#{reservation_end}, 'YYYY-MM-DD') + 1			
+		</if>
+		order by r.reservation_date
+	</select>
+	
+	<!-- 회원 예약내역 리스트 갯수 -->
+	<select id="reservationGetTotal" parameterType="hashmap" resultType="int">
+		select count(*)
+		from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
+		where r.reservation_num = s.reservation_num
+		and rou.route_num = s.route_num
+		and c.customer_id = s.customer_id
+		and r.customer_id = #{customer_id}
+		and s.type = '출발'
+		<if test="!reservation_start.equals('')">
+			and reservation_date <![CDATA[>=]]> to_date(#{reservation_start}, 'YYYY-MM-DD')
+		</if>
+		<if test="!reservation_end.equals('')">
+			and reservation_date <![CDATA[<=]]> to_date(#{reservation_end}, 'YYYY-MM-DD') + 1			
+		</if>
+	</select>
+	
+	<!-- 예약내역 상세 -->
+	<select id="getscheduleByresernum" parameterType="String" resultType="hashmap">
+		select r.*, s.passenger_name, s.type, s.seat_class, s.customer_type, s.passport_num, s.customer_id id, rou.departure_date, rou.arrival_date, rou.departure_name, rou.arrival_name, rou.route_num, a.airplane_type, a.airplane_id	
+	    from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c, airplane_fa a
+		where r.reservation_num = s.reservation_num
+			and rou.route_num = s.route_num
+			and c.customer_id = r.customer_id
+		    and r.reservation_num = #{reservation_num}
+		    and a.airplane_id = rou.airplane_id
+		order by departure_date
+	</select>
+
+	<!-- 팝업창에 필요한 회원 이름과 등급 가져오기 -->
+	<select id="getCustomerNG" parameterType="string" resultType="customer">
+		select customer_name, customer_grade
+		from customer_fa
+		<where>
+			customer_id = #{customer_id}
 		</where>
 	</select>
 	

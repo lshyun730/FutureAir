@@ -41,8 +41,10 @@
 	</select>
 	
 	<!-- 비행일정 검색 -->
-	<select id="getRoute" parameterType="String" resultType="route">
-		select * from route_fa where route_num = #{route_num}
+	<select id="getRoute" parameterType="String" resultType="HashMap">
+		select * from route_fa r, airplane_fa a 
+			where r.route_num = #{r.route_num}
+			and r.airplane_id = a.airplane_id
 	</select>
 	
 	<!-- 비행일정 추가 -->
@@ -82,10 +84,23 @@
 		where route_num = #{route_num}
 	</delete>
 	
+	<!-- 비행번호의 예약된 갯수 -->
+	<select id="getReservationCountByRoutrnum" resultType="int" parameterType="String">
+		select count(*) from schedule_fa where route_num = #{route_num}
+	</select>
+	
+	
 
 	<!-- 비행기 리스트 검색 -->
 	<select id="getAirplaneList" resultType="airplane">
 		select * from airplane_fa
+	</select>
+	
+	<!-- 비행일정상세 - 예약현황 -->
+	<select id="getReservationByRoutenum" parameterType="String" resultType="HashMap">
+		select * from reservation_fa r, schedule_fa s
+		where r.reservation_num = s.reservation_num
+		and s.route_num = #{route_num}
 	</select>
 	
 
@@ -93,12 +108,12 @@
    <!-- 예약일정리스트 -->
    <select id="reservationList" parameterType="HashMap" resultType="HashMap">
    	select a.*,  case when b.count = '1' then '편도'when b.count = '2' then '왕복' else '다구간' end as reservation_type  from 
-		(select s.reservation_num, c.customer_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment
-		    from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
-		    where r.reservation_num = s.reservation_num 
-		    and s.route_num = rou.route_num
-		    and c.customer_id = r.customer_id
-		    and c.customer_name = s.passenger_name
+    (select s.reservation_num, r.customer_id, s.passenger_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment, r.reservation_state
+        from reservation_fa r, schedule_fa s, route_fa rou
+        where r.reservation_num = s.reservation_num 
+        and s.route_num = rou.route_num
+        and s.customer_id = r.customer_id
+        and s.type = '출발'
 		    <if test="departure_date_start != ''">
             and to_char(rou.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
 			</if>
@@ -121,7 +136,7 @@
 			and c.customer_name like  '%'||#{customer_name}||'%'
 			</if>
 		    and s.type = '출발'
-		group by s.reservation_num, c.customer_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment) a,
+		group by s.reservation_num, r.customer_id,  s.passenger_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment, r.reservation_state) a,
 		(select reservation_num, count(*) count from (
 		    select s.reservation_num, s.type
 		            from reservation_fa r, schedule_fa s
@@ -135,11 +150,11 @@
 	<!-- 예약일정갯수 -->
 	<select id="getReservationTotal" parameterType="HashMap" resultType="int">
 		select count(*)
-		    from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
-		    where r.reservation_num = s.reservation_num 
-		    and s.route_num = rou.route_num
-		    and c.customer_id = r.customer_id
-		    and c.customer_name = s.passenger_name
+		    from reservation_fa r, schedule_fa s, route_fa rou
+	        where r.reservation_num = s.reservation_num 
+	        and s.route_num = rou.route_num
+	        and s.customer_id = r.customer_id
+	        and s.type = '출발'
 		    <if test="departure_date_start != ''">
             and to_char(rou.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
 			</if>
@@ -164,23 +179,17 @@
 		    and s.type = '출발'
 	</select>
 	
-	<!-- 예약삭제 (schedule_fa) -->
-	<delete id="deleteSchedule" parameterType="String">
-		delete from schedule_fa
+	<!-- 예약취소 (reservation_fa) -->
+	<update id="reservationCancle" parameterType="String">
+		update reservation_fa
+		set reservation_state = '예약취소'
 		where reservation_num = #{reservation_num}
-	</delete>
-	
-	<!-- 예약삭제 (reservation_fa) -->
-	<delete id="deleteReservation" parameterType="String">
-		delete from reservation_fa
-		where reservation_num = #{reservation_num}
-	</delete>
+	</update>
 	
 	
 	
 	
 <!-- 공통 -->	
-
 	<!-- 취향지리스트 -->
 	<select id="destinationList" resultType="destination" parameterType="String">
 		select * from destination_fa

@@ -15,7 +15,7 @@
 		        <div class="flex_content_header">
 		            <h2>게시물관리</h2>
 		            <div class="action">
-		                <button class="btn_s dropdown">상세검색<span class="icon"><i class="fas fa-chevron-down"></i></span></button>
+		                <button class="btn_s dropdown btn_search_detail">상세검색<span class="icon"><i class="fas fa-chevron-down"></i></span></button>
 		            </div>
 		        </div>
 		        <!-- content header E -->   
@@ -110,21 +110,23 @@
 			                </c:if>
 		                    </td>
 		                    <td>
-		                        <button class="btn_s more">답변하기<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+		                        <button class="btn_s more" onclick="popupOpen('postWriteForm?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}')">답변하기
+		                        	<span class="icon"><i class="fas fa-chevron-right"></i></span>
+		                        </button>
 		                    </td>
 		                    <td>${post.POST_DATE }</td>
 		                    <td>${post.HITS }</td>
 		                    <td class="more">
-	                            <div class="btn_m_wrap" onclick="click_more(this)">
-	                                <div class="btn_m">
-	                                    <span></span>
-	                                </div>
-	                                <ul class="select_list">
-	                                    <li><a href="javascript:popupOpen('postUpdate?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}', 500, 600)">수정</a></li> 
-	                                    <li><a href="#">삭제</a></li> 
-	                                </ul>
-	                            </div>
-	                        </td>
+		                            <div class="btn_m_wrap" onclick="click_more(this)">
+		                                <div class="btn_m">
+		                                    <span></span>
+		                                </div>
+		                                <ul class="select_list">
+		                                    <li><a href="javascript:popupOpen('postUpdateForm?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}&writer=${post.WRITER}', 500, 600)">수정</a></li> 
+		                                    <li><a href="javascript:deletePost('${post.POST_INDEX}')">삭제</a></li> 
+		                                </ul>
+		                            </div>
+		                        </td>
 		                </tr>
 		                </c:forEach>
 		               
@@ -152,10 +154,11 @@
 <!-- footer S -->
 
 <script>
+/* 게시물 리스트 삭제 */
 function deleteAjax(deleteList) {
 	if(confirm("정말 삭제하시겠습니까?")){
 		 $.ajax({
-				url : 'deletePost',
+				url : 'deletePostList',
 				data : {
 					deleteList : deleteList
 				},
@@ -170,6 +173,30 @@ function deleteAjax(deleteList) {
 		 }); 				 
 	 }
 }
+
+/* 게시물 삭제 */
+function deletePost(post_index) {
+	if(confirm("정말 삭제하시겠습니까?")){
+		 $.ajax({
+				url : 'deletePost',
+				data : {
+					post_index : post_index
+				},
+				traditional : true, 
+				type : 'post',
+				success : function(data) {
+					if(data==1) {
+						alert('삭제에 성공하였습니다');		
+						location.reload();
+					}
+				}
+		 }); 				 
+	 }
+}
+
+//상세검색
+const btnSearchDetail = document.querySelector(".btn_search_detail");
+btnSearchDetail.addEventListener("click", searchDetail);
 
 
 //액션 이외 선택시 액션 닫힘
