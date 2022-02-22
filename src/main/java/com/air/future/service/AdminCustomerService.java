@@ -120,8 +120,8 @@ public class AdminCustomerService {
 	}
 	
 	// 모달창을 통한 회원 등급 추가하기
-	public int gradeAdd(String grade, String mileage_exp, String mileage_scope
-						, String mileage_ratio, String pay_scope, String pay_ratio, String promo_terms) {
+	public int gradeAdd(Grade gradeAll) {
+		/*
 		Grade gradeAll = new Grade();
 		gradeAll.setGrade(grade);
 		gradeAll.setMileage_exp(Integer.parseInt(mileage_exp));
@@ -130,6 +130,7 @@ public class AdminCustomerService {
 		gradeAll.setPay_scope(Integer.parseInt(pay_scope));
 		gradeAll.setPay_ratio(Integer.parseInt(pay_ratio));
 		gradeAll.setPromo_terms(Integer.parseInt(promo_terms));
+		*/
 		int result = dao.gradeAdd(gradeAll);
 		return result;
 	}
@@ -207,22 +208,9 @@ public class AdminCustomerService {
 	}
 
 	// 팝업창 : 회원정보 수정하기에서 회원정보 수정하기(customerUpdate.jsp)
-	public int userInfoChange(/*String customer_id, String customer_name, String customer_birth
-								, String customer_country, String customer_gender, String customer_grade
-								, String customer_email, String customer_phone, String customer_address*/
-								Customer customer) {
+	public int userInfoChange(Customer customer) {
 		customer.setCustomer_birth(customer.getCustomer_birth().replaceAll("[^0-9]",""));
-		/*
-		Customer customer = new Customer();
-		customer.setCustomer_id(customer_id);
-		customer.setCustomer_name(customer_name);
-		customer.setCustomer_birth(customer_birth.replaceAll("[^0-9]",""));
-		customer.setCustomer_country(customer_country);
-		customer.setCustomer_gender(customer_gender);
-		customer.setCustomer_grade(customer_grade);
-		customer.setCustomer_email(customer_email);
-		customer.setCustomer_phone(customer_phone);
-		customer.setCustomer_address(customer_address);*/
+
 		return dao.userInfoChange(customer);
 	}
 
@@ -232,18 +220,8 @@ public class AdminCustomerService {
 		return dao.customerGradeSet(grade);
 	}
 	// 팝업창 : 회원 등급 수정하기 부분의 회원등급 수정하기(customerGradeUpdate.jsp)
-	public int customerGradeChange(/*String grade, int mileage_scope, int mileage_ratio, int mileage_exp
-									, int pay_scope, int pay_ratio, int promo_terms*/
-									Grade gradeSet) {
-		/*
-		Grade gradeSet = new Grade();
-		gradeSet.setGrade(grade);
-		gradeSet.setMileage_scope(mileage_scope);
-		gradeSet.setMileage_ratio(mileage_ratio);
-		gradeSet.setMileage_exp(mileage_exp);
-		gradeSet.setPay_scope(pay_scope);
-		gradeSet.setPay_ratio(pay_ratio);
-		gradeSet.setPromo_terms(promo_terms);*/
+	public int customerGradeChange(Grade gradeSet) {
+
 		return dao.customerGradeChange(gradeSet);
 	}
 

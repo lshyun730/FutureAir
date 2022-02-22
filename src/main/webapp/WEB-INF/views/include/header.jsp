@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,7 +18,17 @@
 <section class="util">
 		<div class="inner">
 			<ul>
-				<li><a href="${pageContext.request.contextPath}/login">로그인</a></li>
+				<li>
+					<c:if test="${ empty userId }">
+						<a href="${pageContext.request.contextPath}/login">로그인</a>
+					</c:if>
+					<ul>
+						<c:if test="${!empty userId }">
+							<li><a href="${pageContext.request.contextPath}/mypage">마이페이지</a></li>
+							<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
+						</c:if>
+					</ul>
+				</li>
 				<li><a href="#">이벤트</a></li>
 				<li><a href="#">고객서비스</a></li>
 				<li><a href="#">한국어</a></li>

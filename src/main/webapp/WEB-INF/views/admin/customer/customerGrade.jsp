@@ -195,7 +195,7 @@
 	    <section class="modal" id="modal">
 	        <div class="modal_wrap">
 	            <h2>회원등급추가</h2>
-	            <form action="gradeAdd" method="post" class="create_grade" onsubmit='return gradeAdd();'>
+	            <form id="gradeAdd" class="create_grade" onsubmit='return gradeAddAjax();'>
 	                <div class="inputbox no_icon">
 	                    <p class="inputbox_title">등급이름</p>
 	                    <div class="inputbox_input">
@@ -260,55 +260,65 @@ document.addEventListener('click', () => {;
 
 
 
-	// 등급이름 중복체킹을 위한 전역변수
-	const gradeChecker = false;
+// 등급이름 중복체킹을 위한 전역변수
+const gradeChecker = false;
 
-	// 등급 추가하기
-	function gradeAdd(){
-		
-		const grade			= document.getElementById("grade");
-		const mileage_exp	= document.getElementById("mileage_exp");
-		const mileage_scope	= document.getElementById("mileage_scope");
-		const mileage_ratio	= document.getElementById("mileage_ratio");
-		const pay_scope		= document.getElementById("pay_scope");
-		const pay_ratio		= document.getElementById("pay_ratio");
-		const promo_terms 	= document.getElementById("promo_terms");
+// 등급 추가하기
+function gradeAddAjax(){
+	
+	const grade			= document.getElementById("grade");
+	const mileage_exp	= document.getElementById("mileage_exp");
+	const mileage_scope	= document.getElementById("mileage_scope");
+	const mileage_ratio	= document.getElementById("mileage_ratio");
+	const pay_scope		= document.getElementById("pay_scope");
+	const pay_ratio		= document.getElementById("pay_ratio");
+	const promo_terms 	= document.getElementById("promo_terms");
 
-		if (gradeCheker == false){
-			alert("등급명이 중복입니다.");	return false;
-		}
-		
-		if (grade.value == "" || mileage_exp.value == "" || mileage_scope.value == "" || mileage_ratio.value == ""
-			|| pay_scope.value == "" || pay_ratio.value == "" || promo_terms.value == "") {
-			alert("값을 빠짐없이 입력해주시길 바랍니다."); 						return false;
-		}
-		
-		if(isNaN(mileage_exp.value) == true || isNaN(mileage_scope.value) == true || isNaN(mileage_ratio.value) == true
-				|| isNaN(pay_scope.value) == true || isNaN(pay_ratio.value) == true){
-			alert("등급 명칭을 제외한 나머지는 숫자로 입력해 주시길 바랍니다."); 		return false;
-		}
-		
-		return true;
-	}	
-
-	//등급 명칭 중복 검사하기
-	function checkGrade(){
-		const inputGrade = $("#grade").val();
-		$.ajax({
-			data 	: { grade : inputGrade },
-			url		: "checkGradeName",
-			type	: "post",
-			dataType : "text",
-			success	: function(data) {
-					if (data != '0'){
-						gradeCheker = false;
-					} else {
-						gradeCheker = true;
-					}
+	if (gradeCheker == false){
+		alert("등급명이 중복입니다.");	return false;
+	}
+	
+	if (grade.value == "" || mileage_exp.value == "" || mileage_scope.value == "" || mileage_ratio.value == ""
+		|| pay_scope.value == "" || pay_ratio.value == "" || promo_terms.value == "") {
+		alert("값을 빠짐없이 입력해주시길 바랍니다."); 						return false;
+	}
+	
+	if(isNaN(mileage_exp.value) == true || isNaN(mileage_scope.value) == true || isNaN(mileage_ratio.value) == true
+			|| isNaN(pay_scope.value) == true || isNaN(pay_ratio.value) == true){
+		alert("등급 명칭을 제외한 나머지는 숫자로 입력해 주시길 바랍니다."); 		return false;
+	}
+	
+	 $.ajax({
+			url : 'gradeAddAjax',
+			data : $("#gradeAdd").serialize(),
+			traditional : true, 
+			type : 'post',
+			success : function(data) {
+				if(data == 1) {
+					alert('등급 추가가 완료되었습니다.');
+					location.reload();
 				}
 			}
-		})
-	}
+	 }); 				 
+}	
+
+//등급 명칭 중복 검사하기
+function checkGrade(){
+	const inputGrade = $("#grade").val();
+	$.ajax({
+		data 	: { grade : inputGrade },
+		url		: "checkGradeName",
+		type	: "post",
+		dataType : "text",
+		success	: function(data) {
+				if (data != '0'){
+					gradeCheker = false;
+				} else {
+					gradeCheker = true;
+				}
+		}
+	})
+}
 
 //선택삭제
 function deleteAjax(deleteList) {

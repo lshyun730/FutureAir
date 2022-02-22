@@ -626,6 +626,7 @@
 		from schedule_fa
 		<where>
 			reservation_num = #{reservation_num}
+			and reservation_type = '출발'
 		</where>
 	</select>
 	

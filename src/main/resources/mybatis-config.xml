@@ -23,5 +23,6 @@
 		<mapper resource="mapper/AdminCustomerMapper.xml"/>
 		<mapper resource="mapper/AdminBoardMapper.xml"/>
 		<mapper resource="mapper/AdminMailMapper.xml"/>	
+		<mapper resource="mapper/HomeControllerMapper.xml"/>
 	</mappers>
 </configuration>

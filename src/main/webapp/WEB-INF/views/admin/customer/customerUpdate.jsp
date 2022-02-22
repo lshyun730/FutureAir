@@ -15,7 +15,7 @@
 <!-- popup S -->  
     <section class="popup" id="popup">
             <h2>회원수정</h2>
-            <form id="updateForm" class="update_customer" onsubmit="customerUpdateAjax();">
+            <form id="updateForm" class="update_customer" onsubmit="return customerUpdateAjax();">
 	            <div class="inputbox">
 	                <p class="inputbox_title">아이디</p>
 	                <div class="inputbox_input">
@@ -92,6 +92,7 @@
     </section>
     <!-- modal E -->  
 <script>
+/*
 	function customerUpdateSet(){
 		
 		const id = document.getElementById('customer_id').value;
@@ -113,7 +114,7 @@
 		return true;
 		
 	}
-
+*/
 
 
 	function customerUpdateAjax() {

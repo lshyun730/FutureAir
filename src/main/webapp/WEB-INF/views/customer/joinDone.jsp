@@ -12,10 +12,10 @@
         <li>정보입력</li>
         <li class="active">가입완료</li>
     </ul>
-    <h2><span class="name">홍길동</span>님 환영합니다! 회원가입이 완료되었습니다.</h2>
+    <h2><span class="name">${newId }(${newName })</span>님 환영합니다! 회원가입이 완료되었습니다.</h2>
     <div class="btn_wrap">
-        <button class="btn_primary light">홈으로</button>
-        <button class="btn_primary">로그인</button>
+        <button class="btn_primary light" onclick="location.href='/future'">홈으로</button>
+        <button class="btn_primary" onclick="location.href='login'">로그인</button>
     </div>
 </section>
 <!-- join E-->

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.air.future.dao.HomeControllerMapper">
+	
+	<!-- 일반 회원 로그인 -->
+	<select id="loginAction" parameterType="hashmap" resultType="int">
+		select count(*)
+		from customer_fa
+		<where>
+			customer_id = #{customer_id}
+			and customer_pw = #{customer_pw}
+		</where>
+	</select>
+	
+	<!-- AJAX : 회원가입 시 ID 중복 체킹하기 -->
+	<select id="validateIdAjax" parameterType="string" resultType="int">
+		select count(*)
+		from customer_fa
+		<where>
+			customer_id = #{customer_id}
+		</where>	
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="joinForm" parameterType="customer">
+		insert into
+		customer_fa(customer_id
+					, customer_pw
+					, customer_name
+					, customer_gender
+					, customer_country
+					, customer_email
+					, customer_address
+					, customer_phone
+					, customer_birth
+					, customer_grade
+					)
+		values(
+			#{customer_id}
+			, #{customer_pw}
+			, #{customer_name}
+			, #{customer_gender}
+			, #{customer_country}
+			, #{customer_email}
+			, #{customer_address}
+			, #{customer_phone}
+			, #{customer_birth}
+			, (select grade from customer_grade_fa
+				where promo_terms = (select min(promo_terms)
+                    				from customer_grade_fa))
+			)
+	</insert>
+	
+
+</mapper>
