@@ -135,7 +135,7 @@
 	                    <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
 	                </div>
 	            </div>
-	            <div class="inputbox">
+<%-- 	            <div class="inputbox">
 	                <p class="inputbox_title">출발지</p>
 	                <div class="inputbox_input selectbox">
 	                	<select name="departure_name" onchange="changeSelect(this)" id="departure_name">
@@ -158,17 +158,24 @@
 	                		<c:forEach var="continent" items="${destinationList}">
                 				<optgroup label="${continent[0].continents}">
                 				<c:forEach var="destination" items="${continent}">
-							        <option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.departure_name}">selected="selected"</c:if> >${destination.airport_name} / ${destination.airport_id}</option>
+							        <option value="${destination.airport_name}" <c:if test="${destination.airport_name eq searchMap.arrival_name}">selected="selected"</c:if> >${destination.airport_name} / ${destination.airport_id}</option>
                 				</c:forEach>
                 				</optgroup>
 					        </c:forEach>
 	                	</select>
 	                </div>
-	            </div>
+	            </div> --%>
 	            <div class="inputbox icon">
 	                <p class="inputbox_title">예약자 </p>
 	                <div class="inputbox_input">
-	                    <input type="text" placeholder="홍길동" name="customer_name">
+	                    <input type="text" placeholder="홍길동" name="customer_name" value="${searchMap.customer_name }">
+	                    <span class="inputbox_icon"><i class="fas fa-user"></i></span>
+	                </div>
+	            </div>
+	            <div class="inputbox icon">
+	                <p class="inputbox_title">예약번호 </p>
+	                <div class="inputbox_input">
+	                    <input type="text" placeholder="예약번호" name="reservation_num" value="${searchMap.reservation_num }">
 	                    <span class="inputbox_icon"><i class="fas fa-user"></i></span>
 	                </div>
 	            </div>
@@ -177,6 +184,7 @@
 	                    <input type="submit" value="검색" onclick="pagingFormSubmit(1)">
 	                </div>
 	            </div>
+	            
 	            <input type="hidden" name="page" id="page" />
 	        </form>
 	        <!-- search detail E -->   
@@ -186,10 +194,8 @@
 	                <tr>
 	                    <th><input type="checkbox" onclick="selectAll(this)"></th>
 	                    <th>예약번호</th>
-	                    <th>승객</th>
+	                    <th>예약자</th>
 	                    <th>출발일</th>
-	                    <th>출발지</th>
-	                    <th>도착지</th>
 	                    <th>타입</th>
 	                    <th>결제가격</th>
 	                    <th>예약일</th>
@@ -211,8 +217,6 @@
 	                    <td><a href="javascript:popupOpen('${pageContext.request.contextPath}/admin/customer/customerReservationDetail?id=${reservation.CUSTOMER_ID}&reservation_num=${reservation.RESERVATION_NUM}', 1000, 600)">${reservation.RESERVATION_NUM}</a></td>
 	                    <td>${reservation.PASSENGER_NAME}</td>
 	                 	<td><fmt:formatDate value="${departure_date}" pattern="yyyy-MM-dd" /></td>
-	                    <td>${reservation.DEPARTURE_NAME}</td>
-	                    <td>${reservation.ARRIVAL_NAME}</td>
 	                    <td>${reservation.RESERVATION_TYPE}</td>
 	                    <td><fmt:formatNumber value="${reservation.PAYMENT}" pattern="#,###"/> 원</td>
 	                    <td><fmt:formatDate value="${reservation_date}" pattern="yyyy-MM-dd" /></td>

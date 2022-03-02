@@ -25,7 +25,7 @@ public interface AdminFlightMapper {
 	// 비행일정 추가
 	public int insertFlight(HashMap<String, String> routeForm);
 		
-	// 비행일정 업데이트
+	// 비행일정 수정
 	public int updateFlight(HashMap<String, String> routeForm);	
 	
 	// 비행일정 삭제
@@ -49,9 +49,6 @@ public interface AdminFlightMapper {
 	// 예약현황 리스트 검색
 	public ArrayList<HashMap<String, String>> reservationList(HashMap<String, String> searchList, RowBounds rb);
 	
-	// 예약 삭제 - 스케줄 테이블
-	// public void deleteSchedule(String reservation_num);
-	
 	// 예약 삭제 - 예약 테이블
 	public int reservationCancle(String reservation_num);
 
@@ -64,6 +61,9 @@ public interface AdminFlightMapper {
 	
 	// 대륙 리스트 검색
 	public ArrayList<String> continentsList();
+
+	// 예약취소 시 마이너스 마일리지 
+	public void insertMileage(String reservation_num);
 
 
 

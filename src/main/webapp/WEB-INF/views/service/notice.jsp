@@ -1,6 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
-<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!-- header S -->    
 <%@include file ="../include/header.jsp" %>
@@ -26,22 +26,28 @@
     </div>
     <table class="table top_boder">
         <thead>
-            <th>번호</th>
-            <th>제목</th>
-            <th>등록일</th>
-            <th>조회수</th>
+        	<tr>
+	            <th>번호</th>
+	            <th>제목</th>
+	            <th>등록일</th>
+	            <th>조회수</th>
+        	</tr>
         </thead>
         <tbody>
-            <td>201</td>
-            <td>사회적 거리두기 강화 관련 국내선 항공권 환불 수수료 면제 안내</td>
-            <td>2022-03-01</td>
-            <td>101</td>
+        	<c:forEach var="post" items="${noticeList }">
+	        	<tr>
+		            <td>${post.post_index }</td>
+		            <td style="text-align: left;">${post.title }</td>
+		            <td>${post.post_date }</td>
+		            <td>${post.hits }</td>
+	        	</tr>
+        	</c:forEach>
         </tbody>
     </table>
 
     <div class="navi">
-        <a href="#" class="icon"><img src="${pageContext.request.contextPath}/resources/images/common/ico_first_prev.png" alt="첫페이지이동"></a>
-        <a href="#" class="icon"><img src="${pageContext.request.contextPath}/resources/images/common/ico_prev.png" alt="이전페이지이동"></a>
+        <a href="#" class="icon first_prev"></a>
+        <a href="#" class="icon prev"></a>
         <a href="#" class="active">1</a>
         <a href="#">2</a>
         <a href="#">3</a>
@@ -52,8 +58,8 @@
         <a href="#">8</a>
         <a href="#">9</a>
         <a href="#">10</a>
-        <a href="#" class="icon"><img src="${pageContext.request.contextPath}/resources/images/common/ico_next.png" alt="다음페이지이동"></a>
-        <a href="#" class="icon"><img src="${pageContext.request.contextPath}/resources/images/common/ico_last_next.png" alt="끝페이지이동"></a>
+        <a href="#" class="icon next"></a>
+        <a href="#" class="icon last_next"></a>
     </div>
 </section>
 <!-- notice E --> 

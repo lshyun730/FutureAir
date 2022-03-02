@@ -11,6 +11,11 @@
 		and arrival_name = #{arrival_name}
 	</select>
 	
+	<select id="getFlight" parameterType="String" resultType="HashMap">
+		select * from route_fa
+		where route_num = #{route_num}
+	</select>
+	
 	<select id="getWeekInfo" parameterType="HashMap" resultType="HashMap">
 		select to_char(b.dt, 'YYYY-MM-DD') departure_date , nvl(min(a.normal_price), 0) normal_price from 
 		    (select to_char(departure_date, 'YYYY-MM-DD') departure_date , min(normal_price) normal_price from route_fa
@@ -26,6 +31,11 @@
 		where to_char(b.dt, 'YYYY-MM-DD') = a.departure_date(+)
 		group by to_char(b.dt, 'YYYY-MM-DD')
 		order by to_char(b.dt, 'YYYY-MM-DD')
+	</select>
+	
+	
+	<select id="getCustomerInfo" parameterType="String" resultType="customer">
+		select * from customer_fa where customer_id = #{userId}
 	</select>
 
 </mapper>

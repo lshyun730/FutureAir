@@ -3,19 +3,21 @@ package com.air.future.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.air.future.service.AdminFlightService;
 import com.air.future.service.FlightService;
+import com.air.future.vo.Customer;
 import com.air.future.vo.Destination;
 
+@SessionAttributes("userId")
 @RequestMapping(value = "book")
 @Controller
 public class FlightController {
@@ -51,8 +53,14 @@ public class FlightController {
 	}
 	
 	// 항공권예약 - 고객정보입력
-	@RequestMapping(value = "passengerInfo", method = RequestMethod.GET)
-	public String passengerInfo() {
+	@RequestMapping(value = "passengerInfo", method = RequestMethod.POST)
+	public String passengerInfo(@RequestParam HashMap<String, String> bookForm, Model model, @ModelAttribute("userId") String userId) {
+		ArrayList<HashMap<String, String>> flightInfo = service.getRoute(bookForm);
+		Customer customer = service.getCustomerInfo(userId);
+		model.addAttribute("customer", customer);
+		model.addAttribute("bookForm", bookForm);
+		model.addAttribute("flightInfo", flightInfo);
+		System.out.println(bookForm);
 		return "book/bookInfoForm";
 	}
 	

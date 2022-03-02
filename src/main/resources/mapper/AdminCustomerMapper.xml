@@ -197,8 +197,9 @@
 		<where>
 			mileage_id = #{mileage_id}
 		</where>
-			order by mileage_date
+			order by mileage_date desc
 	</select>
+	
 	
 	<!-- 등급 추가 시 customer_grade_fa 테이블의 중복된 명칭 중복 여부 체킹하기 -->
 	<select id="gradeDuplication" parameterType="string" resultType="int">
@@ -329,6 +330,26 @@
 		where r.reservation_num = s.reservation_num
 		and rou.route_num = s.route_num
 		and c.customer_id = s.customer_id
+		and s.customer_id = r.customer_id
+		and r.customer_id = #{customer_id}
+		and s.type = '출발'
+		<if test="!reservation_start.equals('')">
+			and reservation_date <![CDATA[>=]]> to_date(#{reservation_start}, 'YYYY-MM-DD')
+		</if>
+		<if test="!reservation_end.equals('')">
+			and reservation_date <![CDATA[<=]]> to_date(#{reservation_end}, 'YYYY-MM-DD') + 1			
+		</if>
+		order by r.reservation_date desc
+	</select>
+	
+	<!-- 회원 예약내역 리스트 갯수 -->
+	<select id="reservationGetTotal" parameterType="hashmap" resultType="int">
+		select count(*)
+		from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
+		where r.reservation_num = s.reservation_num
+		and rou.route_num = s.route_num
+		and c.customer_id = s.customer_id
+		and s.customer_id = r.customer_id
 		and r.customer_id = #{customer_id}
 		and s.type = '출발'
 		<if test="!reservation_start.equals('')">
@@ -340,26 +361,9 @@
 		order by r.reservation_date
 	</select>
 	
-	<!-- 회원 예약내역 리스트 갯수 -->
-	<select id="reservationGetTotal" parameterType="hashmap" resultType="int">
-		select count(*)
-		from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
-		where r.reservation_num = s.reservation_num
-		and rou.route_num = s.route_num
-		and c.customer_id = s.customer_id
-		and r.customer_id = #{customer_id}
-		and s.type = '출발'
-		<if test="!reservation_start.equals('')">
-			and reservation_date <![CDATA[>=]]> to_date(#{reservation_start}, 'YYYY-MM-DD')
-		</if>
-		<if test="!reservation_end.equals('')">
-			and reservation_date <![CDATA[<=]]> to_date(#{reservation_end}, 'YYYY-MM-DD') + 1			
-		</if>
-	</select>
-	
 	<!-- 예약내역 상세 -->
 	<select id="getscheduleByresernum" parameterType="String" resultType="hashmap">
-		select r.*, s.passenger_name, s.type, s.seat_class, s.customer_type, s.passport_num, s.customer_id id, rou.departure_date, rou.arrival_date, rou.departure_name, rou.arrival_name, rou.route_num, a.airplane_type, a.airplane_id	
+		select r.*, s.passenger_name, s.passenger_gender,  s.type, s.seat_class, s.customer_type, s.passport_num, s.customer_id id, rou.departure_date, rou.arrival_date, rou.departure_name, rou.arrival_name, rou.route_num, a.airplane_model, a.airplane_id	
 	    from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c, airplane_fa a
 		where r.reservation_num = s.reservation_num
 			and rou.route_num = s.route_num

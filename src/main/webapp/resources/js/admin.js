@@ -16,7 +16,6 @@ function loginFormCheck() {
     }
 }
 
-
 /* 상세검색 submit */
 function pagingFormSubmit(currentPage) {
 	const form = document.getElementById("search_detail");
@@ -154,11 +153,6 @@ function searchDetail() {
 function modalOpen(){ document.getElementById("modal").style.display = 'flex'; }
 function modalClose(){ document.getElementById("modal").style.display = 'none'; }
 
-
-// 팝업창 오픈
-function popupCustomerOpen(link) {
-	window.open(link, '_blank', 'width=1000, height=800');
-}
 
 // 팝업창 오픈
 function popupOpen(link, width, height) {

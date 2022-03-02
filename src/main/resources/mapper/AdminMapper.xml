@@ -63,9 +63,9 @@
 		select to_char(b.dt, 'MM.DD') as reservation_date, nvl(sum(a.count), 0) count
 		from ( select to_char(reservation_date, 'YY-MM-DD') as reservation_date, count(reservation_num) as count
 		        from reservation_fa
-		        where reservation_date between to_date(add_months(sysdate,-12))
-		                                        and to_date(add_months(sysdate,0)) 
-		        group by reservation_date
+		        where reservation_date between to_date(sysdate - 5, 'YY-MM-DD' )
+		        	and to_date(sysdate + 1, 'YY-MM-DD') 
+		        group by reservation_date, to_char(reservation_date, 'YY-MM-DD')
 		    ) a
 		  , ( select to_date(sysdate - 4, 'YY-MM-DD') + level - 1 as dt
 		        from dual 
@@ -111,13 +111,13 @@
 	<select id="recentReservation" resultType="HashMap">
 		select * 
 		from (
-			select r.reservation_num, c.customer_name, rou.departure_name, rou.arrival_name, r.payment, r.reservation_date
+			select r.reservation_num, c.customer_name, to_char(rou.departure_date, 'YYYY-MM-DD') as departure_date, rou.arrival_name, r.payment, r.reservation_date, r.customer_id
 		    from reservation_fa r, schedule_fa s ,route_fa rou, customer_fa c
 		    where r.reservation_num = s.reservation_num
 		        and s.route_num = rou.route_num
 		        and c.customer_id = r.customer_id
-		        and c.customer_name = s.passenger_name
-		    group by r.reservation_num, c.customer_name, rou.departure_name, rou.arrival_name, r.payment, r.reservation_date
+		        and r.customer_id = s.customer_id
+		    group by r.reservation_num, c.customer_name, departure_date, rou.arrival_name, r.payment, r.reservation_date,r. customer_id
 		    order by r.reservation_date desc,  reservation_num desc)
 		where <![CDATA[rownum <=5]]>
 	</select>

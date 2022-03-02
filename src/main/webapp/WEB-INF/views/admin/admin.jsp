@@ -1,10 +1,98 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
-<!-- header S -->    
-<%@include file ="include/header.jsp" %>
-<!-- header E -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
+    <title>미래항공 관리자페이지</title>
+</head>
+<body>
+<!-- header S -->  
+<header class="header">
+    <h1 class="logo"><a href="${pageContext.request.contextPath}/admin"><img src="${pageContext.request.contextPath}/resources/images/common/logo.png" alt="FUTURE AIR"></a></h1>
+    <nav class="gnb">
+        <ul>
+            <span class="gnb_txt">GENERAL</span>
+            <li class="active">
+                <a href="${pageContext.request.contextPath}/admin">홈
+                    <span class="icon"><i class="fas fa-home"></i></span>
+                </a>
+            </li>
+    
+            <span class="gnb_txt">FLIGHT</span>
+            <li>
+                <a href="${pageContext.request.contextPath}/admin/flight/flightList">비행일정
+                    <span class="icon"><i class="fas fa-plane"></i></span>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/admin/flight/reservationList">예약현황
+                    <span class="icon"><i class="fas fa-clipboard-list"></i></span>
+                </a>
+            </li>
+            
+            <span class="gnb_txt">CUSTOMER</span>
+            <li>
+                <a href="${pageContext.request.contextPath}/admin/customer/customerList">회원정보
+                    <span class="icon"><i class="fas fa-user"></i></span>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/admin/customer/customerGrade">회원등급
+                    <span class="icon"><i class="fas fa-arrow-circle-up"></i></span>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/admin/customer/sendMail">메일발송
+                    <span class="icon"><i class="fas fa-envelope"></i></span>
+                </a>
+            </li>
+    
+            <span class="gnb_txt">BOARD</span>
+            <li>
+                <a href="${pageContext.request.contextPath}/admin/board/postList">게시물관리
+                    <span class="icon"><i class="fas fa-pen-alt"></i></span>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/admin/board/boardList">게시판설정
+                    <span class="icon"><i class="fas fa-cog"></i></span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<!-- header E -->  
+<!-- util S -->  
+<div class="util contents">
+    <div class="row">
+        <div class="search_box">
+            <form action="#" class="search item">
+                <span class="search_icon"><i class="fas fa-search"></i></span>
+                <input type="search_text" name="search" placeholder="Search for...">
+            </form>
+        </div>
+        
+        <div class="info">
+            <a class="bell" href="${pageContext.request.contextPath}/" target="_blank"></a>
+            <div class="profile">
+                <div class="profile_img">
+                    <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt="profile">
+                </div>
+                <p>홍길동<span>마스터관리자</span></p>
+                <div class="btn_m"><span></span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- util E -->  
 <!-- content S -->   
 <div class="contents contents_box">
     <div class="row">
@@ -130,17 +218,15 @@
                     <tr>
                         <th>예약번호</th>
                         <th>예약자</th>
-                        <th>출발지</th>
-                        <th>도착지</th>
+                        <th>출발일</th>
                         <th>가격</th>
                     </tr>
                     <c:forEach var="recent" items="${recentReservation}">
 			            <tr>
-			                <td>${recent.RESERVATION_NUM}</td>
+			                <td><a href="javascript:popupOpen('${pageContext.request.contextPath}/admin/customer/customerReservationDetail?id=${recent.CUSTOMER_ID}&reservation_num=${recent.RESERVATION_NUM}', 1000, 600)">${recent.RESERVATION_NUM}</a></td>
 			                <td>${recent.CUSTOMER_NAME}</td>
-			                <td>${recent.DEPARTURE_NAME}</td>
-			                <td>${recent.ARRIVAL_NAME}</td>
-			                <td>${recent.PAYMENT}</td>
+			                <td>${recent.DEPARTURE_DATE}</td>
+			                <td class="payment"><fmt:formatNumber value="${recent.PAYMENT}" pattern="#,###"/>원</td>
 			            </tr>
 	            	</c:forEach>
                 </table>
@@ -217,10 +303,10 @@ $.ajax({
 			                        callback: function(value, index, values) {
 			                        // if(values[0].toString().length > 9 && value != 0) return (Math.floor(value / 100000000)).toLocaleString("ko-KR") + "억";
 			                        // else if(values[0].toString().length = 9 && value != 0) return (value / 100000000).toFixed(1) + "억";
-			                        if(values[0].toString().length >= 8 && value != 0) return (Math.floor(value / 10000000)).toLocaleString("ko-KR") + "천";
-			                        // else if(values[0].toString().length = 8 && value != 0) return (value / 10000000).toFixed(1) + "천";
-			                        else if(values[0].toString().length > 6 && value != 0) return (Math.floor(value / 1000000)).toLocaleString("ko-KR") + "백";
-			                        // else if(values[0].toString().length = 6 && value != 0) return (value / 1000000).toFixed(1) + "백";
+			                        // if(values[0].toString().length >= 8 && value != 0) return (Math.floor(value / 10000000)).toLocaleString("ko-KR") + "천";
+			                        //else if(values[0].toString().length = 8 && value != 0) return (value / 10000000).toFixed(1) + "천";
+			                        if(values[0].toString().length > 6 && value != 0) return (Math.floor(value / 1000000)).toLocaleString("ko-KR") + "백";
+			                        else if(values[0].toString().length = 6 && value != 0) return (value / 1000000).toFixed(1) + "백";
 			                        else return value.toLocaleString("ko-KR");
 			                        }
 			                    }
@@ -298,8 +384,10 @@ $.ajax({
 			                        zeroLineColor: 'rgba(0,0,0,0)'                        
 			                    },
 			                    ticks: {
-			                        beginAtZero: true,
+			                        /* beginAtZero: true, */
 			                        padding: 30,
+			                        stepSize: 1,
+			                        /* min: 0 */
 			                    }
 			                } 
 			            ]

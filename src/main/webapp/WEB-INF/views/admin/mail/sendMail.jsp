@@ -232,6 +232,7 @@ function sendMail() {
 	    }
 	});  
 }
+
 </script>
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>

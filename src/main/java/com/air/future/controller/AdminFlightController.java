@@ -126,7 +126,6 @@ public class AdminFlightController {
 	public int flightDelete(HttpServletRequest request) {
 		String route_num = request.getParameter("route_num"); 
 		int result = service.deleteRoute(route_num); // 비행일정삭제
-		System.out.println(result);
 		return result;
 	}
 	
@@ -136,7 +135,6 @@ public class AdminFlightController {
 	public int deleteRoute(HttpServletRequest request) {
 		String[] deleteList = request.getParameterValues("deleteList");
 		int result = service.deleteRouteList(deleteList); // 비행일정리스트 삭제
-		System.out.println(result);
 		return result;
 	}
 	
@@ -157,6 +155,7 @@ public class AdminFlightController {
 		@RequestParam(value="reservation_date_start", defaultValue ="") String reservation_date_start,
 		@RequestParam(value="reservation_date_end", defaultValue="") String reservation_date_end,
 		@RequestParam(value="customer_name", defaultValue="") String customer_name,
+		@RequestParam(value="reservation_num", defaultValue="") String reservation_num,
 		Model model
 		) {
 		
@@ -169,6 +168,7 @@ public class AdminFlightController {
 		searchList.put("reservation_date_start", reservation_date_start);
 		searchList.put("reservation_date_end", reservation_date_end);
 		searchList.put("customer_name", customer_name);
+		searchList.put("reservation_num", reservation_num);
 		
 		int total = service.getReservationTotal(searchList); // 검색된 리스트 갯수
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total); // 페이징처리

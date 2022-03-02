@@ -57,8 +57,6 @@ public class AdminBoardController {
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total); // 페이징처리
 		ArrayList<HashMap<String, String>> postList = service.getPostList(searchList, navi); // 게시물리스트
 		ArrayList<String> boardList = service.getTopicList(); // 게시판이름리스트
-		
-		System.out.println(postList.size());
 
 		model.addAttribute("searchList", searchList);
 		model.addAttribute("postList", postList);
@@ -73,7 +71,6 @@ public class AdminBoardController {
 	@ResponseBody
 	public int boardDelete(HttpServletRequest request) {
 		String post_index = request.getParameter("post_index");
-		System.out.println(post_index);
 		int result = service.deletePost(post_index); // 게시물 삭제
 		return result;
 	}
@@ -103,7 +100,6 @@ public class AdminBoardController {
 	@RequestMapping(value = "postUpdate", method = RequestMethod.POST)
 	@ResponseBody
 	public int postUpdate(@RequestParam HashMap<String, String> post) {
-		System.out.println(post);
 		int result = service.PostUpdate(post);
 		return result;
 	}
@@ -248,7 +244,7 @@ public class AdminBoardController {
 	// 게시판 관리 - 공지글 삭제 기능
 	@RequestMapping(value = "deleteNotice", method = RequestMethod.GET)
 	public String deleteNotice(Model model, int post_index[], String board_name) {
-		service.insertNotice(post_index, board_name);
+		service.deleteNotice(post_index, board_name);
 		model.addAttribute("board_name", board_name);
 		return "redirect:/admin/board/postNotice";
 	}

@@ -64,9 +64,7 @@ public class AdminFlightDAO {
 	public int deleteRoute(String route_num) {
 		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
 		int reservationCount = mapper.getReservationCountByRoutrnum(route_num);
-		
 		if (reservationCount > 0) return -1;
-		
 		int result = mapper.deleteRoute(route_num);
 		return result;
 	}
@@ -110,7 +108,7 @@ public class AdminFlightDAO {
 	@Transactional
 	public int reservationCancle(String reservation_num) {
 		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
-		// mapper.deleteSchedule(reservation_num);
+		mapper.insertMileage(reservation_num);
 		int result = mapper.reservationCancle(reservation_num);
 		return result;
 	}

@@ -89,58 +89,71 @@
         </div>
         <input type="hidden" name="pick_date_list" id="pick_date_list" value=""/>
     </form>
-	<c:forEach var="flightType" items="${flightListType}" varStatus="status">
-	    <div class="trip">
-	        <h3>여정 ${status.count }. <span>${flightType[0].DEPARTURE_NAME } - ${flightType[0].ARRIVAL_NAME }</span></h3>
-			<c:if test="${empty flightType}">
-				내역이 존재하지 않습니다
-			</c:if>
-			<c:if test="${not empty flightType}">
-		        <ul class="weekList">
-		            <fmt:parseDate value="${flightType[0].DEPARTURE_DATE}" var="departure_date" pattern="yyyy-MM-dd HH:mm:ss.S"/>
-		            <fmt:formatDate var="departure_date" value="${departure_date}" pattern="yyyy-MM-dd" />
-		            <li class="navigation prev"><a href="#"><i class="fas fa-chevron-left"></i></a></li>
-		            <c:forEach var="day" items="${weekList[status.index]}">
-			            <fmt:parseDate value="${day.DEPARTURE_DATE}" var="departure_date_time" pattern="yyyy-MM-dd"/>
-			            <li <c:if test="${departure_date eq day.DEPARTURE_DATE}"></c:if> >
-			            	<a href="#" onclick="pickDate.call(this)"<c:if test="${departure_date eq day.DEPARTURE_DATE}"> class="dayActive day" </c:if> class="day">      
-			            		<span class="pick_date">${day.DEPARTURE_DATE}</span>
-				            	<fmt:formatDate value="${departure_date_time}" pattern="MM/dd (E)" />
-				            	<span><fmt:formatNumber value="${day.NORMAL_PRICE}" pattern="#,###"/></span>
-			            	</a>
-			            </li>
-		            </c:forEach>
-		            <li class="navigation next"><a href="#"><i class="fas fa-chevron-right"></i></a></li>
-		        </ul>
-		        <ul class="flight_list">
-		        	<c:forEach var="flight" items="${flightType}">
-		        		<fmt:parseDate value="${flight.DEPARTURE_DATE}" var="departure_date_time" pattern="yyyy-MM-dd HH:mm:ss.S"/>
-	            		<fmt:parseDate value="${flight.ARRIVAL_DATE}" var="arrival_date_time" pattern="yyyy-MM-dd HH:mm:ss.S"/>
-			            <li>
-			                <div class="flight_info">
-			                    <div class="from">${flight.DEPARTURE_NAME}<span><fmt:formatDate value="${departure_date_time}" pattern="HH:mm" /></span></div>
-			                    <div class="to">${flight.ARRIVAL_NAME}<span><fmt:formatDate value="${arrival_date_time}" pattern="HH:mm" /></span></div>
-			                    <div class="direction"></div>
-			                </div>
-			                <div class="flight_time">${flight.ETA }분</div>
-			                <ul class="flight_contents">
-			                    <li><a href="#">이코노미석 <span><fmt:formatNumber value="${flight.NORMAL_PRICE}" pattern="#,###"/> 원</span></a></li>
-			                    <li><a href="#">비즈니스석 <span><fmt:formatNumber value="${flight.PRESTIGE_PRICE}" pattern="#,###"/> 원</span></a></li>
-			                    <li><a href="#">일등석 <span><fmt:formatNumber value="${flight.FIRST_PRICE}" pattern="#,###"/> 원</span></a></li>
-			                </ul>
-			            </li>	        	
-		        	</c:forEach>
-		        </ul>
-			</c:if>
-	    </div>
-	</c:forEach>
+	
+	<form action="${pageContext.request.contextPath}/book/passengerInfo" method="post" onsubmit="return bookCheck()">
+		<c:forEach var="flightType" items="${flightListType}" varStatus="status">
+		    <div class="trip">
+		        <h3>여정 ${status.count }. <span>${flightType[0].DEPARTURE_NAME } - ${flightType[0].ARRIVAL_NAME }</span></h3>
+				<c:if test="${empty flightType}">
+					내역이 존재하지 않습니다
+				</c:if>
+				<c:if test="${not empty flightType}">\
+					<!-- day list S -->
+			        <ul class="weekList">
+			            <fmt:parseDate value="${flightType[0].DEPARTURE_DATE}" var="departure_date" pattern="yyyy-MM-dd HH:mm:ss.S"/>
+			            <fmt:formatDate var="departure_date" value="${departure_date}" pattern="yyyy-MM-dd" />
+			            <li class="navigation prev"><a href="#"><i class="fas fa-chevron-left"></i></a></li>
+			            <c:forEach var="day" items="${weekList[status.index]}">
+				            <fmt:parseDate value="${day.DEPARTURE_DATE}" var="departure_date_time" pattern="yyyy-MM-dd"/>
+				            <li <c:if test="${departure_date eq day.DEPARTURE_DATE}"></c:if> >
+				            	<a href="#" onclick="pickDate.call(this)"<c:if test="${departure_date eq day.DEPARTURE_DATE}"> class="dayActive day" </c:if> class="day">      
+				            		<span class="pick_date">${day.DEPARTURE_DATE}</span>
+					            	<fmt:formatDate value="${departure_date_time}" pattern="MM/dd (E)" />
+					            	<span><fmt:formatNumber value="${day.NORMAL_PRICE}" pattern="#,###"/></span>
+				            	</a>
+				            </li>
+			            </c:forEach>
+			            <li class="navigation next"><a href="#"><i class="fas fa-chevron-right"></i></a></li>
+			        </ul>
+			        <!-- day list E -->
+			        <!-- flight list S -->
+			        <ul class="flight_list">
+			        	<c:forEach var="flight" items="${flightType}" varStatus="flight_status">
+			        		<fmt:parseDate value="${flight.DEPARTURE_DATE}" var="departure_date_time" pattern="yyyy-MM-dd HH:mm:ss.S"/>
+		            		<fmt:parseDate value="${flight.ARRIVAL_DATE}" var="arrival_date_time" pattern="yyyy-MM-dd HH:mm:ss.S"/>
+				            <li>
+				                <div class="flight_info">
+				                    <div class="from">${flight.DEPARTURE_NAME}<span><fmt:formatDate value="${departure_date_time}" pattern="HH:mm" /></span></div>
+				                    <div class="to">${flight.ARRIVAL_NAME}<span><fmt:formatDate value="${arrival_date_time}" pattern="HH:mm" /></span></div>
+				                    <div class="direction"></div>
+				                </div>
+				                <div class="flight_time">${flight.ETA }분</div>
+				                <div class="flight_contents">
+					                <input type="radio" name="seat_class${status.count}" class="seat_class" id="seat${status.count}_${flight_status.count}_1" onchange="javascript:setRouteNum('${status.count}', '${flight.ROUTE_NUM }', '이코노미')" value="이코노미"/><label for="seat${status.count}_${flight_status.count}_1">이코노미석 <span><fmt:formatNumber value="${flight.NORMAL_PRICE}" pattern="#,###"/> 원</span></label>
+					                <input type="radio" name="seat_class${status.count }" class="seat_class" id="seat${status.count}_${flight_status.count}_2" onchange="javascript:setRouteNum('${status.count}', '${flight.ROUTE_NUM }', '프레스티지')" value="프레스티지"/><label for="seat${status.count}_${flight_status.count}_2">비즈니스석 <span><fmt:formatNumber value="${flight.PRESTIGE_PRICE}" pattern="#,###"/> 원</span></label>
+					                <input type="radio" name="seat_class${status.count }" class="seat_class" id="seat${status.count}_${flight_status.count}_3" onchange="javascript:setRouteNum('${status.count}', '${flight.ROUTE_NUM }', '일등')" value="일등"/><label for="seat${status.count}_${flight_status.count}_3">일등석 <span><fmt:formatNumber value="${flight.FIRST_PRICE}" pattern="#,###"/> 원</span></label>
+				                </div>
+				            </li>	        	
+			        	</c:forEach>
+		       	 	</ul>
+			        <!-- flight list E -->
+				</c:if>
+		    </div>
+		    <input type="hidden" name="route_num${status.count}" class="route_num" value=""/>
+		</c:forEach>
+	    <input type="hidden" name="route_num[]" id="route_num_list"/>
+	    <input type="hidden" name="seat_class[]" id="seat_class_list"/>
+	    <input type="hidden" name="seat_adult" value="${bookForm.seat_adult}"/>
+	    <input type="hidden" name="seat_childAge" value="${bookForm.seat_childAge}"/>
+	    <input type="hidden" name="seat_infantAge" value="${bookForm.seat_infantAge}"/>
     <div class="flight_payment_wrap">
         <div class="flight_payment">
             <p>총 결제금액</p>
             <p class="price">67,200원</p>
         </div>
-        <button class="btn_primary" onclick="location='${pageContext.request.contextPath}/book/passengerInfo'">다음</button>
+        <button class="btn_primary">다음</button>
     </div>
+	</form>
 </section>
 <!-- book flight E -->
 <!-- footer S -->
@@ -167,14 +180,40 @@ function pickDate(element) {
  		}
 	 } 
  	
-	
-	console.log(pick_date_list.value)
 	form.submit()
 }
 
-function bookFormCheck() {
-	
+ function setRouteNum(input, route_num, seat_class) {
+	const inputRouteNum = document.querySelector('input[name=route_num' + input + ']'); 
+	const inputSeatClass = document.querySelector('input[name=seat_class' + input + ']'); 
+	inputRouteNum.value = route_num
+	inputSeatClass.value = seat_class
 }
+
+ function bookCheck() {
+	 
+	const route_nums = document.getElementsByClassName('route_num');
+	const route_num_list =  document.getElementById('route_num_list'); 
+	
+	const seat_classes = document.getElementsByClassName('seat_class:checked');
+	const seat_class_list =  document.getElementById('seat_class_list'); 
+	
+	const route_list = new Array()
+	for (let i = 0; i < route_nums.length; i++) {
+		route_list.push(route_nums[i].value)
+	}
+	
+	const seat_list = new Array()
+	for (let i = 0; i < seat_classes.length; i++) {
+		seat_list.push(seat_classes[i].value)
+	}
+	
+	route_num_list.value = route_list
+	seat_class_list.value = seat_list
+}
+
+
+
 
 const startDate = new Date();
 startDate.setDate(startDate.getDate()+1);

@@ -181,7 +181,6 @@ public class AdminBoardService {
 	// 고정글 추가
 	public int insertNotice(int[] tableSelect, String board_name) {
 		int result = 0;
-		
 		for( int string : tableSelect) { 
 			String notice_index = "1"; 
 			Post post = new Post(); 
@@ -189,8 +188,20 @@ public class AdminBoardService {
 			post.setPost_index(string); 
 			result = dao.insertNotice(post);
 		}
-		
-		return result;
+		return result;	
+	}
+	
+	// 고정글 삭제
+	public int deleteNotice(int[] post_index, String board_name) {
+		int result = 0;
+		for( int string : post_index) { 
+			String notice_index = "0"; 
+			Post post = new Post(); 
+			post.setNotice_index(notice_index); 
+			post.setPost_index(string); 
+			result = dao.insertNotice(post);
+		}
+		return result;	
 		
 	}
 	

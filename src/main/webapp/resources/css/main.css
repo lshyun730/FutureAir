@@ -200,9 +200,10 @@ book
 .flight_list li .flight_info .direction::before {content:''; position: absolute; width: 0.313rem; height: 0.313rem; background: #000; display: block; transform: translate(-50% , -50%); top: 50%; left: 0; border-radius: 50%;} 
 .flight_list li .flight_info .direction::after {content:''; position: absolute; width: 0.313rem; height: 0.313rem; background: #000; display: block; transform: translate(50% , -50%); top: 50%; right: 0; border-radius: 50%;} 
 .flight_contents {display: flex;}
-.flight_contents li.active  a{background: var(--primary); color: #fff;}
-.flight_contents li a{display: block; padding: 2.5rem 3.75rem;}
-.flight_contents li a span {display: block; font-size: 1.25rem;}
+.flight_contents input {display: none}
+.flight_contents label {display: block; padding: 2.5rem 3.75rem; cursor: pointer;}
+.flight_contents label span {display: block; font-size: 1.25rem;}
+.flight_contents input:checked + label {background: var(--primary); color: #fff;}
 .flight_payment_wrap {text-align: center; margin-top: 3.75rem}
 .flight_payment_wrap .btn_primary {margin: 3.75rem 0; }
 .flight_payment {display: flex; justify-content: space-between; padding: 1.875rem; background: var(--secondary); font-size: 1.25rem;}
@@ -380,8 +381,12 @@ select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.3
 /* 페이지네비 */
 .navi {text-align: center;padding-top: 60px;display: flex; justify-content: center;}
 .navi a {text-align: center; width: 40px;height: 40px; line-height: 40px;}
-.navi a.icon {border: 1px solid var(--light);}
-.navi a.icon img {width: auto; height: 13px;}
+.navi a.icon {position:relative;border: 1px solid var(--light);}
+.navi a.icon::after {content:''; position:absolute; background-repeat: no-repeat; background-position: center center; background-size:contain; width: 10px; height: 13px; left: 50%; top: 50%;transform: translate(-50%,-50%);}
+.navi a.icon.first_prev::after {background-image: url(../images/common/ico_first_prev.png)} 
+.navi a.icon.prev::after {background-image: url(../images/common/ico_prev.png)} 
+.navi a.icon.next::after {background-image: url(../images/common/ico_next.png)} 
+.navi a.icon.last_next::after {background-image: url(../images/common/ico_last_next.png)} 
 .navi a.active {color: var(--primary); position: relative;font-weight: bold;}
 .navi a.active::after {content: ""; display: block; width:50%; height: 3px; background: var(--primary); position: absolute; left: 50%; bottom: 0; transform: translate(-50%,-100%);}
 

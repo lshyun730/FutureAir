@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.air.future.service.HomeControllerService;
 
-
+@SessionAttributes("userId")
 @Controller
 public class HomeController {
 	
@@ -112,5 +113,13 @@ public class HomeController {
 		return "customer/joinDone";
 	}
 	*/
+	
+	// 로그아웃
+	@RequestMapping(value = "mypage", method = RequestMethod.GET)
+	public String mypage() {
+		return "customer/mypage";
+	}
+		
+	
 
 }

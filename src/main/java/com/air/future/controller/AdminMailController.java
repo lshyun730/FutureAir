@@ -61,16 +61,14 @@ public class AdminMailController {
 	@RequestMapping(value = "sendMail", method = RequestMethod.POST)
 	@ResponseBody
 	public int sendMail(@RequestParam HashMap<String, String> mailForm) {
-		System.out.println(mailForm);
 		int result = service.send(mailForm);
-		System.out.println("전송완료");
+		System.out.println("전송완료 : "+ result);
 		return result;
 	}
 	
 	@RequestMapping(value = "mailUpdate", method = RequestMethod.POST)
 	@ResponseBody
 	public int mailUpdate(@RequestParam HashMap<String, String> mailForm) {
-		System.out.println(mailForm);
 		int result = service.mailUpdate(mailForm);
 		return result;
 	}

@@ -43,7 +43,8 @@
 <script type="text/javascript">
 	function replyWrite(){
 		var title = document.getElementById('title').value
-		var contents = document.getElementById('contents').value
+		var contents = CKEDITOR.instances.editor_body.getData()
+		const textarea = document.querySelector('textarea[name="contents"]'); 
 
 		if(title ==''){
 			alert('제목을 한글자 이상 입력해주세요');
@@ -54,6 +55,8 @@
 			alert('내용을 한글자 이상 입력해주세요');
 			return false;
 		}
+		
+		textarea.value = contents;
 
 		 $.ajax({
 			 url : 'replyWrite',

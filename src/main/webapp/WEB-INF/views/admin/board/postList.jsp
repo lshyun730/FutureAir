@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -187,8 +187,11 @@
 		                <tr>
 		                    <td><input type="checkbox" name="tableSelect" value="${post.POST_INDEX}"></td>
 		                    <td>${post.BOARD_NAME}</td>
-		                    <td><a href="#">${post.TITLE}</a></td>
-		                    <td><a href="customerInfo">${post.WRITER}</a></td>
+		                    <td><a href="#">
+								<c:if test="${fn:length(post.TITLE) > 25}">${fn:substring(post.TITLE,0,25)}...</c:if> 
+	                    		<c:if test="${fn:length(post.TITLE) <= 25}">${post.TITLE} </c:if>
+							</a></td>
+		                    <td><a href="javascript:popupOpen('${pageContext.request.contextPath}/admin/customer/customerInfo?id=${post.WRITER}', 1000, 600)">${post.WRITER}</a></td>
 		                    <td>
 		                    <c:if test="${post.REPLY_TYPE eq '1'}">
 			                    <c:if test="${post.REPLY_INDEX eq null}"> 답변전 </c:if>
@@ -199,11 +202,10 @@
 			                </c:if>
 		                    </td>
 		                    <td>
-		                    	<c:if test="${post.REPLY_TYPE eq '1' }">
-		                        <button class="btn_s more" onclick="popupOpen('replyWriteForm?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}&post_title=${post.TITLE}', 500, 600)">답변하기
+		                    	
+		                        <button <c:if test="${post.REPLY_TYPE ne '1' }"> style="opacity:0; cursor:default" disabled </c:if> class="btn_s more" onclick="popupOpen('replyWriteForm?post_index=${post.POST_INDEX}&board_name=${post.BOARD_NAME}&post_title=${post.TITLE}', 500, 600)">답변하기
 		                        	<span class="icon"><i class="fas fa-chevron-right"></i></span>
 		                        </button>
-		                        </c:if>
 		                    </td>
 		                    <td>${post.POST_DATE }</td>
 		                    <td>${post.HITS }</td>
@@ -298,6 +300,7 @@ document.addEventListener('click', () => {;
 	 	}	
 	}
 })
+
 </script>
 <%@include file ="../include/footer.jsp" %>
 <!-- footer E --> 

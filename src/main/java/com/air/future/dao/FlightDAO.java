@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.air.future.vo.Customer;
+
 @Repository
 public class FlightDAO {
 	
@@ -26,4 +28,15 @@ public class FlightDAO {
 		return weekList;
 	}
 
+	public HashMap<String, String> getRoute(String route_num) {
+		FlightMapper mapper = sqlSession.getMapper(FlightMapper.class);		
+		HashMap<String, String>  flightList = mapper.getFlight(route_num);
+		return flightList;
+	}
+
+	public Customer getCustomerInfo(String userInfo) {
+		FlightMapper mapper = sqlSession.getMapper(FlightMapper.class);		
+		Customer customer = mapper.getCustomerInfo(userInfo);
+		return customer;
+	}
 }

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-	<title>미래항공 관리자페이지</title>
+	<title>미래항공</title>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -24,16 +24,12 @@
 					<c:if test="${ empty userId }">
 						<a href="${pageContext.request.contextPath}/login">로그인</a>
 					</c:if>
-					<ul>
-						<c:if test="${!empty userId }">
-							<li><a href="${pageContext.request.contextPath}/mypage">마이페이지</a></li>
-							<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
-						</c:if>
-					</ul>
+					<c:if test="${!empty userId }">
+						<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
+						<li><a href="${pageContext.request.contextPath}/mypage">마이페이지</a></li>
+					</c:if>
 				</li>
-				<li><a href="#">이벤트</a></li>
 				<li><a href="#">고객서비스</a></li>
-				<li><a href="#">한국어</a></li>
 			</ul>
 		</div>
 	</section>
@@ -140,8 +136,8 @@
 								<ul class="gnb_dep2">
 									<li><a href="#">고객지원</a>
 										<ul class="gnb_dep3">
-											<li><a href="#">공지사항</a></li>
-											<li><a href="#">자주묻는질문</a></li>
+											<li><a href="${pageContext.request.contextPath}/service/notice">공지사항</a></li>
+											<li><a href="${pageContext.request.contextPath}/service/faq">자주묻는질문</a></li>
 											<li><a href="#">1:1 문의</a></li>
 										</ul>
 									</li>

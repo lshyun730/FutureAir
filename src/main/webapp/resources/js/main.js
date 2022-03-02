@@ -1,6 +1,6 @@
 
 // 메인 비쥬얼 슬라이더
-var swiper = new Swiper(".main_slider", {
+const swiper = new Swiper(".main_slider", {
     autoplay: {
         delay: 5000,
         disableOnInteraction: false,
@@ -17,7 +17,7 @@ var swiper = new Swiper(".main_slider", {
 
 
 // 인기 항공권 슬라이더
-var swiper = new Swiper(".popular_slider", {
+const swiper = new Swiper(".popular_slider", {
     autoplay: {
         delay: 5000,
         disableOnInteraction: false,

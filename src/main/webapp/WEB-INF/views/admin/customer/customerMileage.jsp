@@ -46,7 +46,7 @@
                         <tr>
                             <th>총 마일리지</th>
                             <td><fmt:formatNumber value="${mileageAll }" pattern="#,###" /></td>
-                            <th>사용된 마일리지</th>
+                            <th>차감된 마일리지</th>
                             <td><fmt:formatNumber value="${mileageUsed }" pattern="#,###" /></td>
                         </tr>
                         <tr>
@@ -75,6 +75,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                        	<c:if test="${empty mileageBalance}">
+			            		<tr><td colspan="9" class="tableEmpty">검색 결과가 없습니다</td></tr>
+			            	</c:if>
                         	<c:forEach var="mMap" items="${mileageBalance }" varStatus="status">
 		                           <tr>
 		                           		<td><c:out value="${mMap['MILEAGE_DATE'] }" /></td>
@@ -83,7 +86,7 @@
 		                           		<td>
 		                           			<c:if test="${mMap['MILEAGE_RESERVATION'] eq '-'}">-</c:if>
 		                           			<c:if test="${mMap['MILEAGE_RESERVATION'] ne '-'}">
-		                           				<a href="#"><c:out value="${mMap['MILEAGE_RESERVATION'] }" /></a>	
+		                           				<a href="${pageContext.request.contextPath}/admin/customer/customerReservationDetail?id=${id}&reservation_num=${mMap['MILEAGE_RESERVATION'] }"><c:out value="${mMap['MILEAGE_RESERVATION'] }" /></a>	
 		                           			</c:if>
 		                           		</td>
 		                           		<td><fmt:formatNumber value="${mMap['MILEAGE_POINT'] }" pattern="#,###" /></td>

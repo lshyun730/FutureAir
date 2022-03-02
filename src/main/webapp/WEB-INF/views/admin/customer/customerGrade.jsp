@@ -131,7 +131,7 @@
 								<td>
 									<c:choose>
 										<c:when test="${customerGrade.pay_ratio == 0}" >-</c:when>
-										<c:otherwise>${customerGrade.pay_scope }원 이상 결제 시 ${customerGrade.pay_ratio }% 적립</c:otherwise>
+										<c:otherwise>${customerGrade.pay_scope }원 이상 결제 시 ${customerGrade.pay_ratio }% 할인</c:otherwise>
 									</c:choose>
 								</td>
 								<td>${customerGrade.the_count }</td>
@@ -141,7 +141,7 @@
 		                                    <span></span>
 		                                </div>
 		                                <ul class="select_list">
-		                                    <li><a href="javascript:popupOpen('customerGradeUpdate?grade=${customerGrade.grade}', 550, 600)">수정</a></li> 
+		                                    <li><a href="javascript:popupOpen('customerGradeUpdate?grade=${customerGrade.grade}', 600, 600)">수정</a></li> 
 		                                    <li><a href="javascript:gradeDeletePoint('${customerGrade.grade}')">삭제</a></li> 
 		                                </ul>
 		                            </div>
@@ -236,10 +236,10 @@
 								</td>
 								<td>${customerList.customer_grade }</td>
 								<td>
-									<button class="btn_s more" onclick="javascript:popupOpen('customerReservation?id=${customerList.customer_id}')">
+									<button class="btn_s more" onclick="javascript:popupOpen('customerReservation?id=${customerList.customer_id}', 1000, 800)">
 										<span>예약내역</span><span class="icon"><i class="fas fa-chevron-right"></i></span>
 									</button>
-		                        	<button class="btn_s more" onclick="javascript:popupOpen('customerMileage?id=${customerList.customer_id}')">
+		                        	<button class="btn_s more" onclick="javascript:popupOpen('customerMileage?id=${customerList.customer_id}', 1000, 800)">
 		                        		<span>마일리지</span><span class="icon"><i class="fas fa-chevron-right"></i></span>
 		                        	</button>
 								</td>

@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
     <title>미래항공 관리자페이지</title>
@@ -37,18 +38,16 @@
                 <section class="customer_content">
                     <h2>전체 예약내역</h2>
                     <!-- search detail S -->
-                    <form action="customerReservation" class="search_detail active" id="serch_detail">
+                    <form action="customerReservation" class="search_detail active" id="search_detail">
                         <div class="inputbox term">
                             <p class="inputbox_title">예약일</p>
                             <div class="inputbox_input">
                                 <input type="date" id="reservation_start" name="reservation_start" value="${reservation_start}">
-                                <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
                             </div>
                         </div>
                         <div class="inputbox">
                             <div class="inputbox_input">
                                 <input type="date" id="reservation_end" name="reservation_end"  value="${reservation_end}">
-                                <span class="inputbox_icon"><i class="far fa-calendar"></i></span>
                             </div>
                         </div>
                         <div class="inputbox submit">
@@ -56,7 +55,8 @@
                                 <input type="submit" value="검색">
                             </div>
                         </div>
-                        <input type="hidden" id="id" name="id" value="${id }">
+                        <input type="hidden" id="id" name="id" value="${id}">
+                        <input type="hidden" name="page" id="page">
                     </form>
                     <!-- search detail E -->
                     <!-- table S --> 
@@ -72,6 +72,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                        	<c:if test="${empty reservationList}">
+			            		<tr><td colspan="9" class="tableEmpty">검색 결과가 없습니다</td></tr>
+			            	</c:if>
                         	<c:forEach var="reservation" items="${reservationList}" varStatus="status">
 	                            <tr>
 	                                <td>
@@ -96,17 +99,17 @@
                         </tbody>
                     </table>
                     <!-- table E --> 
-        <!-- content footer S --> 
-        <div class="flex_content_footer">
-            <div class="navi">
-	           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
-               	<c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
-					<a href="javascript:pagingFormSubmit(${counter})" <c:if test="${navi.currentPage == counter}"> class="active"</c:if>>${counter}</a>
-				</c:forEach>
-	           	<a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})" class="next"></a>
-           </div>
-        </div>
-	<!-- content footer E --> 
+			        <!-- content footer S --> 
+			        <div class="flex_content_footer">
+			            <div class="navi">
+				           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
+			               	<c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
+								<a href="javascript:pagingFormSubmit(${counter})" <c:if test="${navi.currentPage == counter}"> class="active"</c:if>>${counter}</a>
+							</c:forEach>
+				           	<a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})" class="next"></a>
+			           </div>
+			        </div>
+					<!-- content footer E --> 
                 </section>
                 <!-- customer content E -->  
             </div>
@@ -114,6 +117,5 @@
         <!-- customer contents  E -->  
     </div>
     <!-- customer detail  E -->  
-
 </body>
 </html>

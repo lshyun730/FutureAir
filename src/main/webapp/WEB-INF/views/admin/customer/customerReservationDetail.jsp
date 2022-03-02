@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
     <title>미래항공 관리자페이지</title>
@@ -65,6 +66,7 @@
                                 <th>이름</th>
                                 <th>여권번호</th>
                                 <th>분류</th>
+                                <th>성별</th>
                                 <th>여정안내서</th>
                             </tr>
                         </thead>
@@ -75,6 +77,7 @@
 		                                <td>${schedule.PASSENGER_NAME }</td>
 		                                <td>${schedule.PASSPORT_NUM }</td>
 		                                <td>${schedule.CUSTOMER_TYPE }</td>
+		                                <td>${schedule.PASSENGER_GENDER}</td>
 		                                <td>
 		                                    <button class="btn_s more"><span>출력</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
 		                                    <button class="btn_s more"><span>PDF</span><span class="icon"><i class="fas fa-chevron-right"></i></span></button>
@@ -95,7 +98,7 @@
                     <table class="table">
                         <colgroup>
                         <col width="15%">
-                        <col width="38%">
+                        <col width="40%">
                         </colgroup>
                         <thead>
                             <tr>
@@ -129,13 +132,12 @@
 		                                    </div>
 		                                    <div class="direction"></div>
 		                                </td>
-		                                <td><a href="javascript:popupOpen('flightView?route_num=${route.ROUTE_NUM}', 1000, 800)">${schedule.ROUTE_NUM }</a></td>
-		                                <td>${schedule.AIRPLANE_ID }</td>
+		                                <td><a href="javascript:popupOpen('${pageContext.request.contextPath}/admin/flight/flightView?route_num=${schedule.ROUTE_NUM}', 1000, 800)">${schedule.ROUTE_NUM }</a></td>
+		                                <td>${schedule.AIRPLANE_MODEL }</td>
 	                                	<td>${schedule.SEAT_CLASS }</td>
 		                            </tr>
 	                            </c:if>
 							</c:forEach>
-
                         </tbody>
                     </table>
                     <!-- table E --> 

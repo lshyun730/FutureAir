@@ -80,11 +80,11 @@
 	        	</colgroup>
 	            <tr>
 	                <th>일반석</th>
-	                <td>${route.NORMAL_PRICE }</td>
+	                <td><fmt:formatNumber value="${route.NORMAL_PRICE}" pattern="#,###"/> 원</td>
 	                <th>프레스티지석</th>
-	                <td>${route.PRESTIGE_PRICE }</td>
+	                <td><fmt:formatNumber value="${route.PRESTIGE_PRICE}" pattern="#,###"/> 원</td>
 	                <th>일등석</th>
-	                <td>${route.FIRST_PRICE }</td>
+	                <td><fmt:formatNumber value="${route.FIRST_PRICE}" pattern="#,###"/> 원</td>
 	            </tr> 
         	</table>
         	<!-- table E --> 
@@ -145,6 +145,7 @@
 	            		<tr><td colspan="9" class="tableEmpty">검색 결과가 없습니다</td></tr>
 	            	</c:if>
 		            <c:forEach var="reservation" items="${reservationList}">
+		            	<fmt:parseDate value="${reservation.RESERVATION_DATE}" var="reservation_date_time" pattern="yyyy-MM-dd HH:mm:ss.S"/>
 			            <tr>
 			            	<td>
 		                    	<input type="checkbox" name="tableSelect" value="${reservation.RESERVATION_NUM}" <c:if test="${reservation.RESERVATION_STATE eq '예약취소'}">disabled</c:if>>
@@ -152,7 +153,7 @@
 			            	<td><a href="">${reservation.RESERVATION_NUM}</a></td>
 			            	<td>${reservation.PASSENGER_NAME}</td>
 			            	<td>${reservation.SEAT_CLASS}</td>
-			            	<td>${reservation.RESERVATION_DATE}</td>
+			            	<td><fmt:formatDate pattern="yyyy-MM-dd" value="${reservation_date_time}"/></td>
 			            	<td>
 								<c:if test="${reservation.RESERVATION_STATE eq '예약완료'}">
 				                    <button class="btn_s status">예약</button>
@@ -179,13 +180,13 @@
 	        </form>
         	<!-- content footer S --> 
 	        <div class="flex_content_footer">
-	            <button class="btn danger" onclick="javascript:checkDelete(this)">선택취소</button>
+	            <button class="btn danger" onclick="javascript:checkDelete(this)">예약취소</button>
 	            <div class="navi">
-	           	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="prev"></a>
+	           	<a href="flightView?page=${navi.currentPage - navi.pagePerGroup}&route_num=${route.ROUTE_NUM}" class="prev"></a>
 	               <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
-					<a href="javascript:pagingFormSubmit(${counter})" <c:if test="${navi.currentPage == counter}">class="active"</c:if>>${counter}</a>
+					<a href="flightView?page=${counter}&route_num=${route.ROUTE_NUM}" <c:if test="${navi.currentPage == counter}">class="active"</c:if>>${counter}</a>
 				</c:forEach>
-	           	<a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})" class="next"></a>
+	           	<a href="flightView?page=${navi.currentPage + navi.pagePerGroup}&route_num=${route.ROUTE_NUM}" class="next"></a>
 	           </div>
 	        </div>
 	        <!-- content footer E --> 

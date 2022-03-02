@@ -13,7 +13,6 @@ common
 	--info: #c3c3c3; 
 	--danger: #E74D4D; 
 	--black: #484848; 
-	
 }
 
 html, body {height: 100%;}
@@ -121,7 +120,7 @@ main page
 /* recent_reservation */
 
 .rate_reservation ul li {padding: 0.875rem 0;}
-
+.recent_reservation .payment {text-align: right}
 
 /*
 -----------------------
@@ -177,7 +176,6 @@ sub page
 .board_blank.board_notice .flex_content_footer {justify-content: flex-end;}
 
 /* 회원상세 */
-.customer_detail {height: 100%;}
 .customer_detail .lnb ul { display: flex; } 
 .customer_detail .lnb ul li a { display: block; padding: 1.25rem 3.125rem; border-radius: 0.625rem 0.625rem 0 0; } 
 .customer_detail .lnb ul li.active a { background: var(--white); } 
@@ -189,6 +187,8 @@ sub page
 .customer_detail .search_detail {grid-template-columns: repeat(3, 1fr)}
 .customer_detail .flight_info {position: relative;;display: flex; justify-content: space-between; text-align: center; margin-right: 1.5rem; margin-left: 0;}
 .customer_detail .flight_info span {display: block; font-size: 1.25rem; font-weight: bold;}
+.customer_detail .flight_info .from {text-align: left;}
+.customer_detail .flight_info .to {text-align: right;}
 .customer_detail .flight_info .direction {position: absolute; width: 5.625rem; height: 1px; background: #000; top: 50%; left: 50%; transform: translate(-50%, -50%);}
 .customer_detail .flight_info .direction::before {content:''; position: absolute; width: 0.313rem; height: 0.313rem; background: #000; display: block; transform: translate(-50% , -50%); top: 50%; left: 0; border-radius: 50%;} 
 .customer_detail .flight_info .direction::after {content:''; position: absolute; width: 0.313rem; height: 0.313rem; background: #000; display: block; transform: translate(50% , -50%); top: 50%; right: 0; border-radius: 50%;} 

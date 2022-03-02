@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.air.future.dao.FlightDAO;
+import com.air.future.vo.Customer;
 
 @Service
 public class FlightService {
@@ -47,17 +48,31 @@ public class FlightService {
 		if(bookSearch.get("pick_date_list").equals("")) date = bookSearch.get("departure_date").split(" ~ ");	
 		
 		for (int i = 0; i < date.length; i++) {
-			System.out.println(date[i]);
 			bookSearch.put("pick_date", date[i]);
 			if(i == 1 && reser_type.equals("왕복")) {
 				String departure_name = bookSearch.get("departure_name");
 				bookSearch.put("departure_name", bookSearch.get("arrival_name"));
 				bookSearch.put("arrival_name", departure_name);
 			}
-			System.out.println("week info : " + dao.getWeekInfo(bookSearch));
 			weekInfo.add(dao.getWeekInfo(bookSearch));
 		}
 		return weekInfo;
 	
+	}
+
+	public ArrayList<HashMap<String, String>> getRoute(HashMap<String, String> bookForm) {
+		ArrayList<HashMap<String, String>> flightList = new ArrayList<>();
+		System.out.println(bookForm.get("route_num[]"));
+		String[] route_num_list = bookForm.get("route_num[]").split(",");
+		for (int i = 0; i < route_num_list.length; i++) {
+			System.out.println(route_num_list[i]);
+			flightList.add(dao.getRoute(route_num_list[i]));
+		}
+		return flightList;
+	}
+
+	public Customer getCustomerInfo(String userInfo) {
+		Customer customer = dao.getCustomerInfo(userInfo);
+		return customer;
 	}
 }

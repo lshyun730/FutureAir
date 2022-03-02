@@ -21,22 +21,23 @@
 		<if test="route_num != ''">
 		and r.route_num = #{route_num}
 		</if>
-		order by route_num
+		order by r.departure_date, r.route_num
 	</select>
 	
 	<!-- 비행일정 갯수 검색 -->
 	<select id="getRouteTotal" resultType="int" parameterType="HashMap">
-		select count(*) from route_fa
- 		where to_char(departure_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{departure_date_end}
-		and to_char(departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
+		select count(*) from route_fa r, airplane_fa a
+		where r.airplane_id = a.airplane_id 
+		and to_char(r.departure_date, 'YYYY-MM-DD') <![CDATA[ < ]]>= #{departure_date_end}
+		and to_char(r.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
 		<if test="departure_name != ''">
-		and departure_name = #{departure_name}
+		and r.departure_name = #{departure_name}
 		</if>
 		<if test="arrival_name != ''">
-		and arrival_name = #{arrival_name}
+		and r.arrival_name = #{arrival_name}
 		</if>
 		<if test="route_num != ''">
-		and route_num = #{route_num}
+		and r.route_num = #{route_num}
 		</if>
 	</select>
 	
@@ -109,11 +110,12 @@
    <select id="reservationList" parameterType="HashMap" resultType="HashMap">
    	select a.*,  case when b.count = '1' then '편도'when b.count = '2' then '왕복' else '다구간' end as reservation_type  from 
     (select s.reservation_num, r.customer_id, s.passenger_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment, r.reservation_state
-        from reservation_fa r, schedule_fa s, route_fa rou
-        where r.reservation_num = s.reservation_num 
-        and s.route_num = rou.route_num
-        and s.customer_id = r.customer_id
-        and s.type = '출발'
+        from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
+        where r.reservation_num = s.reservation_num
+		    and s.route_num = rou.route_num
+		    and r.customer_id = c.customer_id
+		    and c.customer_id = s.customer_id
+		    and s.type = '출발'
 		    <if test="departure_date_start != ''">
             and to_char(rou.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
 			</if>
@@ -135,7 +137,9 @@
 			<if test="customer_name != ''">
 			and c.customer_name like  '%'||#{customer_name}||'%'
 			</if>
-		    and s.type = '출발'
+			<if test="reservation_num != ''">
+			and r.reservation_num = #{reservation_num}
+			</if>
 		group by s.reservation_num, r.customer_id,  s.passenger_name, rou.departure_name, rou.arrival_name, rou.departure_date, r.reservation_date, r.payment, r.reservation_state) a,
 		(select reservation_num, count(*) count from (
 		    select s.reservation_num, s.type
@@ -144,17 +148,18 @@
 		    group by s.reservation_num, s.type) a
 		group by reservation_num) b
 	where a.reservation_num = b.reservation_num
-	order by b.reservation_num desc
+	order by a.reservation_date desc
    </select>
    
 	<!-- 예약일정갯수 -->
 	<select id="getReservationTotal" parameterType="HashMap" resultType="int">
 		select count(*)
-		    from reservation_fa r, schedule_fa s, route_fa rou
-	        where r.reservation_num = s.reservation_num 
-	        and s.route_num = rou.route_num
-	        and s.customer_id = r.customer_id
-	        and s.type = '출발'
+		    from reservation_fa r, schedule_fa s, route_fa rou, customer_fa c
+	        where r.reservation_num = s.reservation_num
+		    and s.route_num = rou.route_num
+		    and r.customer_id = c.customer_id
+		    and c.customer_id = s.customer_id
+		    and s.type = '출발'
 		    <if test="departure_date_start != ''">
             and to_char(rou.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
 			</if>
@@ -176,10 +181,17 @@
 			<if test="customer_name != ''">
 			and c.customer_name like  '%'||#{customer_name}||'%'
 			</if>
-		    and s.type = '출발'
 	</select>
 	
-	<!-- 예약취소 (reservation_fa) -->
+	<!-- 예약취소 시 마일리지감소 -->	
+	<insert id="insertMileage" parameterType="String">
+		insert into mileage_fa (mileage_index, mileage_id, mileage_date, mileage_type, mileage_reservation, mileage_point) 
+		select MILEAGE_INDEX_SEQ.nextval mileage_index, mileage_id, sysdate mileage_date, '결제취소' mileage_type, mileage_reservation , mileage_point * -1 mileage_point 
+		from mileage_fa 
+		where mileage_reservation = #{reservation_num}
+	</insert>
+	
+	<!-- 예약취소 -->
 	<update id="reservationCancle" parameterType="String">
 		update reservation_fa
 		set reservation_state = '예약취소'

@@ -92,28 +92,6 @@
     </section>
     <!-- modal E -->  
 <script>
-/*
-	function customerUpdateSet(){
-		
-		const id = document.getElementById('customer_id').value;
-		const name = document.getElementById('customer_name').value;
-		const country = document.getElementById('customer_country').value;
-		const gender = document.getElementById('customer_gender').value;
-		const grade = document.getElementById('customer_grade').value;
-		const email = document.getElementById('customer_email').value;
-		const phone = document.getElementById('customer_phone').value;
-		const address = document.getElementById('customer_address').value;
-
-
-		if( id == "" || name == "" || country == "" || gender == "" || grade == ""
-			|| email == "" || phone == "" || address == ""){
-			alert("빈 값을 넣을 수 없습니다."); return false;
-		}
-		opener.parent.location.reload();
-		return true;
-		
-	}
-*/
 
 
 	function customerUpdateAjax() {
@@ -142,6 +120,7 @@
 				type : 'post',
 				success : function(data) {
 					if(data == 1) {
+						alert('수정이 완료되었습니다')
 						opener.parent.location.reload();
 						window.close();
 					}

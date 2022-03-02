@@ -116,7 +116,6 @@ public class AdminCustomerController {
 		return Integer.toString(service.gradeDuplication(grade));
 	}
 
-	
 	// 팝업창 : 회원 세부정보(customerInfo.jsp)
 	@RequestMapping(value = "customerInfo", method = RequestMethod.GET)
 	public String customerInfo(Model model, String id) {
@@ -198,6 +197,20 @@ public class AdminCustomerController {
 		return "admin/customer/customerGradeUpdate";
 	}
 	
+
+	// 팝업창 : 회원정보 수정하기 열기(customerUpdate.jsp)
+	@RequestMapping(value="customerUpdate", method = RequestMethod.GET)
+	public String customerUpdate(Model model, @RequestParam(value="customer_id", defaultValue = "") String customer_id) {
+
+		ArrayList<Grade> customerGradeAll = service.customerGradeAll();
+		
+		// 기존 회원정보를 들고오는 파트
+		Customer customer = service.userInfoFind(customer_id);
+		model.addAttribute("customer", customer);
+		model.addAttribute("customerGradeAll", customerGradeAll);
+		return "admin/customer/customerUpdate";
+	}
+	
 	// 팝업창 : 회원등급 삭제 AJAX 처리(customerGradeUpdate.jsp)
 	@RequestMapping(value = "gradeDelete", method = RequestMethod.POST)
 	@ResponseBody
@@ -240,4 +253,17 @@ public class AdminCustomerController {
 		return result;
 
 	}
+	
+	
+	
+	@RequestMapping(value="mileageListInsertForm", method = RequestMethod.GET)
+	public String mileageListInsertForm(Model model) {
+		return "admin/customer/mileageListInsert";
+	}
+	
+	@RequestMapping(value="GradeListUpdateForm", method = RequestMethod.GET)
+	public String GradeListUpdateForm(Model model) {
+		return "admin/customer/gradeListUpdate";
+	}
+	
 }

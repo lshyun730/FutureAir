@@ -43,6 +43,17 @@ public class AdminFlightService {
 
 	// 비행일정 리스트 갯수
 	public int getRouteTotal(HashMap<String, String> searchList) {
+		// departure_date_start에 오늘 날짜 입력
+		if(searchList.get("departure_date_start").isEmpty()) {
+			LocalDate today = LocalDate.now();
+			searchList.put("departure_date_start", today.toString());
+		}
+		// departure_date_end에 일년 뒤 날짜 입력
+		if(searchList.get("departure_date_end").isEmpty()) {
+			LocalDate yearsAgoDate = LocalDate.now().plusDays(365);
+			searchList.put("departure_date_end", yearsAgoDate.toString());
+		}
+				
 		int total = dao.getRouteTotal(searchList);
 		return total;
 	}
@@ -150,8 +161,4 @@ public class AdminFlightService {
 		ArrayList<ArrayList<Destination>> destinationList = dao.destinationList();
 		return destinationList;
 	}
-
-
-
-
 }
