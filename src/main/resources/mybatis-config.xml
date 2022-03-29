@@ -24,7 +24,7 @@
 		<mapper resource="mapper/AdminBoardMapper.xml"/>
 		<mapper resource="mapper/AdminMailMapper.xml"/>	
 		
-		<mapper resource="mapper/HomeControllerMapper.xml"/>
+		<mapper resource="mapper/CustomerMapper.xml"/>
 		<mapper resource="mapper/FlightMapper.xml"/>
 		<mapper resource="mapper/ServiceMapper.xml"/>
 	</mappers>

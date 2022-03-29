@@ -13,4 +13,5 @@ public class Schedule {
 	private String customer_type;
 	private String type;
 	private String route_num;
+	private String customer_id;
 }

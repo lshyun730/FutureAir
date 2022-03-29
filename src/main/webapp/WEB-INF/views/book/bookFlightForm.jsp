@@ -21,9 +21,9 @@
     <form action="flightBook" method="post" class="bookFlightForm" id="bookFlightForm" onsubmit="bookFormCheck()">
     	<div class="row">
         	<div class="selectList">
-        		<input type="radio" id="tab1" value="왕복" name="reservation_type" checked><label for="tab1">왕복</label>
-        		<input type="radio" id="tab2" value="편도" name="reservation_type"><label for="tab2">편도</label>
-        		<input type="radio" id="tab3" value="다구간" name="reservation_type"><label for="tab3">다구간</label>
+        		<input type="radio" id="tab1" value="왕복" name="trip_type" checked><label for="tab1">왕복</label>
+        		<input type="radio" id="tab2" value="편도" name="trip_type"><label for="tab2">편도</label>
+        		<input type="radio" id="tab3" value="다구간" name="trip_type"><label for="tab3">다구간</label>
         	</div>
     	</div>
         <div class="row">
@@ -61,7 +61,7 @@
         <div class="row">
             <div>
                 <p class="title">성인</p>
-                <select name="seat_adult">
+                <select name="seat_adult" id="seat_adult">
                 	<c:forEach var="i" begin="0" end="5">
 	                    <option value="${i}" <c:if test="${i eq bookForm.seat_adult}">selected</c:if>>${i}</option>
                 	</c:forEach>
@@ -69,7 +69,7 @@
             </div>
             <div>
                 <p class="title">소아</p>
-                <select name="seat_childAge">
+                <select name="seat_childAge" id="seat_childAge">
                     <c:forEach var="i" begin="0" end="5">
 	                    <option value="${i}" <c:if test="${i eq bookForm.seat_childAge}">selected</c:if>>${i}</option>
                 	</c:forEach>
@@ -77,7 +77,7 @@
             </div>
             <div>
                 <p class="title">유아</p>
-                <select name="seat_infantAge">
+                <select name="seat_infantAge" id="seat_infantAge">
                     <c:forEach var="i" begin="0" end="5">
 	                    <option value="${i}" <c:if test="${i eq bookForm.seat_infantAge}">selected</c:if>>${i}</option>
                 	</c:forEach>
@@ -97,7 +97,7 @@
 				<c:if test="${empty flightType}">
 					내역이 존재하지 않습니다
 				</c:if>
-				<c:if test="${not empty flightType}">\
+				<c:if test="${not empty flightType}">
 					<!-- day list S -->
 			        <ul class="weekList">
 			            <fmt:parseDate value="${flightType[0].DEPARTURE_DATE}" var="departure_date" pattern="yyyy-MM-dd HH:mm:ss.S"/>
@@ -129,9 +129,9 @@
 				                </div>
 				                <div class="flight_time">${flight.ETA }분</div>
 				                <div class="flight_contents">
-					                <input type="radio" name="seat_class${status.count}" class="seat_class" id="seat${status.count}_${flight_status.count}_1" onchange="javascript:setRouteNum('${status.count}', '${flight.ROUTE_NUM }', '이코노미')" value="이코노미"/><label for="seat${status.count}_${flight_status.count}_1">이코노미석 <span><fmt:formatNumber value="${flight.NORMAL_PRICE}" pattern="#,###"/> 원</span></label>
-					                <input type="radio" name="seat_class${status.count }" class="seat_class" id="seat${status.count}_${flight_status.count}_2" onchange="javascript:setRouteNum('${status.count}', '${flight.ROUTE_NUM }', '프레스티지')" value="프레스티지"/><label for="seat${status.count}_${flight_status.count}_2">비즈니스석 <span><fmt:formatNumber value="${flight.PRESTIGE_PRICE}" pattern="#,###"/> 원</span></label>
-					                <input type="radio" name="seat_class${status.count }" class="seat_class" id="seat${status.count}_${flight_status.count}_3" onchange="javascript:setRouteNum('${status.count}', '${flight.ROUTE_NUM }', '일등')" value="일등"/><label for="seat${status.count}_${flight_status.count}_3">일등석 <span><fmt:formatNumber value="${flight.FIRST_PRICE}" pattern="#,###"/> 원</span></label>
+					                <input type="radio" name="seat_class${status.count}" class="seat_class" id="seat${status.count}_${flight_status.count}_1" onchange="javascript:setRouteNum('${status.count}', '${flight.ROUTE_NUM }', ${flight.NORMAL_PRICE}, '일반')" value="일반"/><label for="seat${status.count}_${flight_status.count}_1">일반석 <span><fmt:formatNumber value="${flight.NORMAL_PRICE}" pattern="#,###"/> 원</span></label>
+					                <input type="radio" name="seat_class${status.count }" class="seat_class" id="seat${status.count}_${flight_status.count}_2" onchange="javascript:setRouteNum('${status.count}', '${flight.ROUTE_NUM }', ${flight.PRESTIGE_PRICE}, '프레스티지')" value="프레스티지"/><label for="seat${status.count}_${flight_status.count}_2">프리스티지석 <span><fmt:formatNumber value="${flight.PRESTIGE_PRICE}" pattern="#,###"/> 원</span></label>
+					                <input type="radio" name="seat_class${status.count }" class="seat_class" id="seat${status.count}_${flight_status.count}_3" onchange="javascript:setRouteNum('${status.count}', '${flight.ROUTE_NUM }', ${flight.FIRST_PRICE}, '일등')" value="일등"/><label for="seat${status.count}_${flight_status.count}_3">일등석 <span><fmt:formatNumber value="${flight.FIRST_PRICE}" pattern="#,###"/> 원</span></label>
 				                </div>
 				            </li>	        	
 			        	</c:forEach>
@@ -140,19 +140,22 @@
 				</c:if>
 		    </div>
 		    <input type="hidden" name="route_num${status.count}" class="route_num" value=""/>
+		    <input type="hidden" name="price${status.count}" class="price" value=""/>
 		</c:forEach>
-	    <input type="hidden" name="route_num[]" id="route_num_list"/>
-	    <input type="hidden" name="seat_class[]" id="seat_class_list"/>
+		<input type="hidden" name="route_num[]" id="route_num_list"/>
+	    <input type="hidden" name="payment">
 	    <input type="hidden" name="seat_adult" value="${bookForm.seat_adult}"/>
 	    <input type="hidden" name="seat_childAge" value="${bookForm.seat_childAge}"/>
 	    <input type="hidden" name="seat_infantAge" value="${bookForm.seat_infantAge}"/>
-    <div class="flight_payment_wrap">
-        <div class="flight_payment">
-            <p>총 결제금액</p>
-            <p class="price">67,200원</p>
-        </div>
-        <button class="btn_primary">다음</button>
-    </div>
+		<c:if test="${not empty bookForm}">
+		    <div class="flight_payment_wrap">
+		        <div class="flight_payment">
+		            <p>총 결제금액</p>
+		            <p class="price" id="lastPayment">0 원</p>
+		        </div>
+		        <button class="btn_primary">다음</button>
+		    </div>
+		</c:if>
 	</form>
 </section>
 <!-- book flight E -->
@@ -176,18 +179,36 @@ function pickDate(element) {
  		if(i <= 0) {
  			pick_date_list.value = pick_date[i].children[0].innerHTML
  		} else {
-			pick_date_list.value = pick_date_list.value + ',' + pick_date[i].children[0].innerHTML 			
+			pick_date_list.value = pick_date_list.value + ' ~ ' + pick_date[i].children[0].innerHTML 			
  		}
 	 } 
  	
 	form.submit()
 }
 
- function setRouteNum(input, route_num, seat_class) {
+ function setRouteNum(input, route_num, price, seat_class) {
+	 
 	const inputRouteNum = document.querySelector('input[name=route_num' + input + ']'); 
+	const inputPrice = document.querySelector('input[name=price' + input + ']');
 	const inputSeatClass = document.querySelector('input[name=seat_class' + input + ']'); 
+	const payment = document.querySelector('input[name=payment]'); 
+	
+	const paymentList = document.getElementsByClassName('price');
+	const lastPayment = document.getElementById('lastPayment');
+	
+	inputPrice.value = price
 	inputRouteNum.value = route_num
 	inputSeatClass.value = seat_class
+	
+	let sumPayment = 0
+	for (let i = 0; i < paymentList.length; i++) {
+		if(paymentList[i].value != null) {
+			sumPayment += parseInt(paymentList[i].value)
+			payment.value = sumPayment 
+		}
+	}
+	
+	lastPayment.innerHTML = sumPayment.toLocaleString()+ ' 원'
 }
 
  function bookCheck() {
@@ -212,11 +233,30 @@ function pickDate(element) {
 	seat_class_list.value = seat_list
 }
 
+ function changeCustomerType() {
+	const seat_adult =  document.getElementById('seat_adult').value; 
+	const seat_childAge =  document.getElementById('seat_childAge').value; 
+	const seat_infantAge =  document.getElementById('seat_infantAge').value; 
+	const customer_type =  document.getElementById('customer_type'); 
+	
+ 	const customerTypeList = new Array()
+	for (let i = 0; i < seat_adult; i++) {
+		customerTypeList.push('성인')
+	}
+ 	for (let i = 0; i < seat_childAge; i++) {
+		customerTypeList.push('소아')
+	}
+ 	for (let i = 0; i < seat_infantAge; i++) {
+		customerTypeList.push('유아')
+	}
+ 	customer_type.value = customerTypeList
+	 
+ }
 
 
 
 const startDate = new Date();
-startDate.setDate(startDate.getDate()+1);
+/* startDate.setDate(startDate.getDate()+1); */
 
 $('#dateRange').daterangepicker({
 	locale: {

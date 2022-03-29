@@ -23,11 +23,16 @@
 	</beans:bean>
 	
 	<beans:bean id="AdminLoginInterceptor" class="com.air.future.interceptor.AdminLoginInterceptor"></beans:bean>
+	<beans:bean id="LoginInterceptor" class="com.air.future.interceptor.LoginInterceptor"></beans:bean>
 	
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/admin/**"/>
 			<beans:ref bean="AdminLoginInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/book/passengerInfo/**"/>
+			<beans:ref bean="LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 	

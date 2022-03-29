@@ -19,12 +19,19 @@
 <section class="inner content notice">
     <h2>공지사항</h2>
     <div class="title_box">
-        <form action="#" method="get" class="searchForm">
-            <input type="text" placeholder="검색어 입력">
+        <form action="notice" method="get" class="searchForm" id="search_detail">
+            <input type="text" name= "searchText" placeholder="검색어 입력" value="${searchText }">
             <input type="submit" value="검색">
+            <input type="hidden" name="page" id="page" />
         </form>
     </div>
     <table class="table top_boder">
+    	<colgroup>
+    		<col width="15%"/>
+    		<col width="55%"/>
+    		<col width="15%"/>
+    		<col width="15%"/>
+    	</colgroup>
         <thead>
         	<tr>
 	            <th>번호</th>
@@ -33,33 +40,36 @@
 	            <th>조회수</th>
         	</tr>
         </thead>
-        <tbody>
-        	<c:forEach var="post" items="${noticeList }">
+        <tbody>	
+        	<c:forEach var="post" items="${fixList}">
+	        	<tr class="notice_fix">
+		            <td>공지</td>
+		            <td style="text-align: left;"><a href="#">${post.title }</a></td>
+		            <td>${post.post_date }</td>
+		            <td>${post.hits }</td>
+	        	</tr>
+        	</c:forEach>
+        	<c:if test="${empty noticeList}">
+           		<tr><td colspan="9">검색 결과가 없습니다</td></tr>
+           	</c:if>
+        	<c:forEach var="post" items="${noticeList}">
 	        	<tr>
 		            <td>${post.post_index }</td>
-		            <td style="text-align: left;">${post.title }</td>
+		            <td style="text-align: left;"><a href="#">${post.title }</a></td>
 		            <td>${post.post_date }</td>
 		            <td>${post.hits }</td>
 	        	</tr>
         	</c:forEach>
         </tbody>
     </table>
-
-    <div class="navi">
-        <a href="#" class="icon first_prev"></a>
-        <a href="#" class="icon prev"></a>
-        <a href="#" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">6</a>
-        <a href="#">7</a>
-        <a href="#">8</a>
-        <a href="#">9</a>
-        <a href="#">10</a>
-        <a href="#" class="icon next"></a>
-        <a href="#" class="icon last_next"></a>
+	<div class="navi">
+       	<a href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})" class="icon first_prev"></a>
+       	<a href="javascript:pagingFormSubmit(${navi.currentPage - 1})" class="icon prev"></a>
+        <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
+			<a href="javascript:pagingFormSubmit(${counter})" <c:if test="${navi.currentPage == counter}">class="active"</c:if>>${counter}</a>
+		</c:forEach>
+       	<a href="javascript:pagingFormSubmit(${navi.currentPage + 1})" class="icon next"></a>
+       	<a href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})" class="icon last_next"></a>
     </div>
 </section>
 <!-- notice E --> 

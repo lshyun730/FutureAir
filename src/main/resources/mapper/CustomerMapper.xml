@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.air.future.dao.CustomerMapper">
+	
+	<!-- 일반 회원 로그인 -->
+	<select id="loginAction" parameterType="hashmap" resultType="customer">
+		select *
+		from customer_fa
+		<where>
+			customer_id = #{customer_id}
+			and customer_pw = #{customer_pw}
+		</where>
+	</select>
+	
+	<!-- AJAX : 회원가입 시 ID 중복 체킹하기 -->
+	<select id="validateIdAjax" parameterType="string" resultType="int">
+		select count(*)
+		from customer_fa
+		<where>
+			customer_id = #{customer_id}
+		</where>	
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="joinForm" parameterType="customer">
+		insert into
+		customer_fa(customer_id
+					, customer_pw
+					, customer_name
+					, customer_gender
+					, customer_country
+					, customer_email
+					, customer_address
+					, customer_phone
+					, customer_birth
+					, customer_grade
+					)
+		values(
+			#{customer_id}
+			, #{customer_pw}
+			, #{customer_name}
+			, #{customer_gender}
+			, #{customer_country}
+			, #{customer_email}
+			, #{customer_address}
+			, #{customer_phone}
+			, #{customer_birth}
+			, (select grade from customer_grade_fa
+				where promo_terms = (select min(promo_terms)
+                    				from customer_grade_fa))
+			)
+	</insert>
+	
+<!-- 마이페이지 -->
+	<!-- 보유 마일리지 -->
+	<select id="getMyMileage" parameterType="String" resultType="int">
+		select sum(mileage_point) from mileage_fa
+		where mileage_id = #{customer_id}
+	</select>
+	
+	<!-- 최근예약내역 -->
+	<select id="getMyReservationList" parameterType="String" resultType="HashMap">
+		select * from 
+			(select r.reservation_num, s.passenger_name, to_char(rou.departure_date, 'YYYY-MM-DD') departure_date, rou.departure_name, rou.arrival_name, to_char(r.reservation_date, 'YYYY-MM-DD') reservation_date from reservation_fa  r, route_fa rou, schedule_fa s
+			where r.customer_id = #{customer_id}
+			and r.customer_id = s.customer_id
+			and s.reservation_num = r.reservation_num
+			and s.route_num = rou.route_num
+			and s.type = '여정1') a ,
+			(select reservation_num, count(*)-1 count from schedule_fa
+			group by reservation_num) b
+		where a.reservation_num = b.reservation_num
+		order by a.reservation_date desc
+	</select>
+	
+	<!-- 최근문의내역 -->
+	<select id="getMyQnAList" parameterType="String" resultType="post">
+		select post_index, title, to_char(post_date, 'YYYY-MM-DD') post_date, post_type, reply_index  from post_fa
+		where board_name = 'QnA'
+		and writer = #{customer_id}
+		order by post_date desc
+	</select>
+	
+	
+	
+
+</mapper>

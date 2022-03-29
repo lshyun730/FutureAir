@@ -6,8 +6,11 @@ import java.util.HashMap;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.air.future.vo.Customer;
+import com.air.future.vo.Reservation;
+import com.air.future.vo.Schedule;
 
 @Repository
 public class FlightDAO {
@@ -38,5 +41,22 @@ public class FlightDAO {
 		FlightMapper mapper = sqlSession.getMapper(FlightMapper.class);		
 		Customer customer = mapper.getCustomerInfo(userInfo);
 		return customer;
+	}
+
+	public String getReservationNum() {
+		FlightMapper mapper = sqlSession.getMapper(FlightMapper.class);		
+		String reservationNum = mapper.getReservationNum();
+		return reservationNum;
+	}
+
+	@Transactional
+	public int insertReservation(Reservation reservation, ArrayList<Schedule> scheduleList, String string) {
+		FlightMapper mapper = sqlSession.getMapper(FlightMapper.class);				
+		int result = 0;
+		result = mapper.insertReservation(reservation); 
+		for (int i = 0; i < scheduleList.size(); i++) {
+			result = mapper.insertSchedule(scheduleList.get(i)); 
+		}
+		return 0;
 	}
 }

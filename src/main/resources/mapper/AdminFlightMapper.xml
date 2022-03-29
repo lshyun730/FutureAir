@@ -115,7 +115,7 @@
 		    and s.route_num = rou.route_num
 		    and r.customer_id = c.customer_id
 		    and c.customer_id = s.customer_id
-		    and s.type = '출발'
+		    and s.type = '여정1'
 		    <if test="departure_date_start != ''">
             and to_char(rou.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
 			</if>
@@ -159,7 +159,7 @@
 		    and s.route_num = rou.route_num
 		    and r.customer_id = c.customer_id
 		    and c.customer_id = s.customer_id
-		    and s.type = '출발'
+		    and s.type = '여정1'
 		    <if test="departure_date_start != ''">
             and to_char(rou.departure_date, 'YYYY-MM-DD') >= #{departure_date_start}
 			</if>

@@ -33,74 +33,69 @@
             </div>
         </div>
     </div>
-    <form action="book/flightBook" method="get" class="quick_reservation">
+    <form action="book/flightBook" method="post" class="quick_reservation">
         <div class="inner">
             <div class="trip_type">
                 <p class="title">여행타입</p>
-                <label><input type="radio" name="trip_type">왕복</label>
-                <label><input type="radio" name="trip_type">편도</label>
-                <label><input type="radio" name="trip_type">다구간</label>
+                <label><input type="radio" name="trip_type" value="왕복" checked="checked">왕복</label>
+                <label><input type="radio" name="trip_type" value="편도">편도</label>
+                <label><input type="radio" name="trip_type" value="다구간" disabled>다구간</label>
             </div>
             <div>
                 <p class="title">출발지</p>
-                <select name="departure">
-                    <option value="김포">김포</option>
+                <select name="departure_name">
+                <option value="" disabled selected>도시 혹은 공항</option>
+                    <c:forEach var="continent" items="${destinationList}">
+             			<optgroup label="${continent[0].continents}">
+             				<c:forEach var="destination" items="${continent}">
+				        		<option value="${destination.airport_name}">${destination.airport_name} / ${destination.airport_id}</option>
+             				</c:forEach>
+            			</optgroup>
+		        	</c:forEach>
                 </select>
             </div>
             <div>
                 <p class="title">도착지</p>
-                <select name="arrival">
-                    <option value="김포">김포</option>
+                <select name="arrival_name">
+               		<option value="" disabled selected>도시 혹은 공항</option>
+                    <c:forEach var="continent" items="${destinationList}">
+             			<optgroup label="${continent[0].continents}">
+             				<c:forEach var="destination" items="${continent}">
+				        		<option value="${destination.airport_name}">${destination.airport_name} / ${destination.airport_id}</option>
+             				</c:forEach>
+            			</optgroup>
+		        	</c:forEach>
+                </select>
+            </div>
+             <div class="flight_date">
+                <p class="title">출발일</p>
+                <input type="text" name="pick_date_list" id="dateRange">
+            </div>
+            <div>
+                <p class="title">성인</p>
+                <select name="seat_adult">
+                    <c:forEach var="i" begin="0" end="5">
+	                    <option value="${i}" <c:if test="${i eq bookForm.seat_adult}">selected</c:if>>${i}</option>
+                	</c:forEach>
                 </select>
             </div>
             <div>
-                <p class="title">좌석</p>
-                <select name="seat">
-                    <option value="이코노미석">이코노미석</option>
-                    <option value="비즈니스석">비즈니스석</option>
-                    <option value="일등석">일등석</option>
+                <p class="title">소아</p>
+                <select name="seat_childAge">
+                    <c:forEach var="i" begin="0" end="5">
+	                    <option value="${i}" <c:if test="${i eq bookForm.seat_adult}">selected</c:if>>${i}</option>
+                	</c:forEach>
                 </select>
             </div>
-            <div class="passenger_type">
-                <div>
-                    <p class="title">성인</p>
-                    <select name="seat_adult">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="1">4</option>
-                        <option value="2">5</option>
-                    </select>
-                </div>
-                <div>
-                    <p class="title">소아</p>
-                    <select name="seat_childAge">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="1">4</option>
-                        <option value="2">5</option>
-                    </select>
-                </div>
-                <div>
-                    <p class="title">유아</p>
-                    <select name="seat_infantAge">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="1">4</option>
-                        <option value="2">5</option>
-                    </select>
-                </div>
+            <div>
+                <p class="title">유아</p>
+                <select name="seat_infantAge">
+                    <c:forEach var="i" begin="0" end="5">
+	                    <option value="${i}" <c:if test="${i eq bookForm.seat_adult}">selected</c:if>>${i}</option>
+                	</c:forEach>
+                </select>
             </div>
-            <div class="flight_date">
-                <p class="title">출발일</p>
-                <input type="date" name="departure_date" >
-            </div>
-            <div class="flight_date">
-                <p class="title">도착일</p>
-                <input type="date" name="arrival_date">
-            </div>
+            <!-- <input type="hidden" name="pick_date_list" id="pick_date_list" value=""/> -->
             <div class="submit">
                 <input type="submit">
             </div>
@@ -216,6 +211,24 @@
     </div>
 </section>
 <!-- service E -->
+<<script type="text/javascript">
+
+const startDate = new Date();
+/* startDate.setDate(startDate.getDate()); */
+
+$('#dateRange').daterangepicker({
+	locale: {
+	    "separator": " ~ ",                    
+	    "format": 'YYYY-MM-DD',     
+	    "applyLabel": "확인",                    
+	    "cancelLabel": "취소",                 
+	    "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+	    "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+	    },
+	minDate: startDate
+});
+
+</script>
 <!-- footer S -->
 <%@include file ="include/footer.jsp" %>
 <!-- footer E --> 

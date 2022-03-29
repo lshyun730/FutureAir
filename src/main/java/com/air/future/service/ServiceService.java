@@ -26,4 +26,19 @@ public class ServiceService {
 		return count;
 	}
 
+	public ArrayList<Post> getFixList() {
+		ArrayList<Post> fixList = dao.getFixList();
+		return fixList;
+	}
+
+	public ArrayList<ArrayList<Post>> getfaqList() {
+		ArrayList<ArrayList<Post>> faqList = dao.getfaqList();
+		return faqList;
+	}
+
+	public ArrayList<String> getPostType() {
+		ArrayList<String> postType = dao.getPostType();
+		return postType;
+	}
+
 }

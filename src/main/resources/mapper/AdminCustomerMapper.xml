@@ -332,7 +332,7 @@
 		and c.customer_id = s.customer_id
 		and s.customer_id = r.customer_id
 		and r.customer_id = #{customer_id}
-		and s.type = '출발'
+		and s.type = '여정1'
 		<if test="!reservation_start.equals('')">
 			and reservation_date <![CDATA[>=]]> to_date(#{reservation_start}, 'YYYY-MM-DD')
 		</if>
@@ -351,7 +351,7 @@
 		and c.customer_id = s.customer_id
 		and s.customer_id = r.customer_id
 		and r.customer_id = #{customer_id}
-		and s.type = '출발'
+		and s.type = '여정1'
 		<if test="!reservation_start.equals('')">
 			and reservation_date <![CDATA[>=]]> to_date(#{reservation_start}, 'YYYY-MM-DD')
 		</if>
@@ -387,7 +387,7 @@
 		from schedule_fa
 		<where>
 			reservation_num = #{reservation_num}
-			and reservation_type = '출발'
+			and reservation_type = '여정1'
 		</where>
 	</select>
 	

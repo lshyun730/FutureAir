@@ -12,12 +12,12 @@
     <div class="mypage_main">
         <div class="customer_info">
             <div class="profile">
-                <p class="customer_name">홍길동님 <span>hong123</span></p>
+                <p class="customer_name">${customer.customer_name }님 <span>${customer.customer_id }</span></p>
             </div>
             <ul class="customer_info_list">
-                <li>등급 <span>일반</span></li>
-                <li>마일리지 <span>10000</span></li>
-                <li class="logout"><a href="#">로그아웃</a></li>
+                <li>등급 <span>${customer.customer_grade }</span></li>
+                <li>마일리지 <span>${mileage}</span></li>
+                <li class="logout"><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
             </ul>
         </div>
         <ul class="mypage_nav">
@@ -58,14 +58,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>R00001</td>
-                    <td>홍길동 외 1</td>
-                    <td>2022-01-01</td>
-                    <td>김해</td>
-                    <td>김포</td>
-                    <td>2022-03-01</td>
-                </tr>
+            	<c:forEach var="reservation" items="${myReservationList }" end="4">
+	                <tr>
+	                    <td>${reservation.RESERVATION_NUM }</td>
+	                    <td>${reservation.PASSENGER_NAME } <c:if test="${reservation.COUNT ne 0 }">외 ${reservation.COUNT }</c:if> </td>
+	                    <td>${reservation.DEPARTURE_DATE }</td>
+	                    <td>${reservation.DEPARTURE_NAME }</td>
+	                    <td>${reservation.ARRIVAL_NAME }</td>
+	                    <td>${reservation.RESERVATION_DATE }</td>
+	                </tr>
+            	</c:forEach>
             </tbody>
         </table>
     </div>
@@ -74,7 +76,7 @@
             <h3>최근 문의 내역 <span>최대 5건 까지 노출됩니다</span></h3>
             <a href="#" class="all_link">전체 내역 보기</a>
         </div>
-        <table class="table top_boder">
+        <table class="table faq_list top_boder">
             <thead>
                 <tr>
                     <th>문의내용</th>
@@ -84,12 +86,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>항공권 예약 관련 문의</td>
-                    <td>문의</td>
-                    <td>2022-02-28</td>
-                    <td>답변완료</td>
-                </tr>
+            	<c:forEach var="qna" items="${myQnAList }" end="4">
+	                <tr class="quest">
+	                    <td style="text-align: left">${qna.title}</td>
+	                    <td>${qna.post_type }</td>
+	                    <td>${qna.post_date }</td>
+	                    <td>
+	                    	<c:if test="${empty qna.reply_index}">답변전</c:if>
+	                    	<c:if test="${not empty qna.reply_index}">답변완료</c:if>
+	                    </td>
+	                </tr>
+            	</c:forEach>
             </tbody>
         </table>
     </div>

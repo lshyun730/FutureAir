@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="https://cdn.ckeditor.com/4.17.2/basic/ckeditor.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
     <title>미래항공 관리자페이지</title>
 </head>

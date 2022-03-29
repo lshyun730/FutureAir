@@ -8,5 +8,5 @@ public class Reservation {
 	private String customer_id;
 	private String reservation_date;
 	private String reservation_state;
-	private String payment;
+	private int payment;
 }

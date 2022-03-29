@@ -16,8 +16,12 @@ header
 -----------------------
 */
 .util {text-align: right;border-bottom: 1px solid var(--secondary);}
-.util ul li {display: inline-block;padding: 0.625rem 0 0.625rem 3.125rem;}
-.util ul li a {font-size: .875rem;}
+.util_list > li {display: inline-block;padding: 0.625rem 0; margin-left: 3.125rem;position: relative;}
+.util_list li a {font-size: .875rem;}
+.util_list > li:hover .util_dep {display: flex;}
+.util_list .util_dep {display: none; position: absolute; z-index: 999; border: 1px solid var(--light); flex-direction: column; left: 50%; background: #fff; text-align: center;width: max-content; transform: translateX(-50%); top: 100%;}
+.util_list .util_dep li a{display: block; padding: 5px 20px; background: #fff;}
+.util_list .util_dep li a:hover {color: var(--primary);text-decoration: underline;}
 
 .header {position: relative;box-shadow: 0 0.625rem 0.625rem rgba(0, 0, 0, .03); z-index: 99;}
 .header .inner { display: flex; justify-content: space-between; align-items: center; }
@@ -268,11 +272,12 @@ service
 .faq .faq_nav {display: flex;justify-content: center;}
 .faq .faq_nav li {padding: 0 20px;}
 .faq .faq_nav li a:hover {color: var(--primary);font-weight: bold;}
-/* .faq .faq_nav li.active a{color: var(--primary); font-weight: bold; text-decoration: underline;} */
-.faq table.faq_list td{text-align: left;padding :0;}
+.faq table.faq_list td{text-align: left;padding :0; cursor: pointer;}
+.faq table.faq_list td.active .answer{display: block; border-bottom: 2px solid var(--light)}
 .faq table.faq_list td .quest, table.faq_list td .answer { padding: 20px 100px; position: relative;}
 .faq table.faq_list td .quest::before{content: "Q";font-weight: bold; position: absolute; left: 30px;}
-.faq table.faq_list td .quest::after{font-family: "Font Awesome 5 Free";font-weight: 900; content: "\f078"; position: absolute; right: 30px;}
+.faq table.faq_list td .quest::after{font-family: "Font Awesome 5 Free";font-weight: 900; content: "\f078"; position: absolute; right: 30px; transition: all .3s; transform: rotate(0deg)}
+.faq table.faq_list td.active .quest::after{transform: rotate(180deg);}
 .faq table.faq_list td .answer {display: none;}
 .faq table.faq_list td .answer {background: var(--secondary);}
 .faq table.faq_list td .answer::before{content: "A";font-weight: bold; position: absolute; left: 30px;}
@@ -357,6 +362,7 @@ select {width: 100%;border:0; border-bottom: 1px solid var(--gray); padding: 0.3
 /* 테이블 */
 .table {width: 100%; border-collapse: collapse;}
 .table th, .table td {padding: 1.25rem;border-bottom: 1px solid var(--light); text-align: center;}
+.table td a:hover {text-decoration: underline;}
 .table th {background: var(--secondary);}
 .table.top_boder {border-top: 3px solid #000;}
 

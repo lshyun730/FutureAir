@@ -16,15 +16,6 @@ function loginFormCheck() {
     }
 }
 
-/* 상세검색 submit */
-function pagingFormSubmit(currentPage) {
-	const form = document.getElementById("search_detail");
-	const page = document.getElementById("page");
-	
-	page.value = currentPage;
-	form.submit();
-}
-
 /* 체크박스 전체 선택 & 전체 선택 취소 */
 function selectAll(selectAll)  {
 	const table = selectAll.closest('.table'); 
@@ -118,6 +109,7 @@ function reservationDelete(reservation_num, reservation_state) {
 		alert('이미 취소 된 예약입니다');
 		return;
 	}
+	
  	if(confirm("정말 취소하시겠습니까?")){
 		 $.ajax({
 				url : 'reservationCancle',
@@ -149,17 +141,6 @@ function searchDetail() {
     } 
 }
 
-// 모달창 Open/Close
-function modalOpen(){ document.getElementById("modal").style.display = 'flex'; }
-function modalClose(){ document.getElementById("modal").style.display = 'none'; }
-
-
-// 팝업창 오픈
-function popupOpen(link, width, height) {
-	const popupX = (window.screen.width / 2) - (width / 2);
-	const popupY= (window.screen.height /2) - (height / 2);
-	window.open(link, '_blank', 'width=' + width + ',height=' + height + ',left=' + popupX + ',top=' + popupY );
-}
 
 // ... 버튼
 function click_more(element){

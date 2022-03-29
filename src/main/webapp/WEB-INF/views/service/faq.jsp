@@ -15,77 +15,37 @@
 	</ul>
 </div>
 <!-- breadcrumbs E --> 
+<!-- faq S -->
 <section class="content inner faq">
     <h2>자주묻는질문</h2>
     <ul class="faq_nav title_box">
-        <li class="active"><a href="#">항공권예약</a></li>
-        <li><a href="#">마일리지</a></li>
-        <li><a href="#">체크인</a></li>
-        <li><a href="#">수하물</a></li>
-        <li><a href="#">공항</a></li>
-        <li><a href="#">홈페이지이동</a></li>
+    	<c:forEach var="type" items="${postType}">
+	        <li><a href="#${type}">${type}</a></li>
+    	</c:forEach>
     </ul>
-    
-    <div>
-        <h3>항공권예약</h3>
-        <table class="faq_list table top_boder">
-            <tr>
-                <td>
-                    <p class="quest">탑승할 항공편에 미리 좌석을 선택할 수 있나요?</p>
-                    <p class="answer" style="display:none">네, 가능합니다. 대한항공 홈페이지, 서비스 센터, 지점, 공항 및 여행사를 통하여 '좌석 배정'을 할 수 있습니다. <br>
-                        일등석 및 프레스티지석 승객 : 항공권 예약 시 혹은 구매 후 모두 가능 (출발 361일 전부터 출발 24시간 전까지) <br>
-                        일반석 승객 : 항공권 구매 이후 가능 (출발 361일 전부터 출발 48시간 전까지)</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p class="quest">탑승할 항공편에 미리 좌석을 선택할 수 있나요?</p>
-                    <p class="answer" style="display:none">네, 가능합니다. 대한항공 홈페이지, 서비스 센터, 지점, 공항 및 여행사를 통하여 '좌석 배정'을 할 수 있습니다. <br>
-                        일등석 및 프레스티지석 승객 : 항공권 예약 시 혹은 구매 후 모두 가능 (출발 361일 전부터 출발 24시간 전까지) <br>
-                        일반석 승객 : 항공권 구매 이후 가능 (출발 361일 전부터 출발 48시간 전까지)</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p class="quest">탑승할 항공편에 미리 좌석을 선택할 수 있나요?</p>
-                    <p class="answer">네, 가능합니다. 대한항공 홈페이지, 서비스 센터, 지점, 공항 및 여행사를 통하여 '좌석 배정'을 할 수 있습니다. <br>
-                        일등석 및 프레스티지석 승객 : 항공권 예약 시 혹은 구매 후 모두 가능 (출발 361일 전부터 출발 24시간 전까지) <br>
-                        일반석 승객 : 항공권 구매 이후 가능 (출발 361일 전부터 출발 48시간 전까지)</p>
-                </td>
-            </tr>
-        </table>
-    </div>
-
-    <div>
-        <h3>마일리지</h3>
-        <table class="faq_list table top_boder">
-            <tr>
-                <td>
-                    <p class="quest">탑승할 항공편에 미리 좌석을 선택할 수 있나요?</p>
-                    <p class="answer">네, 가능합니다. 대한항공 홈페이지, 서비스 센터, 지점, 공항 및 여행사를 통하여 '좌석 배정'을 할 수 있습니다. <br>
-                        일등석 및 프레스티지석 승객 : 항공권 예약 시 혹은 구매 후 모두 가능 (출발 361일 전부터 출발 24시간 전까지) <br>
-                        일반석 승객 : 항공권 구매 이후 가능 (출발 361일 전부터 출발 48시간 전까지)</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p class="quest">탑승할 항공편에 미리 좌석을 선택할 수 있나요?</p>
-                    <p class="answer">네, 가능합니다. 대한항공 홈페이지, 서비스 센터, 지점, 공항 및 여행사를 통하여 '좌석 배정'을 할 수 있습니다. <br>
-                        일등석 및 프레스티지석 승객 : 항공권 예약 시 혹은 구매 후 모두 가능 (출발 361일 전부터 출발 24시간 전까지) <br>
-                        일반석 승객 : 항공권 구매 이후 가능 (출발 361일 전부터 출발 48시간 전까지)</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p class="quest">탑승할 항공편에 미리 좌석을 선택할 수 있나요?</p>
-                    <p class="answer" style="display:block">네, 가능합니다. 대한항공 홈페이지, 서비스 센터, 지점, 공항 및 여행사를 통하여 '좌석 배정'을 할 수 있습니다. <br>
-                        일등석 및 프레스티지석 승객 : 항공권 예약 시 혹은 구매 후 모두 가능 (출발 361일 전부터 출발 24시간 전까지) <br>
-                        일반석 승객 : 항공권 구매 이후 가능 (출발 361일 전부터 출발 48시간 전까지)</p>
-                </td>
-            </tr>
-        </table>
-    </div>
+   	<c:forEach var="faqType" items="${faqList}">
+	    <div>
+	        <h3 id="${faqType[0].post_type }">${faqType[0].post_type }</h3>
+	        <table class="faq_list table top_boder">
+	        	<c:forEach var="post" items="${faqType}">
+		            <tr>
+		                <td onclick="faqToggle(this)">
+		                    <p class="quest">${post.title}</p>
+ 		                    <div class="answer">${post.contents }</div>
+		                </td>
+		            </tr>
+	        	
+	        	</c:forEach>
+	        </table>
+	    </div>
+   	</c:forEach>
 </section>
+<!-- faq E -->
+<script>
+	function faqToggle(element) {
+		element.classList.toggle("active");
+	}
+</script>
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>
 <!-- footer E -->  

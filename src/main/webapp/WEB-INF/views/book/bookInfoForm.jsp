@@ -19,6 +19,7 @@
 <!-- breadcrumbs E --> 
 <!-- book customer info S -->
 <section class="inner content">
+	<form action="bookDone" method="post" class="border_input" id="bookForm">
     <h2>항공권 예약</h2>
     <div>
         <h3>여행정보</h3>
@@ -32,7 +33,7 @@
                     <th>좌석정보</th>
                 </tr>
             </thead>
-            <tbody> 
+            <tbody>  
             	<c:forEach var="flight" items="${flightInfo }" varStatus="status">
             		<fmt:parseDate value="${flight.DEPARTURE_DATE}" var="departure_date_time" pattern="yyyy-MM-dd HH:mm:ss.S"/>
 	               	<fmt:formatDate var="departure_date" pattern="yyyy-MM-dd (E)" value="${departure_date_time}"/>
@@ -41,20 +42,21 @@
 	                <fmt:formatDate var="arrival_date" pattern="yyyy-MM-dd" value="${arrival_date_time}"/>
 	               	<fmt:formatDate var="arrival_time" pattern="HH:mm" value="${arrival_date_time}"/>
 	                <tr>
-	                    <td>여정${status.count }</td>
+	                    <td>여정${status.count}</td>
 	                    <td>${flight.DEPARTURE_NAME } - ${flight.ARRIVAL_NAME }</td>
 	                    <td>${departure_date}  ${departure_time} - ${arrival_time}</td>
 	                    <td>${flight.ROUTE_NUM}</td>
-	                    <td>${bookForm.seat_class1}
+	                    <td>${flight.SEAT_CLASS}
 						</td>
 	                </tr>            	
+	            	<input type="hidden" class="route_num" name="route_num" value="${flight.ROUTE_NUM}" disabled/>
+	            	<input type="hidden" class="seat_class" name="seat_class" value="${flight.SEAT_CLASS}" disabled/>
             	</c:forEach>
             </tbody>
         </table>
     </div>
     <div>
         <h3>승객정보</h3>
-        <form action="#" class="border_input">
             <table class="table top_boder">
                 <colgroup>
                     <col width="10%">
@@ -75,100 +77,105 @@
                 </thead>
                 <tbody>
                 	<c:forEach var="adult" begin="1" end="${bookForm.seat_adult }" varStatus="status">
-                		<c:set var="i" value="${i+1}"></c:set>
+	               		<c:set var="i" value="${i+1}"></c:set>
                 		<fmt:parseDate value="${customer.customer_birth}" var="customer_birth" pattern="yyyyMMdd"/>
                 		<fmt:formatDate var="birth" pattern="yyyy-MM-dd" value="${customer_birth}"/>
 	                	<tr>
-		                    <td>성인</td>
+		                    <td>성인 <input type="hidden" name="type${i}" value="성인"/></td>
 		                    <td>
-		                        <input type="text" placeholder="이름을 입력해 주세요" <c:if test="${status.count eq 1 }">value="${customer.customer_name }" readonly</c:if>>
+		                        <input name="name${i}" type="text" placeholder="이름을 입력해 주세요" <c:if test="${status.count eq 1 }">value="${customer.customer_name }" readonly</c:if>>
 		                    </td>
 		                    <td>
-		                        <input type="radio" name="gender${i}" id="tab${i}-1" value="남자" <c:if test="${customer.customer_gender eq '남자' }">checked </c:if>><label for="tab${i}-1">남</label>
-		                        <input type="radio" name="gender${i}" id="tab${i}-2" value="여자" <c:if test="${customer.customer_gender eq '여자' }">checked </c:if>><label for="tab${i}-2">여</label>
+		                        <input type="radio" name="gender${i}" id="tab${i}-1" value="남자" <c:if test="${status.count eq 1 and customer.customer_gender eq '남자' }">checked </c:if>><label for="tab${i}-1">남</label>
+		                        <input type="radio" name="gender${i}" id="tab${i}-2" value="여자" <c:if test="${status.count eq 1 and customer.customer_gender eq '여자' }">checked </c:if>><label for="tab${i}-2">여</label>
 		                    </td>
 		                    <td>
-		                        <input type="date" value="${birth}">
+		                        <input type="date" name="birth${i}" <c:if test="${status.count eq 1 }"> value="${birth}" </c:if>>
 		                    </td>
-		                    <!-- <td>
-		                        <select name="" id="">
-		                            <option value="국적" disabled>국적</option>
-		                            <option value="대한민국">대한민국</option>
-		                        </select>
-		                    </td> -->
-		                    <td><input type="text" placeholder="여권번호"></td>
+		                    <td><input type="text" name="passport${i}" placeholder="여권번호"></td>
 	                    </tr>                		
                 	</c:forEach>
                 	<c:forEach var="childAge" begin="1" end="${bookForm.seat_childAge}" >
+                		<c:set var="i" value="${i+1}"></c:set>
 	                	<tr>
-		                    <td>소아</td>
+		                    <td>소아 <input type="hidden" name="type${i}" value="소아"/></td>
 		                    <td>
-		                        <input type="text" placeholder="이름을 입력해 주세요">
+		                        <input name="name${i}" type="text" placeholder="이름을 입력해 주세요">
 		                    </td>
 		                    <td>
-		                        <input type="radio" name="gender" id="tab1"><label for="tab1">남</label>
-		                        <input type="radio" name="gender" id="tab2"><label for="tab2">여</label>
+		                        <input type="radio" name="gender${i}" id="tab1" value="남자" ><label for="tab1">남</label>
+		                        <input type="radio" name="gender${i}" id="tab2" value="여자" ><label for="tab2">여</label>
 		                    </td>
 		                    <td>
-		                        <input type="date">
+		                        <input type="date" name="birth${i}" >
 		                    </td>
-		                    <td>
-		                        <select name="" id="">
-		                            <option value="국적" disabled>국적</option>
-		                            <option value="대한민국">대한민국</option>
-		                        </select>
-		                    </td>
-		                    <td><input type="text" placeholder="여권번호"></td>
+		                    <td><input type="text" name="passport${i}" placeholder="여권번호"></td>
 	                    </tr>                		
                 	</c:forEach>
                 	<c:forEach var="infantAge" begin="1" end="${bookForm.seat_infantAge }" >
+                		<c:set var="i" value="${i+1}"></c:set>
 	                	<tr>
-		                    <td>유아</td>
+		                    <td>소아 <input type="hidden" name="type${i}" value="유아"/></td>
 		                    <td>
-		                        <input type="text" placeholder="이름을 입력해 주세요">
+		                        <input name="name${i}" type="text" placeholder="이름을 입력해 주세요">
 		                    </td>
 		                    <td>
-		                        <input type="radio" name="gender" id="tab1"><label for="tab1">남</label>
-		                        <input type="radio" name="gender" id="tab2"><label for="tab2">여</label>
+		                        <input type="radio" name="gender${i}" id="tab1" value="남자" ><label for="tab1">남</label>
+		                        <input type="radio" name="gender${i}" id="tab2" value="여자" ><label for="tab2">여</label>
 		                    </td>
 		                    <td>
-		                        <input type="date">
+		                        <input type="date" name="birth${i}" >
 		                    </td>
-		                    <td>
-		                        <select name="" id="">
-		                            <option value="국적" disabled>국적</option>
-		                            <option value="대한민국">대한민국</option>
-		                        </select>
-		                    </td>
-		                    <td><input type="text" placeholder="여권번호"></td>
+		                    <td><input type="text" name="passport${i}" placeholder="여권번호"></td>
 	                    </tr>                		
                 	</c:forEach>
                 </tbody>
             </table>
-        </form>
+            <input type="hidden" name="payment" value="${bookForm.payment}" />
+            <input type="hidden" name="customer_id" value="${customer.customer_id}" />
+            <input type="hidden" name="passenger_count" value="${bookForm.seat_adult + bookForm.seat_childAge + bookForm.seat_infantAge}" /> 
+            <input type="hidden" id= "seat_class_list" name="seat_class_list" value="" />
+            <input type="hidden" id= "route_num_list" name="route_num_list" value="" /> 
+        
     </div>
-<!--     <div>
-        <h3>연락처정보</h3>
-        <form action="#" class="border_input">
-            <table class="table top_boder">
-                    <tr>
-                        <th>휴대전화</th>
-                        <td><input type="text"/></td>
-                        <th>이메일</th>                        
-                        <td><input type="text" /></td>
-                    </tr>
-            </table>
-        </form>
-    </div> -->
     <div class="flight_payment_wrap">
         <div class="flight_payment">
             <p>총 결제금액</p>
-            <p class="price">67,200원</p>
+            <p class="price"><fmt:formatNumber value="${bookForm.payment}" pattern="#,###"/> 원</p>
         </div>
-        <button class="btn_primary" onclick="location='${pageContext.request.contextPath}/book/bookDone'">다음</button>
+        <button class="btn_primary" onclick="checkForm()">다음</button>
     </div>
+    </form>
 </section>
 <!-- book customer info E -->
+<script>
+	
+	function checkForm() {
+		const form = document.getElementById('bookForm');
+		const route_num = document.getElementsByClassName('route_num');
+		const seat_class =  document.getElementsByClassName('seat_class'); 
+		
+		const route_num_list =  document.getElementById('route_num_list'); 
+		const seat_class_list =  document.getElementById('seat_class_list'); 
+		
+		const route_list = new Array()
+		for (let i = 0; i < route_num.length; i++) {
+			route_list.push(route_num[i].value)
+		}
+		
+		const seat_list = new Array()
+		for (let i = 0; i < seat_class.length; i++) {
+			seat_list.push(seat_class[i].value)
+		}
+		
+		route_num_list.value = route_list
+		seat_class_list.value = seat_list
+		
+		
+		
+		form.submit()
+	}
+</script>
 <!-- footer S -->
 <%@include file ="../include/footer.jsp" %>
 <!-- footer E --> 

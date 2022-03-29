@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.air.future.service.AdminCustomerService;
-import com.air.future.service.HomeControllerService;
+import com.air.future.service.CustomerService;
 import com.air.future.util.PageNavigator;
 import com.air.future.vo.Airplane;
 import com.air.future.vo.Customer;

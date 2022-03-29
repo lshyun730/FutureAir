@@ -17,7 +17,7 @@ const swiper = new Swiper(".main_slider", {
 
 
 // 인기 항공권 슬라이더
-const swiper = new Swiper(".popular_slider", {
+const swiper2 = new Swiper(".popular_slider", {
     autoplay: {
         delay: 5000,
         disableOnInteraction: false,

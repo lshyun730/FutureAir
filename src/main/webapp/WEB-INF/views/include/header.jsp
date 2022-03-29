@@ -9,6 +9,7 @@
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+	<script defer src="${pageContext.request.contextPath}/resources/js/common.js"></script>
 	<script defer src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
@@ -19,17 +20,25 @@
 
 <section class="util">
 		<div class="inner">
-			<ul>
-				<li>
-					<c:if test="${ empty userId }">
-						<a href="${pageContext.request.contextPath}/login">로그인</a>
-					</c:if>
-					<c:if test="${!empty userId }">
-						<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
-						<li><a href="${pageContext.request.contextPath}/mypage">마이페이지</a></li>
-					</c:if>
+			<ul class="util_list">
+				<c:if test="${ empty customer }">
+					<li><a href="${pageContext.request.contextPath}/login">로그인</a></li>
+				</c:if>
+				<c:if test="${!empty customer }">
+					 <li><a href="${pageContext.request.contextPath}/mypage">${customer.customer_name } 님</a>
+						<ul class="util_dep">
+							<li><a href="${pageContext.request.contextPath}/mypage">마이페이지</a>
+							<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>							
+						</ul>
+					</li>
+				</c:if>
+				<li><a href="#">고객서비스</a>
+					<ul class="util_dep">
+						<li><a href="${pageContext.request.contextPath}/service/notice">공지사항</a></li>
+						<li><a href="${pageContext.request.contextPath}/service/faq">자주묻는질문</a></li>
+						<li><a href="">1:1 문의</a></li>
+					</ul>
 				</li>
-				<li><a href="#">고객서비스</a></li>
 			</ul>
 		</div>
 	</section>

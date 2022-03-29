@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
     <title>미래항공 관리자페이지</title>
 </head>
@@ -246,6 +247,7 @@ $.ajax({
 	url : 'graphIncome',
 		type : 'get',
 		success : function(data) {
+			console.log(data)
 			let monthList = [];
 			let paymentList = []
 			for(let i = 0; i < data.length; i++) {
@@ -324,6 +326,7 @@ $.ajax({
 	url : 'graphReservation',
 		type : 'get',
 		success : function(data) {
+			console.log(data)
 			let dayList = [];
 			let countList = []
 			for(let i = 0; i < data.length; i++) {
@@ -402,6 +405,7 @@ $.ajax({
 	url : 'graphFlightState',
 		type : 'get',
 		success : function(data) {
+			console.log(data)
 			let labelList = Object.keys(data);
 			let countList = Object.values(data);
 			new Chart(document.getElementById('flightChart'), {

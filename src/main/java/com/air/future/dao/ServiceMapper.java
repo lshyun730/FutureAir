@@ -8,8 +8,15 @@ import com.air.future.vo.Post;
 
 public interface ServiceMapper {
 
-	ArrayList<Post> getNoticeList(String searchText, RowBounds rb);
+	public ArrayList<Post> getNoticeList(String searchText, RowBounds rb);
 
-	int getNoticeListCount(String searchText);
+	public int getNoticeListCount(String searchText);
+
+	public ArrayList<Post> getFixList();
+
+	public ArrayList<String> getPostType();
+
+	public ArrayList<Post> getfaqList(String type);
+
 
 }
