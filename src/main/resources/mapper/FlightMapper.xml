@@ -51,7 +51,8 @@
 	</insert>
 	
 	<insert id="insertSchedule" parameterType="schedule">
-		insert into schedule_fa values(concat('R' , lpad(#{reservation_num}, 5, '0'))
+		insert into schedule_fa values
+			(concat('R' , lpad(#{reservation_num}, 5, '0'))
 			, #{passport_num}
 			, #{passenger_name}
 			, TO_DATE(#{passenger_birth}, 'YYYY-MM-DD')  

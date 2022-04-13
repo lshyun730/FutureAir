@@ -70,6 +70,7 @@
 			and s.route_num = rou.route_num
 			and s.type = '여정1') a ,
 			(select reservation_num, count(*)-1 count from schedule_fa
+			where type='여정1'
 			group by reservation_num) b
 		where a.reservation_num = b.reservation_num
 		order by a.reservation_date desc

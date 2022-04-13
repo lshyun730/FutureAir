@@ -161,9 +161,14 @@ public class AdminCustomerController {
 		
 		Customer customer = service.getCustomerNG(id);
 
+		HashMap<String, String> value = new HashMap<>();
+		value.put("customer_id", id);
+		value.put("reservation_start", reservation_start);
+		value.put("reservation_end", reservation_end);
+		
 		int total = service.reservationGetTotal(id, reservation_start, reservation_end);
 		PageNavigator navi 	= new PageNavigator(countPerPage, pagePerGroup, page, total);
-		ArrayList<HashMap<String, String>> reservationList = service.getCommonReservation(id, reservation_start, reservation_end);
+		ArrayList<HashMap<String, String>> reservationList = service.getCommonReservation(value, navi);
 				
 		model.addAttribute("id", id);
 		model.addAttribute("customer", customer);

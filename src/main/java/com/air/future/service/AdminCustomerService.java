@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.air.future.dao.AdminCustomerDAO;
 import com.air.future.dao.AdminCustomerMapper;
 import com.air.future.vo.*;
+import com.air.future.util.PageNavigator;
 
 @Service
 public class AdminCustomerService {
@@ -167,12 +168,9 @@ public class AdminCustomerService {
 	}
 	
 	// 팝업창 : 예약 전체내역 불러오기 위한 부분
-	public ArrayList<HashMap<String, String>> getCommonReservation(String id, String reservation_start, String reservation_end){
-		HashMap<String, String> value = new HashMap<>();
-		value.put("customer_id", id);
-		value.put("reservation_start", reservation_start);
-		value.put("reservation_end", reservation_end);
-		ArrayList<HashMap<String, String>> result = dao.getCommonReservation(value);
+	public ArrayList<HashMap<String, String>> getCommonReservation(HashMap<String, String> value, PageNavigator navi){
+		
+		ArrayList<HashMap<String, String>> result = dao.getCommonReservation(value, navi.getStartRecord(), navi.getCountPerPage());
 
 		return result;
 	}

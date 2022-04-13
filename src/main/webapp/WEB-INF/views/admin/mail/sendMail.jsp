@@ -180,40 +180,6 @@
 	    </section>
 	    <!-- mail send E -->
 	</div>   
-    <!-- modal view S -->  
-    <section class="modal view">
-        <div class="modal_wrap">
-            <h2>미리보기</h2>
-            <button class="close"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="bg_black"></div>
-    </section>
-    <!-- modal view E -->  
-    <!-- modal rewrite S -->  
-    <section class="modal rewrite">
-        <div class="modal_wrap">
-            <h2>수정하기</h2>
-            <form action="#">
-                <div class="inputbox no_icon">
-                    <p class="inputbox_title">제목</p>
-                    <div class="inputbox_input">
-                        <input type="text" placeholder="${user} 님 회원가입을 축하드립니다.">
-                    </div>
-                </div>
-                <div class="textbox">
-                	<div>
-                    	<textarea placeholder="내용을 입력해 주세요"></textarea>
-                    </div>
-                </div>
-                <div class="submit">
-                    <input type="submit" value="수정하기">
-                </div>
-            </form>
-            <button class="close"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="bg_black"></div>
-    </section>
-    <!-- modal rewrite E -->  
 </section>
 <!-- content E --> 
 <script>

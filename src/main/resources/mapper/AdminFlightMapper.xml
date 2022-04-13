@@ -102,6 +102,14 @@
 		select * from reservation_fa r, schedule_fa s
 		where r.reservation_num = s.reservation_num
 		and s.route_num = #{route_num}
+		order by r.reservation_date
+	</select>
+	
+	<!-- 비행일정상세갯수 - 예약현황 -->
+	<select id="getReservationByRoutenumTotal" parameterType="String" resultType="int">
+		select count(*) from reservation_fa r, schedule_fa s
+		where r.reservation_num = s.reservation_num
+		and s.route_num = #{route_num}
 	</select>
 	
 

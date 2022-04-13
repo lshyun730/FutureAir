@@ -11,7 +11,6 @@ import com.air.future.dao.AdminFlightDAO;
 import com.air.future.util.PageNavigator;
 import com.air.future.vo.Airplane;
 import com.air.future.vo.Destination;
-import com.air.future.vo.Route;
 
 @Service
 public class AdminFlightService {
@@ -108,9 +107,15 @@ public class AdminFlightService {
 	}
 	
 	// 비행일정상세 - 예약고객리스트
-	public ArrayList<HashMap<String, String>> getReservationByRoutenum(String route_num) {
-		ArrayList<HashMap<String, String>> reservationList = dao.getReservationByRoutenum(route_num);
+	public ArrayList<HashMap<String, String>> getReservationByRoutenum(String route_num, PageNavigator navi) {
+		ArrayList<HashMap<String, String>> reservationList = dao.getReservationByRoutenum(route_num, navi.getStartRecord(), navi.getCountPerPage());
 		return reservationList;
+	}
+	
+	// 비행일정상세 리스트 갯수 - 예약고객리스트
+	public int getReservationByRoutenumTotal(String route_num) {
+		int total = dao.getReservationByRoutenumTotal(route_num);
+		return total;
 	}
 
 	
@@ -161,4 +166,6 @@ public class AdminFlightService {
 		ArrayList<ArrayList<Destination>> destinationList = dao.destinationList();
 		return destinationList;
 	}
+
+
 }

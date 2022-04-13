@@ -151,9 +151,10 @@ public class AdminCustomerDAO {
 	}
 	
 	// 팝업창 : 예약 내역 불러오기 위한 부분
-	public ArrayList<HashMap<String, String>> getCommonReservation(HashMap<String, String> value) {
+	public ArrayList<HashMap<String, String>> getCommonReservation(HashMap<String, String> value, int startRecord, int countPerPage) {
 		AdminCustomerMapper mapper = sqlSession.getMapper(AdminCustomerMapper.class);
-		ArrayList<HashMap<String, String>> result = mapper.getCommonReservation(value);
+		RowBounds rb = new RowBounds(startRecord, countPerPage);
+		ArrayList<HashMap<String, String>> result = mapper.getCommonReservation(value, rb);
 		System.out.println(result);
 		return result;
 	}

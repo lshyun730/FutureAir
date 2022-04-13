@@ -248,5 +248,4 @@ public class AdminBoardController {
 		model.addAttribute("board_name", board_name);
 		return "redirect:/admin/board/postNotice";
 	}
-
 }

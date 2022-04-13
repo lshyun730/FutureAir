@@ -32,6 +32,7 @@
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/book/passengerInfo/**"/>
+			<mvc:mapping path="/mypage"/>
 			<beans:ref bean="LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

@@ -179,31 +179,31 @@
             </li>
             <li>
                 <a href="#">
-                    <span class="icon"><i class="fas fa-hotel"></i></span>
+                    <span class="icon"><i class="fas fa-car-side"></i></span>
                     <p>렌터카</p>
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <span class="icon"><i class="fas fa-hotel"></i></span>
+                    <span class="icon"><i class="fas fa-money-bill-wave-alt"></i></span>
                     <p>마일리지</p>
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <span class="icon"><i class="fas fa-hotel"></i></span>
+                    <span class="icon"><i class="fas fa-shield-alt"></i></span>
                     <p>여행자보험</p>
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <span class="icon"><i class="fas fa-hotel"></i></span>
+                    <span class="icon"><i class="fas fa-shopping-cart"></i></span>
                     <p>면세점</p>
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <span class="icon"><i class="fas fa-hotel"></i></span>
+                    <span class="icon"><i class="fas fa-ticket-alt"></i></span>
                     <p>엑티비티</p>
                 </a>
             </li>

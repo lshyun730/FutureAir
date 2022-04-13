@@ -82,10 +82,10 @@ public class AdminFlightController {
 	// 비행일정 상세
 	@RequestMapping(value = "flightView", method = RequestMethod.GET)
 	public String flightView(@RequestParam(value="page", defaultValue="1") int page, String route_num, Model model) {
-		int total = service.getReservationByRoutenum(route_num).size(); // 검색된리스트갯수
+		int total = service.getReservationByRoutenumTotal(route_num); // 검색된리스트갯수
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total); // 페이징처리
 		HashMap<String, String>  route = service.getRoute(route_num); // 상세 확인할 비행일정 정보
-		ArrayList<HashMap<String, String>> reservationList = service.getReservationByRoutenum(route_num); // 비행번호의 예약 리스트
+		ArrayList<HashMap<String, String>> reservationList = service.getReservationByRoutenum(route_num, navi); // 비행번호의 예약 리스트
 		model.addAttribute("route", route); 
 		model.addAttribute("reservationList", reservationList);
 		model.addAttribute("navi", navi);

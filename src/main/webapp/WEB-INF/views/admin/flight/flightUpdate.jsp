@@ -9,6 +9,7 @@
 	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/common.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/admin.js"></script>
 	<title>미래항공 관리자페이지</title>
 </head>
@@ -47,7 +48,7 @@
 	        		<col width="30%">
 	        	</colgroup>
 	            <tr>
-	                <th>${route.AIRPLANE_TYPE}출발지</th>
+	                <th>출발지</th>
 	                <td>
 	                	<select name="departure_name" onchange="changeLocation('${route.AIRPLANE_TYPE}', this)" id="departure_name" required="required">
 	                     	<option value="" disabled selected>도시 혹은 공항</option>
@@ -167,6 +168,7 @@
 	}
 	
 	function changeLocation(type, element) {
+		changeSelect();
 		const departure_name = document.getElementById("departure_name");
 		const arrivel_name = document.getElementById("arrival_name");	
 		const departure_country = departure_name.options[departure_name.selectedIndex].getAttribute('class') // 출발지 국가;

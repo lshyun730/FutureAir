@@ -77,10 +77,18 @@ public class AdminFlightDAO {
 	}
 	
 	// 비행일정상세 - 예약고객리스트
-	public ArrayList<HashMap<String, String>> getReservationByRoutenum(String route_num) {
+	public ArrayList<HashMap<String, String>> getReservationByRoutenum(String route_num, int startRecord, int countPerPage) {
 		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
-		ArrayList<HashMap<String, String>> reservationList = mapper.getReservationByRoutenum(route_num);
+		RowBounds rb = new RowBounds(startRecord, countPerPage);
+		ArrayList<HashMap<String, String>> reservationList = mapper.getReservationByRoutenum(route_num, rb);
 		return reservationList;
+	}
+	
+	// 비행일정상세갯수 - 예약고객리스트
+	public int getReservationByRoutenumTotal(String route_num) {
+		AdminFlightMapper mapper = sqlSession.getMapper(AdminFlightMapper.class);
+		int result = mapper.getReservationByRoutenumTotal(route_num);
+		return result;
 	}
 
 	
@@ -130,6 +138,7 @@ public class AdminFlightDAO {
 		}
 		return destinationList;
 	}
+
 
 
 

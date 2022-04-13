@@ -38,7 +38,10 @@ public interface AdminFlightMapper {
 	public ArrayList<Airplane> getAirplaneList();
 	
 	// 비행일정상세 - 예약고객리스트
-	public ArrayList<HashMap<String, String>> getReservationByRoutenum(String route_num);
+	public ArrayList<HashMap<String, String>> getReservationByRoutenum(String route_num, RowBounds rb);
+
+	// 비행일정상세갯수 - 예약고객리스트
+	public int getReservationByRoutenumTotal(String route_num);
 	
 	
 // 예약현황	
@@ -64,6 +67,8 @@ public interface AdminFlightMapper {
 
 	// 예약취소 시 마이너스 마일리지 
 	public void insertMileage(String reservation_num);
+
+
 
 
 

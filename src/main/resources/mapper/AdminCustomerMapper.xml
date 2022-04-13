@@ -358,7 +358,6 @@
 		<if test="!reservation_end.equals('')">
 			and reservation_date <![CDATA[<=]]> to_date(#{reservation_end}, 'YYYY-MM-DD') + 1			
 		</if>
-		order by r.reservation_date
 	</select>
 	
 	<!-- 예약내역 상세 -->

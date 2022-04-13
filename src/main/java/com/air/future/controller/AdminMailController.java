@@ -30,10 +30,10 @@ public class AdminMailController {
 	@RequestMapping(value = "sendMail", method = RequestMethod.GET)
 	public String sendMail(Model model) {
 		ArrayList<Mail> mailList= service.getMailList();
-		 ArrayList<Grade> gradeList= customerService.customerGradeAll();
+		ArrayList<Grade> gradeList= customerService.customerGradeAll();
 		 
-		 model.addAttribute("mailList", mailList);
-		 model.addAttribute("gradeList", gradeList);
+		model.addAttribute("mailList", mailList);
+		model.addAttribute("gradeList", gradeList);
 		return "admin/mail/sendMail";
 	}
 	
