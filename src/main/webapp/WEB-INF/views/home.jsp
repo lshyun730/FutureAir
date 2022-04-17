@@ -33,7 +33,7 @@
             </div>
         </div>
     </div>
-    <form action="book/flightBook" method="post" class="quick_reservation">
+    <form action="book/flightBook" method="post" class="quick_reservation" onsubmit="return checkBookingFrom()">
         <div class="inner">
             <div class="trip_type">
                 <p class="title">여행타입</p>
@@ -43,7 +43,7 @@
             </div>
             <div>
                 <p class="title">출발지</p>
-                <select name="departure_name">
+                <select name="departure_name" onchange="changeSelect(this)" id="departure_name">
                 <option value="" disabled selected>도시 혹은 공항</option>
                     <c:forEach var="continent" items="${destinationList}">
              			<optgroup label="${continent[0].continents}">
@@ -56,7 +56,7 @@
             </div>
             <div>
                 <p class="title">도착지</p>
-                <select name="arrival_name">
+                <select name="arrival_name" onchange="changeSelect(this)" id="arrival_name">
                		<option value="" disabled selected>도시 혹은 공항</option>
                     <c:forEach var="continent" items="${destinationList}">
              			<optgroup label="${continent[0].continents}">
@@ -95,7 +95,6 @@
                 	</c:forEach>
                 </select>
             </div>
-            <!-- <input type="hidden" name="pick_date_list" id="pick_date_list" value=""/> -->
             <div class="submit">
                 <input type="submit">
             </div>
@@ -174,47 +173,76 @@
             <li>
                 <a href="#">
                     <span class="icon"><i class="fas fa-hotel"></i></span>
-                    <p>호텔</p>
+                    <span>호텔</span>
                 </a>
             </li>
             <li>
                 <a href="#">
                     <span class="icon"><i class="fas fa-car-side"></i></span>
-                    <p>렌터카</p>
+                    <span>렌터카</span>
                 </a>
             </li>
             <li>
                 <a href="#">
                     <span class="icon"><i class="fas fa-money-bill-wave-alt"></i></span>
-                    <p>마일리지</p>
+                    <span>마일리지</span>
                 </a>
             </li>
             <li>
                 <a href="#">
                     <span class="icon"><i class="fas fa-shield-alt"></i></span>
-                    <p>여행자보험</p>
+                    <span>여행자보험</span>
                 </a>
             </li>
             <li>
                 <a href="#">
                     <span class="icon"><i class="fas fa-shopping-cart"></i></span>
-                    <p>면세점</p>
+                    <span>면세점</span>
                 </a>
             </li>
             <li>
                 <a href="#">
                     <span class="icon"><i class="fas fa-ticket-alt"></i></span>
-                    <p>엑티비티</p>
+                    <span>엑티비티</span>
                 </a>
             </li>
         </ul>
     </div>
 </section>
 <!-- service E -->
-<<script type="text/javascript">
+<script type="text/javascript">
+
+function checkBookingFrom() {
+	
+ 	const departure_name = document.querySelector('select[name=departure_name]').value;
+ 	const arrival_name = document.querySelector('select[name=arrival_name]').value;
+	
+ 	const seat_adult = document.querySelector('select[name=seat_adult]').value;
+	const seat_childAge = document.querySelector('select[name=seat_childAge]').value;
+	const seat_infantAge = document.querySelector('select[name=seat_infantAge]').value;
+	
+	if(departure_name == '') {
+		alert('출발지를 선택해주세요')
+		return false;
+	} else if(arrival_name == '') {
+		alert('도착지를 선택해주세요')
+		return false;
+	}
+	
+	if(seat_adult == '0' && seat_childAge == '0' && seat_infantAge == '0') {
+		alert('인원을 선택해주세요')
+		return false;
+	} else if (seat_adult == '0') {
+		alert('성인은 1인 이상이 선택해야합니다')
+		return false;		
+	}
+	
+	return true;
+}
+
 
 const startDate = new Date();
-/* startDate.setDate(startDate.getDate()); */
+/* startDate.setDate(startDate.getDate() + 1); */
 
 $('#dateRange').daterangepicker({
 	locale: {
@@ -225,7 +253,7 @@ $('#dateRange').daterangepicker({
 	    "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
 	    "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
 	    },
-	minDate: startDate
+	/* minDate: startDate */
 });
 
 </script>

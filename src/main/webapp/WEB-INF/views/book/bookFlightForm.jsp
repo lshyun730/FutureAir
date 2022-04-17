@@ -211,7 +211,7 @@ function pickDate(element) {
 	lastPayment.innerHTML = sumPayment.toLocaleString()+ ' 원'
 }
 
- function bookCheck() {
+function bookCheck() {
 	 
 	const route_nums = document.getElementsByClassName('route_num');
 	const route_num_list =  document.getElementById('route_num_list'); 
@@ -233,7 +233,7 @@ function pickDate(element) {
 	seat_class_list.value = seat_list
 }
 
- function changeCustomerType() {
+function changeCustomerType() {
 	const seat_adult =  document.getElementById('seat_adult').value; 
 	const seat_childAge =  document.getElementById('seat_childAge').value; 
 	const seat_infantAge =  document.getElementById('seat_infantAge').value; 
