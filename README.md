@@ -6,15 +6,6 @@
 
 2022.01.10 - 2022.02.28 - ing
 
-| Goal                                                                                                                | Start Date | Done Date  | Status        |
-| ------------------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ------------- |
-| 1. プロジェクト企画                                                                                                 | 2022/01/02 | 2022/01/16 | Done 👌       |
-| 2. プロトタイプ製作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 2022/01/13 | 2022/01/16 | Done 👌       |
-| 3. ウェブデザイン                                                                                                   | 2022/01/17 | 2022/01/31 | Done 👌       |
-| 4. フロントエンド開発                                                                                               | 2022/01/21 |            | Working On 💻 |
-| 5. バックトエンド開発                                                                                               | 2022/01/27 |            | Working On 💻 |
-| 6. エラー訂正、改善                                                                                                 |            |            | To Do 📌      |
-
 <br><br>
 
 ### ✔ Technology Stack
@@ -24,28 +15,48 @@ Spring, Oracle, Javascript, AdobeXd, Figma, Ajex, Github, AWS
 
 ### ✔ Project Outline
 
-Future Air は main page と admin page に分かれている航空会社のウェブサイトだ。<br>
+Future Air is an airline website consisting of main page and admin page
 
--   [MainPage](http://15.165.189.61:8080/futureair/) (id = future1, password = 1234) (doing front-end) <br>
-    お客様が航空券の予約·キャンセルなどのサービスを利用　<br><br>
--   [AdminPage](http://15.165.189.61:8080/futureair/admin) (id = admin, password = 1234) (doing back-end) <br>
-    未来航空管理者が予約·飛行日程などのサービスを管理 <br>
-    <br><br>
+<br>
+
+⭐ Description
+
+<a href="https://drive.google.com/file/d/1KyrHD26Puyi6UNcJ6drwaJwf-QXvhKp5/view"><img alt="GitHub" src ="https://img.shields.io/badge/Japanese-B7472A.svg?&style=for-the-badge&logo=Microsoft PowerPoint&logoColor=white"/></a>
+
+<br>
+
+⭐ Demo
+
+<a href = "http://15.165.189.61:8080/futureair/admin"><img alt="GitHub" src ="https://img.shields.io/badge/Admin Page-181717.svg?&style=for-the-badge&logo=GitHub&logoColor=white"/></a>
+
+Manager can manage services such as reservations, flight schedules, etc
+(id = admin, password = 1234)
+
+<br>
+
+<a href = "http://15.165.189.61:8080/futureair/"><img alt="GitHub" src ="https://img.shields.io/badge/Main Page-181717.svg?&style=for-the-badge&logo=GitHub&logoColor=white"/></a>
+
+Customers can use services such as airline ticket reservation and cancellation
+(id = future1, password = 1234)
+
+<br>
+
+<br><br>
 
 #### 💻 My Work
 
 ##### 1. Web Design / Front-end
 
-メインページと管理者ページ全体のウェブデザイン、HTML、CSS 作成
+Web design, HTML, CSS for the entire page
 
 ##### 2. Back-and
 
-飛行予約、キャンセル、マイページなど <br>
-ダッシュボード、飛行管理、予約管理、メールサービスなど
+Flight reservation, cancellation, My Page, etc. <br>
+Dashboards, flight management, reservation management, mail services, etc
 
 ##### 3. Server
 
-AWS を利用してウェブサーバーを構築し、スプリングウェブプロジェクトをサービス
+Build a Web Server Using AWS EC2
 
 <br><br>
 
