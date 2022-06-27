@@ -9,8 +9,12 @@
 <br><br>
 
 ### ✔ Technology Stack
+- Design - AdobeXd, Figma, Photoshop, Illustration
+- Frontend - Javascript
+- Backend - Spring
+- Database - Oracle(mybatis)
+- Deployment - AWS
 
-Spring, Oracle, Javascript, AdobeXd, Figma, Ajex, Github, AWS  
 <br><br>
 
 ### ✔ Project Outline
